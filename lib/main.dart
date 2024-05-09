@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bmflocation/flutter_bmflocation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,9 +84,13 @@ class MyAppState extends State<HhApp> {
   void initState() {
     super.initState();
     ///百度地图sdk初始化鉴权
+    /// 设置是否隐私政策
+    LocationFlutterPlugin myLocPlugin = LocationFlutterPlugin();
+    myLocPlugin.setAgreePrivacy(true);
+    BMFMapSDK.setAgreePrivacy(true);
     if (Platform.isIOS) {
       BMFMapSDK.setApiKeyAndCoordType(
-          'ni6Yg24GGbnO8xnAhd7xKgTNLDGcSsLZ', BMF_COORD_TYPE.BD09LL);
+          'wARV9WoE9vC8q8QE7n7oTTC59541zYTy', BMF_COORD_TYPE.BD09LL);
     } else if (Platform.isAndroid) {
       // Android 目前不支持接口设置Apikey,
       // 请在主工程的Manifest文件里设置，详细配置方法请参考官网(https://lbsyun.baidu.com/)demo
@@ -97,9 +102,9 @@ class MyAppState extends State<HhApp> {
         iOSAppId: "ed96239f50");*/
     ///推送注册
     if (Platform.isIOS) {
-      XgFlutterPlugin().startXg("1600022588", "I21Z1FYFYFQH");
+      XgFlutterPlugin().startXg("1600040310", "IRL5SNBR2DSA");
     }else{
-      XgFlutterPlugin().startXg("1500022588", "AO91IE0UVN5L");
+      XgFlutterPlugin().startXg("1500040311", "ADC2K1REPJ75");
     }
     //注册回调
     XgFlutterPlugin().addEventHandler(
