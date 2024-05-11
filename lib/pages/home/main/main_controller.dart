@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/event_class.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/utils/HhLog.dart';
 
 import '../../../utils/EventBusUtils.dart';
 
@@ -10,10 +12,12 @@ class MainController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
   final title = "主页".obs;
-  Rx<double?> latitude = CommonData.latitude.obs;
-  Rx<double?> longitude = CommonData.longitude.obs;
+  final Rx<double?> latitude = CommonData.latitude.obs;
+  final Rx<double?> longitude = CommonData.longitude.obs;
   BMFMapController ?controller;
   StreamSubscription ?pushTouchSubscription;
+  final Rx<bool?> searchStatus = false.obs;
+  TextEditingController ?searchController;
 
   @override
   void onInit() {
@@ -36,5 +40,12 @@ class MainController extends GetxController {
 
   void onBMFMapCreated(BMFMapController controller_) {
     controller = controller_;
+  }
+
+  void onSearchClick() {
+    searchStatus.value = true;
+  }
+  void restartSearchClick() {
+    searchStatus.value = false;
   }
 }
