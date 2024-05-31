@@ -4,7 +4,7 @@ class HhColors {
   static const themeBackColor = Color(0xFFF5F7F7);//主题背景颜色
   static const backTransColor = Color(0x66786F68);//透明灰色背景色
   static const backTransColor1 = Color(0xFFDEEAF9);//主页背景渐变色
-  static const backTransColor2 = Color(0xFFF3F3ED);//主页背景渐变色
+  static const backTransColor2 = Color(0xFFF0F0FF);//主页背景渐变色
   static const backTransColor3 = Color(0xFFF5F7F7);//主页背景渐变色
   static const transBlueColor = Color(0xFF98BAFE);//麦克风蓝色
   static const gray9TextColor = Color(0xFF999999);//深灰字体颜色
@@ -29,6 +29,7 @@ class HhColors {
   static const questionColor = Color(0xFF049594); //主题颜色
   static const whiteColor = Colors.white;
   static const blackColor = Colors.black;
+  static const textColor = Color(0xFF888888);
   static const clearColor = Colors.transparent;
   static const backColorScreen = Color(0xFFf9f9f9); //主题背景颜色
 
@@ -43,6 +44,7 @@ class HhColors {
   static const transYellow2 = Color(0x66F5CD5B);
   static const transYellow3 = Color(0x33F5CD5B);
   static const trans_99 = Color(0x22999999);
+  static const trans_77 = Color(0x55888888);
   static const trans_66 = Color(0x55222222);
   static const transTips = Color(0x66999999);
 

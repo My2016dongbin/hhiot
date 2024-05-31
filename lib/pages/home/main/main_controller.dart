@@ -16,7 +16,7 @@ class MainController extends GetxController {
   final Rx<double?> longitude = CommonData.longitude.obs;
   BMFMapController ?controller;
   StreamSubscription ?pushTouchSubscription;
-  final Rx<bool?> searchStatus = false.obs;
+  final Rx<bool?> searchStatus = true.obs;
   TextEditingController ?searchController;
 
   @override
@@ -29,7 +29,7 @@ class MainController extends GetxController {
             center: BMFCoordinate(CommonData.latitude ?? 36.30865,
                 CommonData.longitude ?? 120.314037),
             zoomLevel: 12,
-            mapType: BMFMapType.Satellite,
+            mapType: BMFMapType.Standard,
             mapPadding: BMFEdgeInsets(
                 left: 30, top: 0, right: 30, bottom: 0)));
       }
