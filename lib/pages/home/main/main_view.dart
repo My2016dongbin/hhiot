@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../utils/HhColors.dart';
 import '../../common/common_data.dart';
+import '../../common/model/model_class.dart';
 import 'main_controller.dart';
 
 class MainPage extends StatelessWidget {
@@ -17,30 +19,34 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HhColors.backColor,
-      body: Obx(() => Container(
+      body: Obx(
+        () => Container(
           height: 1.sh,
           width: 1.sw,
           padding: EdgeInsets.zero,
-          child: logic.pageMapStatus.value?mapPage():containPage(),
+          child: logic.pageMapStatus.value ? mapPage() : containPage(),
         ),
       ),
     );
   }
 
+  ///地图视图-搜索
   buildSearchView() {
     return Container(
       width: 0.6.sw,
-      margin: EdgeInsets.fromLTRB(
-          30.w, logic.marginTop+70.w, 0, 0),
-      padding: EdgeInsets.fromLTRB(20.w,20.w,50.w,20.w),
+      margin: EdgeInsets.fromLTRB(30.w, logic.marginTop + 70.w, 0, 0),
+      padding: EdgeInsets.fromLTRB(20.w, 20.w, 50.w, 20.w),
       decoration: BoxDecoration(
-          boxShadow:const [ BoxShadow(
-            color: HhColors.trans_77,
-            ///控制阴影的位置
-            offset: Offset(0, 10),
-            ///控制阴影的大小
-            blurRadius: 24.0,
-          ),
+          boxShadow: const [
+            BoxShadow(
+              color: HhColors.trans_77,
+
+              ///控制阴影的位置
+              offset: Offset(0, 10),
+
+              ///控制阴影的大小
+              blurRadius: 24.0,
+            ),
           ],
           color: HhColors.whiteColor,
           borderRadius: BorderRadius.all(Radius.circular(20.w))),
@@ -68,7 +74,9 @@ class MainPage extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-                SizedBox(width: 5.w,),
+                SizedBox(
+                  width: 5.w,
+                ),
                 Expanded(
                   child: TextField(
                     textAlign: TextAlign.left,
@@ -83,8 +91,8 @@ class MainPage extends StatelessWidget {
                       hintStyle: TextStyle(
                           color: HhColors.gray9TextColor, fontSize: 24.sp),
                     ),
-                    style: TextStyle(
-                        color: HhColors.textColor, fontSize: 24.sp),
+                    style:
+                        TextStyle(color: HhColors.textColor, fontSize: 24.sp),
                   ),
                 )
               ],
@@ -95,6 +103,7 @@ class MainPage extends StatelessWidget {
     );
   }
 
+  ///主页-地图视图
   mapPage() {
     return Stack(
       children: [
@@ -108,12 +117,15 @@ class MainPage extends StatelessWidget {
               zoomLevel: 12,
               mapType: BMFMapType.Standard,
               mapPadding:
-              BMFEdgeInsets(left: 30.w, top: 0, right: 30.w, bottom: 0)),
+                  BMFEdgeInsets(left: 30.w, top: 0, right: 30.w, bottom: 0)),
         ),
         Container(
           height: 160.w,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft,end: Alignment.bottomRight,colors: [HhColors.backTransColor1,HhColors.backTransColor3]),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
           ),
           child: Stack(
             children: [
@@ -124,16 +136,24 @@ class MainPage extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("我的空间",style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
+                      Text(
+                        "我的空间",
+                        style: TextStyle(
+                            color: HhColors.blackTextColor,
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.bold),
+                      ),
                       SizedBox(
                         height: 2.w,
                       ),
                       Container(
-                        height: 5.w,width: 20.w,
+                        height: 5.w,
+                        width: 20.w,
                         decoration: BoxDecoration(
                           color: HhColors.blackTextColor,
                           border: Border.all(color: HhColors.blackTextColor),
-                          borderRadius: BorderRadius.all(Radius.circular(2.w)),),
+                          borderRadius: BorderRadius.all(Radius.circular(2.w)),
+                        ),
                       )
                     ],
                   ),
@@ -145,12 +165,12 @@ class MainPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     InkWell(
-                      onTap:(){
+                      onTap: () {
                         logic.pageMapStatus.value = false;
                       },
                       child: Container(
                         margin: EdgeInsets.only(bottom: 10.w),
-                        padding: EdgeInsets.fromLTRB(15.w,10.w,15.w,10.w),
+                        padding: EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
                         decoration: BoxDecoration(
                           color: HhColors.whiteColor,
                           borderRadius: BorderRadius.all(Radius.circular(40.w)),
@@ -178,7 +198,7 @@ class MainPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(30.w,0,20.w,10.w),
+                      margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
                       child: Image.asset(
                         "assets/images/common/shared.png",
                         width: 50.w,
@@ -197,300 +217,441 @@ class MainPage extends StatelessWidget {
           child: logic.searchStatus.value
               ? buildSearchView()
               : Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: logic.onSearchClick,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: HhColors.whiteColor,
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(20.w)),
-                        boxShadow:const [ BoxShadow(
-                          color: HhColors.trans_77,
-                          ///控制阴影的位置
-                          offset: Offset(0, 10),
-                          ///控制阴影的大小
-                          blurRadius: 24.0,
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: logic.onSearchClick,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: HhColors.whiteColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.w)),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: HhColors.trans_77,
+
+                                  ///控制阴影的位置
+                                  offset: Offset(0, 10),
+
+                                  ///控制阴影的大小
+                                  blurRadius: 24.0,
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.fromLTRB(
+                                30.w, logic.marginTop + 70.w, 0, 0),
+                            padding:
+                                EdgeInsets.fromLTRB(16.w, 10.w, 16.w, 10.w),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/shared.png",
+                                  width: 50.w,
+                                  height: 50.w,
+                                  fit: BoxFit.fill,
+                                ),
+                                SizedBox(
+                                  height: 5.w,
+                                ),
+                                Text(
+                                  "搜索",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 20.sp),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        ],
-                      ),
-                      margin: EdgeInsets.fromLTRB(
-                          30.w, logic.marginTop+70.w, 0, 0),
-                      padding: EdgeInsets.fromLTRB(16.w,10.w,16.w,10.w),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            "assets/images/common/shared.png",
-                            width: 50.w,
-                            height: 50.w,
+                      ],
+                    ),
+                  ],
+                ),
+        ),
+        logic.videoStatus.value
+            ? Align(
+                alignment: Alignment.bottomCenter,
+                child: InkWell(
+                  onTap: () {
+                    logic.videoStatus.value = !logic.videoStatus.value;
+                  },
+                  child: Container(
+                    width: 0.7.sw,
+                    height: 0.4.sw,
+                    margin: EdgeInsets.fromLTRB(50.w, 0, 50.w, 30.w),
+                    clipBehavior: Clip.hardEdge,
+                    //裁剪
+                    decoration: BoxDecoration(
+                        color: HhColors.trans,
+                        borderRadius: BorderRadius.all(Radius.circular(30.w))),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Image.asset(
+                            "assets/images/common/test_video.jpg",
+                            width: 0.7.sw,
+                            height: 0.4.sw,
                             fit: BoxFit.fill,
                           ),
-                          SizedBox(
-                            height: 5.w,
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 20.w, 20.w, 0),
+                            padding:
+                                EdgeInsets.fromLTRB(30.w, 10.w, 30.w, 10.w),
+                            decoration: BoxDecoration(
+                                color: HhColors.blackColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.w))),
+                            child: Text(
+                              "进入",
+                              style: TextStyle(
+                                  color: HhColors.whiteColor, fontSize: 24.sp),
+                            ),
                           ),
-                          Text(
-                            "搜索",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: HhColors.blackTextColor,
-                                fontSize: 20.sp),
-                          ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        logic.videoStatus.value?Align(
-          alignment: Alignment.bottomCenter,
-          child: InkWell(
-            onTap: (){
-              logic.videoStatus.value = !logic.videoStatus.value;
-            },
-            child: Container(
-              width: 0.7.sw,
-              height: 0.4.sw,
-              margin: EdgeInsets.fromLTRB(50.w, 0, 50.w, 30.w),
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  color: HhColors.trans,
-                  borderRadius: BorderRadius.all(Radius.circular(30.w))
-              ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset(
-                      "assets/images/common/test_video.jpg",
-                      width: 0.7.sw,
-                      height: 0.4.sw,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 20.w, 20.w, 0),
-                      padding: EdgeInsets.fromLTRB(30.w, 10.w, 30.w, 10.w),
-                      decoration: BoxDecoration(
-                          color: HhColors.blackColor,
-                          borderRadius: BorderRadius.all(Radius.circular(30.w))
-                      ),
-                      child: Text("进入",style: TextStyle(color: HhColors.whiteColor,fontSize: 24.sp),),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ):const SizedBox(),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }
 
+  ///主页-我的空间视图
   containPage() {
     return Stack(
       children: [
         Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft,end: Alignment.bottomRight,colors: [HhColors.backTransColor1,HhColors.backTransColor3]),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
           ),
         ),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.topLeft,end: Alignment.bottomRight,colors: [HhColors.backTransColor1,HhColors.backTransColor3]),
-                ),
+        Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      HhColors.backTransColor1,
+                      HhColors.backTransColor3
+                    ]),
               ),
-              InkWell(
-                onTap: (){
-
-                },
-                child: Container(
-                  height: 80.w,
-                  margin: EdgeInsets.fromLTRB(20.w, logic.marginTop, 20.w, 0),
-                  decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(40.w)),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 25.w,),
-                      Image.asset(
-                        "assets/images/common/shared.png",
-                        width: 35.w,
-                        height: 35.w,
-                        fit: BoxFit.fill,
-                      ),
-                      SizedBox(width: 15.w,),
-                      Expanded(
-                        child: Text('搜索设备、事件、和视频',
-                          style: TextStyle(
-                              color: HhColors.textColor, fontSize: 24.sp),
-                        ),
-                      ),
-                      SizedBox(width: 15.w,),
-                      Image.asset(
-                        "assets/images/common/shared.png",
-                        width: 35.w,
-                        height: 35.w,
-                        fit: BoxFit.fill,
-                      ),
-                      SizedBox(width: 30.w,)
-                    ],
-                  ),
+            ),
+            ///搜索
+            InkWell(
+              onTap: () {},
+              child: Container(
+                height: 80.w,
+                margin: EdgeInsets.fromLTRB(20.w, logic.marginTop, 20.w, 0),
+                decoration: BoxDecoration(
+                  color: HhColors.whiteColor,
+                  borderRadius: BorderRadius.all(Radius.circular(40.w)),
                 ),
-              ),
-              SizedBox(
-                height: 100.w,
-                child: Stack(
+                child: Row(
                   children: [
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(55.w, 0, 0, 10.w),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/common/test_video.jpg",
-                              width: 30.w,
-                              height: 30.w,
-                              fit: BoxFit.fill,
-                            ),
-                            SizedBox(width: 10.w,),
-                            Text("2°多云",style: TextStyle(color: HhColors.blackTextColor,fontSize: 24.sp),),
-                            SizedBox(width: 5.w,),
-                            Image.asset(
-                              "assets/images/common/shared.png",
-                              width: 20.w,
-                              height: 20.w,
-                              fit: BoxFit.fill,
-                            )
-                          ],
-                        ),
+                    SizedBox(
+                      width: 25.w,
+                    ),
+                    Image.asset(
+                      "assets/images/common/shared.png",
+                      width: 35.w,
+                      height: 35.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(
+                      width: 15.w,
+                    ),
+                    Expanded(
+                      child: Text(
+                        '搜索设备、事件、和视频',
+                        style: TextStyle(
+                            color: HhColors.textColor, fontSize: 24.sp),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10.w),
-                            child: Image.asset(
-                              "assets/images/common/shared.png",
-                              width: 50.w,
-                              height: 50.w,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(30.w,0,20.w,10.w),
-                            child: Image.asset(
-                              "assets/images/common/shared.png",
-                              width: 50.w,
-                              height: 50.w,
-                              fit: BoxFit.fill,
-                            ),
-                          )
-                        ],
-                      ),
+                    SizedBox(
+                      width: 15.w,
                     ),
+                    Image.asset(
+                      "assets/images/common/shared.png",
+                      width: 35.w,
+                      height: 35.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(
+                      width: 30.w,
+                    )
                   ],
                 ),
               ),
-              SizedBox(
-                height: 100.w,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(40.w, 0, 0, 10.w),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("我的空间",style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
-                            SizedBox(
-                              height: 2.w,
-                            ),
-                            Container(
-                              height: 5.w,width: 20.w,
-                              decoration: BoxDecoration(
+            ),
+            ///天气
+            SizedBox(
+              height: 100.w,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(55.w, 0, 0, 10.w),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/images/common/test_video.jpg",
+                            width: 30.w,
+                            height: 30.w,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Text(
+                            "2°多云",
+                            style: TextStyle(
                                 color: HhColors.blackTextColor,
-                                border: Border.all(color: HhColors.blackTextColor),
-                                borderRadius: BorderRadius.all(Radius.circular(2.w)),),
-                            )
-                          ],
-                        ),
+                                fontSize: 24.sp),
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Image.asset(
+                            "assets/images/common/shared.png",
+                            width: 20.w,
+                            height: 20.w,
+                            fit: BoxFit.fill,
+                          )
+                        ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Row(
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10.w),
+                          child: Image.asset(
+                            "assets/images/common/shared.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                          child: Image.asset(
+                            "assets/images/common/shared.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ///我的空间
+            SizedBox(
+              height: 100.w,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(40.w, 0, 0, 10.w),
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            onTap:(){
-                              logic.pageMapStatus.value = true;
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 10.w),
-                              padding: EdgeInsets.fromLTRB(15.w,10.w,15.w,10.w),
-                              decoration: BoxDecoration(
-                                color: HhColors.whiteColor,
-                                borderRadius: BorderRadius.all(Radius.circular(40.w)),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    "assets/images/common/shared.png",
-                                    width: 36.w,
-                                    height: 36.w,
-                                    fit: BoxFit.fill,
-                                  ),
-                                  SizedBox(
-                                    width: 5.h,
-                                  ),
-                                  Text(
-                                    "地图",
-                                    style: TextStyle(
-                                        color: HhColors.mainBlueColor,
-                                        fontSize: 24.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          Text(
+                            "我的空间",
+                            style: TextStyle(
+                                color: HhColors.blackTextColor,
+                                fontSize: 36.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 2.w,
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(30.w,0,20.w,10.w),
-                            child: Image.asset(
-                              "assets/images/common/shared.png",
-                              width: 50.w,
-                              height: 50.w,
-                              fit: BoxFit.fill,
+                            height: 5.w,
+                            width: 20.w,
+                            decoration: BoxDecoration(
+                              color: HhColors.blackTextColor,
+                              border:
+                                  Border.all(color: HhColors.blackTextColor),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2.w)),
                             ),
                           )
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            logic.pageMapStatus.value = true;
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10.w),
+                            padding:
+                                EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                            decoration: BoxDecoration(
+                              color: HhColors.whiteColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.w)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/shared.png",
+                                  width: 36.w,
+                                  height: 36.w,
+                                  fit: BoxFit.fill,
+                                ),
+                                SizedBox(
+                                  width: 5.h,
+                                ),
+                                Text(
+                                  "地图",
+                                  style: TextStyle(
+                                      color: HhColors.mainBlueColor,
+                                      fontSize: 24.sp),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                          child: Image.asset(
+                            "assets/images/common/shared.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        )
+            ),
+            ///GridView
+            Expanded(
+              child: PagedGridView<int, MainGridModel>(
+                  pagingController: logic.pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<MainGridModel>(
+                    itemBuilder: (context, item, index) =>
+                        gridItemView(context, item, index),
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, //横轴三个子widget
+                      childAspectRatio: 1.3 //宽高比为1时，子widget
+                  )),
+            ),
+            buttonView()
+          ],
+        ),
+
       ],
+    );
+  }
+
+  ///我的空间视图-网格列表itemView
+  gridItemView(BuildContext context, MainGridModel item, int index) {
+    return Container(
+      clipBehavior: Clip.hardEdge, //裁剪
+      margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
+      decoration: BoxDecoration(
+          color: HhColors.whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 0.25.sw,
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+            child: Image.asset(
+              "assets/images/common/test_video.jpg",
+              fit: BoxFit.fill,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "${item.name}",
+                  style: TextStyle(
+                      color: HhColors.blackTextColor,
+                      fontSize: 30.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 10.w,),
+                Expanded(
+                  child: Text(
+                    "${item.count}个设备",
+                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                  ),
+                ),
+                Image.asset(
+                  "assets/images/common/shared.png",
+                  width: 16.w,
+                  height: 16.w,
+                  fit: BoxFit.fill,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  ///我的空间视图-添加空间按钮
+  buttonView() {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: 1.sw,
+        height: 90.w,
+        margin: EdgeInsets.fromLTRB(50.w, 20.w, 50.w, 50.w),
+        decoration: BoxDecoration(
+            color: HhColors.mainBlueColor,
+            borderRadius: BorderRadius.all(Radius.circular(50.w))),
+        child: Center(
+          child: Text(
+            "没有我的空间？去添加",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: HhColors.grayEEBackColor, fontSize: 26.sp),
+          ),
+        ),
+      ),
     );
   }
 }
