@@ -5,6 +5,7 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/routes/app_navigator.dart';
@@ -695,54 +696,59 @@ class MainPage extends StatelessWidget {
 
   ///我的空间视图-网格列表itemView
   gridItemView(BuildContext context, MainGridModel item, int index) {
-    return Container(
-      clipBehavior: Clip.hardEdge, //裁剪
-      margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
-      decoration: BoxDecoration(
-          color: HhColors.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(32.w))),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 0.25.sw,
-            decoration: BoxDecoration(
-                color: HhColors.whiteColor,
-                borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
-            child: Image.asset(
-              "assets/images/common/test_video.jpg",
-              fit: BoxFit.fill,
+    return InkWell(
+      onTap: (){
+        Get.to(DeviceListPage());
+      },
+      child: Container(
+        clipBehavior: Clip.hardEdge, //裁剪
+        margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
+        decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(32.w))),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 0.25.sw,
+              decoration: BoxDecoration(
+                  color: HhColors.whiteColor,
+                  borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+              child: Image.asset(
+                "assets/images/common/test_video.jpg",
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  "${item.name}",
-                  style: TextStyle(
-                      color: HhColors.blackTextColor,
-                      fontSize: 30.sp,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(width: 10.w,),
-                Expanded(
-                  child: Text(
-                    "${item.count}个设备",
-                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+            Container(
+              margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "${item.name}",
+                    style: TextStyle(
+                        color: HhColors.blackTextColor,
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.bold),
                   ),
-                ),
-                Image.asset(
-                  "assets/images/common/shared.png",
-                  width: 16.w,
-                  height: 16.w,
-                  fit: BoxFit.fill,
-                )
-              ],
-            ),
-          )
-        ],
+                  SizedBox(width: 10.w,),
+                  Expanded(
+                    child: Text(
+                      "${item.count}个设备",
+                      style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                    ),
+                  ),
+                  Image.asset(
+                    "assets/images/common/shared.png",
+                    width: 16.w,
+                    height: 16.w,
+                    fit: BoxFit.fill,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
