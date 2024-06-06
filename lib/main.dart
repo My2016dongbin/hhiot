@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/res/strings.dart';
 import 'package:iot/routes/app_pages.dart';
 import 'package:iot/utils/CustomNavigatorObserver.dart';

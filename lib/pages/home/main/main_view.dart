@@ -5,9 +5,15 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/home/main/search/search_view.dart';
+import 'package:iot/pages/home/space/space_view.dart';
+import 'package:iot/routes/app_navigator.dart';
+import '../../../routes/app_pages.dart';
+import '../../../utils/CustomRoute.dart';
 import '../../../utils/HhColors.dart';
 import '../../common/common_data.dart';
 import '../../common/model/model_class.dart';
+import '../my/my_view.dart';
 import 'main_controller.dart';
 
 class MainPage extends StatelessWidget {
@@ -17,6 +23,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
@@ -53,6 +60,7 @@ class MainPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          ///搜索框
           Container(
             height: 80.w,
             padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
@@ -95,6 +103,101 @@ class MainPage extends StatelessWidget {
                         TextStyle(color: HhColors.textColor, fontSize: 24.sp),
                   ),
                 )
+              ],
+            ),
+          ),
+          ///列表数据
+          Container(
+            padding: EdgeInsets.all(15.w),
+            decoration: BoxDecoration(
+                color: HhColors.blueBackColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+            margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "WF1000U单目摄像头",
+                    style: TextStyle(
+                        color: HhColors.textBlackColor,
+                        fontSize: 26.sp,fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50.w),
+                    child: Text(
+                      "崂山区崂山水库西侧50米",
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor,
+                          fontSize: 23.sp),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 90.w),
+                    child: Text(
+                      "(120.55,36.40)",
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor,
+                          fontSize: 23.sp),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 0.5.w,
+            width: 1.sw,
+            margin: EdgeInsets.fromLTRB(20.w, 5.w, 20.w, 0),
+            color: HhColors.grayDDTextColor,
+          ),
+          Container(
+            padding: EdgeInsets.all(15.w),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+            margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "WF1000U单目摄像头",
+                    style: TextStyle(
+                        color: HhColors.textBlackColor,
+                        fontSize: 26.sp,fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50.w),
+                    child: Text(
+                      "崂山区崂山水库西侧50米",
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor,
+                          fontSize: 23.sp),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 90.w),
+                    child: Text(
+                      "(120.55,36.40)",
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor,
+                          fontSize: 23.sp),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -179,7 +282,7 @@ class MainPage extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Image.asset(
-                              "assets/images/common/shared.png",
+                              "assets/images/common/ic_jk.png",
                               width: 36.w,
                               height: 36.w,
                               fit: BoxFit.fill,
@@ -279,7 +382,7 @@ class MainPage extends StatelessWidget {
                     logic.videoStatus.value = !logic.videoStatus.value;
                   },
                   child: Container(
-                    width: 0.7.sw,
+                    width: 0.9.sw,
                     height: 0.4.sw,
                     margin: EdgeInsets.fromLTRB(50.w, 0, 50.w, 30.w),
                     clipBehavior: Clip.hardEdge,
@@ -293,11 +396,20 @@ class MainPage extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                           child: Image.asset(
                             "assets/images/common/test_video.jpg",
+                            width: 0.9.sw,
+                            height: 0.4.sw,
+                            fit: BoxFit.fill,
+                          ),
+                        ),/*
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Image.asset(
+                            "assets/images/common/test_video.jpg",
                             width: 0.7.sw,
                             height: 0.4.sw,
                             fit: BoxFit.fill,
                           ),
-                        ),
+                        ),*/
                         Align(
                           alignment: Alignment.topRight,
                           child: Container(
@@ -352,7 +464,9 @@ class MainPage extends StatelessWidget {
             ),
             ///搜索
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(SearchPage());
+              },
               child: Container(
                 height: 80.w,
                 margin: EdgeInsets.fromLTRB(20.w, logic.marginTop, 20.w, 0),
@@ -385,7 +499,7 @@ class MainPage extends StatelessWidget {
                       width: 15.w,
                     ),
                     Image.asset(
-                      "assets/images/common/shared.png",
+                      "assets/images/common/ic_record.png",
                       width: 35.w,
                       height: 35.w,
                       fit: BoxFit.fill,
@@ -425,12 +539,12 @@ class MainPage extends StatelessWidget {
                                 fontSize: 24.sp),
                           ),
                           SizedBox(
-                            width: 5.w,
+                            width: 10.w,
                           ),
                           Image.asset(
-                            "assets/images/common/shared.png",
-                            width: 20.w,
-                            height: 20.w,
+                            "assets/images/common/back_role.png",
+                            width: 10.w,
+                            height: 16.w,
                             fit: BoxFit.fill,
                           )
                         ],
@@ -445,7 +559,7 @@ class MainPage extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(bottom: 10.w),
                           child: Image.asset(
-                            "assets/images/common/shared.png",
+                            "assets/images/common/ic_message.png",
                             width: 50.w,
                             height: 50.w,
                             fit: BoxFit.fill,
@@ -454,7 +568,7 @@ class MainPage extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
                           child: Image.asset(
-                            "assets/images/common/shared.png",
+                            "assets/images/common/ic_add.png",
                             width: 50.w,
                             height: 50.w,
                             fit: BoxFit.fill,
@@ -525,7 +639,7 @@ class MainPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
-                                  "assets/images/common/shared.png",
+                                  "assets/images/common/ic_jk.png",
                                   width: 36.w,
                                   height: 36.w,
                                   fit: BoxFit.fill,
@@ -636,7 +750,6 @@ class MainPage extends StatelessWidget {
   ///我的空间视图-添加空间按钮
   buttonView() {
     return InkWell(
-      onTap: () {},
       child: Container(
         width: 1.sw,
         height: 90.w,
@@ -652,6 +765,9 @@ class MainPage extends StatelessWidget {
           ),
         ),
       ),
+      onTap: () {
+        Get.to(SpacePage());
+      },
     );
   }
 }

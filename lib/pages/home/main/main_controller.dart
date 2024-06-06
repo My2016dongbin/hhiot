@@ -23,9 +23,10 @@ class MainController extends GetxController {
   final Rx<bool> searchStatus = false.obs;
   final Rx<bool> videoStatus = true.obs;
   final Rx<bool> pageMapStatus = false.obs;
-  TextEditingController ?searchController;
+  TextEditingController ?searchController = TextEditingController();
   final PagingController<int, MainGridModel> pagingController = PagingController(firstPageKey: 0);
   static const pageSize = 20;
+  late BuildContext context;
 
   @override
   void onInit() {

@@ -4,6 +4,8 @@ import '../pages/home/home_binding.dart';
 import '../pages/home/home_view.dart';
 import '../pages/home/main/main_binding.dart';
 import '../pages/home/main/main_view.dart';
+import '../pages/home/space/space_binding.dart';
+import '../pages/home/space/space_view.dart';
 
 part 'app_routes.dart';
 
@@ -29,11 +31,6 @@ class AppPages {
       name: AppRoutes.home,
       page: () => HomePage(),
       binding: HomeBinding(),
-    ),
-    _pageBuilder(
-      name: AppRoutes.main,
-      page: () => MainPage(),
-      binding: MainBinding(),
     ),
     // ...OPages.pages, // 组织架构
     // ...WPages.pages, // 工作圈

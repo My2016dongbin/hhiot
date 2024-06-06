@@ -7,5 +7,5 @@ import 'package:get/get.dart';
 class MyController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
-  final title = "我的".obs;
+  final Rx<bool> testStatus = true.obs;
 }

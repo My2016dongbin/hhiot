@@ -3,43 +3,40 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:pinput/pinput.dart';
 
 class DeviceController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
-  final title = "设备".obs;
-  final code = "2222".obs;
-  final defaultPinTheme = PinTheme(
-    width: 56,
-    height: 56,
-    textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-    decoration: BoxDecoration(
-      border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
-      borderRadius: BorderRadius.circular(20),
-    ),
-  );
-
-  PinTheme ?focusedPinTheme;
-
-  PinTheme ?submittedPinTheme;
+  final Rx<int> tabIndex = 0.obs;
+  final Rx<bool> testStatus = true.obs;
+  final PagingController<int, Device> deviceController = PagingController(firstPageKey: 0);
+  static const pageSize = 20;
 
   @override
   void onInit() {
-    focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
-      borderRadius: BorderRadius.circular(8),
-    );
-    submittedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
-      ),
-    );
+    deviceController.addPageRequestListener((pageKey) {
+      fetchPageDevice(pageKey);
+    });
     super.onInit();
   }
 
-  void onCodeComplete(var code){
-    HhLog.i("code ==> $code");
+  void fetchPageDevice(int pageKey) {
+    List<Device> newItems = [
+      Device("F1-HH160双枪机", "红外报警-光感报警", "", "",true,true),
+      Device("F1-HH160双枪机", "红外报警-光感报警", "", "",false,true),
+      Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
+    ];
+    final isLastPage = newItems.length < pageSize;
+    if (isLastPage) {
+      deviceController.appendLastPage(newItems);
+    } else {
+      final nextPageKey = pageKey + newItems.length;
+      deviceController.appendPage(newItems, nextPageKey);
+    }
   }
 }

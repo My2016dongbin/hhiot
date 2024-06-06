@@ -18,6 +18,7 @@ class HhColors {
   static const mainRedColor = Color(0xFFFF5C5C);//主红色字体颜色
   static const transBlue1Color = Color(0xFFAACAFF);//蓝色渐变背景色
   static const transBlue2Color = Color(0xFFD3E8FF);//蓝色渐变背景色
+  static const blueBackColor = Color(0xFFEAF1FF);//蓝色渐变背景色
   static const videoControlBorder1Color = Color(0xFFD3E8FF);//视频控制边框线-外
   static const videoControlBorder2Color = Color(0xFFCDD8ED);//视频控制边框线-内
   static const videoControlInnerColor = Color(0xFFADC6F9);//视频控制图标内线
@@ -33,6 +34,7 @@ class HhColors {
   static const whiteColor = Colors.white;
   static const blackColor = Colors.black;
   static const textBlackColor = Color(0xFF333333);
+  static const textBlackColor2 = Color(0xFF555555);
   static const textColor = Color(0xFF888888);
   static const clearColor = Colors.transparent;
   static const backColorScreen = Color(0xFFf9f9f9); //主题背景颜色
