@@ -33,6 +33,8 @@ class HhColors {
   static const questionColor = Color(0xFF049594); //主题颜色
   static const whiteColor = Colors.white;
   static const blackColor = Colors.black;
+  static const backBlueInColor = Color(0xFFE1E9F7);
+  static const backBlueOutColor = Color(0xFF3477FF);
   static const textBlackColor = Color(0xFF333333);
   static const textBlackColor2 = Color(0xFF555555);
   static const textColor = Color(0xFF888888);

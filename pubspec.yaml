@@ -57,6 +57,9 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   toggle_switch: ^2.3.0
   flutter_styled_toast: ^2.2.1
+  flutter_barcode_scanner: ^2.0.0
+
+
 
   flutter_bmflocation: ^3.3.0
   flutter_baidu_mapapi_map: ^3.7.0

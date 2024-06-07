@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:iot/pages/common/launch/launch_binding.dart';
+import 'package:iot/pages/common/launch/launch_view.dart';
 
 import '../pages/home/home_binding.dart';
 import '../pages/home/home_view.dart';
@@ -27,6 +29,11 @@ class AppPages {
       );
 
   static final routes = <GetPage>[
+    _pageBuilder(
+      name: AppRoutes.launch,
+      page: () => LaunchPage(),
+      binding: LaunchBinding(),
+    ),
     _pageBuilder(
       name: AppRoutes.home,
       page: () => HomePage(),
