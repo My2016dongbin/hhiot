@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
+import 'package:iot/pages/common/share/share_binding.dart';
+import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
@@ -92,7 +95,7 @@ class DeviceListPage extends StatelessWidget {
                       SizedBox(width: 30.w,),
                       InkWell(
                         onTap: (){
-                          Get.to(DeviceAddPage());
+                          Get.to(()=>DeviceAddPage(),binding: DeviceAddBinding());
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -305,13 +308,18 @@ class DeviceListPage extends StatelessWidget {
                   ):const SizedBox(),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Container(
-                      margin: EdgeInsets.only(right: item.shared==true?0:80.w),
-                      child: Image.asset(
-                        item.shared==true?"assets/images/common/shared.png":"assets/images/common/share.png",
-                        width: 50.w,
-                        height: 50.w,
-                        fit: BoxFit.fill,
+                    child: InkWell(
+                      onTap: (){
+                        Get.to(()=>SharePage(),binding: ShareBinding());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(right: item.shared==true?0:80.w),
+                        child: Image.asset(
+                          item.shared==true?"assets/images/common/shared.png":"assets/images/common/share.png",
+                          width: 50.w,
+                          height: 50.w,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),
