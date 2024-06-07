@@ -6,6 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:video_player/video_player.dart';
 
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
@@ -36,6 +37,24 @@ class DeviceDetailPage extends StatelessWidget {
                 width: 1.sw,
                 height: 500.w,
                 fit: BoxFit.fill,
+              ),
+              SizedBox(
+                width: 1.sw,
+                height: 500.w,
+                child: AspectRatio(
+                  aspectRatio: logic.controller.value.aspectRatio,
+                  child: VideoPlayer(logic.controller),
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  logic.controller.play();
+                },
+                child: Container(
+                  width: 1.sw,
+                  height: 500.w,
+                  color: HhColors.blackColor,
+                ),
               ),
               ///title
               InkWell(

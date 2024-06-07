@@ -5,8 +5,13 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/common/share/share_binding.dart';
+import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
+import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
+import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/routes/app_navigator.dart';
 import '../../../routes/app_pages.dart';
@@ -301,13 +306,18 @@ class MainPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
-                      child: Image.asset(
-                        "assets/images/common/shared.png",
-                        width: 50.w,
-                        height: 50.w,
-                        fit: BoxFit.fill,
+                    InkWell(
+                      onTap: (){
+                        Get.to(()=>SharePage(),binding: ShareBinding());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                        child: Image.asset(
+                          "assets/images/common/shared.png",
+                          width: 50.w,
+                          height: 50.w,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     )
                   ],
@@ -393,7 +403,7 @@ class MainPage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(30.w))),
                     child: Stack(
                       children: [
-                        Align(
+                        /*Align(
                           alignment: Alignment.bottomCenter,
                           child: Image.asset(
                             "assets/images/common/test_video.jpg",
@@ -401,16 +411,15 @@ class MainPage extends StatelessWidget {
                             height: 0.4.sw,
                             fit: BoxFit.fill,
                           ),
-                        ),/*
+                        ),*/
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: Image.asset(
-                            "assets/images/common/test_video.jpg",
-                            width: 0.7.sw,
+                          child: Container(
+                            width: 0.9.sw,
                             height: 0.4.sw,
-                            fit: BoxFit.fill,
+                            color: HhColors.blackColor,
                           ),
-                        ),*/
+                        ),
                         Align(
                           alignment: Alignment.topRight,
                           child: Container(
@@ -466,7 +475,7 @@ class MainPage extends StatelessWidget {
             ///搜索
             InkWell(
               onTap: () {
-                Get.to(SearchPage());
+                Get.to(()=>SearchPage(),binding: SearchBinding());
               },
               child: Container(
                 height: 80.w,
@@ -658,13 +667,18 @@ class MainPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
-                          child: Image.asset(
-                            "assets/images/common/shared.png",
-                            width: 50.w,
-                            height: 50.w,
-                            fit: BoxFit.fill,
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=>SharePage(),binding: ShareBinding());
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                            child: Image.asset(
+                              "assets/images/common/shared.png",
+                              width: 50.w,
+                              height: 50.w,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         )
                       ],
@@ -698,7 +712,7 @@ class MainPage extends StatelessWidget {
   gridItemView(BuildContext context, MainGridModel item, int index) {
     return InkWell(
       onTap: (){
-        Get.to(DeviceListPage());
+        Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
       },
       child: Container(
         clipBehavior: Clip.hardEdge, //裁剪
@@ -772,7 +786,7 @@ class MainPage extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Get.to(SpacePage());
+        Get.to(()=>SpacePage(),binding: SpaceBinding());
       },
     );
   }

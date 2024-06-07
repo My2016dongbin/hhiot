@@ -7,15 +7,14 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'package:iot/pages/home/device/manage/device_manage_controller.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/utils/HhColors.dart';
-import 'device_controller.dart';
 
-class DevicePage extends StatelessWidget {
-  final logic = Get.find<DeviceController>();
-  final logicHome = Get.find<HomeController>();
+class DeviceManagePage extends StatelessWidget {
+  final logic = Get.find<DeviceManageController>();
 
-  DevicePage({super.key});
+  DeviceManagePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class DevicePage extends StatelessWidget {
               ///title
               InkWell(
                 onTap: (){
-                  logicHome.index.value = 0;
+                  Get.back();
                 },
                 child: Container(
                   margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
@@ -51,7 +50,7 @@ class DevicePage extends StatelessWidget {
                   margin: EdgeInsets.only(top:90.w),
                   color: HhColors.trans,
                   child: Text(
-                    "智能设备",
+                    "设备管理",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
                         fontSize: 30.sp,fontWeight: FontWeight.bold),

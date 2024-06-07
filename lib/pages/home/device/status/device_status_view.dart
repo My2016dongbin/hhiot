@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
+import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/device/status/device_status_controller.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -189,7 +190,7 @@ class DeviceStatusPage extends StatelessWidget {
                       curve: Curves.elasticOut,
                       reverseCurve: Curves.linear,
                     );
-                    Get.to(DeviceListPage());
+                    Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
                   },
                   child: Container(
                     height: 80.w,

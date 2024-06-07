@@ -58,6 +58,7 @@ dependencies:
   toggle_switch: ^2.3.0
   flutter_styled_toast: ^2.2.1
   flutter_barcode_scanner: ^2.0.0
+  video_player: ^2.8.6
 
 
 

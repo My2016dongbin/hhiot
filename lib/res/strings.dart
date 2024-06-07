@@ -19,6 +19,8 @@ class TranslationService extends Translations {
 class StrRes {
   StrRes._();
 
+  static String get hhTitles => 'hh'.tr;
+
   static String get welcome => 'welcome'.tr;
 
   static String get phoneNumber => 'phoneNumber'.tr;

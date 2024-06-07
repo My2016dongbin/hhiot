@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
+import 'package:iot/pages/home/device/status/device_status_binding.dart';
 import 'package:iot/pages/home/device/status/device_status_view.dart';
+import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -241,7 +243,7 @@ class DeviceAddPage extends StatelessWidget {
               ///新增空间
               InkWell(
                 onTap: (){
-                  Get.to(SpacePage());
+                  Get.to(()=>SpacePage(),binding: SpaceBinding());
                 },
                 child: Container(
                   height: 90.w,
@@ -288,7 +290,7 @@ class DeviceAddPage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: InkWell(
                   onTap: (){
-                    Get.to(DeviceStatusPage());
+                    Get.to(()=>DeviceStatusPage(),binding: DeviceStatusBinding());
                   },
                   child: Container(
                     height: 80.w,
