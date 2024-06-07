@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
+import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/device_view.dart';
 import 'package:iot/pages/home/device/list/device_list_controller.dart';
@@ -238,7 +239,7 @@ class DeviceListPage extends StatelessWidget {
         builderDelegate: PagedChildBuilderDelegate<Device>(
           itemBuilder: (context, item, index) => InkWell(
             onTap: (){
-              Get.to(()=>DeviceDetailPage());
+              Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
             },
             child: Container(
               height: 180.w,

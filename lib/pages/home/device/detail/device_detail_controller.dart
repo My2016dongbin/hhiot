@@ -12,12 +12,31 @@ class DeviceDetailController extends GetxController {
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
   final Rx<int> tabIndex = 0.obs;
-  late BuildContext context;
+  final PagingController<int, Device> deviceController = PagingController(firstPageKey: 0);
+  static const pageSize = 20;
 
   @override
   void onInit() {
-    ///init
+    deviceController.addPageRequestListener((pageKey) {
+      fetchPageDevice(pageKey);
+    });
     super.onInit();
+  }
+
+  void fetchPageDevice(int pageKey) {
+    List<Device> newItems = [
+      Device("检测到画面变化", "08:59:06", "", "",true,true),
+      Device("区域入侵", "19:36:06", "", "",false,true),
+      Device("检测到画面变化", "10:59:06", "", "",false,false),
+      Device("区域入侵", "12:59:06", "", "",false,false),
+    ];
+    final isLastPage = newItems.length < pageSize;
+    if (isLastPage) {
+      deviceController.appendLastPage(newItems);
+    } else {
+      final nextPageKey = pageKey + newItems.length;
+      deviceController.appendPage(newItems, nextPageKey);
+    }
   }
 
 }

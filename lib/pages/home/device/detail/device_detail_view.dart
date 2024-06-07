@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
-import 'package:iot/pages/home/device/list/device_list_view.dart';
-import 'package:iot/pages/home/device/status/device_status_controller.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class DeviceDetailPage extends StatelessWidget {
@@ -15,7 +14,6 @@ class DeviceDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logic.context = context;
     // 在这里设置状态栏字体为深色
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏背景色
@@ -162,24 +160,207 @@ class DeviceDetailPage extends StatelessWidget {
                 ),
               ),
 
-              logic.tabIndex.value==0? Container(
+              Container(
                 margin: EdgeInsets.fromLTRB(0, 600.w, 0, 0),
-                child: Center(child: Text(
-                  "实时视频",
-                  style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                ),),
-              )
-                  :Container(
-                margin: EdgeInsets.fromLTRB(0, 600.w, 0, 0),
-                child: Center(child: Text(
-                  "历史消息",
-                  style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                ),),
+                child: logic.tabIndex.value==0?livePage():historyPage(),
               ),
 
 
               logic.testStatus.value?const SizedBox():const SizedBox(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  livePage() {
+    return Column(
+      children: [
+        Container(
+          width: 0.66.sw,
+          height: 0.66.sw,
+          margin: EdgeInsets.fromLTRB(0, 100.w, 0, 100.w),
+          child: Stack(
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/images/common/video_board.png",
+                  width: 0.66.sw,
+                  height: 0.66.sw,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 40.w, 0, 0),
+                  child: Image.asset(
+                    "assets/images/common/top.png",
+                    width: 60.w,
+                    height: 60.w,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 55.w),
+                  child: Image.asset(
+                    "assets/images/common/bottom.png",
+                    width: 60.w,
+                    height: 60.w,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(45.w, 0, 0, 0),
+                  child: Image.asset(
+                    "assets/images/common/left.png",
+                    width: 60.w,
+                    height: 60.w,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 45.w, 0),
+                  child: Image.asset(
+                    "assets/images/common/right.png",
+                    width: 60.w,
+                    height: 60.w,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                  child: Text(
+                    "切换角度",
+                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                "assets/images/common/ic_video.png",
+                width: 130.w,
+                height: 130.w,
+                fit: BoxFit.fill,
+              ),
+              Image.asset(
+                "assets/images/common/ic_picture.png",
+                width: 130.w,
+                height: 130.w,
+                fit: BoxFit.fill,
+              ),
+              Image.asset(
+                "assets/images/common/ic_yy.png",
+                width: 130.w,
+                height: 130.w,
+                fit: BoxFit.fill,
+              ),
+              Image.asset(
+                "assets/images/common/ic_voice.png",
+                width: 130.w,
+                height: 130.w,
+                fit: BoxFit.fill,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+  historyPage() {
+    return PagedListView<int, Device>(
+      pagingController: logic.deviceController,
+      builderDelegate: PagedChildBuilderDelegate<Device>(
+        itemBuilder: (context, item, index) => InkWell(
+          onTap: (){
+
+          },
+          child: Container(
+            height: 180.w,
+            margin: EdgeInsets.fromLTRB(20.w, 0.w, 20.w, 0),
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+                color: HhColors.trans,
+                borderRadius: BorderRadius.all(Radius.circular(10.w))
+            ),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20.w))
+                    ),
+                    child: Image.asset(
+                      "assets/images/common/test_video.jpg",
+                      width: 240.w,
+                      height: 120.w,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(40.w, 25.w, 0, 50.w),
+                  child: Text(
+                    '${item.desc}',
+                    style: TextStyle(
+                        color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(40.w, 50.w, 0, 0),
+                    child: Text(
+                      '${item.name}',
+                      style: TextStyle(
+                          color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    width: 4.w,
+                    margin: EdgeInsets.fromLTRB(13.w, 0, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.blueBackColor,
+                        borderRadius: BorderRadius.vertical(top:Radius.circular(4.w))),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    width: 10.w,
+                    height: 10.w,
+                    margin: EdgeInsets.fromLTRB(10.w, 40.w, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.mainBlueColor,
+                        borderRadius: BorderRadius.all(Radius.circular(5.w))),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
+import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -159,7 +160,7 @@ class DevicePage extends StatelessWidget {
         builderDelegate: PagedChildBuilderDelegate<Device>(
           itemBuilder: (context, item, index) => InkWell(
             onTap: (){
-              Get.to(()=>DeviceDetailPage());
+              Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
             },
             child: Container(
               height: 180.w,
