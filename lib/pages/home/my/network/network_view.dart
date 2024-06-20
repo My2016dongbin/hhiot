@@ -47,7 +47,8 @@ class NetWorkPage extends StatelessWidget {
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
                 borderRadius: BorderRadius.all(Radius.circular(25.w))),
-            margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+            margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+            padding: EdgeInsets.all(10.w),
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

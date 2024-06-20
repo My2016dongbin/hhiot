@@ -82,7 +82,7 @@ class MainPage extends StatelessWidget {
                 InkWell(
                   onTap: logic.restartSearchClick,
                   child: Image.asset(
-                    "assets/images/common/shared.png",
+                    "assets/images/common/icon_search.png",
                     width: 35.w,
                     height: 35.w,
                     fit: BoxFit.fill,
@@ -313,7 +313,7 @@ class MainPage extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
                         child: Image.asset(
-                          "assets/images/common/shared.png",
+                          "assets/images/common/icon_menu.png",
                           width: 50.w,
                           height: 50.w,
                           fit: BoxFit.fill,
@@ -361,7 +361,7 @@ class MainPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
-                                  "assets/images/common/shared.png",
+                                  "assets/images/common/icon_search.png",
                                   width: 50.w,
                                   height: 50.w,
                                   fit: BoxFit.fill,
@@ -490,7 +490,7 @@ class MainPage extends StatelessWidget {
                       width: 25.w,
                     ),
                     Image.asset(
-                      "assets/images/common/shared.png",
+                      "assets/images/common/icon_search.png",
                       width: 35.w,
                       height: 35.w,
                       fit: BoxFit.fill,
@@ -534,7 +534,7 @@ class MainPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                            "assets/images/common/test_video.jpg",
+                            "assets/images/common/icon_weather.png",
                             width: 30.w,
                             height: 30.w,
                             fit: BoxFit.fill,
@@ -543,7 +543,7 @@ class MainPage extends StatelessWidget {
                             width: 10.w,
                           ),
                           Text(
-                            "2°多云",
+                            "22°多云",
                             style: TextStyle(
                                 color: HhColors.blackTextColor,
                                 fontSize: 24.sp),
@@ -570,18 +570,23 @@ class MainPage extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: 10.w),
                           child: Image.asset(
                             "assets/images/common/ic_message.png",
-                            width: 50.w,
-                            height: 50.w,
+                            width: 45.w,
+                            height: 45.w,
                             fit: BoxFit.fill,
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
-                          child: Image.asset(
-                            "assets/images/common/ic_add.png",
-                            width: 50.w,
-                            height: 50.w,
-                            fit: BoxFit.fill,
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=>SpacePage(),binding: SpaceBinding());
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                            child: Image.asset(
+                              "assets/images/common/ic_add.png",
+                              width: 45.w,
+                              height: 45.w,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         )
                       ],
@@ -649,9 +654,9 @@ class MainPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
-                                  "assets/images/common/ic_jk.png",
-                                  width: 36.w,
-                                  height: 36.w,
+                                  "assets/images/common/icon_map.png",
+                                  width: 30.w,
+                                  height: 30.w,
                                   fit: BoxFit.fill,
                                 ),
                                 SizedBox(
@@ -673,9 +678,14 @@ class MainPage extends StatelessWidget {
                           },
                           child: Container(
                             margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              color: HhColors.trans,
+                              borderRadius: BorderRadius.all(Radius.circular(20.w))
+                            ),
                             child: Image.asset(
-                              "assets/images/common/shared.png",
-                              width: 50.w,
+                              "assets/images/common/icon_menu.png",
+                              width: 55.w,
                               height: 50.w,
                               fit: BoxFit.fill,
                             ),
@@ -753,9 +763,9 @@ class MainPage extends StatelessWidget {
                     ),
                   ),
                   Image.asset(
-                    "assets/images/common/shared.png",
-                    width: 16.w,
-                    height: 16.w,
+                    "assets/images/common/icon_red.png",
+                    width: 30.w,
+                    height: 30.w,
                     fit: BoxFit.fill,
                   )
                 ],

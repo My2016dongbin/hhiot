@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/res/strings.dart';
 import 'package:iot/routes/app_pages.dart';
@@ -120,7 +121,7 @@ class MyAppState extends State<HhApp> {
     //通知类消息点击
     XgFlutterPlugin().addEventHandler(
       xgPushClickAction: (Map<String, dynamic> msg) async {
-        print("HomePage -> xgPushClickAction -> $msg");
+        HhLog.e("HomePage -> xgPushClickAction -> $msg");
         //EventBusUtil.getInstance().fire(PushTouch());
       },
     );
@@ -180,7 +181,7 @@ class MyAppState extends State<HhApp> {
           },
           getPages: AppPages.routes,
           initialBinding: InitBinding(),
-          initialRoute: AppRoutes.home,
+          initialRoute: AppRoutes.launch,
         ));
   }
 }
@@ -189,6 +190,6 @@ class MyAppState extends State<HhApp> {
 class InitBinding extends Bindings {
   @override
   void dependencies() {
-    //Get.put<HomeController>(HomeController());
+    Get.put<HomeController>(HomeController());
   }
 }

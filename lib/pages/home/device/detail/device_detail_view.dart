@@ -106,7 +106,7 @@ class DeviceDetailPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image.asset(
-                                    "assets/images/common/ic_message.png",
+                                    "assets/images/common/icon_live.png",
                                     width: 30.w,
                                     height: 30.w,
                                     fit: BoxFit.fill,
@@ -148,7 +148,7 @@ class DeviceDetailPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image.asset(
-                                    "assets/images/common/ic_message.png",
+                                    "assets/images/common/icon_msg.png",
                                     width: 30.w,
                                     height: 30.w,
                                     fit: BoxFit.fill,

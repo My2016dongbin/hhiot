@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:iot/pages/common/launch/launch_controller.dart';
 import 'package:iot/utils/HhColors.dart';
 
-class LaunchPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   final logic = Get.find<LaunchController>();
 
-  LaunchPage({super.key});
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +20,13 @@ class LaunchPage extends StatelessWidget {
           height: 1.sh,
           width: 1.sw,
           padding: EdgeInsets.zero,
-          child: logic.testStatus.value ? launchView() : const SizedBox(),
+          child: logic.testStatus.value ? loginView() : const SizedBox(),
         ),
       ),
     );
   }
 
-  launchView() {
+  loginView() {
     return Stack(
       children: [
         Image.asset('assets/images/common/icon_launch.png',fit: BoxFit.fill,),

@@ -34,7 +34,8 @@ class DeviceManagePage extends StatelessWidget {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+                  padding: EdgeInsets.all(10.w),
                   color: HhColors.trans,
                   child: Image.asset(
                     "assets/images/common/back.png",

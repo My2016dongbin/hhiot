@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iot/pages/home/device/device_binding.dart';
@@ -62,25 +63,39 @@ class MyPage extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(0, 90.w, 115.w, 0),
-            child: Image.asset(
-              "assets/images/common/shared.png",
-              width: 50.w,
-              height: 50.w,
-              fit: BoxFit.fill,
+          child: InkWell(
+            onTap: () async {
+              String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+                  "#6666ff",
+                  "取消",
+                  true,
+                  ScanMode.DEFAULT);
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 90.w, 115.w, 0),
+              child: Image.asset(
+                "assets/images/common/icon_scanner.png",
+                width: 45.w,
+                height: 45.w,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
         Align(
           alignment: Alignment.topRight,
-          child: Container(
-            margin: EdgeInsets.fromLTRB(0, 90.w, 40.w, 0),
-            child: Image.asset(
-              "assets/images/common/ic_setting.png",
-              width: 50.w,
-              height: 50.w,
-              fit: BoxFit.fill,
+          child: InkWell(
+            onTap: (){
+              Get.to(()=>SettingPage(),binding: SettingBinding());
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 90.w, 40.w, 0),
+              child: Image.asset(
+                "assets/images/common/icon_set.png",
+                width: 45.w,
+                height: 45.w,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),

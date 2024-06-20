@@ -35,7 +35,8 @@ class MessagePage extends StatelessWidget {
                     logicHome.index.value = 0;
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+                    margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+                    padding: EdgeInsets.all(10.w),
                     color: HhColors.whiteColor,
                     child: Image.asset(
                       "assets/images/common/back.png",
@@ -90,14 +91,14 @@ class MessagePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 10.w, 0, 0),
                   child: Image.asset(
-                    "assets/images/common/shared.png",
-                    width: 10.w,
-                    height: 10.w,
+                    "assets/images/common/icon_red.png",
+                    width: 20.w,
+                    height: 20.w,
                     fit: BoxFit.fill,
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                  margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
                   child: Text(
                     '${item.name}',
                     style: TextStyle(
@@ -105,7 +106,7 @@ class MessagePage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(20.w, 50.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
                   child: Text(
                     '${item.content}',
                     style: TextStyle(
@@ -147,14 +148,14 @@ class MessagePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 10.w, 0, 0),
                   child: Image.asset(
-                    "assets/images/common/shared.png",
-                    width: 10.w,
-                    height: 10.w,
+                    "assets/images/common/icon_red.png",
+                    width: 20.w,
+                    height: 20.w,
                     fit: BoxFit.fill,
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                  margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
                   child: Text(
                     '${item.name}',
                     style: TextStyle(
@@ -162,7 +163,7 @@ class MessagePage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(20.w, 50.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
                   child: Text(
                     '${item.content}',
                     style: TextStyle(

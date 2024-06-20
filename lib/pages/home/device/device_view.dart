@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -19,6 +20,12 @@ class DevicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 在这里设置状态栏字体为深色
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // 状态栏背景色
+      statusBarBrightness: Brightness.dark, // 状态栏字体亮度
+      statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
+    ));
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
@@ -35,7 +42,8 @@ class DevicePage extends StatelessWidget {
                   logicHome.index.value = 0;
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+                  padding: EdgeInsets.all(10.w),
                   color: HhColors.trans,
                   child: Image.asset(
                     "assets/images/common/back.png",
@@ -58,6 +66,8 @@ class DevicePage extends StatelessWidget {
                   ),
                 ),
               ),
+              ///列表
+              logic.testStatus.value?deviceList():const SizedBox(),
               ///tab
               Container(
                 margin: EdgeInsets.fromLTRB(50.w, 180.w, 0, 0),
@@ -134,7 +144,7 @@ class DevicePage extends StatelessWidget {
                               height: 4.w,
                               width: 26.w,
                               decoration: BoxDecoration(
-                                color: HhColors.mainBlueColor,
+                                  color: HhColors.mainBlueColor,
                                   borderRadius: BorderRadius.all(Radius.circular(2.w))
                               ),
                             ):const SizedBox()
@@ -145,8 +155,6 @@ class DevicePage extends StatelessWidget {
                   ),
                 ),
               ),
-              ///列表
-              logic.testStatus.value?deviceList():const SizedBox()
             ],
           ),
         ),
@@ -156,9 +164,10 @@ class DevicePage extends StatelessWidget {
 
   deviceList() {
     return Container(
-      margin: EdgeInsets.only(top: 190.w),
+      margin: EdgeInsets.only(top: 260.w),
       child: PagedListView<int, Device>(
         pagingController: logic.deviceController,
+        padding: EdgeInsets.zero,
         builderDelegate: PagedChildBuilderDelegate<Device>(
           itemBuilder: (context, item, index) => InkWell(
             onTap: (){

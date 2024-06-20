@@ -30,6 +30,12 @@ class DeviceController extends GetxController {
       Device("F1-HH160双枪机", "红外报警-光感报警", "", "",false,true),
       Device("智能语音卡口", "", "", "",false,false),
       Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
+      Device("智能语音卡口", "", "", "",false,false),
     ];
     final isLastPage = newItems.length < pageSize;
     if (isLastPage) {

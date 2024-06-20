@@ -48,7 +48,8 @@ class SearchPage extends StatelessWidget {
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+            margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+            padding: EdgeInsets.all(10.w),
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
@@ -85,7 +86,7 @@ class SearchPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/images/common/shared.png",
+                "assets/images/common/icon_search.png",
                 width: 35.w,
                 height: 35.w,
                 fit: BoxFit.fill,

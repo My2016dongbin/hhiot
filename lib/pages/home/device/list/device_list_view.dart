@@ -55,7 +55,8 @@ class DeviceListPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
                       borderRadius: BorderRadius.all(Radius.circular(25.w))),
-                  margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+                  padding: EdgeInsets.all(10.w),
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -79,17 +80,22 @@ class DeviceListPage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        "assets/images/common/shared.png",
-                        width: 50.w,
-                        height: 50.w,
-                        fit: BoxFit.fill,
+                      InkWell(
+                        onTap: (){
+                          Get.to(()=>SharePage(),binding: ShareBinding());
+                        },
+                        child: Image.asset(
+                          "assets/images/common/icon_shared_space.png",
+                          width: 45.w,
+                          height: 45.w,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       SizedBox(width: 30.w,),
                       Image.asset(
-                        "assets/images/common/shared.png",
-                        width: 50.w,
-                        height: 50.w,
+                        "assets/images/common/icon_map_space.png",
+                        width: 45.w,
+                        height: 45.w,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(width: 30.w,),
@@ -103,9 +109,9 @@ class DeviceListPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(25.w))
                           ),
                           child: Image.asset(
-                            "assets/images/common/ic_add.png",
-                            width: 50.w,
-                            height: 50.w,
+                            "assets/images/common/icon_add_space.png",
+                            width: 45.w,
+                            height: 45.w,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -141,7 +147,7 @@ class DeviceListPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                            "assets/images/common/shared.png",
+                            "assets/images/common/icon_wd_space.png",
                             width: 36.w,
                             height: 36.w,
                             fit: BoxFit.fill,
@@ -159,7 +165,7 @@ class DeviceListPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                            "assets/images/common/shared.png",
+                            "assets/images/common/icon_sd_space.png",
                             width: 36.w,
                             height: 36.w,
                             fit: BoxFit.fill,
@@ -177,7 +183,7 @@ class DeviceListPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                            "assets/images/common/shared.png",
+                            "assets/images/common/icon_dq_space.png",
                             width: 36.w,
                             height: 36.w,
                             fit: BoxFit.fill,
@@ -263,7 +269,7 @@ class DeviceListPage extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(5.w))
                       ),
                       child: Image.asset(
-                        "assets/images/common/test_video.jpg",
+                        "assets/images/common/icon_camera_space.png",
                         width: 80.w,
                         height: 80.w,
                         fit: BoxFit.fill,

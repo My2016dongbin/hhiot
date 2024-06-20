@@ -34,7 +34,8 @@ class DeviceAddPage extends StatelessWidget {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+                  padding: EdgeInsets.all(10.w),
                   color: HhColors.trans,
                   child: Image.asset(
                     "assets/images/common/back.png",
@@ -86,7 +87,7 @@ class DeviceAddPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 95.w, 36.w, 0),
                     color: HhColors.trans,
                     child: Image.asset(
-                      "assets/images/common/shared.png",
+                      "assets/images/common/icon_search.png",
                       width: 50.w,
                       height: 50.w,
                       fit: BoxFit.fill,

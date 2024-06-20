@@ -13,6 +13,7 @@ import '../../utils/EventBusUtils.dart';
 
 class HomeController extends GetxController {
   final index = 0.obs;
+  late BuildContext context;
   final unreadMsgCount = 0.obs;
   final unhandledFriendApplicationCount = 0.obs;
   final unhandledGroupApplicationCount = 0.obs;
