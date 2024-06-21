@@ -2,7 +2,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:logger/logger.dart';
 export 'dart:async';
-class HhLog {
+class HhLog {///
   static Logger logger = Logger();
 
   static t(String msg){
