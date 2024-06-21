@@ -674,7 +674,7 @@ class MainPage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: (){
-                            Get.to(()=>SharePage(),binding: ShareBinding());
+                            //Get.to(()=>SharePage(),binding: ShareBinding());
                           },
                           child: Container(
                             margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),

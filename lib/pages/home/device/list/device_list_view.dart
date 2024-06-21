@@ -103,17 +103,11 @@ class DeviceListPage extends StatelessWidget {
                         onTap: (){
                           Get.to(()=>DeviceAddPage(),binding: DeviceAddBinding());
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: HhColors.whiteColor,
-                            borderRadius: BorderRadius.all(Radius.circular(25.w))
-                          ),
-                          child: Image.asset(
-                            "assets/images/common/icon_add_space.png",
-                            width: 45.w,
-                            height: 45.w,
-                            fit: BoxFit.fill,
-                          ),
+                        child: Image.asset(
+                          "assets/images/common/icon_add_space.png",
+                          width: 45.w,
+                          height: 45.w,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ],

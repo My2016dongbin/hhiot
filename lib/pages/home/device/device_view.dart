@@ -192,7 +192,7 @@ class DevicePage extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(5.w))
                       ),
                       child: Image.asset(
-                        "assets/images/common/test_video.jpg",
+                        "assets/images/common/icon_camera_space.png",
                         width: 80.w,
                         height: 80.w,
                         fit: BoxFit.fill,
