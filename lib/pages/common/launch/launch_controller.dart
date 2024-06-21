@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/HhLog.dart';
 
 class LaunchController extends GetxController {

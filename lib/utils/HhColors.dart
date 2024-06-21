@@ -7,6 +7,8 @@ class HhColors {
   static const backTransColor2 = Color(0xFFF0F0FF);//主页背景渐变色
   static const backTransColor3 = Color(0xFFF5F7F7);//主页背景渐变色
   static const transBlueColor = Color(0xFF98BAFE);//麦克风蓝色
+  static const grayAATextColor = Color(0xFFAAAAAA);//深灰字体颜色
+  static const grayBBTextColor = Color(0xFFBBBBBB);//深灰字体颜色
   static const grayCCTextColor = Color(0xFFCCCCCC);//深灰字体颜色
   static const grayDDTextColor = Color(0xFFDDDDDD);//深灰字体颜色
   static const gray9TextColor = Color(0xFF999999);//深灰字体颜色
