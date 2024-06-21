@@ -108,7 +108,7 @@ class CodePage extends StatelessWidget {
                     reverseCurve: Curves.linear,
                   );
                   Future.delayed(const Duration(seconds: 1),(){
-                    Get.off(HomePage(),binding: HomeBinding());
+                    Get.offAll(HomePage(),binding: HomeBinding());
                   });
                 }
               },
