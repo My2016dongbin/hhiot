@@ -106,7 +106,7 @@ class DeviceDetailPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image.asset(
-                                    "assets/images/common/icon_live.png",
+                                    logic.tabIndex.value==0?"assets/images/common/icon_live.png":"assets/images/common/icon_live_.png",
                                     width: 30.w,
                                     height: 30.w,
                                     fit: BoxFit.fill,
@@ -115,7 +115,7 @@ class DeviceDetailPage extends StatelessWidget {
                                   Text(
                                     '实时视频',
                                     style: TextStyle(
-                                        color: logic.tabIndex.value==0?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==0?32.sp:26.sp,fontWeight: FontWeight.bold),
+                                        color: logic.tabIndex.value==0?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==0?30.sp:26.sp,fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -148,7 +148,7 @@ class DeviceDetailPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image.asset(
-                                    "assets/images/common/icon_msg.png",
+                                    logic.tabIndex.value==1?"assets/images/common/icon_msg_.png":"assets/images/common/icon_msg.png",
                                     width: 30.w,
                                     height: 30.w,
                                     fit: BoxFit.fill,
@@ -157,7 +157,7 @@ class DeviceDetailPage extends StatelessWidget {
                                   Text(
                                     '历史消息',
                                     style: TextStyle(
-                                        color: logic.tabIndex.value==1?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==1?32.sp:26.sp,fontWeight: FontWeight.bold),
+                                        color: logic.tabIndex.value==1?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==1?30.sp:26.sp,fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
