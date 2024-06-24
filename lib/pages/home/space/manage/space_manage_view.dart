@@ -108,7 +108,7 @@ class SpaceManagePage extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 3.w, 6.w, 0),
                             child: Image.asset(
-                              "assets/images/common/ic_add.png",
+                              "assets/images/common/icon_add_space.png",
                               width: 30.w,
                               height: 30.w,
                               fit: BoxFit.fill,
@@ -187,15 +187,28 @@ class SpaceManagePage extends StatelessWidget {
                   ),
                   SizedBox(width: 10.w,),
                   Expanded(
-                    child: Text(
-                      "${item.count}个设备",
-                      style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                          decoration: BoxDecoration(
+                              color: HhColors.grayEFBackColor,
+                              borderRadius: BorderRadius.all(Radius.circular(8.w))
+                          ),
+                          child: Text(
+                            "${item.count}个设备",
+                            style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Image.asset(
-                    "assets/images/common/shared.png",
-                    width: 16.w,
-                    height: 16.w,
+                    "assets/images/common/icon_red.png",
+                    width: 30.w,
+                    height: 30.w,
                     fit: BoxFit.fill,
                   )
                 ],

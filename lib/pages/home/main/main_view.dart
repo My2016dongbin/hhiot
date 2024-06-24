@@ -308,7 +308,7 @@ class MainPage extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: (){
-                        Get.to(()=>SharePage(),binding: ShareBinding());
+                        //Get.to(()=>SharePage(),binding: ShareBinding());
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
@@ -403,15 +403,6 @@ class MainPage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(30.w))),
                     child: Stack(
                       children: [
-                        /*Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Image.asset(
-                            "assets/images/common/test_video.jpg",
-                            width: 0.9.sw,
-                            height: 0.4.sw,
-                            fit: BoxFit.fill,
-                          ),
-                        ),*/
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
@@ -567,12 +558,30 @@ class MainPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
+                          width: 55.w,
+                          height: 50.w,
                           margin: EdgeInsets.only(bottom: 10.w),
-                          child: Image.asset(
-                            "assets/images/common/ic_message.png",
-                            width: 45.w,
-                            height: 45.w,
-                            fit: BoxFit.fill,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Image.asset(
+                                  "assets/images/common/icon_message_main.png",
+                                  width: 45.w,
+                                  height: 45.w,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Image.asset(
+                                  "assets/images/common/icon_red1.png",
+                                  width: 25.w,
+                                  height: 25.w,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         InkWell(
@@ -644,7 +653,7 @@ class MainPage extends StatelessWidget {
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10.w),
                             padding:
-                                EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                                EdgeInsets.fromLTRB(16.w, 6.w, 16.w, 6.w),
                             decoration: BoxDecoration(
                               color: HhColors.whiteColor,
                               borderRadius:
@@ -660,7 +669,7 @@ class MainPage extends StatelessWidget {
                                   fit: BoxFit.fill,
                                 ),
                                 SizedBox(
-                                  width: 5.h,
+                                  width: 3.h,
                                 ),
                                 Text(
                                   "地图",
@@ -734,7 +743,8 @@ class MainPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 0.25.sw,
+              height: 0.23.sw,
+              width: 0.5.sw,
               decoration: BoxDecoration(
                   color: HhColors.whiteColor,
                   borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
@@ -744,22 +754,34 @@ class MainPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
+              margin: EdgeInsets.fromLTRB(20.w, 16.w, 10.w, 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     "${item.name}",
                     style: TextStyle(
-                        color: HhColors.blackTextColor,
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.bold),
+                        color: HhColors.blackColor,
+                        fontSize: 30.sp,),
                   ),
                   SizedBox(width: 10.w,),
                   Expanded(
-                    child: Text(
-                      "${item.count}个设备",
-                      style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                          decoration: BoxDecoration(
+                            color: HhColors.grayEFBackColor,
+                            borderRadius: BorderRadius.all(Radius.circular(8.w))
+                          ),
+                          child: Text(
+                            "${item.count}个设备",
+                            style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Image.asset(
