@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -87,8 +88,10 @@ class HelpPage extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                InkWell(
-                                  onTap: (){
+                                BouncingWidget(
+                                  duration: const Duration(milliseconds: 100),
+                                  scaleFactor: 1.2,
+                                  onPressed: (){
                                     logic.tabIndex.value = 0;
                                   },
                                   child: Text(
@@ -113,8 +116,10 @@ class HelpPage extends StatelessWidget {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  InkWell(
-                                    onTap: (){
+                                  BouncingWidget(
+                                    duration: const Duration(milliseconds: 100),
+                                    scaleFactor: 1.2,
+                                    onPressed: (){
                                       logic.tabIndex.value = 1;
                                     },
                                     child: Text(
@@ -140,8 +145,10 @@ class HelpPage extends StatelessWidget {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  InkWell(
-                                    onTap: (){
+                                  BouncingWidget(
+                                    duration: const Duration(milliseconds: 100),
+                                    scaleFactor: 1.2,
+                                    onPressed: (){
                                       logic.tabIndex.value = 2;
                                     },
                                     child: Text(

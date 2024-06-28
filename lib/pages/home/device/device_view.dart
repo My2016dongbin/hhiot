@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,8 +38,10 @@ class DevicePage extends StatelessWidget {
           child: Stack(
             children: [
               ///title
-              InkWell(
-                onTap: (){
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
                   logicHome.index.value = 0;
                 },
                 child: Container(
@@ -76,8 +79,10 @@ class DevicePage extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          InkWell(
-                            onTap: (){
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: (){
                               logic.tabIndex.value = 0;
                             },
                             child: Text(
@@ -102,8 +107,10 @@ class DevicePage extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            InkWell(
-                              onTap: (){
+                            BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: (){
                                 logic.tabIndex.value = 1;
                               },
                               child: Text(
@@ -129,8 +136,10 @@ class DevicePage extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            InkWell(
-                              onTap: (){
+                            BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: (){
                                 logic.tabIndex.value = 2;
                               },
                               child: Text(
@@ -169,10 +178,11 @@ class DevicePage extends StatelessWidget {
         pagingController: logic.deviceController,
         padding: EdgeInsets.zero,
         builderDelegate: PagedChildBuilderDelegate<Device>(
-          itemBuilder: (context, item, index) => InkWell(
-            onTap: (){
-              Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
-            },
+          itemBuilder: (context, item, index) =>
+              InkWell(
+                onTap: (){
+                  Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
+                },
             child: Container(
               height: 180.w,
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
@@ -237,8 +247,11 @@ class DevicePage extends StatelessWidget {
                   ):const SizedBox(),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: (){
+                    child:
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
                         Get.to(()=>SharePage(),binding: ShareBinding());
                       },
                       child: Container(

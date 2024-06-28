@@ -8,4 +8,5 @@ class MyController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
   final Rx<bool> testStatus = true.obs;
+  late BuildContext context;
 }

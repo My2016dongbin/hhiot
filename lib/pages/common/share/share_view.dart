@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -185,8 +186,11 @@ class SharePage extends StatelessWidget {
         ///分享完成按钮
         Align(
           alignment: Alignment.bottomCenter,
-          child: InkWell(
-            onTap: (){
+          child:
+          BouncingWidget(
+            duration: const Duration(milliseconds: 100),
+            scaleFactor: 1.2,
+            onPressed: (){
               Get.back();
             },
             child: Container(

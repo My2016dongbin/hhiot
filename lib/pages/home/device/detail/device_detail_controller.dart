@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:draggable_widget/draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class DeviceDetailController extends GetxController {
   final PagingController<int, Device> deviceController = PagingController(firstPageKey: 0);
   static const pageSize = 20;
   late VideoPlayerController controller;
+  late DragController dragController;
 
   @override
   void onInit() {
@@ -27,6 +29,8 @@ class DeviceDetailController extends GetxController {
       ..initialize().then((_) {
 
       });
+    dragController = DragController();
+
     super.onInit();
   }
 

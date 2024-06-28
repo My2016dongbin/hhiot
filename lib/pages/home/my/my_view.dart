@@ -1,11 +1,8 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iot/pages/home/device/device_binding.dart';
-import 'package:iot/pages/home/device/device_view.dart';
-import 'package:iot/pages/home/device/list/device_list_binding.dart';
-import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/device/manage/device_manage_binding.dart';
 import 'package:iot/pages/home/device/manage/device_manage_view.dart';
 import 'package:iot/pages/home/my/help/help_binding.dart';
@@ -18,17 +15,19 @@ import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
 import '../../../utils/HhColors.dart';
 import 'my_controller.dart';
+
 class MyPage extends StatelessWidget {
   final logic = Get.find<MyController>();
-  MyPage({super.key});
 
+  MyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
-            () => Container(
+        () => Container(
           height: 1.sh,
           width: 1.sw,
           padding: EdgeInsets.zero,
@@ -50,6 +49,7 @@ class MyPage extends StatelessWidget {
                 colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
           ),
         ),
+
         ///title
         Container(
           margin: EdgeInsets.fromLTRB(30.w, 90.w, 0, 0),
@@ -63,13 +63,12 @@ class MyPage extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: () async {
+          child: BouncingWidget(
+            duration: const Duration(milliseconds: 100),
+            scaleFactor: 1.2,
+            onPressed: () async {
               String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                  "#6666ff",
-                  "取消",
-                  true,
-                  ScanMode.DEFAULT);
+                  "#6666ff", "取消", true, ScanMode.DEFAULT);
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 90.w, 115.w, 0),
@@ -84,9 +83,11 @@ class MyPage extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: (){
-              Get.to(()=>SettingPage(),binding: SettingBinding());
+          child: BouncingWidget(
+            duration: const Duration(milliseconds: 100),
+            scaleFactor: 1.2,
+            onPressed: () {
+              Get.to(() => SettingPage(), binding: SettingBinding());
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 90.w, 40.w, 0),
@@ -99,18 +100,20 @@ class MyPage extends StatelessWidget {
             ),
           ),
         ),
+
         ///头像等信息
-        InkWell(
-          onTap: (){
-            Get.to(()=>SettingPage(),binding: SettingBinding());
+        BouncingWidget(
+          duration: const Duration(milliseconds: 100),
+          scaleFactor: 1.2,
+          onPressed: () {
+            Get.to(() => SettingPage(), binding: SettingBinding());
           },
           child: Container(
             clipBehavior: Clip.hardEdge,
             margin: EdgeInsets.fromLTRB(36.w, 190.w, 0.w, 0),
             decoration: BoxDecoration(
-              color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(50.w))
-            ),
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(50.w))),
             child: Image.asset(
               "assets/images/common/user.png",
               width: 100.w,
@@ -120,8 +123,8 @@ class MyPage extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: (){
-            Get.to(()=>SettingPage(),binding: SettingBinding());
+          onTap: () {
+            Get.to(() => SettingPage(), binding: SettingBinding());
           },
           child: Container(
             margin: EdgeInsets.fromLTRB(150.w, 200.w, 0, 0),
@@ -129,40 +132,43 @@ class MyPage extends StatelessWidget {
               "HaoHai_430695",
               style: TextStyle(
                   color: HhColors.blackTextColor,
-                  fontSize: 30.sp,fontWeight: FontWeight.bold),
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
         InkWell(
-          onTap: (){
-            Get.to(()=>SettingPage(),binding: SettingBinding());
+          onTap: () {
+            Get.to(() => SettingPage(), binding: SettingBinding());
           },
           child: Container(
             margin: EdgeInsets.fromLTRB(150.w, 245.w, 0, 0),
             child: Text(
               "188****8888",
-              style: TextStyle(
-                  color: HhColors.gray6TextColor,
-                  fontSize: 23.sp),
+              style: TextStyle(color: HhColors.gray6TextColor, fontSize: 23.sp),
             ),
           ),
         ),
+
         ///设备&&空间
         Container(
           margin: EdgeInsets.fromLTRB(20.w, 330.w, 20.w, 0),
           child: Row(
             children: [
-              Expanded(child: InkWell(
-                onTap: (){
-                  Get.to(()=>DeviceManagePage(),binding: DeviceManageBinding());
+              Expanded(
+                  child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.to(() => DeviceManagePage(),
+                      binding: DeviceManageBinding());
                 },
                 child: Container(
                   height: 160.w,
                   margin: EdgeInsets.only(right: 10.w),
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(14.w))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(14.w))),
                   child: Stack(
                     children: [
                       Align(
@@ -172,8 +178,8 @@ class MyPage extends StatelessWidget {
                           margin: EdgeInsets.fromLTRB(30.w, 0.w, 0.w, 0.w),
                           decoration: BoxDecoration(
                               color: HhColors.whiteColor,
-                              borderRadius: BorderRadius.all(Radius.circular(50.w))
-                          ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.w))),
                           child: Image.asset(
                             "assets/images/common/ic_my_left.png",
                             width: 75.w,
@@ -190,7 +196,8 @@ class MyPage extends StatelessWidget {
                             "12",
                             style: TextStyle(
                                 color: HhColors.blackColor,
-                                fontSize: 40.sp,fontWeight: FontWeight.bold),
+                                fontSize: 40.sp,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -210,17 +217,20 @@ class MyPage extends StatelessWidget {
                   ),
                 ),
               )),
-              Expanded(child: InkWell(
-                onTap: (){
-                  Get.to(()=>SpaceManagePage(),binding: SpaceManageBinding());
+              Expanded(
+                  child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.to(() => SpaceManagePage(),
+                      binding: SpaceManageBinding());
                 },
                 child: Container(
                   height: 160.w,
                   margin: EdgeInsets.only(left: 10.w),
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(14.w))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(14.w))),
                   child: Stack(
                     children: [
                       Align(
@@ -230,8 +240,8 @@ class MyPage extends StatelessWidget {
                           margin: EdgeInsets.fromLTRB(30.w, 0.w, 0.w, 0.w),
                           decoration: BoxDecoration(
                               color: HhColors.whiteColor,
-                              borderRadius: BorderRadius.all(Radius.circular(50.w))
-                          ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.w))),
                           child: Image.asset(
                             "assets/images/common/ic_my_right.png",
                             width: 75.w,
@@ -248,7 +258,8 @@ class MyPage extends StatelessWidget {
                             "6",
                             style: TextStyle(
                                 color: HhColors.blackColor,
-                                fontSize: 40.sp,fontWeight: FontWeight.bold),
+                                fontSize: 40.sp,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -271,31 +282,31 @@ class MyPage extends StatelessWidget {
             ],
           ),
         ),
+
         ///菜单
         Container(
           margin: EdgeInsets.fromLTRB(20.w, 510.w, 20.w, 0),
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(14.w))
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(14.w))),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ///空间网络
               InkWell(
-                onTap: (){
-                  Get.to(()=>NetWorkPage(),binding: NetWorkBinding());
+                onTap: () {
+                  Get.to(() => NetWorkPage(), binding: NetWorkBinding());
                 },
                 child: Container(
-                  height:110.w,
+                  height: 110.w,
                   color: HhColors.trans,
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin:EdgeInsets.only(left: 20.w),
+                          margin: EdgeInsets.only(left: 20.w),
                           child: Image.asset(
                             "assets/images/common/ic_jk.png",
                             width: 36.w,
@@ -307,19 +318,20 @@ class MyPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin:EdgeInsets.only(left: 70.w),
+                          margin: EdgeInsets.only(left: 70.w),
                           child: Text(
                             "空间网络",
                             style: TextStyle(
                                 color: HhColors.textBlackColor,
-                                fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
-                          margin:EdgeInsets.only(right: 65.w),
+                          margin: EdgeInsets.only(right: 65.w),
                           child: Text(
                             "优秀",
                             style: TextStyle(
@@ -331,7 +343,7 @@ class MyPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
-                          margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                          margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
                           child: Image.asset(
                             "assets/images/common/back_role.png",
                             width: 12.w,
@@ -341,32 +353,33 @@ class MyPage extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: Alignment.bottomCenter,
-                        child:Container(
-                          height: 0.5.w,
-                          width: 1.sw,
-                          margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                          color: HhColors.grayDDTextColor,
-                        )
-                      )
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 0.5.w,
+                            width: 1.sw,
+                            margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                            color: HhColors.grayDDTextColor,
+                          ))
                     ],
                   ),
                 ),
               ),
+
               ///设置
+
               InkWell(
-                onTap: (){
-                  Get.to(()=>SettingPage(),binding: SettingBinding());
+                onTap: () {
+                  Get.to(() => SettingPage(), binding: SettingBinding());
                 },
                 child: Container(
-                  height:110.w,
+                  height: 110.w,
                   color: HhColors.trans,
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin:EdgeInsets.only(left: 20.w),
+                          margin: EdgeInsets.only(left: 20.w),
                           child: Image.asset(
                             "assets/images/common/ic_setting.png",
                             width: 36.w,
@@ -378,19 +391,20 @@ class MyPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin:EdgeInsets.only(left: 70.w),
+                          margin: EdgeInsets.only(left: 70.w),
                           child: Text(
                             "设置",
                             style: TextStyle(
                                 color: HhColors.textBlackColor,
-                                fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
-                          margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                          margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
                           child: Image.asset(
                             "assets/images/common/back_role.png",
                             width: 12.w,
@@ -401,31 +415,31 @@ class MyPage extends StatelessWidget {
                       ),
                       Align(
                           alignment: Alignment.bottomCenter,
-                          child:Container(
+                          child: Container(
                             height: 0.5.w,
                             width: 1.sw,
                             margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
                             color: HhColors.grayDDTextColor,
-                          )
-                      )
+                          ))
                     ],
                   ),
                 ),
               ),
+
               ///帮助与反馈
               InkWell(
-                onTap: (){
-                  Get.to(()=>HelpPage(),binding: HelpBinding());
+                onTap: () {
+                  Get.to(() => HelpPage(), binding: HelpBinding());
                 },
                 child: Container(
-                  height:110.w,
+                  height: 110.w,
                   color: HhColors.trans,
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin:EdgeInsets.only(left: 20.w),
+                          margin: EdgeInsets.only(left: 20.w),
                           child: Image.asset(
                             "assets/images/common/ic_help.png",
                             width: 36.w,
@@ -437,19 +451,20 @@ class MyPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          margin:EdgeInsets.only(left: 70.w),
+                          margin: EdgeInsets.only(left: 70.w),
                           child: Text(
                             "帮助与反馈",
                             style: TextStyle(
                                 color: HhColors.textBlackColor,
-                                fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                fontSize: 28.sp,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
-                          margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                          margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
                           child: Image.asset(
                             "assets/images/common/back_role.png",
                             width: 12.w,

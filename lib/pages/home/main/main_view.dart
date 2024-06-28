@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
@@ -79,8 +80,10 @@ class MainPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: logic.restartSearchClick,
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: logic.restartSearchClick,
                   child: Image.asset(
                     "assets/images/common/icon_search.png",
                     width: 35.w,
@@ -273,8 +276,10 @@ class MainPage extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    InkWell(
-                      onTap: () {
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
                         logic.pageMapStatus.value = false;
                       },
                       child: Container(
@@ -334,8 +339,10 @@ class MainPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        InkWell(
-                          onTap: logic.onSearchClick,
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: logic.onSearchClick,
                           child: Container(
                             decoration: BoxDecoration(
                               color: HhColors.whiteColor,
@@ -388,8 +395,11 @@ class MainPage extends StatelessWidget {
         logic.videoStatus.value
             ? Align(
                 alignment: Alignment.bottomCenter,
-                child: InkWell(
-                  onTap: () {
+                child:
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
                     logic.videoStatus.value = !logic.videoStatus.value;
                   },
                   child: Container(
@@ -464,8 +474,10 @@ class MainPage extends StatelessWidget {
               ),
             ),
             ///搜索
-            InkWell(
-              onTap: () {
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 1.2,
+              onPressed: () {
                 Get.to(()=>SearchPage(),binding: SearchBinding());
               },
               child: Container(
@@ -584,8 +596,10 @@ class MainPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        InkWell(
-                          onTap: (){
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: (){
                             Get.to(()=>SpacePage(),binding: SpaceBinding());
                           },
                           child: Container(
@@ -646,8 +660,10 @@ class MainPage extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        InkWell(
-                          onTap: () {
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
                             logic.pageMapStatus.value = true;
                           },
                           child: Container(
@@ -681,8 +697,10 @@ class MainPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: (){
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: (){
                             //Get.to(()=>SharePage(),binding: ShareBinding());
                           },
                           child: Container(
@@ -801,7 +819,10 @@ class MainPage extends StatelessWidget {
 
   ///我的空间视图-添加空间按钮
   buttonView() {
-    return InkWell(
+    return
+      BouncingWidget(
+        duration: const Duration(milliseconds: 100),
+        scaleFactor: 1.2,
       child: Container(
         width: 1.sw,
         height: 90.w,
@@ -817,7 +838,7 @@ class MainPage extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () {
+      onPressed: () {
         Get.to(()=>SpacePage(),binding: SpaceBinding());
       },
     );

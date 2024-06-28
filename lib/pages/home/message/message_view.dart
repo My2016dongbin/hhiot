@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -30,8 +31,10 @@ class MessagePage extends StatelessWidget {
                   width: 1.sw,
                   color: HhColors.whiteColor,
                 ),
-                InkWell(
-                  onTap: (){
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
                     logicHome.index.value = 0;
                   },
                   child: Container(

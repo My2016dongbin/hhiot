@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -90,8 +91,11 @@ class SpaceManagePage extends StatelessWidget {
               ///新增空间按钮
               Align(
                 alignment: Alignment.bottomCenter,
-                child: InkWell(
-                  onTap: (){
+                child:
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
                     Get.to(()=>SpacePage(),binding: SpaceBinding());
                   },
                   child: Container(
@@ -150,8 +154,11 @@ class SpaceManagePage extends StatelessWidget {
   }
 
   gridItemView(BuildContext context, MainGridModel item, int index) {
-    return InkWell(
-      onTap: (){
+    return
+      BouncingWidget(
+        duration: const Duration(milliseconds: 100),
+        scaleFactor: 1.2,
+        onPressed: (){
         Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
       },
       child: Container(

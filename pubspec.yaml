@@ -60,7 +60,8 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   video_player: ^2.8.6
 
-
+  bouncing_widget: ^2.0.0
+  draggable_widget: ^2.0.0
 
   flutter_bmflocation: ^3.3.0
   flutter_baidu_mapapi_map: ^3.7.0

@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,8 +62,11 @@ class DeviceAddPage extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: () async {
+                child:
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () async {
                     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
                         "#6666ff",
                         "取消",
@@ -87,7 +91,7 @@ class DeviceAddPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 95.w, 36.w, 0),
                     color: HhColors.trans,
                     child: Image.asset(
-                      "assets/images/common/icon_search.png",
+                      "assets/images/common/icon_scan_add.png",
                       width: 50.w,
                       height: 50.w,
                       fit: BoxFit.fill,
@@ -145,8 +149,10 @@ class DeviceAddPage extends StatelessWidget {
                         TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                       ),
                     ),
-                    InkWell(
-                      onTap: (){
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
                         logic.snController!.text = '';
                       },
                       child: Image.asset(
@@ -212,8 +218,10 @@ class DeviceAddPage extends StatelessWidget {
                         TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                       ),
                     ),
-                    InkWell(
-                      onTap: (){
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
                         logic.nameController!.text = '';
                       },
                       child: Image.asset(
@@ -242,8 +250,10 @@ class DeviceAddPage extends StatelessWidget {
               ),
               logic.testStatus.value ? deviceList() : const SizedBox(),
               ///新增空间
-              InkWell(
-                onTap: (){
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
                   Get.to(()=>SpacePage(),binding: SpaceBinding());
                 },
                 child: Container(
@@ -289,8 +299,11 @@ class DeviceAddPage extends StatelessWidget {
               ///确定添加按钮
               Align(
                 alignment: Alignment.bottomCenter,
-                child: InkWell(
-                  onTap: (){
+                child:
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
                     Get.to(()=>DeviceStatusPage(),binding: DeviceStatusBinding());
                   },
                   child: Container(
@@ -328,11 +341,14 @@ class DeviceAddPage extends StatelessWidget {
             childAspectRatio: 2 //宽高比为1时，子widget
             ),
         builderDelegate: PagedChildBuilderDelegate<Device>(
-          itemBuilder: (context, item, index) => InkWell(
-            onTap: (){
-              logic.index.value = -1;
-              logic.index.value = index;
-            },
+          itemBuilder: (context, item, index) =>
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+                  logic.index.value = -1;
+                  logic.index.value = index;
+                },
             child: Container(
               height: 90.w,
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),

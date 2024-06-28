@@ -1,3 +1,5 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:draggable_widget/draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -95,8 +97,10 @@ class DeviceDetailPage extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            onTap: (){
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 300),
+                            scaleFactor: 1.2,
+                            onPressed: (){
                               logic.tabIndex.value = 0;
                             },
                             child: Container(
@@ -105,11 +109,14 @@ class DeviceDetailPage extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Image.asset(
-                                    logic.tabIndex.value==0?"assets/images/common/icon_live.png":"assets/images/common/icon_live_.png",
-                                    width: 30.w,
-                                    height: 30.w,
-                                    fit: BoxFit.fill,
+                                  Container(
+                                    margin: EdgeInsets.only(top: 5.w),
+                                    child: Image.asset(
+                                      logic.tabIndex.value==0?"assets/images/common/icon_live.png":"assets/images/common/icon_live_.png",
+                                      width: 30.w,
+                                      height: 30.w,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                   SizedBox(width: 6.w,),
                                   Text(
@@ -137,8 +144,10 @@ class DeviceDetailPage extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            onTap: (){
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 300),
+                            scaleFactor: 1.2,
+                            onPressed: (){
                               logic.tabIndex.value = 1;
                             },
                             child: Container(
@@ -147,11 +156,14 @@ class DeviceDetailPage extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Image.asset(
-                                    logic.tabIndex.value==1?"assets/images/common/icon_msg_.png":"assets/images/common/icon_msg.png",
-                                    width: 30.w,
-                                    height: 30.w,
-                                    fit: BoxFit.fill,
+                                  Container(
+                                    margin: EdgeInsets.only(top: 3.w),
+                                    child: Image.asset(
+                                      logic.tabIndex.value==1?"assets/images/common/icon_msg_.png":"assets/images/common/icon_msg.png",
+                                      width: 30.w,
+                                      height: 30.w,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                   SizedBox(width: 6.w,),
                                   Text(
@@ -197,74 +209,99 @@ class DeviceDetailPage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 0.66.sw,
-          height: 0.66.sw,
-          margin: EdgeInsets.fromLTRB(0, 100.w, 0, 100.w),
+          width: 1.sw,
+          height: 1.sw,
           child: Stack(
             children: [
-              Center(
-                child: Image.asset(
-                  "assets/images/common/video_board.png",
-                  width: 0.66.sw,
-                  height: 0.66.sw,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 40.w, 0, 0),
-                  child: Image.asset(
-                    "assets/images/common/top.png",
-                    width: 60.w,
-                    height: 60.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 55.w),
-                  child: Image.asset(
-                    "assets/images/common/bottom.png",
-                    width: 60.w,
-                    height: 60.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(45.w, 0, 0, 0),
-                  child: Image.asset(
-                    "assets/images/common/left.png",
-                    width: 60.w,
-                    height: 60.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 45.w, 0),
-                  child: Image.asset(
-                    "assets/images/common/right.png",
-                    width: 60.w,
-                    height: 60.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
               Align(
                 alignment: Alignment.center,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                  child: Text(
-                    "切换角度",
-                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                child: DraggableWidget(
+                  dragController: logic.dragController,
+                  shadowBorderRadius: 0.33.sw,
+                  initialPosition: AnchoringPosition.center,
+                  intialVisibility: true,
+                  horizontalSpace: 20,
+                  verticalSpace: 20,
+                  dragAnimationScale: 1.1,
+                  normalShadow: const BoxShadow(
+                         color: Colors.white,
+                        offset: Offset(0, 10),
+                        blurRadius: 10,
+                  ),
+                  child: Container(
+                    width: 0.66.sw,
+                    height: 0.66.sw,
+                    // margin: EdgeInsets.fromLTRB(0, 100.w, 0, 100.w),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Image.asset(
+                            "assets/images/common/video_board.png",
+                            width: 0.66.sw,
+                            height: 0.66.sw,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 40.w, 0, 0),
+                            child: Image.asset(
+                              "assets/images/common/top.png",
+                              width: 60.w,
+                              height: 60.w,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 55.w),
+                            child: Image.asset(
+                              "assets/images/common/bottom.png",
+                              width: 60.w,
+                              height: 60.w,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(45.w, 0, 0, 0),
+                            child: Image.asset(
+                              "assets/images/common/left.png",
+                              width: 60.w,
+                              height: 60.w,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 45.w, 0),
+                            child: Image.asset(
+                              "assets/images/common/right.png",
+                              width: 60.w,
+                              height: 60.w,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                            child: Text(
+                              "切换角度",
+                              style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -275,29 +312,57 @@ class DeviceDetailPage extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                "assets/images/common/ic_video.png",
-                width: 130.w,
-                height: 130.w,
-                fit: BoxFit.fill,
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+
+                },
+                child: Image.asset(
+                  "assets/images/common/ic_video.png",
+                  width: 130.w,
+                  height: 130.w,
+                  fit: BoxFit.fill,
+                ),
               ),
-              Image.asset(
-                "assets/images/common/ic_picture.png",
-                width: 130.w,
-                height: 130.w,
-                fit: BoxFit.fill,
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+
+                },
+                child: Image.asset(
+                  "assets/images/common/ic_picture.png",
+                  width: 130.w,
+                  height: 130.w,
+                  fit: BoxFit.fill,
+                ),
               ),
-              Image.asset(
-                "assets/images/common/ic_yy.png",
-                width: 130.w,
-                height: 130.w,
-                fit: BoxFit.fill,
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+
+                },
+                child: Image.asset(
+                  "assets/images/common/ic_yy.png",
+                  width: 130.w,
+                  height: 130.w,
+                  fit: BoxFit.fill,
+                ),
               ),
-              Image.asset(
-                "assets/images/common/ic_voice.png",
-                width: 130.w,
-                height: 130.w,
-                fit: BoxFit.fill,
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+
+                },
+                child: Image.asset(
+                  "assets/images/common/ic_voice.png",
+                  width: 130.w,
+                  height: 130.w,
+                  fit: BoxFit.fill,
+                ),
               ),
             ],
           ),

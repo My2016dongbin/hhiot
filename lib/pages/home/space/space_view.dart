@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,8 +87,11 @@ class SpacePage extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: (){
+          child:
+          BouncingWidget(
+            duration: const Duration(milliseconds: 100),
+            scaleFactor: 1.2,
+            onPressed: (){
               showToast('添加成功',
                 context: logic.context,
                 animation: StyledToastAnimation.slideFromBottomFade,
@@ -183,8 +187,11 @@ class SpacePage extends StatelessWidget {
               ),
               SizedBox(
                 height: 100.w,
-                child: InkWell(
-                  onTap: (){
+                child:
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
                     getImageFromGallery(1);
                   },
                   child: Row(

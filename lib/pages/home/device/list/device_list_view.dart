@@ -1,3 +1,4 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,8 +81,10 @@ class DeviceListPage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      InkWell(
-                        onTap: (){
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
                           Get.to(()=>SharePage(),binding: ShareBinding());
                         },
                         child: Image.asset(
@@ -99,8 +102,10 @@ class DeviceListPage extends StatelessWidget {
                         fit: BoxFit.fill,
                       ),
                       SizedBox(width: 30.w,),
-                      InkWell(
-                        onTap: (){
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
                           Get.to(()=>DeviceAddPage(),binding: DeviceAddBinding());
                         },
                         child: Image.asset(
@@ -240,10 +245,11 @@ class DeviceListPage extends StatelessWidget {
       child: PagedListView<int, Device>(
         pagingController: logic.deviceController,
         builderDelegate: PagedChildBuilderDelegate<Device>(
-          itemBuilder: (context, item, index) => InkWell(
-            onTap: (){
-              Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
-            },
+          itemBuilder: (context, item, index) =>
+              InkWell(
+                onTap: (){
+                  Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
+                },
             child: Container(
               height: 180.w,
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
@@ -308,8 +314,11 @@ class DeviceListPage extends StatelessWidget {
                   ):const SizedBox(),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: (){
+                    child:
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
                         Get.to(()=>SharePage(),binding: ShareBinding());
                       },
                       child: Container(

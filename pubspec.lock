@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bouncing_widget:
+    dependency: "direct main"
+    description:
+      name: bouncing_widget
+      sha256: "94d30908780fa0e82ada38ef90963d0760419a42c5d05289f85fae745981da99"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   characters:
     dependency: transitive
     description:
@@ -129,6 +137,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  draggable_widget:
+    dependency: "direct main"
+    description:
+      name: draggable_widget
+      sha256: d7f6b1eb9cb79b724b02dc2ac699f82d1ab20b99920b8b1f25812054d72ca803
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   easy_refresh:
     dependency: "direct main"
     description:

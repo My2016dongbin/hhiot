@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -91,8 +92,10 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                   ),
-                  logic.accountStatus.value?InkWell(
-                    onTap: (){
+                  logic.accountStatus.value? BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: (){
                       logic.accountController!.clear();
                       logic.accountStatus.value = false;
                     },
@@ -135,8 +138,11 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                   ),
-                  logic.passwordStatus.value?InkWell(
-                    onTap: (){
+                  logic.passwordStatus.value?
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: (){
                       logic.passwordController!.clear();
                       logic.passwordStatus.value = false;
                     },
@@ -146,8 +152,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ):const SizedBox(),
                   SizedBox(width: 10.w,),
-                  InkWell(
-                    onTap: (){
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: (){
                       logic.passwordShowStatus.value = !logic.passwordShowStatus.value;
                     },
                     child: Container(
@@ -165,8 +173,10 @@ class LoginPage extends StatelessWidget {
               ///协议
               Row(
                 children: [
-                  InkWell(
-                    onTap: (){
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: (){
                       logic.confirmStatus.value = !logic.confirmStatus.value;
                     },
                     child: Container(
@@ -183,8 +193,10 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               ///登录
-              InkWell(
-                onTap: (){
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
                   if(logic.pageStatus.value){
                     ///验证码点击
                     Get.to(()=>CodePage(),binding: CodeBinding());
@@ -222,8 +234,10 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               ///切换
-              InkWell(
-                onTap: (){
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
                   logic.pageStatus.value = !logic.pageStatus.value;
                 },
                 child: Container(
