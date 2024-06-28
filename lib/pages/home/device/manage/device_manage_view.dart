@@ -58,6 +58,8 @@ class DeviceManagePage extends StatelessWidget {
                   ),
                 ),
               ),
+              ///列表
+              logic.testStatus.value?deviceList():const SizedBox(),
               ///tab
               Container(
                 margin: EdgeInsets.fromLTRB(50.w, 180.w, 0, 0),
@@ -134,7 +136,7 @@ class DeviceManagePage extends StatelessWidget {
                               height: 4.w,
                               width: 26.w,
                               decoration: BoxDecoration(
-                                color: HhColors.mainBlueColor,
+                                  color: HhColors.mainBlueColor,
                                   borderRadius: BorderRadius.all(Radius.circular(2.w))
                               ),
                             ):const SizedBox()
@@ -145,8 +147,6 @@ class DeviceManagePage extends StatelessWidget {
                   ),
                 ),
               ),
-              ///列表
-              logic.testStatus.value?deviceList():const SizedBox()
             ],
           ),
         ),
@@ -156,7 +156,7 @@ class DeviceManagePage extends StatelessWidget {
 
   deviceList() {
     return Container(
-      margin: EdgeInsets.only(top: 190.w),
+      margin: EdgeInsets.only(top: 200.w),
       child: PagedListView<int, Device>(
         pagingController: logic.deviceController,
         builderDelegate: PagedChildBuilderDelegate<Device>(

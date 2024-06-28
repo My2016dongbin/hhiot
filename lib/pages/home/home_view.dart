@@ -100,22 +100,26 @@ class HomePage extends StatelessWidget {
   Future<bool> onBackPressed() {
     bool exit = false;
     int time_ = DateTime.now().millisecondsSinceEpoch;
-    if (time_ - timeForExit > 2000) {
-      showToast('再按一次退出程序',
-        context: logic.context,
-        animation: StyledToastAnimation.slideFromBottomFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        position: StyledToastPosition.bottom,
-        animDuration: const Duration(seconds: 1),
-        duration: const Duration(seconds: 2),
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linear,
-      );
-      // EventBusUtil.getInstance().fire(ShowToast("再按一次退出程序"));
-      timeForExit = time_;
-      exit = false;
-    } else {
-      exit = true;
+    if(logic.index.value == 0){
+      if (time_ - timeForExit > 2000) {
+        showToast('再按一次退出程序',
+          context: logic.context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: const Duration(seconds: 1),
+          duration: const Duration(seconds: 2),
+          curve: Curves.elasticOut,
+          reverseCurve: Curves.linear,
+        );
+        // EventBusUtil.getInstance().fire(ShowToast("再按一次退出程序"));
+        timeForExit = time_;
+        exit = false;
+      } else {
+        exit = true;
+      }
+    }else{
+      logic.index.value = 0;
     }
     return Future.value(exit);
   }
