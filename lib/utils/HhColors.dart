@@ -11,6 +11,7 @@ class HhColors {
   static const grayBBTextColor = Color(0xFFBBBBBB);//深灰字体颜色
   static const grayCCTextColor = Color(0xFFCCCCCC);//深灰字体颜色
   static const grayDDTextColor = Color(0xFFDDDDDD);//深灰字体颜色
+  static const grayXXTextColor = Color(0xFFF5F7F7);//深灰字体颜色
   static const gray9TextColor = Color(0xFF999999);//深灰字体颜色
   static const gray6TextColor = Color(0xFF666666);//深灰字体颜色
   static const grayEDBackColor = Color(0xFFEDEDED);//灰色背景颜色
@@ -22,10 +23,12 @@ class HhColors {
   static const transBlue1Color = Color(0xFFAACAFF);//蓝色渐变背景色
   static const transBlue2Color = Color(0xFFD3E8FF);//蓝色渐变背景色
   static const blueBackColor = Color(0xFFEAF1FF);//蓝色渐变背景色
+  static const blueEAColor = Color(0xFFEAEAEA);//蓝色渐变背景色
   static const videoControlBorder1Color = Color(0xFFD3E8FF);//视频控制边框线-外
   static const videoControlBorder2Color = Color(0xFFCDD8ED);//视频控制边框线-内
   static const videoControlInnerColor = Color(0xFFADC6F9);//视频控制图标内线
   static const videoControlIconColor = Color(0xFFE1E2E5);//视频控制图标边框线
+  static const videoControlShadowColor = Color(0xFFEBF0F7);//视频控制拖动外阴影色
 
 
 
@@ -37,6 +40,7 @@ class HhColors {
   static const whiteColor = Colors.white;
   static const blackColor = Colors.black;
   static const backBlueInColor = Color(0xFFE1E9F7);
+  static const backRedInColor = Color(0xFFFF5C5C);
   static const backBlueOutColor = Color(0xFF3477FF);
   static const textBlackColor = Color(0xFF333333);
   static const textBlackColor2 = Color(0xFF555555);

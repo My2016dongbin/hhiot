@@ -69,7 +69,7 @@ class MainPage extends StatelessWidget {
         children: [
           ///搜索框
           Container(
-            height: 80.w,
+            // height: 80.w,
             padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
@@ -481,7 +481,7 @@ class MainPage extends StatelessWidget {
                 Get.to(()=>SearchPage(),binding: SearchBinding());
               },
               child: Container(
-                height: 80.w,
+                height: 85.w,
                 margin: EdgeInsets.fromLTRB(20.w, logic.marginTop, 20.w, 0),
                 decoration: BoxDecoration(
                   color: HhColors.whiteColor,
@@ -494,18 +494,18 @@ class MainPage extends StatelessWidget {
                     ),
                     Image.asset(
                       "assets/images/common/icon_search.png",
-                      width: 35.w,
-                      height: 35.w,
+                      width: 50.w,
+                      height: 50.w,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(
-                      width: 15.w,
+                      width: 10.w,
                     ),
                     Expanded(
                       child: Text(
                         '搜索设备、事件、和视频',
                         style: TextStyle(
-                            color: HhColors.textColor, fontSize: 24.sp),
+                            color: HhColors.textColor, fontSize: 28.sp),
                       ),
                     ),
                     SizedBox(
@@ -513,12 +513,12 @@ class MainPage extends StatelessWidget {
                     ),
                     Image.asset(
                       "assets/images/common/ic_record.png",
-                      width: 35.w,
-                      height: 35.w,
+                      width: 44.w,
+                      height: 44.w,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(
-                      width: 30.w,
+                      width: 40.w,
                     )
                   ],
                 ),
@@ -538,8 +538,8 @@ class MainPage extends StatelessWidget {
                         children: [
                           Image.asset(
                             "assets/images/common/icon_weather.png",
-                            width: 30.w,
-                            height: 30.w,
+                            width: 44.w,
+                            height: 44.w,
                             fit: BoxFit.fill,
                           ),
                           SizedBox(
@@ -556,8 +556,8 @@ class MainPage extends StatelessWidget {
                           ),
                           Image.asset(
                             "assets/images/common/back_role.png",
-                            width: 10.w,
-                            height: 16.w,
+                            width: 25.w,
+                            height: 25.w,
                             fit: BoxFit.fill,
                           )
                         ],

@@ -78,7 +78,7 @@ class DeviceManagePage extends StatelessWidget {
                             child: Text(
                               '全部',
                               style: TextStyle(
-                                  color: logic.tabIndex.value==0?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==0?32.sp:26.sp,fontWeight: FontWeight.bold),
+                                  color: logic.tabIndex.value==0?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==0?32.sp:28.sp,fontWeight: logic.tabIndex.value==0?FontWeight.bold:FontWeight.w200),
                             ),
                           ),
                           SizedBox(height: 5.w,),
@@ -104,9 +104,9 @@ class DeviceManagePage extends StatelessWidget {
                                 logic.tabIndex.value = 1;
                               },
                               child: Text(
-                                '空间1',
+                                '城阳空间',
                                 style: TextStyle(
-                                    color: logic.tabIndex.value==1?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==1?32.sp:26.sp,fontWeight: FontWeight.bold),
+                                    color: logic.tabIndex.value==1?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==1?32.sp:28.sp,fontWeight: logic.tabIndex.value==1?FontWeight.bold:FontWeight.w200),
                               ),
                             ),
                             SizedBox(height: 5.w,),
@@ -133,9 +133,9 @@ class DeviceManagePage extends StatelessWidget {
                                 logic.tabIndex.value = 2;
                               },
                               child: Text(
-                                '空间2',
+                                '市北空间',
                                 style: TextStyle(
-                                    color: logic.tabIndex.value==2?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==2?32.sp:26.sp,fontWeight: FontWeight.bold),
+                                    color: logic.tabIndex.value==2?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==2?32.sp:28.sp,fontWeight: logic.tabIndex.value==2?FontWeight.bold:FontWeight.w200),
                               ),
                             ),
                             SizedBox(height: 5.w,),
@@ -173,13 +173,13 @@ class DeviceManagePage extends StatelessWidget {
                   Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
                   },
             child: Container(
-              height: 180.w,
+              height: 160.w,
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
               padding: EdgeInsets.all(20.w),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                   color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10.w))
+                  borderRadius: BorderRadius.all(Radius.circular(20.w))
               ),
               child: Stack(
                 children: [
@@ -192,8 +192,8 @@ class DeviceManagePage extends StatelessWidget {
                       ),
                       child: Image.asset(
                         "assets/images/common/icon_camera_space.png",
-                        width: 80.w,
-                        height: 80.w,
+                        width: 85.w,
+                        height: 85.w,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -201,20 +201,24 @@ class DeviceManagePage extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(100.w, 0, 0, item.desc==""?0:50.w),
-                      child: Text(
-                        '${item.name}',
-                        style: TextStyle(
-                            color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                      margin: EdgeInsets.fromLTRB(100.w, 0, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${item.name}',
+                            style: TextStyle(
+                                color: HhColors.textBlackColor, fontSize: 28.sp,fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 10.w,),
+                          item.desc==""?const SizedBox():Text(
+                            '${item.desc}',
+                            style: TextStyle(
+                                color: HhColors.textColor, fontSize: 24.sp),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  item.desc==""?const SizedBox():Container(
-                    margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
-                    child: Text(
-                      '${item.desc}',
-                      style: TextStyle(
-                          color: HhColors.textColor, fontSize: 22.sp),
                     ),
                   ),
                   ///分享
@@ -222,10 +226,10 @@ class DeviceManagePage extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Container(
                       margin: EdgeInsets.only(right:70.w),
-                      padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                      padding: EdgeInsets.fromLTRB(15.w,8.w,15.w,8.w),
                       decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(5.w))
+                          borderRadius: BorderRadius.all(Radius.circular(8.w))
                       ),
                       child: Text(
                         '已共享*1',
@@ -244,11 +248,11 @@ class DeviceManagePage extends StatelessWidget {
                         Get.to(()=>SharePage(),binding: ShareBinding());
                       },
                       child: Container(
-                        margin: EdgeInsets.only(right: item.shared==true?0:80.w),
+                        margin: EdgeInsets.only(right: item.shared==true?0:75.w),
                         child: Image.asset(
                           item.shared==true?"assets/images/common/shared.png":"assets/images/common/share.png",
-                          width: 50.w,
-                          height: 50.w,
+                          width: 55.w,
+                          height: 55.w,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -258,8 +262,8 @@ class DeviceManagePage extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Image.asset(
                       "assets/images/common/close.png",
-                      width: 50.w,
-                      height: 50.w,
+                      width: 55.w,
+                      height: 55.w,
                       fit: BoxFit.fill,
                     ),
                   ),

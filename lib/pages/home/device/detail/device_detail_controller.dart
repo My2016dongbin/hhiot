@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:draggable_widget/draggable_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -18,6 +19,12 @@ class DeviceDetailController extends GetxController {
   static const pageSize = 20;
   late VideoPlayerController controller;
   late DragController dragController;
+  late BuildContext context;
+
+  late Animation<Alignment> animation;
+  late AnimationController animationController;
+  late Alignment animateAlign = Alignment.center;
+  final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
 
   @override
   void onInit() {

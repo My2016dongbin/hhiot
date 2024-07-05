@@ -147,8 +147,8 @@ class DeviceListPage extends StatelessWidget {
                         children: [
                           Image.asset(
                             "assets/images/common/icon_wd_space.png",
-                            width: 36.w,
-                            height: 36.w,
+                            width: 44.w,
+                            height: 44.w,
                             fit: BoxFit.fill,
                           ),
                           SizedBox(width: 10.w,),
@@ -165,8 +165,8 @@ class DeviceListPage extends StatelessWidget {
                         children: [
                           Image.asset(
                             "assets/images/common/icon_sd_space.png",
-                            width: 36.w,
-                            height: 36.w,
+                            width: 44.w,
+                            height: 44.w,
                             fit: BoxFit.fill,
                           ),
                           SizedBox(width: 10.w,),
@@ -183,8 +183,8 @@ class DeviceListPage extends StatelessWidget {
                         children: [
                           Image.asset(
                             "assets/images/common/icon_dq_space.png",
-                            width: 36.w,
-                            height: 36.w,
+                            width: 44.w,
+                            height: 44.w,
                             fit: BoxFit.fill,
                           ),
                           SizedBox(width: 10.w,),
@@ -251,13 +251,13 @@ class DeviceListPage extends StatelessWidget {
                   Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
                 },
             child: Container(
-              height: 180.w,
+              height: 160.w,
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
               padding: EdgeInsets.all(20.w),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                   color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10.w))
+                  borderRadius: BorderRadius.all(Radius.circular(20.w))
               ),
               child: Stack(
                 children: [

@@ -74,7 +74,7 @@ class SearchPage extends StatelessWidget {
           ),
         ),
         Container(
-          height: 90.w,
+          // height: 90.w,
           margin: EdgeInsets.fromLTRB(20.w, 160.w, 100.w, 0),
           padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
           decoration: BoxDecoration(

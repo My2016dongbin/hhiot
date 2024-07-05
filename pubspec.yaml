@@ -59,6 +59,7 @@ dependencies:
   flutter_styled_toast: ^2.2.1
   flutter_barcode_scanner: ^2.0.0
   video_player: ^2.8.6
+#  slide_to_act: ^2.0.2 滑动解锁
 
   bouncing_widget: ^2.0.0
   draggable_widget: ^2.0.0

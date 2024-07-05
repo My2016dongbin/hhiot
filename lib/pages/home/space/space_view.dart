@@ -171,8 +171,8 @@ class SpacePage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(10.w, 3.w, 0, 0),
                       child: Image.asset(
                         "assets/images/common/back_role.png",
-                        width: 12.w,
-                        height: 20.w,
+                        width: 25.w,
+                        height: 25.w,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -221,8 +221,8 @@ class SpacePage extends StatelessWidget {
                         margin: EdgeInsets.fromLTRB(10.w, 6.w, 0, 0),
                         child: Image.asset(
                           "assets/images/common/back_role.png",
-                          width: 12.w,
-                          height: 20.w,
+                          width: 25.w,
+                          height: 25.w,
                           fit: BoxFit.fill,
                         ),
                       ),

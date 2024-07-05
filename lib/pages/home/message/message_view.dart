@@ -55,11 +55,12 @@ class MessagePage extends StatelessWidget {
                     margin: EdgeInsets.only(top: 80.w),
                     child: ToggleSwitch(
                       minWidth: 90,
-                      minHeight: 30,
-                      fontSize: 24.sp,
+                      minHeight: 32,
+                      fontSize: 25.sp,
                       activeBgColor: const [HhColors.mainBlueColor],
-                      inactiveBgColor: HhColors.grayDDTextColor,
+                      inactiveBgColor: HhColors.grayXXTextColor,
                       initialLabelIndex: logic.tabIndex.value,
+                      cornerRadius: 4.0,
                       totalSwitches: 2,
                       labels: const ['设备信息', '报警信息'],
                       onToggle: (index) {
@@ -92,12 +93,12 @@ class MessagePage extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 10.w, 0, 0),
-                  child: Image.asset(
-                    "assets/images/common/icon_red.png",
-                    width: 20.w,
-                    height: 20.w,
-                    fit: BoxFit.fill,
+                  height: 10.w,
+                  width: 10.w,
+                  margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                  decoration: BoxDecoration(
+                    color: HhColors.backRedInColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5.w))
                   ),
                 ),
                 Container(
@@ -149,12 +150,12 @@ class MessagePage extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 10.w, 0, 0),
-                  child: Image.asset(
-                    "assets/images/common/icon_red.png",
-                    width: 20.w,
-                    height: 20.w,
-                    fit: BoxFit.fill,
+                  height: 10.w,
+                  width: 10.w,
+                  margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                  decoration: BoxDecoration(
+                      color: HhColors.backRedInColor,
+                      borderRadius: BorderRadius.all(Radius.circular(5.w))
                   ),
                 ),
                 Container(

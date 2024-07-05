@@ -143,7 +143,7 @@ class DeviceAddPage extends StatelessWidget {
                           border: InputBorder.none,
                           hintText: '请输入SN码',
                           hintStyle: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 26.sp),
+                              color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
                         ),
                         style:
                         TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
@@ -212,7 +212,7 @@ class DeviceAddPage extends StatelessWidget {
                           border: InputBorder.none,
                           hintText: '请输入设备名称',
                           hintStyle: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 26.sp),
+                              color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
                         ),
                         style:
                         TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),

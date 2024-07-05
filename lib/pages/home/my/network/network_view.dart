@@ -207,8 +207,8 @@ class NetWorkPage extends StatelessWidget {
                                 margin:EdgeInsets.fromLTRB(0,0,30.w,0),
                                 child: Image.asset(
                                   "assets/images/common/back_role.png",
-                                  width: 12.w,
-                                  height: 20.w,
+                                  width: 25.w,
+                                  height: 25.w,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -273,8 +273,8 @@ class NetWorkPage extends StatelessWidget {
                                 margin:EdgeInsets.fromLTRB(0,0,30.w,0),
                                 child: Image.asset(
                                   "assets/images/common/back_role.png",
-                                  width: 12.w,
-                                  height: 20.w,
+                                  width: 25.w,
+                                  height: 25.w,
                                   fit: BoxFit.fill,
                                 ),
                               ),
