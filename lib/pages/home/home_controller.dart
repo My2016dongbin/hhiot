@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:rxdart/rxdart.dart';
@@ -22,6 +25,8 @@ class HomeController extends GetxController {
   final LocationFlutterPlugin _myLocPlugin = LocationFlutterPlugin();
 
   Function()? onScrollToUnreadMessage;
+  late StreamSubscription showToastSubscription;
+  late StreamSubscription showLoadingSubscription;
 
   switchTab(index) {
     this.index.value = index;
@@ -55,6 +60,29 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    showToastSubscription = EventBusUtil.getInstance()
+        .on<HhToast>()
+        .listen((event) {
+      showToast(event.title,
+        context: context,
+        animation: StyledToastAnimation.slideFromBottomFade,
+        reverseAnimation: StyledToastAnimation.fade,
+        position: StyledToastPosition.bottom,
+        animDuration: const Duration(seconds: 1),
+        duration: const Duration(seconds: 2),
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.linear,
+      );
+    });
+    showLoadingSubscription = EventBusUtil.getInstance()
+        .on<HhLoading>()
+        .listen((event) {
+      if(event.show){
+        EasyLoading.show(status: '${event.title}');
+      }else{
+        EasyLoading.dismiss();
+      }
+    });
     getLocation();
     super.onInit();
   }

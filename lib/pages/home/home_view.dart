@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 
 import '../../cell/bottom_bar.dart';
 import '../../res/images.dart';
@@ -102,17 +104,7 @@ class HomePage extends StatelessWidget {
     int time_ = DateTime.now().millisecondsSinceEpoch;
     if(logic.index.value == 0){
       if (time_ - timeForExit > 2000) {
-        showToast('再按一次退出程序',
-          context: logic.context,
-          animation: StyledToastAnimation.slideFromBottomFade,
-          reverseAnimation: StyledToastAnimation.fade,
-          position: StyledToastPosition.bottom,
-          animDuration: const Duration(seconds: 1),
-          duration: const Duration(seconds: 2),
-          curve: Curves.elasticOut,
-          reverseCurve: Curves.linear,
-        );
-        // EventBusUtil.getInstance().fire(ShowToast("再按一次退出程序"));
+        EventBusUtil.getInstance().fire(HhToast(title: '再按一次退出程序'));
         timeForExit = time_;
         exit = false;
       } else {

@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
-import 'package:iot/utils/HhLog.dart';
-import 'package:pinput/pinput.dart';
+import 'package:iot/utils/HhHttp.dart';
 
 class DeviceAddController extends GetxController {
   final index = 0.obs;
@@ -41,5 +37,7 @@ class DeviceAddController extends GetxController {
       final nextPageKey = pageKey + newItems.length;
       deviceController.appendPage(newItems, nextPageKey);
     }
+
+    ///var result = await HhHttp().request("",method: DioMethod.get,data: {},);
   }
 }

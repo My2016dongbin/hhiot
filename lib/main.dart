@@ -125,6 +125,7 @@ class MyAppState extends State<HhApp> {
         //EventBusUtil.getInstance().fire(PushTouch());
       },
     );
+    EasyLoading.init();
   }
 
   @override

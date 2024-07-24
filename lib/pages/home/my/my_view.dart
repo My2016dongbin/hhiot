@@ -13,6 +13,7 @@ import 'package:iot/pages/home/my/setting/setting_binding.dart';
 import 'package:iot/pages/home/my/setting/setting_view.dart';
 import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import '../../../utils/HhColors.dart';
 import 'my_controller.dart';
 
@@ -114,11 +115,20 @@ class MyPage extends StatelessWidget {
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
                 borderRadius: BorderRadius.all(Radius.circular(50.w))),
-            child: Image.asset(
-              "assets/images/common/user.png",
+            child: Image.network(
+              logic.avatar!.value,
+              // 'https://i-blog.csdnimg.cn/blog_migrate/5e75d62a5497d2d0da5f65ba2a2e1748.png',
               width: 100.w,
               height: 100.w,
               fit: BoxFit.fill,
+              errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
+                return Image.asset(
+                  "assets/images/common/user.png",
+                  width: 100.w,
+                  height: 100.w,
+                  fit: BoxFit.fill,
+                );
+              },
             ),
           ),
         ),
@@ -129,7 +139,7 @@ class MyPage extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.fromLTRB(150.w, 200.w, 0, 0),
             child: Text(
-              "HaoHai_430695",
+              logic.nickname!.value,
               style: TextStyle(
                   color: HhColors.blackTextColor,
                   fontSize: 30.sp,
@@ -144,7 +154,7 @@ class MyPage extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.fromLTRB(150.w, 245.w, 0, 0),
             child: Text(
-              "188****8888",
+              CommonUtils().mobileString(logic.mobile!.value),
               style: TextStyle(color: HhColors.gray6TextColor, fontSize: 23.sp),
             ),
           ),

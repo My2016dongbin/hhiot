@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iot/pages/common/login/login_binding.dart';
+import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/pages/home/my/setting/setting_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class SettingPage extends StatelessWidget {
   final logic = Get.find<SettingController>();
   SettingPage({super.key});
@@ -118,12 +123,20 @@ class SettingPage extends StatelessWidget {
                                     color: HhColors.whiteColor,
                                     borderRadius: BorderRadius.all(Radius.circular(50.w))
                                 ),
-                                child: Image.asset(
-                                  "assets/images/common/user.png",
-                                  width: 100.w,
-                                  height: 100.w,
-                                  fit: BoxFit.fill,
-                                ),
+                                child: Image.network(
+                                    logic.avatar!.value,
+                                    width: 100.w,
+                                    height: 100.w,
+                                    fit: BoxFit.fill,
+                                    errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
+                                      return Image.asset(
+                                        "assets/images/common/user.png",
+                                        width: 100.w,
+                                        height: 100.w,
+                                        fit: BoxFit.fill,
+                                      );
+                                    },
+                                  ),
                               ),
                             ),
                             Align(
@@ -172,7 +185,7 @@ class SettingPage extends StatelessWidget {
                               child: Container(
                                 margin:EdgeInsets.only(right: 65.w),
                                 child: Text(
-                                  "浩海科技",
+                                  logic.nickname!.value,
                                   style: TextStyle(
                                       color: HhColors.gray9TextColor,
                                       fontSize: 26.sp),
@@ -225,7 +238,7 @@ class SettingPage extends StatelessWidget {
                               child: Container(
                                 margin:EdgeInsets.only(right: 65.w),
                                 child: Text(
-                                  "188****8888",
+                                  logic.account!.value,
                                   style: TextStyle(
                                       color: HhColors.gray9TextColor,
                                       fontSize: 26.sp),
@@ -301,7 +314,7 @@ class SettingPage extends StatelessWidget {
                               child: Container(
                                 margin:EdgeInsets.only(right: 65.w),
                                 child: Text(
-                                  "188****8888",
+                                  CommonUtils().mobileString(logic.mobile!.value),
                                   style: TextStyle(
                                       color: HhColors.gray9TextColor,
                                       fontSize: 26.sp),
@@ -354,7 +367,7 @@ class SettingPage extends StatelessWidget {
                               child: Container(
                                 margin:EdgeInsets.only(right: 65.w),
                                 child: Text(
-                                  "188****@qq.com",
+                                  CommonUtils().mobileString(logic.email!.value),
                                   style: TextStyle(
                                       color: HhColors.gray9TextColor,
                                       fontSize: 26.sp),
@@ -702,8 +715,10 @@ class SettingPage extends StatelessWidget {
                 ),
 
                 InkWell(
-                  onTap: (){
-                    Get.back();
+                  onTap: () async {
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.remove(SPKeys().token);
+                    Get.offAll(LoginPage(),binding: LoginBinding());
                   },
                   child: Container(
                     width: 1.sw,

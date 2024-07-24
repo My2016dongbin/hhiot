@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import '../../../utils/HhColors.dart';
 import 'space_controller.dart';
 
@@ -92,16 +94,7 @@ class SpacePage extends StatelessWidget {
             duration: const Duration(milliseconds: 100),
             scaleFactor: 1.2,
             onPressed: (){
-              showToast('添加成功',
-                context: logic.context,
-                animation: StyledToastAnimation.slideFromBottomFade,
-                reverseAnimation: StyledToastAnimation.fade,
-                position: StyledToastPosition.bottom,
-                animDuration: const Duration(seconds: 1),
-                duration: const Duration(seconds: 2),
-                curve: Curves.elasticOut,
-                reverseCurve: Curves.linear,
-              );
+              EventBusUtil.getInstance().fire(HhToast(title: '添加成功'));
               Get.back();
               logic.picture.value = false;
             },

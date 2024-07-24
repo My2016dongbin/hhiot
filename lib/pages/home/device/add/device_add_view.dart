@@ -1,5 +1,6 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,12 @@ class DeviceAddPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 在这里设置状态栏字体为深色
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // 状态栏背景色
+      statusBarBrightness: Brightness.dark, // 状态栏字体亮度
+      statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
+    ));
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
@@ -91,7 +98,7 @@ class DeviceAddPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 95.w, 36.w, 0),
                     color: HhColors.trans,
                     child: Image.asset(
-                      "assets/images/common/icon_scan_add.png",
+                      "assets/images/common/icon_scanner.png",
                       width: 50.w,
                       height: 50.w,
                       fit: BoxFit.fill,
@@ -104,28 +111,31 @@ class DeviceAddPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(30.w, 200.w, 0, 0),
                 child: Row(
                   children: [
-                    Text(
-                      "*",
-                      style: TextStyle(
-                        color: HhColors.titleColorRed,
-                        fontSize: 36.sp,),
+                    Container(
+                      margin: EdgeInsets.only(top: 4.w),
+                      child: Text(
+                        "*",
+                        style: TextStyle(
+                          color: HhColors.titleColorRed,
+                          fontSize: 28.sp,),
+                      ),
                     ),
                     Text(
-                      "输入SN码",
+                      "输入设备SN码",
                       style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 36.sp,),
+                        fontSize: 28.sp,),
                     ),
                   ],
                 ),
               ),
               Container(
                 height: 90.w,
-                margin: EdgeInsets.fromLTRB(20.w, 280.w, 20.w, 0),
+                margin: EdgeInsets.fromLTRB(20.w, 270.w, 20.w, 0),
                 padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                 decoration: BoxDecoration(
                     color: HhColors.grayEEBackColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(14.w))),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -170,27 +180,27 @@ class DeviceAddPage extends StatelessWidget {
               ),
               ///名称
               Container(
-                margin: EdgeInsets.fromLTRB(30.w, 400.w, 0, 0),
+                margin: EdgeInsets.fromLTRB(30.w, 390.w, 0, 0),
                 child: Row(
                   children: [
                     Text(
-                      "*",
+                      "",
                       style: TextStyle(
                         color: HhColors.titleColorRed,
-                        fontSize: 36.sp,),
+                        fontSize: 28.sp,),
                     ),
                     Text(
                       "输入设备名称",
                       style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 36.sp,),
+                        fontSize: 28.sp,),
                     ),
                   ],
                 ),
               ),
               Container(
                 height: 90.w,
-                margin: EdgeInsets.fromLTRB(20.w, 480.w, 20.w, 0),
+                margin: EdgeInsets.fromLTRB(20.w, 460.w, 20.w, 0),
                 padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                 decoration: BoxDecoration(
                     color: HhColors.grayEEBackColor,
@@ -240,12 +250,12 @@ class DeviceAddPage extends StatelessWidget {
 
               ///列表
               Container(
-                margin: EdgeInsets.fromLTRB(30.w, 600.w, 0, 0),
+                margin: EdgeInsets.fromLTRB(30.w, 580.w, 0, 0),
                 child: Text(
                   "请选择设备空间",
                   style: TextStyle(
                       color: HhColors.blackTextColor,
-                      fontSize: 36.sp,),
+                      fontSize: 28.sp,),
                 ),
               ),
               logic.testStatus.value ? deviceList() : const SizedBox(),
@@ -259,7 +269,7 @@ class DeviceAddPage extends StatelessWidget {
                 child: Container(
                   height: 90.w,
                   width: 220.w,
-                  margin: EdgeInsets.fromLTRB(20.w, 940.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(20.w, 910.w, 0, 0),
                   padding: EdgeInsets.all(20.w),
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
@@ -270,18 +280,18 @@ class DeviceAddPage extends StatelessWidget {
                     children: [
                       Image.asset(
                         "assets/images/common/ic_add.png",
-                        width: 35.w,
-                        height: 35.w,
+                        width: 32.w,
+                        height: 32.w,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
-                        width: 10.w,
+                        width: 6.w,
                       ),
                       Text(
                         "新增空间",
                         style: TextStyle(
-                            color: HhColors.gray6TextColor,
-                            fontSize: 24.sp,fontWeight: FontWeight.bold),
+                            color: HhColors.gray4TextColor,
+                            fontSize: 25.sp,fontWeight: FontWeight.w200),
                       ),
                     ],
                   ),
@@ -333,7 +343,7 @@ class DeviceAddPage extends StatelessWidget {
 
   deviceList() {
     return logic.index.value == -1?const SizedBox():Container(
-      margin: EdgeInsets.only(top: 610.w),
+      margin: EdgeInsets.only(top: 580.w),
       child: PagedGridView<int, Device>(
         pagingController: logic.deviceController,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -363,7 +373,7 @@ class DeviceAddPage extends StatelessWidget {
                   "${item.name}",
                   style: TextStyle(
                       color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
-                      fontSize: 24.sp),
+                      fontSize: 26.sp),
                 ),
               ),
             ),

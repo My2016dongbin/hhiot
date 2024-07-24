@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/device/status/device_status_controller.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class DeviceStatusPage extends StatelessWidget {
@@ -185,16 +187,7 @@ class DeviceStatusPage extends StatelessWidget {
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
                   onPressed: (){
-                    showToast('设备添加成功',
-                      context: logic.context,
-                      animation: StyledToastAnimation.slideFromBottomFade,
-                      reverseAnimation: StyledToastAnimation.fade,
-                      position: StyledToastPosition.bottom,
-                      animDuration: const Duration(seconds: 1),
-                      duration: const Duration(seconds: 2),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.linear,
-                    );
+                    EventBusUtil.getInstance().fire(HhToast(title: '设备添加成功'));
                     Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
                   },
                   child: Container(

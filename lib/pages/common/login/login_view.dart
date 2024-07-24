@@ -6,11 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/login/code/code_binding.dart';
 import 'package:iot/pages/common/login/code/code_view.dart';
 import 'package:iot/pages/common/login/login_controller.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class LoginPage extends StatelessWidget {
@@ -76,12 +78,12 @@ class LoginPage extends StatelessWidget {
                       maxLength: 11,
                       cursorColor: HhColors.titleColor_99,
                       controller: logic.accountController,
-                      keyboardType: TextInputType.number,
+                      keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
                       decoration: InputDecoration(
                         //contentPadding: EdgeInsets.zero,
                         border: InputBorder.none,
                         counterText: '',
-                        hintText: '请输入手机号码',
+                        hintText: logic.pageStatus.value?'请输入手机号码':'请输入账号',
                         hintStyle: TextStyle(
                             color: HhColors.grayCCTextColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
                       ),
@@ -197,24 +199,38 @@ class LoginPage extends StatelessWidget {
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
                 onPressed: (){
+                  //隐藏输入法
+                  FocusScope.of(logic.context).requestFocus(FocusNode());
                   if(logic.pageStatus.value){
                     ///验证码点击
-                    Get.to(()=>CodePage(),binding: CodeBinding());
+                    if(logic.accountController!.text.isEmpty){
+                      EventBusUtil.getInstance().fire(HhToast(title: '手机号不能为空'));
+                      return;
+                    }
+                    if(logic.accountController!.text.length<11){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的手机号'));
+                      return;
+                    }
+                    if(!logic.confirmStatus.value){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
+                      return;
+                    }
+                    Get.to(()=>CodePage(logic.accountController!.text),binding: CodeBinding());
                   }else{
                     ///登录点击
-                    showToast('登录成功',
-                      context: logic.context,
-                      animation: StyledToastAnimation.slideFromBottomFade,
-                      reverseAnimation: StyledToastAnimation.fade,
-                      position: StyledToastPosition.bottom,
-                      animDuration: const Duration(seconds: 1),
-                      duration: const Duration(seconds: 2),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.linear,
-                    );
-                    Future.delayed(const Duration(seconds: 1),(){
-                      Get.off(HomePage(),binding: HomeBinding());
-                    });
+                    if(logic.accountController!.text.isEmpty){
+                      EventBusUtil.getInstance().fire(HhToast(title: '账号不能为空'));
+                      return;
+                    }
+                    if(logic.passwordController!.text.isEmpty){
+                      EventBusUtil.getInstance().fire(HhToast(title: '密码不能为空'));
+                      return;
+                    }
+                    if(!logic.confirmStatus.value){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
+                      return;
+                    }
+                    logic.login();
                   }
                 },
                 child: Container(
@@ -239,6 +255,9 @@ class LoginPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: (){
                   logic.pageStatus.value = !logic.pageStatus.value;
+                  //隐藏输入法
+                  FocusScope.of(logic.context).requestFocus(FocusNode());
+                  logic.accountController!.text = '';
                 },
                 child: Container(
                     margin: EdgeInsets.fromLTRB(0, 5.w, 0, 0),
@@ -260,17 +279,7 @@ class LoginPage extends StatelessWidget {
     bool exit = false;
     int time_ = DateTime.now().millisecondsSinceEpoch;
     if (time_ - timeForExit > 2000) {
-      showToast('再按一次退出程序',
-        context: logic.context,
-        animation: StyledToastAnimation.slideFromBottomFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        position: StyledToastPosition.bottom,
-        animDuration: const Duration(seconds: 1),
-        duration: const Duration(seconds: 2),
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linear,
-      );
-      // EventBusUtil.getInstance().fire(ShowToast("再按一次退出程序"));
+      EventBusUtil.getInstance().fire(HhToast(title: '再按一次退出程序'));
       timeForExit = time_;
       exit = false;
     } else {

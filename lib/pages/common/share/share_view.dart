@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iot/pages/common/share/confirm/confirm_binding.dart';
+import 'package:iot/pages/common/share/confirm/confirm_view.dart';
 import 'package:iot/pages/common/share/share_controller.dart';
 import 'package:iot/pages/home/my/setting/setting_controller.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -75,6 +77,25 @@ class SharePage extends StatelessWidget {
             ),
           ),
         ),
+        Align(
+          alignment: Alignment.topRight,
+          child: InkWell(
+            onTap: (){
+              Get.to(()=>ConfirmPage(),binding: ConfirmBinding());
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 90.w, 20.w, 0),
+              color: HhColors.trans,
+              child: Text(
+                "确认",
+                style: TextStyle(
+                    color: HhColors.blackTextColor,
+                    fontSize: 30.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
         ///菜单
         Container(
           margin: EdgeInsets.fromLTRB(20.w, 180.w, 20.w, 0),
@@ -120,9 +141,10 @@ class SharePage extends StatelessWidget {
                           cursorColor: HhColors.titleColor_99,
                           controller: logic.nameController,
                           keyboardType: TextInputType.text,
+                          enabled: false,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '请输入设备名称',
+                            hintText: '大涧林场一体机',
                             hintStyle: TextStyle(
                                 color: HhColors.gray9TextColor, fontSize: 26.sp),
                           ),
