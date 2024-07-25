@@ -60,28 +60,30 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    showToastSubscription = EventBusUtil.getInstance()
-        .on<HhToast>()
-        .listen((event) {
-      showToast(event.title,
-        context: context,
-        animation: StyledToastAnimation.slideFromBottomFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        position: StyledToastPosition.bottom,
-        animDuration: const Duration(seconds: 1),
-        duration: const Duration(seconds: 2),
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linear,
-      );
-    });
-    showLoadingSubscription = EventBusUtil.getInstance()
-        .on<HhLoading>()
-        .listen((event) {
-      if(event.show){
-        EasyLoading.show(status: '${event.title}');
-      }else{
-        EasyLoading.dismiss();
-      }
+    Future.delayed(const Duration(seconds: 1),(){
+      showToastSubscription = EventBusUtil.getInstance()
+          .on<HhToast>()
+          .listen((event) {
+        showToast(event.title,
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: const Duration(seconds: 1),
+          duration: const Duration(seconds: 2),
+          curve: Curves.elasticOut,
+          reverseCurve: Curves.linear,
+        );
+      });
+      showLoadingSubscription = EventBusUtil.getInstance()
+          .on<HhLoading>()
+          .listen((event) {
+        if(event.show){
+          EasyLoading.show(status: '${event.title}');
+        }else{
+          EasyLoading.dismiss();
+        }
+      });
     });
     getLocation();
     super.onInit();

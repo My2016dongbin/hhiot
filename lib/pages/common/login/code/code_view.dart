@@ -160,11 +160,11 @@ class CodePage extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh + 180.w, 0.1.sw, 0),
             height: 300.w,
             child: Pinput(
-              length: 6,
+              length: 4,
               onCompleted: (pin) {
                 HhLog.e("pin $pin");
                 logic.code = pin;
-                if (pin.length == 6) {
+                if (pin.length == 4) {
                   ///验证
                   /*EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
                   Future.delayed(const Duration(seconds: 1), () {

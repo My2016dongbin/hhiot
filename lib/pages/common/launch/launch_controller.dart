@@ -55,6 +55,9 @@ class LaunchController extends GetxController {
       });
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      Future.delayed(const Duration(seconds: 2),(){
+        Get.offAll(LoginPage(),binding: LoginBinding());
+      });
     }
   }
 }

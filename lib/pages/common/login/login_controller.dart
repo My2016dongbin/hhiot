@@ -113,7 +113,7 @@ class LoginController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
 
       Future.delayed(const Duration(seconds: 1),(){
-        Get.off(HomePage(),binding: HomeBinding());
+        Get.offAll(HomePage(),binding: HomeBinding());
       });
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
