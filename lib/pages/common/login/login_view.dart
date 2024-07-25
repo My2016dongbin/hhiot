@@ -258,6 +258,9 @@ class LoginPage extends StatelessWidget {
                   //隐藏输入法
                   FocusScope.of(logic.context).requestFocus(FocusNode());
                   logic.accountController!.text = '';
+                  if(!logic.pageStatus.value){
+                    logic.accountController!.text = logic.account!;
+                  }
                 },
                 child: Container(
                     margin: EdgeInsets.fromLTRB(0, 5.w, 0, 0),

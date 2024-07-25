@@ -27,6 +27,8 @@ class LoginController extends GetxController {
   TextEditingController ?passwordController = TextEditingController();
   late StreamSubscription showToastSubscription;
   late StreamSubscription showLoadingSubscription;
+  late String? account;
+  late String? password;
 
   @override
   Future<void> onInit() async {
@@ -60,11 +62,11 @@ class LoginController extends GetxController {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString(SPKeys().token);
-    final String? account = prefs.getString(SPKeys().account);
-    final String? password = prefs.getString(SPKeys().password);
+    account = prefs.getString(SPKeys().account);
+    password = prefs.getString(SPKeys().password);
     if(account!=null && password!=null){
-      accountController?.text = account;
-      passwordController?.text = password;
+      accountController?.text = account!;
+      passwordController?.text = password!;
     }
 
     super.onInit();

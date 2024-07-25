@@ -28,12 +28,14 @@ class CodeController extends GetxController {
   }
 
   Future<void> sendCode() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在发送短信..'));
     var result = await HhHttp().request(
       RequestUtils.codeSend,
       method: DioMethod.post,
       data: {'mobile':mobile,'scene':21},
     );
     HhLog.d("sendCode -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
       time.value = 60;
       runCode();
@@ -44,6 +46,7 @@ class CodeController extends GetxController {
     }
   }
   Future<void> sendLogin() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在验证..'));
     var result = await HhHttp().request(
       RequestUtils.codeLogin,
       method: DioMethod.post,
@@ -51,7 +54,6 @@ class CodeController extends GetxController {
     );
     HhLog.d("sendLogin -- $result");
     if (result["code"] == 0 && result["data"] != null) {
-      EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在登录..'));
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(SPKeys().token, result["data"]["accessToken"]);
       CommonData.token = result["data"]["accessToken"];
@@ -60,6 +62,7 @@ class CodeController extends GetxController {
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
   }
 
@@ -78,6 +81,10 @@ class CodeController extends GetxController {
       await prefs.setString(SPKeys().roles, '${result["data"]["roles"]}');
       await prefs.setString(SPKeys().socialUsers, '${result["data"]["socialUsers"]}');
       await prefs.setString(SPKeys().posts, '${result["data"]["posts"]}');
+
+      //验证码登录成功后清除账号密码
+      prefs.remove(SPKeys().account);
+      prefs.remove(SPKeys().password);
 
       EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
 
