@@ -1,4 +1,5 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -9,6 +10,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
@@ -52,7 +54,7 @@ class DeviceDetailPage extends StatelessWidget {
                 height: 500.w,
                 color: HhColors.blackColor,
               ),
-              FijkView(width: 1.sw,height: 500.w,player: logic.player,color: HhColors.blackColor,),
+              logic.playTag.value?FijkView(width: 1.sw,height: 500.w,player: logic.player,color: HhColors.blackColor,):const SizedBox(),
 
 
               ///title
@@ -76,7 +78,7 @@ class DeviceDetailPage extends StatelessWidget {
                         width: 10.w,
                       ),
                       Text(
-                        "大涧林场-F1双枪机",
+                        logic.name.value,
                         style: TextStyle(
                             color: HhColors.whiteColor,
                             fontSize: 30.sp,
@@ -434,80 +436,99 @@ class DeviceDetailPage extends StatelessWidget {
   }
 
   historyPage() {
-    return PagedListView<int, Device>(
-      pagingController: logic.deviceController,
-      builderDelegate: PagedChildBuilderDelegate<Device>(
-        itemBuilder: (context, item, index) => InkWell(
-          onTap: () {},
-          child: Container(
-            height: 180.w,
-            margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-                color: HhColors.trans,
-                borderRadius: BorderRadius.all(Radius.circular(10.w))),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                    child: Image.asset(
-                      "assets/images/common/test_video.jpg",
-                      width: 250.w,
-                      height: 150.w,
-                      fit: BoxFit.fill,
+    return EasyRefresh(
+      onRefresh: (){
+        logic.pageNum = 1;
+        logic.getDeviceHistory();
+      },
+      onLoad: (){
+        logic.pageNum++;
+        logic.getDeviceHistory();
+      },
+      child: PagedListView<int, dynamic>(
+        pagingController: logic.deviceController,
+        builderDelegate: PagedChildBuilderDelegate<dynamic>(
+          noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidget(top: 0.3.sw),
+          itemBuilder: (context, item, index) => InkWell(
+            onTap: () {},
+            child: Container(
+              height: 180.w,
+              margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  color: HhColors.trans,
+                  borderRadius: BorderRadius.all(Radius.circular(10.w))),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                      child: Image.network(
+                        '${item['alarmImageUrl']}',
+                        width: 250.w,
+                        height: 150.w,
+                        fit: BoxFit.fill,
+                        errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
+                          return Image.asset(
+                            "assets/images/common/test_video.jpg",
+                            width: 250.w,
+                            height: 150.w,
+                            fit: BoxFit.fill,
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(40.w, 10.w, 0, 50.w),
-                  child: Text(
-                    '${item.desc}',
-                    style: TextStyle(
-                        color: HhColors.textBlackColor,
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(40.w, 55.w, 0, 0),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(40.w, 10.w, 0, 50.w),
                     child: Text(
-                      '${item.name}',
+                      '${item['deviceName']}',
                       style: TextStyle(
                           color: HhColors.textBlackColor,
-                          fontSize: 26.sp,
-                          fontWeight: FontWeight.w200),
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    width: 4.w,
-                    margin: EdgeInsets.fromLTRB(15.w, 42.w, 0, 0),
-                    decoration: BoxDecoration(
-                        color: HhColors.blueEAColor,
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(3.w))),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(40.w, 55.w, 0, 0),
+                      child: Text(
+                        '${item['alarmType']}',
+                        style: TextStyle(
+                            color: HhColors.textBlackColor,
+                            fontSize: 26.sp,
+                            fontWeight: FontWeight.w200),
+                      ),
+                    ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    width: 14.w,
-                    height: 14.w,
-                    margin: EdgeInsets.fromLTRB(10.w, 20.w, 0, 0),
-                    decoration: BoxDecoration(
-                        color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(7.w))),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      width: 4.w,
+                      margin: EdgeInsets.fromLTRB(15.w, 42.w, 0, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.blueEAColor,
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(3.w))),
+                    ),
                   ),
-                ),
-              ],
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      width: 14.w,
+                      height: 14.w,
+                      margin: EdgeInsets.fromLTRB(10.w, 20.w, 0, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.mainBlueColor,
+                          borderRadius: BorderRadius.all(Radius.circular(7.w))),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

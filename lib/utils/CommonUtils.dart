@@ -14,10 +14,10 @@ class CommonUtils{
     s = s.substring(s.indexOf(':')+1,s.length);
     return s;
   }
-  Widget noneWidget(){
+  Widget noneWidget({double? top}){
     return Column(
       children: [
-        SizedBox(height: 0.5.sw,),
+        SizedBox(height: top??0.5.sw,),
         Image.asset('assets/images/common/ic_none.png',fit: BoxFit.fill,
           height: 0.4.sw,
           width: 0.5.sw,),

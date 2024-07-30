@@ -1,4 +1,5 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -140,27 +141,35 @@ class SpaceManagePage extends StatelessWidget {
   deviceList() {
     return Container(
       margin: EdgeInsets.only(top: 100.w),
-      child: PagedGridView<int, MainGridModel>(
-          pagingController: logic.pagingController,
-          builderDelegate: PagedChildBuilderDelegate<MainGridModel>(
-            itemBuilder: (context, item, index) =>
-                gridItemView(context, item, index),
-          ),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, //横轴三个子widget
-              childAspectRatio: 1.3 //宽高比为1时，子widget
-          )),
+      child: EasyRefresh(
+        onRefresh: (){
+          logic.pageNum = 1;
+          logic.getSpaceList(logic.pageNum);
+        },
+        onLoad: (){
+          logic.pageNum++;
+          logic.getSpaceList(logic.pageNum);
+        },
+        child: PagedGridView<int, dynamic>(
+            pagingController: logic.pagingController,
+            builderDelegate: PagedChildBuilderDelegate<dynamic>(
+              itemBuilder: (context, item, index) =>
+                  gridItemView(context, item, index),
+            ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, //横轴三个子widget
+                childAspectRatio: 1.3 //宽高比为1时，子widget
+            )),
+      ),
     );
   }
 
-  gridItemView(BuildContext context, MainGridModel item, int index) {
+  gridItemView(BuildContext context, dynamic item, int index) {
     return
-      BouncingWidget(
-        duration: const Duration(milliseconds: 100),
-        scaleFactor: 1.2,
-        onPressed: (){
-        Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
-      },
+      InkWell(
+        onTap: (){
+          Get.to(()=>DeviceListPage(id: "${item['id']}",),binding: DeviceListBinding());
+        },
       child: Container(
         clipBehavior: Clip.hardEdge, //裁剪
         margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
@@ -186,7 +195,7 @@ class SpaceManagePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${item.name}",
+                    "${item['name']}",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
                         fontSize: 30.sp,
@@ -205,14 +214,14 @@ class SpaceManagePage extends StatelessWidget {
                               borderRadius: BorderRadius.all(Radius.circular(8.w))
                           ),
                           child: Text(
-                            "${item.count}个设备",
+                            "${item['deviceCount']}个设备",
                             style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Image.asset(
+                  item['deviceCount']==0?const SizedBox():Image.asset(
                     "assets/images/common/icon_red.png",
                     width: 30.w,
                     height: 30.w,

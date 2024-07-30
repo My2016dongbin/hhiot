@@ -259,44 +259,6 @@ class DeviceAddPage extends StatelessWidget {
                 ),
               ),
               logic.testStatus.value ? deviceList() : const SizedBox(),
-              ///新增空间
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: (){
-                  Get.to(()=>SpacePage(),binding: SpaceBinding());
-                },
-                child: Container(
-                  height: 90.w,
-                  width: 220.w,
-                  margin: EdgeInsets.fromLTRB(20.w, 910.w, 0, 0),
-                  padding: EdgeInsets.all(20.w),
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                      color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        "assets/images/common/ic_add.png",
-                        width: 32.w,
-                        height: 32.w,
-                        fit: BoxFit.fill,
-                      ),
-                      SizedBox(
-                        width: 6.w,
-                      ),
-                      Text(
-                        "新增空间",
-                        style: TextStyle(
-                            color: HhColors.gray4TextColor,
-                            fontSize: 25.sp,fontWeight: FontWeight.w200),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -343,42 +305,89 @@ class DeviceAddPage extends StatelessWidget {
 
   deviceList() {
     return logic.index.value == -1?const SizedBox():Container(
-      margin: EdgeInsets.only(top: 580.w),
-      child: PagedGridView<int, Device>(
-        pagingController: logic.deviceController,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, //横轴三个子widget
-            childAspectRatio: 2 //宽高比为1时，子widget
-            ),
-        builderDelegate: PagedChildBuilderDelegate<Device>(
-          itemBuilder: (context, item, index) =>
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: (){
-                  logic.index.value = -1;
-                  logic.index.value = index;
-                },
-            child: Container(
-              height: 90.w,
-              margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-              padding: EdgeInsets.all(20.w),
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  color: logic.index.value==index?HhColors.backBlueInColor:HhColors.whiteColor,
-                  border:logic.index.value==index?Border.all(color: HhColors.backBlueOutColor):null,
-                  borderRadius: BorderRadius.all(Radius.circular(20.w))),
-              child: Center(
-                child: Text(
-                  "${item.name}",
-                  style: TextStyle(
-                      color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
-                      fontSize: 26.sp),
+      margin: EdgeInsets.only(top: 625.w),
+      constraints: BoxConstraints(maxHeight: 0.7.sw),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: PagedGridView<int, Device>(
+              padding: const EdgeInsets.all(0),
+              pagingController: logic.deviceController,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, //横轴三个子widget
+                  childAspectRatio: 2 //宽高比为1时，子widget
+                  ),
+              builderDelegate: PagedChildBuilderDelegate<Device>(
+                itemBuilder: (context, item, index) =>
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
+                        logic.index.value = -1;
+                        logic.index.value = index;
+                      },
+                  child: Container(
+                    height: 90.w,
+                    margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                    padding: EdgeInsets.all(20.w),
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                        color: logic.index.value==index?HhColors.backBlueInColor:HhColors.whiteColor,
+                        border:logic.index.value==index?Border.all(color: HhColors.backBlueOutColor):null,
+                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                    child: Center(
+                      child: Text(
+                        "${item.name}",
+                        style: TextStyle(
+                            color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
+                            fontSize: 26.sp),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
+          ///新增空间
+          BouncingWidget(
+            duration: const Duration(milliseconds: 100),
+            scaleFactor: 1.2,
+            onPressed: (){
+              Get.to(()=>SpacePage(),binding: SpaceBinding());
+            },
+            child: Container(
+              height: 90.w,
+              width: 220.w,
+              margin: EdgeInsets.fromLTRB(20.w, 20.w, 0, 0),
+              padding: EdgeInsets.all(20.w),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  color: HhColors.whiteColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20.w))),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    "assets/images/common/ic_add.png",
+                    width: 32.w,
+                    height: 32.w,
+                    fit: BoxFit.fill,
+                  ),
+                  SizedBox(
+                    width: 6.w,
+                  ),
+                  Text(
+                    "新增空间",
+                    style: TextStyle(
+                        color: HhColors.gray4TextColor,
+                        fontSize: 25.sp,fontWeight: FontWeight.w200),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

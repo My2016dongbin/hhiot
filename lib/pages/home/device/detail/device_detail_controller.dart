@@ -18,9 +18,12 @@ import 'package:iot/utils/RequestUtils.dart';
 class DeviceDetailController extends GetxController {
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
+  final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
-  final PagingController<int, Device> deviceController = PagingController(firstPageKey: 0);
-  static const pageSize = 20;
+  final Rx<bool> playTag = true.obs;
+  final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
+  late int pageNum = 1;
+  late int pageSize = 20;
   late DragController dragController;
   late BuildContext context;
   late String deviceNo;
@@ -34,19 +37,11 @@ class DeviceDetailController extends GetxController {
 
   @override
   void onInit() {
-    deviceController.addPageRequestListener((pageKey) {
-      fetchPageDevice(pageKey);
-    });
-
-    player.setDataSource(
-        "rtmp://111.17.222.72:11935/live/efb70bbd-4fc9-44a3-9546-715aa079ec82?streamType=2&deviceType=132",
-        autoPlay: true);
-
     dragController = DragController();
-
     Future.delayed(const Duration(seconds: 1),(){
       getDeviceStream();
       getDeviceInfo();
+      getDeviceHistory();
     });
     super.onInit();
   }
@@ -88,15 +83,26 @@ class DeviceDetailController extends GetxController {
     var result = await HhHttp().request(RequestUtils.devicePlayUrl,method: DioMethod.post,data: {
       'deviceId':ids,
       'channelNumber':number,
-      'streamProtocol': "WS-FLV",
+      // 'deviceId':'2096e4bf4af411efa74f2a37f6c892cc',
+      // 'channelNumber':'24070888001320000082',
+      'streamProtocol': "RTSP",
       'streamType': 0,
       'transMode': "TCP"
     });
     HhLog.d("getPlayUrl -- $result");
-    if(result["code"]==0 && result["data"]!=null){
-      HhLog.e("url = ${result["data"]["url"]}");
+    if(result["code"]==200 && result["data"]!=null){
+      try{
+        String url = result["data"][0]['url'];
+        player.setDataSource(
+            url,
+            autoPlay: true);
+        playTag.value = false;
+        playTag.value = true;
+      }catch(e){
+        HhLog.e(e.toString());
+      }
     }else{
-      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["message"])));
     }
   }
 
@@ -107,7 +113,36 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceInfo -- $id");
     HhLog.d("getDeviceInfo -- $result");
     if(result["code"]==0 && result["data"]!=null){
+      name.value = "${result["data"]["spaceName"]}-${result["data"]["name"]}";
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
 
+  Future<void> getDeviceHistory() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "数据加载中.."));
+    Map<String, dynamic> map = {};
+    map['deviceId'] = id;
+    map['pageNo'] = pageNum;
+    map['pageSize'] = pageSize;
+    var result = await HhHttp().request(RequestUtils.deviceHistory,method: DioMethod.get,params: map);
+    HhLog.d("getDeviceHistory -- $pageNum");
+    HhLog.d("getDeviceHistory -- $result");
+    Future.delayed(const Duration(seconds: 1),(){
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
+    });
+    if(result["code"]==0 && result["data"]!=null){
+      List<dynamic> newItems = [];
+      try{
+        newItems = result["data"]["list"];
+      }catch(e){
+        HhLog.e(e.toString());
+      }
+
+      if(pageNum == 1){
+        deviceController.itemList = [];
+      }
+      deviceController.appendLastPage(newItems);
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
