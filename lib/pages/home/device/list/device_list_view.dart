@@ -1,4 +1,5 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,12 +14,15 @@ import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/device_view.dart';
 import 'package:iot/pages/home/device/list/device_list_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class DeviceListPage extends StatelessWidget {
   final logic = Get.find<DeviceListController>();
 
-  DeviceListPage({super.key});
+  DeviceListPage({super.key,String ?id}){
+    logic.id = id??'';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +130,7 @@ class DeviceListPage extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(20.w, 180.w, 0, 0),
                   color: HhColors.trans,
                   child: Text(
-                    "大涧林场·设备列表",
+                    "${logic.name}·设备列表",
                     style: TextStyle(
                         color: HhColors.whiteColor,
                         fontSize: 36.sp,fontWeight: FontWeight.bold),
@@ -153,7 +157,7 @@ class DeviceListPage extends StatelessWidget {
                           ),
                           SizedBox(width: 10.w,),
                           Text(
-                            "23.5°C",
+                            "${logic.temp}°C",
                             style: TextStyle(
                                 color: HhColors.whiteColor,
                                 fontSize: 32.sp,fontWeight: FontWeight.bold),
@@ -171,7 +175,7 @@ class DeviceListPage extends StatelessWidget {
                           ),
                           SizedBox(width: 10.w,),
                           Text(
-                            "23.5",
+                            "${logic.dew}",
                             style: TextStyle(
                                 color: HhColors.whiteColor,
                                 fontSize: 32.sp,fontWeight: FontWeight.bold),
@@ -189,7 +193,7 @@ class DeviceListPage extends StatelessWidget {
                           ),
                           SizedBox(width: 10.w,),
                           Text(
-                            "23.5°C",
+                            "${logic.feelsLike}°C",
                             style: TextStyle(
                                 color: HhColors.whiteColor,
                                 fontSize: 32.sp,fontWeight: FontWeight.bold),
@@ -242,106 +246,117 @@ class DeviceListPage extends StatelessWidget {
   deviceList() {
     return Container(
       margin: EdgeInsets.only(top: 380.w),
-      child: PagedListView<int, Device>(
-        pagingController: logic.deviceController,
-        builderDelegate: PagedChildBuilderDelegate<Device>(
-          itemBuilder: (context, item, index) =>
-              InkWell(
-                onTap: (){
-                  Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
-                },
-            child: Container(
-              height: 160.w,
-              margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-              padding: EdgeInsets.all(20.w),
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20.w))
-              ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5.w))
-                      ),
-                      child: Image.asset(
-                        "assets/images/common/icon_camera_space.png",
-                        width: 80.w,
-                        height: 80.w,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(100.w, 0, 0, item.desc==""?0:50.w),
-                      child: Text(
-                        '${item.name}',
-                        style: TextStyle(
-                            color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  item.desc==""?const SizedBox():Container(
-                    margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
-                    child: Text(
-                      '${item.desc}',
-                      style: TextStyle(
-                          color: HhColors.textColor, fontSize: 22.sp),
-                    ),
-                  ),
-                  ///分享
-                  item.shared==true?Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      margin: EdgeInsets.only(right:70.w),
-                      padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
-                      decoration: BoxDecoration(
-                        color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(5.w))
-                      ),
-                      child: Text(
-                        '已共享*1',
-                        style: TextStyle(
-                            color: HhColors.whiteColor, fontSize: 23.sp),
-                      ),
-                    ),
-                  ):const SizedBox(),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child:
-                    BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        Get.to(()=>SharePage(),binding: ShareBinding());
-                      },
+      child: EasyRefresh(
+        onRefresh: (){
+          logic.pageNum = 1;
+          logic.deviceList(logic.pageNum);
+        },
+        onLoad: (){
+          logic.pageNum++;
+          logic.deviceList(logic.pageNum);
+        },
+        child: PagedListView<int, dynamic>(
+          pagingController: logic.deviceController,
+          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(),
+            itemBuilder: (context, item, index) =>
+                InkWell(
+                  onTap: (){
+                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+                  },
+              child: Container(
+                height: 160.w,
+                margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                padding: EdgeInsets.all(20.w),
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(20.w))
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.only(right: item.shared==true?0:80.w),
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5.w))
+                        ),
                         child: Image.asset(
-                          item.shared==true?"assets/images/common/shared.png":"assets/images/common/share.png",
-                          width: 50.w,
-                          height: 50.w,
+                          "assets/images/common/icon_camera_space.png",
+                          width: 80.w,
+                          height: 80.w,
                           fit: BoxFit.fill,
                         ),
                       ),
                     ),
-                  ),
-                  item.shared==true?const SizedBox():Align(
-                    alignment: Alignment.centerRight,
-                    child: Image.asset(
-                      "assets/images/common/close.png",
-                      width: 50.w,
-                      height: 50.w,
-                      fit: BoxFit.fill,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(100.w, 0, 0, item['productName']==""?0:50.w),
+                        child: Text(
+                          '${item['name']}',
+                          style: TextStyle(
+                              color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    item['productName']==""?const SizedBox():Container(
+                      margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
+                      child: Text(
+                        '${item['productName']}-${item['categoryName']}',
+                        style: TextStyle(
+                            color: HhColors.textColor, fontSize: 22.sp),
+                      ),
+                    ),
+                    ///分享
+                    item['shared']==true?Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        margin: EdgeInsets.only(right:70.w),
+                        padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                        decoration: BoxDecoration(
+                          color: HhColors.mainBlueColor,
+                            borderRadius: BorderRadius.all(Radius.circular(5.w))
+                        ),
+                        child: Text(
+                          '已共享*1',
+                          style: TextStyle(
+                              color: HhColors.whiteColor, fontSize: 23.sp),
+                        ),
+                      ),
+                    ):const SizedBox(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child:
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          Get.to(()=>SharePage(),binding: ShareBinding());
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: item['shared']==true?0:80.w),
+                          child: Image.asset(
+                            item['shared']==true?"assets/images/common/shared.png":"assets/images/common/share.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                    item['shared']==true?const SizedBox():Align(
+                      alignment: Alignment.centerRight,
+                      child: Image.asset(
+                        "assets/images/common/close.png",
+                        width: 50.w,
+                        height: 50.w,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

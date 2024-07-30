@@ -9,3 +9,6 @@ class HhLoading{
 
   HhLoading({required this.show,this.title});
 }
+class SpaceList{
+  SpaceList();
+}

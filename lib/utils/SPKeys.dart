@@ -10,6 +10,8 @@ class SPKeys{
   final String posts = 'posts';
 
   final String token = 'token';
+  final String tenant = 'tenant';
+  final String tenantName = 'tenantName';
   final String account = 'account';
   final String password = 'password';
 }

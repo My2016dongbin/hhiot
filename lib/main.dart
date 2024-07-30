@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
@@ -126,6 +127,9 @@ class MyAppState extends State<HhApp> {
       },
     );
     EasyLoading.init();
+    // 全局设置
+    EasyRefresh.defaultHeaderBuilder = () => const CupertinoHeader();
+    EasyRefresh.defaultFooterBuilder = () => const CupertinoFooter();
   }
 
   @override

@@ -20,15 +20,7 @@ class HomeBinding extends Bindings {
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => MainController());
     Get.lazyPut(() => DeviceController());
-    Get.lazyPut(() => MessageController());
     Get.lazyPut(() => MyController());
-    // Get.lazyPut(() => SpaceController());
-    // Get.lazyPut(() => SearchedController());
-    // Get.lazyPut(() => DeviceListController());
-    // Get.lazyPut(() => DeviceAddController());
-    // Get.lazyPut(() => DeviceStatusController());
-    // Get.lazyPut(() => DeviceDetailController());
-    // Get.lazyPut(() => SettingController());
-    // Get.lazyPut(() => NetWorkController());
+    Get.lazyPut(() => MessageController());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
@@ -10,6 +11,7 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
+import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
@@ -25,6 +27,7 @@ import 'main_controller.dart';
 
 class MainPage extends StatelessWidget {
   final logic = Get.find<MainController>();
+  final homeLogic = Get.find<HomeController>();
 
   MainPage({super.key});
 
@@ -546,7 +549,7 @@ class MainPage extends StatelessWidget {
                             width: 10.w,
                           ),
                           Text(
-                            "22°多云",
+                            "${logic.temp.value}°${logic.text.value}",
                             style: TextStyle(
                                 color: HhColors.blackTextColor,
                                 fontSize: 24.sp),
@@ -569,31 +572,50 @@ class MainPage extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          width: 55.w,
-                          height: 50.w,
-                          margin: EdgeInsets.only(bottom: 10.w),
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Image.asset(
-                                  "assets/images/common/icon_message_main.png",
-                                  width: 45.w,
-                                  height: 45.w,
-                                  fit: BoxFit.fill,
+                        BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          homeLogic.index.value = 2;
+                        },
+                          child: Container(
+                            width: 55.w,
+                            height: 50.w,
+                            margin: EdgeInsets.only(bottom: 10.w),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Image.asset(
+                                    "assets/images/common/icon_message_main.png",
+                                    width: 45.w,
+                                    height: 45.w,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: Image.asset(
-                                  "assets/images/common/icon_red1.png",
-                                  width: 25.w,
-                                  height: 25.w,
-                                  fit: BoxFit.fill,
+                                /*Align(
+                                  alignment: Alignment.topRight,
+                                  child: Image.asset(
+                                    "assets/images/common/icon_red1.png",
+                                    width: 25.w,
+                                    height: 25.w,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),*/
+                                logic.count.value=='0'?const SizedBox():Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: HhColors.mainRedColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(10.w))
+                                    ),
+                                    width: 25.w + ((logic.count.value.length-1) * 6.w),
+                                    height: 25.w,
+                                    child: Center(child: Text(logic.count.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp),)),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                         BouncingWidget(
@@ -726,16 +748,26 @@ class MainPage extends StatelessWidget {
             ),
             ///GridView
             Expanded(
-              child: PagedGridView<int, MainGridModel>(
-                  pagingController: logic.pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<MainGridModel>(
-                    itemBuilder: (context, item, index) =>
-                        gridItemView(context, item, index),
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, //横轴三个子widget
-                      childAspectRatio: 1.3 //宽高比为1时，子widget
-                  )),
+              child: EasyRefresh(
+                onRefresh: (){
+                  logic.pageNum = 1;
+                  logic.getSpaceList(logic.pageNum);
+                },
+                onLoad: (){
+                  logic.pageNum++;
+                  logic.getSpaceList(logic.pageNum);
+                },
+                child: PagedGridView<int, dynamic>(
+                    pagingController: logic.pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                      itemBuilder: (context, item, index) =>
+                          gridItemView(context, item, index),
+                    ),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, //横轴n个子widget
+                        childAspectRatio: 1.3 //宽高比
+                    )),
+              ),
             ),
             buttonView()
           ],
@@ -746,10 +778,10 @@ class MainPage extends StatelessWidget {
   }
 
   ///我的空间视图-网格列表itemView
-  gridItemView(BuildContext context, MainGridModel item, int index) {
+  gridItemView(BuildContext context, dynamic item, int index) {
     return InkWell(
       onTap: (){
-        Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
+        Get.to(()=>DeviceListPage(id: "${item['id']}",),binding: DeviceListBinding());
       },
       child: Container(
         clipBehavior: Clip.hardEdge, //裁剪
@@ -777,7 +809,7 @@ class MainPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${item.name}",
+                    "${item['name']}",
                     style: TextStyle(
                         color: HhColors.blackColor,
                         fontSize: 30.sp,),
@@ -795,14 +827,14 @@ class MainPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(8.w))
                           ),
                           child: Text(
-                            "${item.count}个设备",
+                            "${item['deviceCount']}个设备",
                             style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Image.asset(
+                  item['deviceCount']==0?const SizedBox():Image.asset(
                     "assets/images/common/icon_red.png",
                     width: 30.w,
                     height: 30.w,

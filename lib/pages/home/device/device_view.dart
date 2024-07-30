@@ -181,7 +181,7 @@ class DevicePage extends StatelessWidget {
           itemBuilder: (context, item, index) =>
               InkWell(
                 onTap: (){
-                  Get.to(()=>DeviceDetailPage(),binding: DeviceDetailBinding());
+                  Get.to(()=>DeviceDetailPage("1",'1'/*item['deviceNo']*/),binding: DeviceDetailBinding());
                 },
             child: Container(
               height: 180.w,

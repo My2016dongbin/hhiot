@@ -13,12 +13,5 @@ class CodeBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => CodeController());
-    Get.lazyPut(() => LaunchController());
-    Get.lazyPut(() => LoginController());
-    Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => MainController());
-    Get.lazyPut(() => DeviceController());
-    Get.lazyPut(() => MessageController());
-    Get.lazyPut(() => MyController());
   }
 }

@@ -718,7 +718,7 @@ class SettingPage extends StatelessWidget {
                   onTap: () async {
                     final SharedPreferences prefs = await SharedPreferences.getInstance();
                     prefs.remove(SPKeys().token);
-                    Get.offAll(LoginPage(),binding: LoginBinding());
+                    Get.offAll(() => LoginPage(),binding: LoginBinding());
                   },
                   child: Container(
                     width: 1.sw,

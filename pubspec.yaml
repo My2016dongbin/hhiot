@@ -58,13 +58,13 @@ dependencies:
   toggle_switch: ^2.3.0
   flutter_styled_toast: ^2.2.1
   flutter_barcode_scanner: ^2.0.0
-  video_player: ^2.8.6
 #  slide_to_act: ^2.0.2 滑动解锁
 #  speech_to_text: ^6.6.2 语音转文字
 
   bouncing_widget: ^2.0.0
   draggable_widget: ^2.0.0
 
+  fijkplayer: ^0.11.0
   shared_preferences: ^2.2.3
   flutter_bmflocation: ^3.3.0
   flutter_baidu_mapapi_map: ^3.7.0

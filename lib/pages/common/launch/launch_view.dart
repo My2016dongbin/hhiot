@@ -13,6 +13,7 @@ class LaunchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(

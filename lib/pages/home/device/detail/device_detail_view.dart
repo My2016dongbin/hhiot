@@ -1,20 +1,25 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
-import 'package:draggable_widget/draggable_widget.dart';
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
-import 'package:video_player/video_player.dart';
+import 'package:iot/utils/HhLog.dart';
 
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
 
-  DeviceDetailPage({super.key});
+  DeviceDetailPage(String deviceNo,String id, {super.key}){
+    logic.deviceNo = deviceNo;
+    logic.id = id;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,24 +47,13 @@ class DeviceDetailPage extends StatelessWidget {
                 height: 500.w,
                 fit: BoxFit.fill,
               ),
-              SizedBox(
+              Container(
                 width: 1.sw,
                 height: 500.w,
-                child: AspectRatio(
-                  aspectRatio: logic.controller.value.aspectRatio,
-                  child: VideoPlayer(logic.controller),
-                ),
+                color: HhColors.blackColor,
               ),
-              InkWell(
-                onTap: () {
-                  logic.controller.play();
-                },
-                child: Container(
-                  width: 1.sw,
-                  height: 500.w,
-                  color: HhColors.blackColor,
-                ),
-              ),
+              FijkView(width: 1.sw,height: 500.w,player: logic.player,color: HhColors.blackColor,),
+
 
               ///title
               InkWell(
@@ -276,12 +270,36 @@ class DeviceDetailPage extends StatelessWidget {
                       );
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
+
+                      String msg = '';
+                      double offset = 20;
+                      double x = details.localPosition.dx;
+                      double y = details.localPosition.dy;
+                      HhLog.d("move $x , $y");
+                      ///上
+                      if(x > -1*offset && x < 1*offset && y > 0){
+                        msg = '上';
+                      }
+                      ///下
+                      if(x > -1*offset && x < 1*offset && y < 0){
+                        msg = '下';
+                      }
+                      ///左
+                      if(y > -1*offset && y < 1*offset && x < 0){
+                        msg = '左';
+                      }
+                      ///右
+                      if(y > -1*offset && y < 1*offset && x > 0){
+                        msg = '右';
+                      }
+                      EventBusUtil.getInstance().fire(HhToast(title: msg));
                     },
                     onPanEnd: (details) {
                       // runAnimation(details.velocity.pixelsPerSecond);
                       logic.animateAlign = Alignment.center;
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
+                      EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
                     },
                     child: SizedBox(
                       width: 0.66.sw,

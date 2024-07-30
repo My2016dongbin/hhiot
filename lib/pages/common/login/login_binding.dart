@@ -10,12 +10,7 @@ import 'package:iot/pages/home/my/my_controller.dart';
 class LoginBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => CodeController());
     Get.lazyPut(() => LoginController());
-    Get.lazyPut(() => HomeController());
     Get.lazyPut(() => MainController());
-    Get.lazyPut(() => DeviceController());
-    Get.lazyPut(() => MessageController());
-    Get.lazyPut(() => MyController());
   }
 }

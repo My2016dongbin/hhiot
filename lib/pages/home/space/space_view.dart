@@ -94,9 +94,13 @@ class SpacePage extends StatelessWidget {
             duration: const Duration(milliseconds: 100),
             scaleFactor: 1.2,
             onPressed: (){
-              EventBusUtil.getInstance().fire(HhToast(title: '添加成功'));
-              Get.back();
-              logic.picture.value = false;
+              //隐藏输入法
+              FocusScope.of(logic.context).requestFocus(FocusNode());
+              if(logic.nameController!.text.isEmpty){
+                EventBusUtil.getInstance().fire(HhToast(title: '空间名称不能为空'));
+                return;
+              }
+              logic.createSpace();
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(0,90.w,20.w,0),
