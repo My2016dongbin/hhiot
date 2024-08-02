@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
+import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
+import 'package:iot/pages/home/my/setting/edit_user/edit_view.dart';
 import 'package:iot/pages/home/my/setting/setting_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -116,27 +121,36 @@ class SettingPage extends StatelessWidget {
                             ),
                             Align(
                               alignment: Alignment.centerRight,
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                margin:EdgeInsets.only(right: 65.w),
-                                decoration: BoxDecoration(
-                                    color: HhColors.whiteColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(50.w))
-                                ),
-                                child: Image.network(
-                                    logic.avatar!.value,
+                              child: InkWell(
+                                onTap: (){
+                                  getImageFromGallery(1);
+                                },
+                                child: Container(
+                                  clipBehavior: Clip.hardEdge,
+                                  margin:EdgeInsets.only(right: 65.w),
+                                  decoration: BoxDecoration(
+                                      color: HhColors.whiteColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(50.w))
+                                  ),
+                                  child: logic.picture.value==true?Image.file(File(logic.file.path),
                                     width: 100.w,
                                     height: 100.w,
-                                    fit: BoxFit.fill,
-                                    errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
-                                      return Image.asset(
-                                        "assets/images/common/user.png",
-                                        width: 100.w,
-                                        height: 100.w,
-                                        fit: BoxFit.fill,
-                                      );
-                                    },
-                                  ),
+                                    fit: BoxFit.fill,)
+                                      :Image.network(
+                                      logic.avatar!.value,
+                                      width: 100.w,
+                                      height: 100.w,
+                                      fit: BoxFit.fill,
+                                      errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
+                                        return Image.asset(
+                                          "assets/images/common/user.png",
+                                          width: 100.w,
+                                          height: 100.w,
+                                          fit: BoxFit.fill,
+                                        );
+                                      },
+                                    ),
+                                ),
                               ),
                             ),
                             Align(
@@ -164,56 +178,61 @@ class SettingPage extends StatelessWidget {
                         ),
                       ),
                       ///昵称
-                      SizedBox(
-                        height:110.w,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin:EdgeInsets.only(left: 30.w),
-                                child: Text(
-                                  "昵称",
-                                  style: TextStyle(
-                                      color: HhColors.textBlackColor,
-                                      fontSize: 28.sp,fontWeight: FontWeight.bold),
+                      InkWell(
+                        onTap: (){
+                          Get.to(() => EditPage(keys: 'nickname',titles: '修改昵称',), binding: EditBinding());
+                        },
+                        child: SizedBox(
+                          height:110.w,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin:EdgeInsets.only(left: 30.w),
+                                  child: Text(
+                                    "昵称",
+                                    style: TextStyle(
+                                        color: HhColors.textBlackColor,
+                                        fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.only(right: 65.w),
-                                child: Text(
-                                  logic.nickname!.value,
-                                  style: TextStyle(
-                                      color: HhColors.gray9TextColor,
-                                      fontSize: 26.sp),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.only(right: 65.w),
+                                  child: Text(
+                                    logic.nickname!.value,
+                                    style: TextStyle(
+                                        color: HhColors.gray9TextColor,
+                                        fontSize: 26.sp),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
-                                child: Image.asset(
-                                  "assets/images/common/back_role.png",
-                                  width: 25.w,
-                                  height: 25.w,
-                                  fit: BoxFit.fill,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                                  child: Image.asset(
+                                    "assets/images/common/back_role.png",
+                                    width: 25.w,
+                                    height: 25.w,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                                alignment: Alignment.bottomCenter,
-                                child:Container(
-                                  height: 0.5.w,
-                                  width: 1.sw,
-                                  margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                  color: HhColors.grayDDTextColor,
-                                )
-                            )
-                          ],
+                              Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child:Container(
+                                    height: 0.5.w,
+                                    width: 1.sw,
+                                    margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                                    color: HhColors.grayDDTextColor,
+                                  )
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       ///账号
@@ -240,12 +259,12 @@ class SettingPage extends StatelessWidget {
                                 child: Text(
                                   logic.account!.value,
                                   style: TextStyle(
-                                      color: HhColors.gray9TextColor,
+                                      color: HhColors.grayCCTextColor,
                                       fontSize: 26.sp),
                                 ),
                               ),
                             ),
-                            Align(
+                            /*Align(
                               alignment: Alignment.centerRight,
                               child: Container(
                                 margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
@@ -256,7 +275,7 @@ class SettingPage extends StatelessWidget {
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                            ),
+                            ),*/
                             Align(
                                 alignment: Alignment.bottomCenter,
                                 child:Container(
@@ -346,56 +365,61 @@ class SettingPage extends StatelessWidget {
                         ),
                       ),
                       ///安全邮箱
-                      SizedBox(
-                        height:110.w,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin:EdgeInsets.only(left: 30.w),
-                                child: Text(
-                                  "安全邮箱",
-                                  style: TextStyle(
-                                      color: HhColors.textBlackColor,
-                                      fontSize: 28.sp,fontWeight: FontWeight.bold),
+                      InkWell(
+                        onTap: (){
+                          Get.to(() => EditPage(keys: 'email',titles: '修改邮箱',), binding: EditBinding());
+                        },
+                        child: SizedBox(
+                          height:110.w,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin:EdgeInsets.only(left: 30.w),
+                                  child: Text(
+                                    "安全邮箱",
+                                    style: TextStyle(
+                                        color: HhColors.textBlackColor,
+                                        fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.only(right: 65.w),
-                                child: Text(
-                                  CommonUtils().mobileString(logic.email!.value),
-                                  style: TextStyle(
-                                      color: HhColors.gray9TextColor,
-                                      fontSize: 26.sp),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.only(right: 65.w),
+                                  child: Text(
+                                    CommonUtils().mobileString(logic.email!.value),
+                                    style: TextStyle(
+                                        color: HhColors.gray9TextColor,
+                                        fontSize: 26.sp),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
-                                child: Image.asset(
-                                  "assets/images/common/back_role.png",
-                                  width: 25.w,
-                                  height: 25.w,
-                                  fit: BoxFit.fill,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                                  child: Image.asset(
+                                    "assets/images/common/back_role.png",
+                                    width: 25.w,
+                                    height: 25.w,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child:Container(
-                                height: 0.5.w,
-                                width: 1.sw,
-                                margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                color: HhColors.grayDDTextColor,
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child:Container(
+                                  height: 0.5.w,
+                                  width: 1.sw,
+                                  margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                                  color: HhColors.grayDDTextColor,
+                                )
                               )
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       ///安全邮箱
@@ -744,5 +768,21 @@ class SettingPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+
+  Future getImageFromGallery(int num) async {
+    final List<XFile> pickedFileList = await ImagePicker().pickMultiImage(
+      maxWidth: 3000,
+      maxHeight: 3000,
+      imageQuality: 1,
+    );
+    if(pickedFileList.isNotEmpty){
+      logic.file = pickedFileList[0];
+      logic.picture.value = false;
+      logic.picture.value = true;
+
+      logic.fileUpload();
+    }
   }
 }

@@ -7,6 +7,8 @@ class RequestUtils{
   static const codeSend = '$base/admin-api/system/auth/send-sms-code';//发送验证码
   static const codeLogin = '$base/admin-api/system/auth/sms-login';//验证码登录
   static const userInfo = '$base/admin-api/system/user/profile/get';//个人信息查询
+  static const codeRegisterSend = '$base/admin-api/system/auth/send-sms-code-register';//发送验证码-注册
+  static const codeRegister = '$base/admin-api/system/auth/register';//注册
   static const weatherLocation = '$base/admin-api/mid/weather-now/getWeatherByLocation';//查询定位天气
   static const unReadCount = '$base/admin-api/system/message-log/getUnReadMessageCount';//主页未读消息数量查询
   static const mainSpaceList = '$base/admin-api/mid/space/page';//主页空间列表
@@ -19,6 +21,13 @@ class RequestUtils{
   static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrl';//设备视频流查询
   static const deviceCreate = '$base/admin-api/mid/device-base/create';//设备添加
   static const deviceList = '$base/admin-api/mid/device-base/page';//设备查询
+  static const userEdit = '$base/admin-api/system/user/profile/update';//修改个人信息
+  static const mainSearch = '$base/admin-api/mid/space/getListByKeyWord';//主页查询空间设备及消息
+  static const fileUpload = '$base/admin-api/infra/file/upload';//文件上传
+
+  ///Socket
+  static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET
+  static const chatCreate = '$base/admin-api/mid/device-info/chatState';//调用语音服务创建会话POST
 
 
   /*

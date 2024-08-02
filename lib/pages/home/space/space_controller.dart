@@ -14,6 +14,8 @@ class SpaceController extends GetxController {
   final Rx<bool> picture = false.obs;
   TextEditingController ?nameController = TextEditingController();
   late BuildContext context;
+  late double longitude;
+  late double latitude;
   late XFile file;
 
 
@@ -21,6 +23,8 @@ class SpaceController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在添加..'));
     var result = await HhHttp().request(RequestUtils.spaceCreate,method: DioMethod.post,data: {
       'name':nameController!.text,
+      'location':'$longitude,$latitude',
+      // 'imgUrl':'',
     });
     HhLog.d("createSpace -- $result");
     if(result["code"]==0 && result["data"]!=null){

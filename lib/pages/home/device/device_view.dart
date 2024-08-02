@@ -10,6 +10,8 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -110,6 +112,11 @@ class DevicePage extends StatelessWidget {
                 InkWell(
                   onTap: (){
                     Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+                    /*if(item['productName']=='浩海一体机'){
+                      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+                    }else if(item['productName']=='智慧立杆'){
+                      Get.to(()=>LiGanDetailPage('${item['deviceNo']}','${item['id']}'),binding: LiGanDetailBinding());
+                    }*/
                   },
               child: Container(
                 height: 180.w,
@@ -130,7 +137,7 @@ class DevicePage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(5.w))
                         ),
                         child: Image.asset(
-                          "assets/images/common/icon_camera_space.png",
+                          item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
                           width: 80.w,
                           height: 80.w,
                           fit: BoxFit.fill,
@@ -173,7 +180,7 @@ class DevicePage extends StatelessWidget {
                         ),
                       ),
                     ):const SizedBox(),
-                    Align(
+                    /*Align(
                       alignment: Alignment.centerRight,
                       child:
                       BouncingWidget(
@@ -192,7 +199,7 @@ class DevicePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                     item['shared']==true?const SizedBox():Align(
                       alignment: Alignment.centerRight,
                       child: Image.asset(

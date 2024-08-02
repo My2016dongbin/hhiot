@@ -90,8 +90,9 @@ class LaunchController extends GetxController {
       Permission.location,
       Permission.storage,
       Permission.camera,
+      Permission.microphone,
     ].request();
-    if(statuses[Permission.location] != PermissionStatus.denied && statuses[Permission.storage] != PermissionStatus.denied && statuses[Permission.camera] != PermissionStatus.denied){
+    if(statuses[Permission.location] != PermissionStatus.denied && statuses[Permission.storage] != PermissionStatus.denied && statuses[Permission.camera] != PermissionStatus.denied&& statuses[Permission.microphone] != PermissionStatus.denied){
       next();
     }else{
       showToast('请授权',

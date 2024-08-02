@@ -12,3 +12,9 @@ class HhLoading{
 class SpaceList{
   SpaceList();
 }
+class DeviceList{
+  DeviceList();
+}
+class UserInfo{
+  UserInfo();
+}

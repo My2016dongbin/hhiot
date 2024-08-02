@@ -8,12 +8,16 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/location/location_binding.dart';
+import 'package:iot/pages/common/location/location_controller.dart';
+import 'package:iot/pages/common/location/location_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import '../../../utils/HhColors.dart';
 import 'space_controller.dart';
 
 class SpacePage extends StatelessWidget {
   final logic = Get.find<SpaceController>();
+  final logicLocation = Get.find<LocationController>();
 
   SpacePage({super.key});
 
@@ -100,6 +104,10 @@ class SpacePage extends StatelessWidget {
                 EventBusUtil.getInstance().fire(HhToast(title: '空间名称不能为空'));
                 return;
               }
+              if(logicLocation.longitude.value!=0.0){
+                logic.longitude = logicLocation.longitude.value;
+                logic.latitude = logicLocation.latitude.value;
+              }
               logic.createSpace();
             },
             child: Container(
@@ -174,6 +182,48 @@ class SpacePage extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  Get.to(()=>LocationPage(),binding: LocationBinding());
+                },
+                child: SizedBox(
+                  height: 100.w,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 5.w,),
+                      Text(
+                        "空间定位",
+                        style: TextStyle(
+                            color: HhColors.textBlackColor,
+                            fontSize: 28.sp,fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Expanded(
+                        child: Text(
+                          logicLocation.longitude.value == 0.0?'请选择空间定位':'${logicLocation.longitude.value},${logicLocation.latitude.value}',
+                          textAlign: TextAlign.end,
+                          style:
+                          TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10.w, 3.w, 0, 0),
+                        child: Image.asset(
+                          "assets/images/common/back_role.png",
+                          width: 25.w,
+                          height: 25.w,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(

@@ -24,6 +24,7 @@ class LoginController extends GetxController {
   final Rx<bool> passwordStatus = false.obs;
   final Rx<bool> passwordShowStatus = false.obs;
   final Rx<bool> confirmStatus = false.obs;
+  final Rx<bool> userType = true.obs;///true企业  false个人用户
   TextEditingController? tenantController = TextEditingController();
   TextEditingController? accountController = TextEditingController();
   TextEditingController? passwordController = TextEditingController();
@@ -97,6 +98,26 @@ class LoginController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/)));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
+    }
+  }
+  Future<void> getTenantId() async {
+    Map<String, dynamic> map = {};
+    map['name'] = tenantController!.text;
+    var tenantResult = await HhHttp().request(
+      RequestUtils.tenantId,
+      method: DioMethod.get,
+      params: map,
+    );
+    HhLog.d("tenant -- $tenantResult");
+    if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');
+      await prefs.setString(SPKeys().tenantName, tenantController!.text);
+      CommonData.tenant = '${tenantResult["data"]}';
+      CommonData.tenantName = tenantController!.text;
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/)));
     }
   }
 

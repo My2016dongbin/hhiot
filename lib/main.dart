@@ -64,6 +64,7 @@ void main() {
     ..textColor = HhColors.titleColor_99
     ..backgroundColor = HhColors.whiteColor
     ..successWidget = const Text("yes")
+    ..dismissOnTap = true
     ..maskType = EasyLoadingMaskType.black;
 
 }
@@ -104,7 +105,7 @@ class MyAppState extends State<HhApp> {
     if (Platform.isIOS) {
       XgFlutterPlugin().startXg("1600040310", "IRL5SNBR2DSA");
     }else{
-      XgFlutterPlugin().startXg("1500040311", "ADC2K1REPJ75");
+      XgFlutterPlugin().startXg("1500040929", "A2UCA4MQX4ST");
     }
     //注册回调
     XgFlutterPlugin().addEventHandler(

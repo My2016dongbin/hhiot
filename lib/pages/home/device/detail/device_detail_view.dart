@@ -8,8 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
+import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -294,14 +295,14 @@ class DeviceDetailPage extends StatelessWidget {
                       if(y > -1*offset && y < 1*offset && x > 0){
                         msg = '右';
                       }
-                      EventBusUtil.getInstance().fire(HhToast(title: msg));
+                      // EventBusUtil.getInstance().fire(HhToast(title: msg));
                     },
                     onPanEnd: (details) {
                       // runAnimation(details.velocity.pixelsPerSecond);
                       logic.animateAlign = Alignment.center;
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
-                      EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
+                      // EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
                     },
                     child: SizedBox(
                       width: 0.66.sw,
@@ -425,6 +426,20 @@ class DeviceDetailPage extends StatelessWidget {
                   "assets/images/common/ic_voice.png",
                   width: 130.w,
                   height: 130.w,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              SizedBox(width: 20.w,),
+              logic.productName.value!='智慧立杆'?const SizedBox():BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.to(()=>LiGanDetailPage(logic.deviceNo,logic.id),binding: LiGanDetailBinding());
+                },
+                child: Image.asset(
+                  "assets/images/common/icon_set.png",
+                  width: 50.w,
+                  height: 50.w,
                   fit: BoxFit.fill,
                 ),
               ),

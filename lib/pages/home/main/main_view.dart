@@ -7,8 +7,13 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/common/socket/socket_page/socket_binding.dart';
+import 'package:iot/pages/common/socket/socket_page/socket_view.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
+import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
@@ -17,6 +22,9 @@ import 'package:iot/pages/home/main/search/search_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/routes/app_navigator.dart';
+import 'package:iot/utils/CommonUtils.dart';
+import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhLog.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/CustomRoute.dart';
 import '../../../utils/HhColors.dart';
@@ -51,6 +59,7 @@ class MainPage extends StatelessWidget {
   buildSearchView() {
     return Container(
       width: 0.6.sw,
+      height: 0.8.sw,
       margin: EdgeInsets.fromLTRB(30.w, logic.marginTop + 70.w, 0, 0),
       padding: EdgeInsets.fromLTRB(20.w, 20.w, 50.w, 20.w),
       decoration: BoxDecoration(
@@ -104,6 +113,14 @@ class MainPage extends StatelessWidget {
                     cursorColor: HhColors.titleColor_99,
                     controller: logic.searchController,
                     keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: (s){
+                      // if(logic.searchController!.text.isEmpty){
+                      //   EventBusUtil.getInstance().fire(HhToast(title: '请输入名称'));
+                      //   return;
+                      // }
+                      logic.deviceSearch();
+                    },
                     decoration: InputDecoration(
                       //contentPadding: EdgeInsets.zero,
                       border: InputBorder.none,
@@ -119,7 +136,80 @@ class MainPage extends StatelessWidget {
             ),
           ),
           ///列表数据
-          Container(
+          Expanded(
+            child: PagedListView<int, dynamic>(
+              pagingController: logic.deviceController,
+              padding: EdgeInsets.zero,
+              builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(),
+                itemBuilder: (context, item, index) =>
+                    InkWell(
+                      onTap: (){
+                        HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
+                        logic.controller?.setCenterCoordinate(
+                          BMFCoordinate(item["latitude"],item["longitude"]), false,
+                        );
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(15.w),
+                            decoration: BoxDecoration(
+                                color: HhColors.blueBackColor,
+                                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                            margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "${item['name']}",
+                                    style: TextStyle(
+                                        color: HhColors.textBlackColor,
+                                        fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 50.w),
+                                    child: Text(
+                                      "${item['spaceName']}",
+                                      style: TextStyle(
+                                          color: HhColors.gray9TextColor,
+                                          fontSize: 23.sp),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 90.w),
+                                    child: Text(
+                                      "(${CommonUtils().subString("${item['longitude']}", 8)},${CommonUtils().subString("${item['latitude']}", 8)})",
+                                      style: TextStyle(
+                                          color: HhColors.gray9TextColor,
+                                          fontSize: 23.sp),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 0.5.w,
+                            width: 1.sw,
+                            margin: EdgeInsets.fromLTRB(20.w, 5.w, 20.w, 0),
+                            color: HhColors.grayDDTextColor,
+                          )
+                        ],
+                      ),
+                    )
+              ),
+            ),
+          ),
+          /*Container(
             padding: EdgeInsets.all(15.w),
             decoration: BoxDecoration(
                 color: HhColors.blueBackColor,
@@ -212,7 +302,7 @@ class MainPage extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          ),*/
         ],
       ),
     );
@@ -576,7 +666,9 @@ class MainPage extends StatelessWidget {
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.2,
                         onPressed: (){
+                          //TODO Socket测试
                           homeLogic.index.value = 2;
+                          // Get.to(()=>SocketPage(),binding: SocketBinding());
                         },
                           child: Container(
                             width: 55.w,
@@ -622,7 +714,7 @@ class MainPage extends StatelessWidget {
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.2,
                           onPressed: (){
-                            Get.to(()=>SpacePage(),binding: SpaceBinding());
+                            Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
                           },
                           child: Container(
                             margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),

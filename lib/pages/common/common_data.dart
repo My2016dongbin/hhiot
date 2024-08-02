@@ -5,4 +5,5 @@ class CommonData{
   static String ?token;
   static String ?tenantName;
   static String ?tenant;
+  static String ?sessionId;
 }

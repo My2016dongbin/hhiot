@@ -24,9 +24,16 @@ class DeviceListController extends GetxController {
   late int pageNum = 1;
   late int pageSize = 20;
   late String id = '';
+  StreamSubscription ?deviceListSubscription;
 
   @override
   void onInit() {
+    deviceListSubscription = EventBusUtil.getInstance()
+        .on<SpaceList>()
+        .listen((event) {
+      //获取设备列表
+      deviceList(1);
+    });
     Future.delayed(const Duration(seconds: 1),(){
       //获取空间信息
       spaceInfo();

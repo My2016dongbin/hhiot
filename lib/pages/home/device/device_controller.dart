@@ -11,7 +11,6 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
-import 'package:pinput/pinput.dart';
 
 class DeviceController extends GetxController {
   final index = 0.obs;

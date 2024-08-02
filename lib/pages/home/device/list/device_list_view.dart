@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/common/location/map/map_binding.dart';
+import 'package:iot/pages/common/location/map/map_view.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
@@ -12,6 +14,8 @@ import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
 import 'package:iot/pages/home/device/device_view.dart';
 import 'package:iot/pages/home/device/list/device_list_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
@@ -85,7 +89,7 @@ class DeviceListPage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      BouncingWidget(
+                      /*BouncingWidget(
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.2,
                         onPressed: (){
@@ -98,19 +102,26 @@ class DeviceListPage extends StatelessWidget {
                           fit: BoxFit.fill,
                         ),
                       ),
-                      SizedBox(width: 30.w,),
-                      Image.asset(
-                        "assets/images/common/icon_map_space.png",
-                        width: 45.w,
-                        height: 45.w,
-                        fit: BoxFit.fill,
+                      SizedBox(width: 30.w,),*/
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          Get.to(()=>MapPage(),binding: MapBinding());
+                        },
+                        child: Image.asset(
+                          "assets/images/common/icon_map_space.png",
+                          width: 45.w,
+                          height: 45.w,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       SizedBox(width: 30.w,),
                       BouncingWidget(
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.2,
                         onPressed: (){
-                          Get.to(()=>DeviceAddPage(),binding: DeviceAddBinding());
+                          Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
                         },
                         child: Image.asset(
                           "assets/images/common/icon_add_space.png",
@@ -263,6 +274,11 @@ class DeviceListPage extends StatelessWidget {
                 InkWell(
                   onTap: (){
                     Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+                    /*if(item['productName']=='浩海一体机'){
+                      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+                    }else if(item['productName']=='智慧立杆'){
+                      Get.to(()=>LiGanDetailPage('${item['deviceNo']}','${item['id']}'),binding: LiGanDetailBinding());
+                    }*/
                   },
               child: Container(
                 height: 160.w,
@@ -283,7 +299,7 @@ class DeviceListPage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(5.w))
                         ),
                         child: Image.asset(
-                          "assets/images/common/icon_camera_space.png",
+                          item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
                           width: 80.w,
                           height: 80.w,
                           fit: BoxFit.fill,
@@ -326,7 +342,7 @@ class DeviceListPage extends StatelessWidget {
                         ),
                       ),
                     ):const SizedBox(),
-                    Align(
+                    /*Align(
                       alignment: Alignment.centerRight,
                       child:
                       BouncingWidget(
@@ -345,7 +361,7 @@ class DeviceListPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                     item['shared']==true?const SizedBox():Align(
                       alignment: Alignment.centerRight,
                       child: Image.asset(

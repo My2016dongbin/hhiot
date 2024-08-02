@@ -1,22 +1,27 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
 import 'package:iot/pages/home/device/status/device_status_binding.dart';
 import 'package:iot/pages/home/device/status/device_status_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class DeviceAddPage extends StatelessWidget {
   final logic = Get.find<DeviceAddController>();
 
-  DeviceAddPage({super.key});
+  DeviceAddPage({super.key,required String snCode}){
+    logic.snCode = snCode;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,25 +79,12 @@ class DeviceAddPage extends StatelessWidget {
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
                   onPressed: () async {
-                    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                        "#6666ff",
-                        "取消",
-                        true,
-                        ScanMode.DEFAULT);
-                    if(barcodeScanRes.isNotEmpty){
+                    String? barcodeScanRes = await scanner.scan();
+                    if(barcodeScanRes!.isNotEmpty){
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
                       logic.snController!.text = barcodeScanRes;
                     }
-                    /*FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", false, ScanMode.DEFAULT)
-                        ?.listen((barcode) {
-                      /// barcode to be used
-                      if(barcode.isNotEmpty){
-                        logic.testStatus.value = false;
-                        logic.testStatus.value = true;
-                        logic.snController!.text = barcode;
-                      }
-                    });*/
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(0, 95.w, 36.w, 0),
@@ -276,7 +268,20 @@ class DeviceAddPage extends StatelessWidget {
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
                   onPressed: (){
-                    Get.to(()=>DeviceStatusPage(),binding: DeviceStatusBinding());
+                    // Get.to(()=>DeviceStatusPage(),binding: DeviceStatusBinding());
+                    if(logic.snController!.text == ''){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入设备SN码'));
+                      return;
+                    }
+                    /*if(logic.nameController!.text == ''){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入设备名称'));
+                      return;
+                    }*/
+                    if(logic.spaceId == '' || logic.spaceId == 'null'){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请选择设备空间'));
+                      return;
+                    }
+                    logic.createDevice();
                   },
                   child: Container(
                     height: 80.w,
@@ -311,14 +316,14 @@ class DeviceAddPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: PagedGridView<int, Device>(
+            child: PagedGridView<int, dynamic>(
               padding: const EdgeInsets.all(0),
               pagingController: logic.deviceController,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, //横轴三个子widget
                   childAspectRatio: 2 //宽高比为1时，子widget
                   ),
-              builderDelegate: PagedChildBuilderDelegate<Device>(
+              builderDelegate: PagedChildBuilderDelegate<dynamic>(
                 itemBuilder: (context, item, index) =>
                     BouncingWidget(
                       duration: const Duration(milliseconds: 100),
@@ -326,6 +331,7 @@ class DeviceAddPage extends StatelessWidget {
                       onPressed: (){
                         logic.index.value = -1;
                         logic.index.value = index;
+                        logic.spaceId = '${item['id']}';
                       },
                   child: Container(
                     height: 90.w,
@@ -338,7 +344,7 @@ class DeviceAddPage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(20.w))),
                     child: Center(
                       child: Text(
-                        "${item.name}",
+                        "${item['name']}",
                         style: TextStyle(
                             color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
                             fontSize: 26.sp),
@@ -350,41 +356,48 @@ class DeviceAddPage extends StatelessWidget {
             ),
           ),
           ///新增空间
-          BouncingWidget(
-            duration: const Duration(milliseconds: 100),
-            scaleFactor: 1.2,
-            onPressed: (){
-              Get.to(()=>SpacePage(),binding: SpaceBinding());
-            },
-            child: Container(
-              height: 90.w,
-              width: 220.w,
-              margin: EdgeInsets.fromLTRB(20.w, 20.w, 0, 0),
-              padding: EdgeInsets.all(20.w),
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20.w))),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    "assets/images/common/ic_add.png",
-                    width: 32.w,
-                    height: 32.w,
-                    fit: BoxFit.fill,
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
+                    Get.to(()=>SpacePage(),binding: SpaceBinding());
+                  },
+                  child: Container(
+                    height: 90.w,
+                    width: 220.w,
+                    margin: EdgeInsets.fromLTRB(20.w, 20.w, 0, 0),
+                    padding: EdgeInsets.all(20.w),
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/ic_add.png",
+                          width: 32.w,
+                          height: 32.w,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(
+                          width: 6.w,
+                        ),
+                        Text(
+                          "新增空间",
+                          style: TextStyle(
+                              color: HhColors.gray4TextColor,
+                              fontSize: 25.sp,fontWeight: FontWeight.w200),
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: 6.w,
-                  ),
-                  Text(
-                    "新增空间",
-                    style: TextStyle(
-                        color: HhColors.gray4TextColor,
-                        fontSize: 25.sp,fontWeight: FontWeight.w200),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

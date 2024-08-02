@@ -27,7 +27,7 @@ class MainController extends GetxController {
   StreamSubscription ?pushTouchSubscription;
   StreamSubscription ?spaceListSubscription;
   final Rx<bool> searchStatus = false.obs;
-  final Rx<bool> videoStatus = true.obs;
+  final Rx<bool> videoStatus = false.obs;
   final Rx<bool> pageMapStatus = false.obs;
   final Rx<String> temp = '23'.obs;
   final Rx<String> icon = '305'.obs;
@@ -35,6 +35,7 @@ class MainController extends GetxController {
   final Rx<String> count = '0'.obs;
   TextEditingController ?searchController = TextEditingController();
   final PagingController<int, dynamic> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 20;
   late BuildContext context;
@@ -79,6 +80,8 @@ class MainController extends GetxController {
     getUnRead();
     //获取空间列表
     getSpaceList(1);
+    //获取设备检索列表
+    deviceSearch();
     super.onInit();
   }
   BaiduLocationAndroidOption initAndroidOptions() {
@@ -216,6 +219,59 @@ class MainController extends GetxController {
         pagingController.itemList = [];
       }
       pagingController.appendLastPage(newItems);
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+
+
+  Future<void> deviceSearch() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '设备加载中..'));
+    Map<String, dynamic> map = {};
+    map['name'] = searchController!.text;
+    map['pageNo'] = '1';
+    map['pageSize'] = '100';
+    var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
+    HhLog.d("deviceSearch -- $result");
+    Future.delayed(const Duration(seconds: 1),(){
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
+    });
+    if(result["code"]==0 && result["data"]!=null){
+      List<dynamic> newItems = [];
+      try{
+        newItems = result["data"]["list"];
+      }catch(e){
+        HhLog.e(e.toString());
+      }
+
+      if(pageNum == 1){
+        deviceController.itemList = [];
+      }
+      deviceController.appendLastPage(newItems);
+      ///地图打点
+      controller?.cleanAllMarkers();
+      for(int i = 0; i < newItems.length; i++){
+        dynamic model = newItems[i];
+        if(model['latitude']==null
+            ||model['longitude'] == null
+            ||model['latitude'] == ''
+            ||model['longitude'] == ''){
+          continue;
+        }
+        HhLog.d('BMFMarker ${model['longitude']} , ${model['latitude']}');
+        /// 创建BMFMarker
+        BMFMarker marker = BMFMarker(
+            position: BMFCoordinate(model['latitude'],model['longitude']),
+            enabled: false,
+            visible: true,
+            identifier: "location",
+            icon: 'assets/images/common/ic_device_online.png');
+
+        /// 添加Marker
+        controller?.addMarker(marker);
+      }
+
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

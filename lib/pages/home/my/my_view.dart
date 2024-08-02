@@ -1,8 +1,10 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
+import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/manage/device_manage_binding.dart';
 import 'package:iot/pages/home/device/manage/device_manage_view.dart';
 import 'package:iot/pages/home/my/help/help_binding.dart';
@@ -14,8 +16,10 @@ import 'package:iot/pages/home/my/setting/setting_view.dart';
 import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import '../../../utils/HhColors.dart';
 import 'my_controller.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class MyPage extends StatelessWidget {
   final logic = Get.find<MyController>();
@@ -68,8 +72,10 @@ class MyPage extends StatelessWidget {
             duration: const Duration(milliseconds: 100),
             scaleFactor: 1.2,
             onPressed: () async {
-              String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                  "#6666ff", "取消", true, ScanMode.DEFAULT);
+              String? barcodeScanRes = await scanner.scan();
+              if(barcodeScanRes!.isNotEmpty){
+                Get.to(()=>DeviceAddPage(snCode: barcodeScanRes,),binding: DeviceAddBinding());
+              }
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 90.w, 115.w, 0),
@@ -306,7 +312,8 @@ class MyPage extends StatelessWidget {
               ///空间网络
               InkWell(
                 onTap: () {
-                  Get.to(() => NetWorkPage(), binding: NetWorkBinding());
+                  // Get.to(() => NetWorkPage(), binding: NetWorkBinding());
+                  EventBusUtil.getInstance().fire(HhToast(title: '暂未开放'));
                 },
                 child: Container(
                   height: 110.w,
@@ -439,7 +446,8 @@ class MyPage extends StatelessWidget {
               ///帮助与反馈
               InkWell(
                 onTap: () {
-                  Get.to(() => HelpPage(), binding: HelpBinding());
+                  // Get.to(() => HelpPage(), binding: HelpBinding());
+                  EventBusUtil.getInstance().fire(HhToast(title: '暂未开放'));
                 },
                 child: Container(
                   height: 110.w,

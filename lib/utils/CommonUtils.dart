@@ -8,10 +8,19 @@ import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/utils/HhLog.dart';
 
 class CommonUtils{
   String msgString(String s){
     s = s.substring(s.indexOf(':')+1,s.length);
+    return s;
+  }
+  String subString(String s,int num){
+    try{
+      s = s.substring(0,num);
+    }catch(e){
+      HhLog.e(e.toString());
+    }
     return s;
   }
   Widget noneWidget({double? top}){
@@ -24,6 +33,20 @@ class CommonUtils{
         Text('暂无数据',style: TextStyle(
             color: HhColors.grayBBTextColor,
             fontSize: 26.sp
+        ),),
+      ],
+    );
+  }
+  Widget noneWidgetSmall({double? top}){
+    return Column(
+      children: [
+        SizedBox(height: top??0.2.sw,),
+        Image.asset('assets/images/common/ic_none.png',fit: BoxFit.fill,
+          height: 0.2.sw,
+          width: 0.2.sw,),
+        Text('暂无数据',style: TextStyle(
+            color: HhColors.grayBBTextColor,
+            fontSize: 20.sp
         ),),
       ],
     );
