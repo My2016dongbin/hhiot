@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/location/location_controller.dart';
+import 'package:iot/pages/common/socket/socket_page/record_to_stream_example.dart';
 import 'package:iot/pages/common/socket/socket_page/socket_controller.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -186,6 +187,31 @@ class SocketPage extends StatelessWidget {
                     ),
                     child: Text(
                       '关闭',
+                      style: TextStyle(
+                        color: HhColors.whiteColor,
+                        fontSize: 26.sp,),
+                    ),
+                  ),
+                ),
+              ),
+              ///流 5
+              InkWell(
+                onTap: (){
+                  Navigator.push(logic.context,
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                        return const RecordToStreamExample();
+                      }));
+                },
+                child: Center(
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 90.w, 36.w, 0),
+                    padding: EdgeInsets.fromLTRB(23.w, 8.w, 23.w, 10.w),
+                    decoration: BoxDecoration(
+                      color: HhColors.mainBlueColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.w),),
+                    ),
+                    child: Text(
+                      '流',
                       style: TextStyle(
                         color: HhColors.whiteColor,
                         fontSize: 26.sp,),

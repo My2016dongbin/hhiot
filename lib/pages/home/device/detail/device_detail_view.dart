@@ -55,7 +55,7 @@ class DeviceDetailPage extends StatelessWidget {
                 height: 500.w,
                 color: HhColors.blackColor,
               ),
-              logic.playTag.value?FijkView(width: 1.sw,height: 500.w,player: logic.player,color: HhColors.blackColor,):const SizedBox(),
+              logic.playTag.value?Container(margin: EdgeInsets.only(top: 60.w),child: FijkView(width: 1.sw,height: 440.w,player: logic.player,color: HhColors.blackColor,fit:FijkFit.fill)):const SizedBox(),
 
 
               ///title
@@ -249,6 +249,25 @@ class DeviceDetailPage extends StatelessWidget {
           height: 1.sw,
           child: Stack(
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: InkWell(
+                  onTap: (){
+                    if(logic.liveList.length>1){
+                      logic.liveIndex.value++;
+                      if(logic.liveIndex.value>=logic.liveList.length){
+                        logic.liveIndex.value = 0;
+                      }
+                      logic.getDeviceStream();
+                      // logic.getPlayUrl('${logic.liveList[logic.liveIndex.value]["deviceId"]}','${logic.liveList[logic.liveIndex.value]["number"]}');
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                      child: Text('枪机${logic.liveIndex.value+1}',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.w),)
+                  ),
+                ),
+              ),
               ///控制背景阴影
               Align(
                 alignment: Alignment.center,

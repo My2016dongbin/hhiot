@@ -21,6 +21,7 @@ class DeviceDetailController extends GetxController {
   final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
+  final Rx<int> liveIndex = 0.obs;
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 20;
@@ -29,8 +30,9 @@ class DeviceDetailController extends GetxController {
   late String deviceNo;
   late String id;
   late Rx<String> productName = ''.obs;
-  final FijkPlayer player = FijkPlayer();
+  FijkPlayer player = FijkPlayer();
 
+  late List<dynamic> liveList = [];
   late Animation<Alignment> animation;
   late AnimationController animationController;
   late Alignment animateAlign = Alignment.center;
@@ -70,9 +72,10 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceStream -- $deviceNo");
     HhLog.d("getDeviceStream -- $result");
     if(result["code"]==0 && result["data"]!=null){
+      liveList = result["data"];
       try{
-        HhLog.d('${result["data"][0]["id"]} , ${result["data"][0]["number"]}');
-        getPlayUrl('${result["data"][0]["id"]}','${result["data"][0]["number"]}');
+        HhLog.d('${result["data"][liveIndex.value]["deviceId"]} , ${result["data"][liveIndex.value]["number"]}');
+        getPlayUrl('${result["data"][liveIndex.value]["deviceId"]}','${result["data"][liveIndex.value]["number"]}');
       }catch(e){
         HhLog.e(e.toString());
       }
@@ -94,11 +97,15 @@ class DeviceDetailController extends GetxController {
     if(result["code"]==200 && result["data"]!=null){
       try{
         String url = result["data"][0]['url'];
+        playTag.value = false;
+        player.release();
+        player = FijkPlayer();
         player.setDataSource(
             url,
             autoPlay: true);
-        playTag.value = false;
-        playTag.value = true;
+        Future.delayed(const Duration(seconds: 1),(){
+          playTag.value = true;
+        });
       }catch(e){
         HhLog.e(e.toString());
       }

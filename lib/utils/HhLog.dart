@@ -5,9 +5,9 @@ export 'dart:async';
 class HhLog {///
   static Logger logger = Logger();
 
-  static t(String msg){
-    logger.t(msg);
-  }
+  // static t(String msg){
+  //   logger.t(msg);
+  // }
   static d(String msg){
     logger.d(msg);
   }
@@ -20,7 +20,7 @@ class HhLog {///
   static e(String msg){
     logger.e(msg);
   }
-  static f(String msg){
-    logger.f(msg);
-  }
+  // static f(String msg){
+  //   logger.f(msg);
+  // }
 }

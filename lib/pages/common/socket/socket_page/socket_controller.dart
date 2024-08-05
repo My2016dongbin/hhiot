@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -28,6 +31,41 @@ class SocketController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
   }
+
+/*
+  Future<void> record() async {
+    assert(_mRecorderIsInited && _mPlayer!.isStopped);
+    var sink = await createFile();
+    var recordingDataController = StreamController<Uint8List>();
+    _mRecordingDataSubscription =
+        recordingDataController.stream.listen((buffer) {
+          sink.add(buffer);
+        });
+    await _mRecorder!.startRecorder(
+      toStream: recordingDataController.sink,
+      codec: Codec.pcm16,
+      numChannels: 1,
+      sampleRate: 44100,
+      bufferSize: 8192,
+    );
+    setState(() {});
+  }
+
+  void play() async {
+    assert(_mPlayerIsInited &&
+        _mplaybackReady &&
+        _mRecorder!.isStopped &&
+        _mPlayer!.isStopped);
+    await _mPlayer!.startPlayer(
+        fromURI: _mPath,
+        sampleRate: sampleRate,
+        codec: Codec.pcm16,
+        numChannels: 1,
+        whenFinished: () {
+          setState(() {});
+        });
+    setState(() {});
+  }*/
 
   Future<void> chatStatus() async {
     Map<String, dynamic> map = {};
@@ -74,8 +112,8 @@ class SocketController extends GetxController {
   }
 
   void chatClose() {
-    manager.disconnect();
     manager.sendMessage({"CallType": "Close", "SessionId": CommonData.sessionId});
+    manager.disconnect();
     manager = WebSocketManager('', '');
   }
 }

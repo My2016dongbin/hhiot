@@ -13,15 +13,15 @@ class WebSocketManager {
   bool _isManuallyDisconnected = false; //是否为主动断开
   late Timer _heartbeatTimer; //心跳定时器
   late Timer _reconnectTimer; //重新连接定时器
-  Duration _reconnectInterval = Duration(seconds: 5); //重新连接间隔时间
-  StreamController<String> _messageController = StreamController<String>();
+  final Duration _reconnectInterval = const Duration(seconds: 5); //重新连接间隔时间
+  final StreamController<String> _messageController = StreamController<String>();
  
   Stream<String> get messageStream => _messageController.stream; //监听的消息
  
   //初始化
   WebSocketManager(this._serverUrl, this._accessToken) {
     print('初始化');
-    _heartbeatTimer = Timer(Duration(seconds: 0), () {});
+    _heartbeatTimer = Timer(const Duration(seconds: 0), () {});
     _startConnection();
   }
  
@@ -36,13 +36,9 @@ class WebSocketManager {
           _isConnected = true;
           print('已连接$data');
           final jsonObj = jsonDecode(data); // 将消息对象转换为 JSON 字符串
-          if (jsonObj['cmd'] == 0) {
-            _startHeartbeat(); //开始心跳
-          } else if (jsonObj['cmd'] == 1) {
-            _resetHeartbeat(); // 重新开启心跳定时
-          } else {
-            _onMessageReceived(data);// 其他消息转发出去
-          }
+
+          _startHeartbeat();
+          _onMessageReceived(data);// 其他消息转发出去
         },
         onError: (error) {
           // 处理连接错误
@@ -51,7 +47,7 @@ class WebSocketManager {
         },
         onDone: _onDone,
       );
-      _sendInitialData(); // 连接成功后发送登录信息();
+      // _sendInitialData(); // 连接成功后发送登录信息();
     } catch (e) {
       // 连接错误处理
       print('连接异常错误: $e');
@@ -71,7 +67,7 @@ class WebSocketManager {
  
   //开始心跳
   void _startHeartbeat() {
-    _heartbeatTimer = Timer.periodic(Duration(seconds: 20), (_) {
+    _heartbeatTimer = Timer.periodic(const Duration(seconds: 20), (_) {
       sendHeartbeat();
     });
   }
@@ -90,7 +86,7 @@ class WebSocketManager {
   // 发送心跳消息到服务器
   void sendHeartbeat() {
     if (_isConnected) {
-      final message = {"cmd": 1, "data": {}};
+      final message = {};
       final jsonString = jsonEncode(message); // 将消息对象转换为 JSON 字符串
       _channel.sink.add(jsonString); // 发送心跳
       print('连接成功发送心跳消息到服务器$message');
@@ -127,12 +123,16 @@ class WebSocketManager {
   // 处理接收到的消息
   void _onMessageReceived(dynamic message) {
     HhLog.d('socket 处理接收到的消息 : $message');
-    dynamic messageDecode = jsonDecode(message);
-    HhLog.d('socket 处理接收到的消息 : $messageDecode');
-    HhLog.d('socket 处理接收到的消息 : ${messageDecode["SessionId"]}');
-    if(messageDecode['SessionId']!=null){
-      CommonData.sessionId = messageDecode['SessionId'];
-      HhLog.d('socket SessionId = ${CommonData.sessionId}');
+    try{
+      dynamic messageDecode = jsonDecode(message);
+      HhLog.d('socket 处理接收到的消息 : $messageDecode');
+      HhLog.d('socket 处理接收到的消息 : ${messageDecode["SessionId"]}');
+      if(messageDecode['SessionId']!=null){
+        CommonData.sessionId = messageDecode['SessionId'];
+        HhLog.d('socket SessionId = ${CommonData.sessionId}');
+      }
+    }catch(e){
+
     }
     _messageController.add(message);
   }

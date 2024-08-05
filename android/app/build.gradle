@@ -66,8 +66,8 @@ android {
         ]
 
 
-        lintOptions { checkReleaseBuilds false }
     }
+    lintOptions { checkReleaseBuilds false }
 
 
     //签名
