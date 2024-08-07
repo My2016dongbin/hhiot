@@ -1,71 +1,38 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
-import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/socket/WebSocketManager.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_socket_channel/io.dart';
 
 class SocketController extends GetxController {
   late BuildContext context;
   final Rx<bool> testStatus = true.obs;
   late String deviceNo = '24070888';
   late WebSocketManager manager;
+  final audioRecord = AudioRecorder();
+  late Stream<Uint8List> stream;
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  late Directory? recordDir;
+  late String nickname = '';
 
   @override
   Future<void> onInit() async {
     super.onInit();
   }
-
-/*
-  Future<void> record() async {
-    assert(_mRecorderIsInited && _mPlayer!.isStopped);
-    var sink = await createFile();
-    var recordingDataController = StreamController<Uint8List>();
-    _mRecordingDataSubscription =
-        recordingDataController.stream.listen((buffer) {
-          sink.add(buffer);
-        });
-    await _mRecorder!.startRecorder(
-      toStream: recordingDataController.sink,
-      codec: Codec.pcm16,
-      numChannels: 1,
-      sampleRate: 44100,
-      bufferSize: 8192,
-    );
-    setState(() {});
-  }
-
-  void play() async {
-    assert(_mPlayerIsInited &&
-        _mplaybackReady &&
-        _mRecorder!.isStopped &&
-        _mPlayer!.isStopped);
-    await _mPlayer!.startPlayer(
-        fromURI: _mPath,
-        sampleRate: sampleRate,
-        codec: Codec.pcm16,
-        numChannels: 1,
-        whenFinished: () {
-          setState(() {});
-        });
-    setState(() {});
-  }*/
 
   Future<void> chatStatus() async {
     Map<String, dynamic> map = {};
@@ -74,6 +41,7 @@ class SocketController extends GetxController {
         .request(RequestUtils.chatStatus, method: DioMethod.get, params: map);
     HhLog.d("chatStatus socket -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
+      nickname = tenantResult["data"];
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
@@ -94,10 +62,23 @@ class SocketController extends GetxController {
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
     }
   }
+  Future<void> chatClosePost() async {
+    var tenantResult = await HhHttp()
+        .request(RequestUtils.chatCreate, method: DioMethod.post, data: {
+      "deviceNo": deviceNo,
+      "state": '0',
+      "sessionId": CommonData.sessionId,
+    });
+    HhLog.d("chatClose socket -- $tenantResult");
+    if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
+    }
+  }
 
   Future<void> connect() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? nickname = prefs.getString(SPKeys().nickname);
+    HhLog.d("socket nickname $nickname");
     /*final channel =
         IOWebSocketChannel.connect('ws://172.16.50.85:6002/$nickname');
 
@@ -108,12 +89,56 @@ class SocketController extends GetxController {
 
     manager =
         WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
-    manager.sendMessage({"CallType": "Active", "Dest": "000001"});
+    manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
   }
 
   void chatClose() {
-    manager.sendMessage({"CallType": "Close", "SessionId": CommonData.sessionId});
+    chatClosePost();
+    dynamic o = {"CallType": "Close", "SessionId": CommonData.sessionId};
+    // manager.sendMessage(jsonEncode(o));
+    manager.sendMessage(o);
     manager.disconnect();
     manager = WebSocketManager('', '');
+  }
+
+  Future<void> startRecording() async {
+    try {
+      recordDir = await getExternalStorageDirectory();
+      if (await audioRecord.hasPermission()) {
+        final file = File("${recordDir!.path}/iosRecord.pcm");
+        HhLog.d("recording downloadsDir!.path ${recordDir!.path}/iosRecord.pcm");
+        // await audioRecord.start(const RecordConfig(/*encoder: AudioEncoder.pcm16bits, echoCancel: true, noiseSuppress: true*/), path: "${recordDir!.path}/iosRecord.pcm");
+        stream = await audioRecord.startStream(const RecordConfig(/*encoder: AudioEncoder.pcm16bits, echoCancel: true, noiseSuppress: true*/));
+        stream.listen((data) {
+          // audioDataBuffer.addAll(data.toList());
+          file.writeAsBytesSync(data, mode: FileMode.append);
+        }, onDone: () => {
+          // sendFileToBackend()
+          onRecordDone()
+        },
+            onError: (e) => HhLog.e(e.toString())
+        );
+      }
+    } catch (e) {
+      HhLog.e(e.toString());
+    }
+  }
+
+  Future<void> stopRecording() async {
+    try {
+      await audioRecord.stop();
+      // onRecordDone();
+    } catch (e) {
+      HhLog.e(e.toString());
+
+    }
+  }
+
+  onRecordDone() async {
+    HhLog.d('recording onDone() ');
+    await _audioPlayer.setUrl(
+        "${recordDir!.path}/iosRecord.pcm");
+    await _audioPlayer.play();
+    manager.sendMessage(File("${recordDir!.path}/iosRecord.pcm"));
   }
 }

@@ -209,7 +209,7 @@ class MyPage extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.fromLTRB(130.w, 0.w, 0.w, 45.w),
                           child: Text(
-                            "12",
+                            "2",
                             style: TextStyle(
                                 color: HhColors.blackColor,
                                 fontSize: 40.sp,
@@ -271,7 +271,7 @@ class MyPage extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.fromLTRB(130.w, 0.w, 0.w, 45.w),
                           child: Text(
-                            "6",
+                            "5",
                             style: TextStyle(
                                 color: HhColors.blackColor,
                                 fontSize: 40.sp,

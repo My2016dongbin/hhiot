@@ -667,8 +667,8 @@ class MainPage extends StatelessWidget {
                         scaleFactor: 1.2,
                         onPressed: (){
                           //TODO Socket测试
-                          // homeLogic.index.value = 2;
-                          Get.to(()=>SocketPage(),binding: SocketBinding());
+                          homeLogic.index.value = 2;
+                          // Get.to(()=>SocketPage(),binding: SocketBinding());
                         },
                           child: Container(
                             width: 55.w,

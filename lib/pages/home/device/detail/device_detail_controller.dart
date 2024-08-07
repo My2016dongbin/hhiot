@@ -7,8 +7,11 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/model/model_class.dart';
+import 'package:iot/pages/common/socket/WebSocketManager.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
@@ -21,6 +24,7 @@ class DeviceDetailController extends GetxController {
   final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
+  final Rx<bool> recordTag = false.obs;
   final Rx<int> liveIndex = 0.obs;
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
@@ -29,8 +33,10 @@ class DeviceDetailController extends GetxController {
   late BuildContext context;
   late String deviceNo;
   late String id;
+  late String nickname='';
   late Rx<String> productName = ''.obs;
   FijkPlayer player = FijkPlayer();
+  late WebSocketManager manager;
 
   late List<dynamic> liveList = [];
   late Animation<Alignment> animation;
@@ -154,6 +160,79 @@ class DeviceDetailController extends GetxController {
       deviceController.appendLastPage(newItems);
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  String parseDate(date) {
+    String s = '$date';
+    try{
+      DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+      s = format.format(DateTime.fromMillisecondsSinceEpoch(date));
+    }catch(e){
+      HhLog.e(e.toString());
+    }
+    return s;
+  }
+
+  String parseType(type) {
+    String s = '检测到画面变化';
+
+    return s;
+  }
+
+  Future<void> chatStatus() async {
+    Map<String, dynamic> map = {};
+    map['deviceNo'] = deviceNo;
+    var tenantResult = await HhHttp()
+        .request(RequestUtils.chatStatus, method: DioMethod.get, params: map);
+    HhLog.d("chatStatus socket -- $tenantResult");
+    if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
+      nickname = tenantResult["data"];
+      connect();
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
+    }
+  }
+
+  Future<void> connect() async {
+    HhLog.d("socket nickname $nickname");
+    /*final channel =
+        IOWebSocketChannel.connect('ws://172.16.50.85:6002/$nickname');
+
+    channel.stream.listen((event) {
+      HhLog.e("socket listen $nickname -- ${event.toString()}");
+    });
+    channel.sink.add({"CallType": "Active", "Dest": "000001"});*/
+
+    manager =
+        WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
+    manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
+    CommonData.deviceNo = deviceNo;
+  }
+
+  void chatClose() {
+    chatClosePost();
+    dynamic o = {"CallType": "Close", "SessionId": CommonData.sessionId};
+    // manager.sendMessage(jsonEncode(o));
+    manager.sendMessage(o);
+    manager.disconnect();
+    manager = WebSocketManager('', '');
+  }
+
+  Future<void> chatClosePost() async {
+    var tenantResult = await HhHttp()
+        .request(RequestUtils.chatCreate, method: DioMethod.post, data: {
+      "deviceNo": deviceNo,
+      "state": '0',
+      "sessionId": CommonData.sessionId,
+    });
+    HhLog.d("chatClose socket -- $tenantResult");
+    if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
+      EventBusUtil.getInstance().fire(HhToast(title: '对讲已结束'));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
     }
   }
 

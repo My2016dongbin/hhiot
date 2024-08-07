@@ -19,7 +19,7 @@ import 'package:iot/utils/HhLog.dart';
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
 
-  DeviceDetailPage(String deviceNo,String id, {super.key}){
+  DeviceDetailPage(String deviceNo, String id, {super.key}) {
     logic.deviceNo = deviceNo;
     logic.id = id;
   }
@@ -55,8 +55,16 @@ class DeviceDetailPage extends StatelessWidget {
                 height: 500.w,
                 color: HhColors.blackColor,
               ),
-              logic.playTag.value?Container(margin: EdgeInsets.only(top: 60.w),child: FijkView(width: 1.sw,height: 440.w,player: logic.player,color: HhColors.blackColor,fit:FijkFit.fill)):const SizedBox(),
-
+              logic.playTag.value
+                  ? Container(
+                      margin: EdgeInsets.only(top: 60.w),
+                      child: FijkView(
+                          width: 1.sw,
+                          height: 440.w,
+                          player: logic.player,
+                          color: HhColors.blackColor,
+                          fit: FijkFit.fill))
+                  : const SizedBox(),
 
               ///title
               InkWell(
@@ -252,10 +260,10 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: InkWell(
-                  onTap: (){
-                    if(logic.liveList.length>1){
+                  onTap: () {
+                    if (logic.liveList.length > 1) {
                       logic.liveIndex.value++;
-                      if(logic.liveIndex.value>=logic.liveList.length){
+                      if (logic.liveIndex.value >= logic.liveList.length) {
                         logic.liveIndex.value = 0;
                       }
                       logic.getDeviceStream();
@@ -263,11 +271,15 @@ class DeviceDetailPage extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
-                      child: Text('枪机${logic.liveIndex.value+1}',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.w),)
-                  ),
+                      padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                      child: Text(
+                        '枪机${logic.liveIndex.value + 1}',
+                        style: TextStyle(
+                            color: HhColors.gray9TextColor, fontSize: 23.w),
+                      )),
                 ),
               ),
+
               ///控制背景阴影
               Align(
                 alignment: Alignment.center,
@@ -276,11 +288,11 @@ class DeviceDetailPage extends StatelessWidget {
                   height: 0.6.sw,
                   margin: EdgeInsets.only(bottom: 15.w),
                   decoration: BoxDecoration(
-                    color: HhColors.videoControlShadowColor,
-                    borderRadius: BorderRadius.all(Radius.circular(0.3.sw))
-                  ),
+                      color: HhColors.videoControlShadowColor,
+                      borderRadius: BorderRadius.all(Radius.circular(0.3.sw))),
                 ),
               ),
+
               ///控制拖动按钮
               Align(
                   alignment: logic.animateAlign,
@@ -298,20 +310,24 @@ class DeviceDetailPage extends StatelessWidget {
                       double x = details.localPosition.dx;
                       double y = details.localPosition.dy;
                       HhLog.d("move $x , $y");
+
                       ///上
-                      if(x > -1*offset && x < 1*offset && y > 0){
+                      if (x > -1 * offset && x < 1 * offset && y > 0) {
                         msg = '上';
                       }
+
                       ///下
-                      if(x > -1*offset && x < 1*offset && y < 0){
+                      if (x > -1 * offset && x < 1 * offset && y < 0) {
                         msg = '下';
                       }
+
                       ///左
-                      if(y > -1*offset && y < 1*offset && x < 0){
+                      if (y > -1 * offset && y < 1 * offset && x < 0) {
                         msg = '左';
                       }
+
                       ///右
-                      if(y > -1*offset && y < 1*offset && x > 0){
+                      if (y > -1 * offset && y < 1 * offset && x > 0) {
                         msg = '右';
                       }
                       // EventBusUtil.getInstance().fire(HhToast(title: msg));
@@ -408,60 +424,125 @@ class DeviceDetailPage extends StatelessWidget {
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
                 onPressed: () {},
-                child: Image.asset(
-                  "assets/images/common/ic_video.png",
-                  width: 130.w,
-                  height: 130.w,
-                  fit: BoxFit.fill,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/ic_video.png",
+                      width: 130.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,
+                    ),
+                    Text(
+                      '录像',
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor, fontSize: 23.sp),
+                    )
+                  ],
                 ),
               ),
               BouncingWidget(
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
                 onPressed: () {},
-                child: Image.asset(
-                  "assets/images/common/ic_picture.png",
-                  width: 130.w,
-                  height: 130.w,
-                  fit: BoxFit.fill,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/ic_picture.png",
+                      width: 130.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,
+                    ),
+                    Text(
+                      '截图',
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor, fontSize: 23.sp),
+                    )
+                  ],
                 ),
               ),
               BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {},
-                child: Image.asset(
-                  "assets/images/common/ic_yy.png",
-                  width: 130.w,
-                  height: 130.w,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {},
-                child: Image.asset(
-                  "assets/images/common/ic_voice.png",
-                  width: 130.w,
-                  height: 130.w,
-                  fit: BoxFit.fill,
-                ),
-              ),
-              SizedBox(width: 20.w,),
-              logic.productName.value!='智慧立杆'?const SizedBox():BouncingWidget(
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
                 onPressed: () {
-                  Get.to(()=>LiGanDetailPage(logic.deviceNo,logic.id),binding: LiGanDetailBinding());
+                  logic.recordTag.value = !logic.recordTag.value;
+                  if(logic.recordTag.value){
+                    //开始
+                    logic.chatStatus();
+                  }else{
+                    //结束
+                    logic.manager.stopRecording();
+                    logic.chatClose();
+                  }
                 },
-                child: Image.asset(
-                  "assets/images/common/icon_set.png",
-                  width: 50.w,
-                  height: 50.w,
-                  fit: BoxFit.fill,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/ic_yy.png",
+                      width: 130.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,
+                    ),
+                    Text(
+                      logic.recordTag.value?'正在对讲':'对讲',
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor, fontSize: 23.sp),
+                    )
+                  ],
                 ),
               ),
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {},
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/ic_voice.png",
+                      width: 130.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,
+                    ),
+                    Text(
+                      '声音',
+                      style: TextStyle(
+                          color: HhColors.gray9TextColor, fontSize: 23.sp),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 20.w,
+              ),
+              logic.productName.value != '智慧立杆'
+                  ? const SizedBox()
+                  : BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
+                        Get.to(() => LiGanDetailPage(logic.deviceNo, logic.id),
+                            binding: LiGanDetailBinding());
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/images/common/ic_voice.png",
+                            width: 130.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,
+                          ),
+                          Text(
+                            '设置',
+                            style: TextStyle(
+                                color: HhColors.gray9TextColor, fontSize: 23.sp),
+                          )
+                        ],
+                      ),
+                    ),
             ],
           ),
         ),
@@ -471,18 +552,19 @@ class DeviceDetailPage extends StatelessWidget {
 
   historyPage() {
     return EasyRefresh(
-      onRefresh: (){
+      onRefresh: () {
         logic.pageNum = 1;
         logic.getDeviceHistory();
       },
-      onLoad: (){
+      onLoad: () {
         logic.pageNum++;
         logic.getDeviceHistory();
       },
       child: PagedListView<int, dynamic>(
         pagingController: logic.deviceController,
         builderDelegate: PagedChildBuilderDelegate<dynamic>(
-          noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidget(top: 0.3.sw),
+          noItemsFoundIndicatorBuilder: (context) =>
+              CommonUtils().noneWidget(top: 0.3.sw),
           itemBuilder: (context, item, index) => InkWell(
             onTap: () {},
             child: Container(
@@ -499,13 +581,15 @@ class DeviceDetailPage extends StatelessWidget {
                     child: Container(
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20.w))),
                       child: Image.network(
                         '${item['alarmImageUrl']}',
                         width: 250.w,
                         height: 150.w,
                         fit: BoxFit.fill,
-                        errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
                           return Image.asset(
                             "assets/images/common/test_video.jpg",
                             width: 250.w,
@@ -519,7 +603,7 @@ class DeviceDetailPage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(40.w, 10.w, 0, 50.w),
                     child: Text(
-                      '${item['deviceName']}',
+                      logic.parseDate(item['alarmTimestamp']),
                       style: TextStyle(
                           color: HhColors.textBlackColor,
                           fontSize: 28.sp,
@@ -531,7 +615,7 @@ class DeviceDetailPage extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.fromLTRB(40.w, 55.w, 0, 0),
                       child: Text(
-                        '${item['alarmType']}',
+                        logic.parseType(item['alarmType']),
                         style: TextStyle(
                             color: HhColors.textBlackColor,
                             fontSize: 26.sp,
