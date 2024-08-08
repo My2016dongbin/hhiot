@@ -59,7 +59,7 @@ class MainPage extends StatelessWidget {
   buildSearchView() {
     return Container(
       width: 0.6.sw,
-      height: 0.8.sw,
+      height: logic.searchDown.value?0.8.sw:150.w,
       margin: EdgeInsets.fromLTRB(30.w, logic.marginTop + 70.w, 0, 0),
       padding: EdgeInsets.fromLTRB(20.w, 20.w, 50.w, 20.w),
       decoration: BoxDecoration(
@@ -81,7 +81,6 @@ class MainPage extends StatelessWidget {
         children: [
           ///搜索框
           Container(
-            // height: 80.w,
             padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
@@ -131,12 +130,27 @@ class MainPage extends StatelessWidget {
                     style:
                         TextStyle(color: HhColors.textColor, fontSize: 24.sp),
                   ),
-                )
+                ),
+                InkWell(
+                  onTap: (){
+                    logic.searchDown.value = !logic.searchDown.value;
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(5.w),
+                    child: Image.asset(
+                      logic.searchDown.value?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
+                      width: 35.w,
+                      height: 35.w,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20.w,),
               ],
             ),
           ),
           ///列表数据
-          Expanded(
+          logic.searchDown.value?Expanded(
             child: PagedListView<int, dynamic>(
               pagingController: logic.deviceController,
               padding: EdgeInsets.zero,
@@ -147,8 +161,10 @@ class MainPage extends StatelessWidget {
                       onTap: (){
                         HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
                         logic.controller?.setCenterCoordinate(
-                          BMFCoordinate(item["latitude"],item["longitude"]), false,
+                          BMFCoordinate(double.parse('${item["latitude"]}'),double.parse('${item["longitude"]}')), false,
                         );
+                        logic.controller?.setZoomTo(17);
+                        logic.searchDown.value = false;
                       },
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -208,101 +224,7 @@ class MainPage extends StatelessWidget {
                     )
               ),
             ),
-          ),
-          /*Container(
-            padding: EdgeInsets.all(15.w),
-            decoration: BoxDecoration(
-                color: HhColors.blueBackColor,
-                borderRadius: BorderRadius.all(Radius.circular(20.w))),
-            margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "WF1000U单目摄像头",
-                    style: TextStyle(
-                        color: HhColors.textBlackColor,
-                        fontSize: 26.sp,fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 50.w),
-                    child: Text(
-                      "崂山区崂山水库西侧50米",
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor,
-                          fontSize: 23.sp),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 90.w),
-                    child: Text(
-                      "(120.55,36.40)",
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor,
-                          fontSize: 23.sp),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 0.5.w,
-            width: 1.sw,
-            margin: EdgeInsets.fromLTRB(20.w, 5.w, 20.w, 0),
-            color: HhColors.grayDDTextColor,
-          ),
-          Container(
-            padding: EdgeInsets.all(15.w),
-            decoration: BoxDecoration(
-                color: HhColors.whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(20.w))),
-            margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "WF1000U单目摄像头",
-                    style: TextStyle(
-                        color: HhColors.textBlackColor,
-                        fontSize: 26.sp,fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 50.w),
-                    child: Text(
-                      "崂山区崂山水库西侧50米",
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor,
-                          fontSize: 23.sp),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 90.w),
-                    child: Text(
-                      "(120.55,36.40)",
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor,
-                          fontSize: 23.sp),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),*/
+          ):const SizedBox(),
         ],
       ),
     );
@@ -374,6 +296,9 @@ class MainPage extends StatelessWidget {
                       scaleFactor: 1.2,
                       onPressed: () {
                         logic.pageMapStatus.value = false;
+                        Future.delayed(const Duration(seconds: 5),(){
+                          logic.refreshMarkers();
+                        });
                       },
                       child: Container(
                         margin: EdgeInsets.only(bottom: 10.w),

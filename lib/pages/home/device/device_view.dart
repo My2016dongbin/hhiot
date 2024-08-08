@@ -79,6 +79,7 @@ class DevicePage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(50.w, 180.w, 0, 0),
                 child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
                   child: Row(
                     children: logic.tabsTag.value?buildTabs():[],
                   ),
@@ -229,10 +230,8 @@ class DevicePage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                BouncingWidget(
-                  duration: const Duration(milliseconds: 100),
-                  scaleFactor: 1.2,
-                  onPressed: (){
+                InkWell(
+                  onTap: (){
                     logic.tabIndex.value = i;
                     logic.pageNum = 1;
                     logic.deviceList(logic.pageNum);

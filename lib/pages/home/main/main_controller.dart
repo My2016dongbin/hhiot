@@ -33,6 +33,7 @@ class MainController extends GetxController {
   final Rx<String> icon = '305'.obs;
   final Rx<String> text = '多云'.obs;
   final Rx<String> count = '0'.obs;
+  final Rx<bool> searchDown = true.obs;
   TextEditingController ?searchController = TextEditingController();
   final PagingController<int, dynamic> pagingController = PagingController(firstPageKey: 1);
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
@@ -41,6 +42,7 @@ class MainController extends GetxController {
   late BuildContext context;
   final LocationFlutterPlugin _myLocPlugin = LocationFlutterPlugin();
   late bool _suc;
+  late List<dynamic> newItems = [];
 
   @override
   void onInit() {
@@ -238,7 +240,7 @@ class MainController extends GetxController {
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     });
     if(result["code"]==0 && result["data"]!=null){
-      List<dynamic> newItems = [];
+      newItems = [];
       try{
         newItems = result["data"]["list"];
       }catch(e){
@@ -249,9 +251,24 @@ class MainController extends GetxController {
         deviceController.itemList = [];
       }
       deviceController.appendLastPage(newItems);
+      searchDown.value = true;
       ///地图打点
-      controller?.cleanAllMarkers();
-      for(int i = 0; i < newItems.length; i++){
+      refreshMarkers();
+
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  void refreshMarkers() {
+    if(newItems.isEmpty){
+      return;
+    }
+
+    ///地图打点
+    controller?.cleanAllMarkers();
+    for(int i = 0; i < newItems.length; i++){
+      try{
         dynamic model = newItems[i];
         if(model['latitude']==null
             ||model['longitude'] == null
@@ -261,19 +278,20 @@ class MainController extends GetxController {
         }
         HhLog.d('BMFMarker ${model['longitude']} , ${model['latitude']}');
         /// 创建BMFMarker
+
         BMFMarker marker = BMFMarker(
-            position: BMFCoordinate(model['latitude'],model['longitude']),
+            position: BMFCoordinate(double.parse('${model['latitude']}'),double.parse('${model['longitude']}')),
             enabled: false,
             visible: true,
             identifier: "location",
-            icon: 'assets/images/common/ic_device_online.png');
+            icon: '${model['activeStatus']}'=='1'?'assets/images/common/ic_device_online.png':'assets/images/common/ic_device_offline.png');
 
         /// 添加Marker
         controller?.addMarker(marker);
+      }catch(e){
+        HhLog.e("search ${e.toString()}");
+        continue;
       }
-
-    }else{
-      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 }

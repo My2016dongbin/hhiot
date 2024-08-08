@@ -416,14 +416,24 @@ class DeviceDetailPage extends StatelessWidget {
             ],
           ),
         ),
-        Center(
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               BouncingWidget(
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
-                onPressed: () {},
+                onPressed: () {
+                  logic.videoTag.value = !logic.videoTag.value;
+                  if(logic.videoTag.value){
+                    //开启录像
+
+                  }else{
+                    //关闭录像
+
+                  }
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -434,7 +444,7 @@ class DeviceDetailPage extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                     Text(
-                      '录像',
+                      logic.videoTag.value?'正在录像':'录像',
                       style: TextStyle(
                           color: HhColors.gray9TextColor, fontSize: 23.sp),
                     )
@@ -496,7 +506,16 @@ class DeviceDetailPage extends StatelessWidget {
               BouncingWidget(
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
-                onPressed: () {},
+                onPressed: () {
+                  logic.voiceTag.value = !logic.voiceTag.value;
+                  if(logic.voiceTag.value){
+                    //开启声音
+
+                  }else{
+                    //关闭声音
+
+                  }
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -507,7 +526,7 @@ class DeviceDetailPage extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                     Text(
-                      '声音',
+                      logic.voiceTag.value?'声音':'已关闭',
                       style: TextStyle(
                           color: HhColors.gray9TextColor, fontSize: 23.sp),
                     )
@@ -530,7 +549,7 @@ class DeviceDetailPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                            "assets/images/common/ic_voice.png",
+                            "assets/images/common/icon_setting_video.png",
                             width: 130.w,
                             height: 130.w,
                             fit: BoxFit.fill,

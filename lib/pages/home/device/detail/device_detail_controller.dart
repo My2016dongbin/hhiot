@@ -25,6 +25,8 @@ class DeviceDetailController extends GetxController {
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
   final Rx<bool> recordTag = false.obs;
+  final Rx<bool> videoTag = false.obs;
+  final Rx<bool> voiceTag = true.obs;
   final Rx<int> liveIndex = 0.obs;
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
