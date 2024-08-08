@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/launch/launch_controller.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -30,7 +31,8 @@ class LaunchPage extends StatelessWidget {
   launchView() {
     return Stack(
       children: [
-        Image.asset('assets/images/common/icon_launch.png',fit: BoxFit.fill,),
+        CommonData.personal?Image.asset('assets/images/common/icon_bg.png',fit: BoxFit.fill,):const SizedBox(),
+        Image.asset(CommonData.personal?'assets/images/common/icon_launch.png':'assets/images/common/icon_launch_blue.png',fit: BoxFit.fill,),
         Align(
           alignment: Alignment.topCenter,
           child: Container(

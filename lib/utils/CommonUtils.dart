@@ -4,8 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/common/login/company/company_login_binding.dart';
+import 'package:iot/pages/common/login/company/company_login_view.dart';
 import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
+import 'package:iot/pages/common/login/personal/personal_login_binding.dart';
+import 'package:iot/pages/common/login/personal/personal_login_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
@@ -137,10 +141,18 @@ class CommonUtils{
     int now = DateTime.now().millisecondsSinceEpoch;
     if(now - CommonData.time > 2000){
       CommonData.time = now;
-      Get.offAll(() => LoginPage(), binding: LoginBinding());
+      toLogin();
       Future.delayed(const Duration(seconds: 1),(){
         EventBusUtil.getInstance().fire(HhToast(title: '登录信息失效,请重新登录'));
       });
+    }
+  }
+
+  toLogin(){
+    if(CommonData.personal){
+      Get.off(() => PersonalLoginPage(), binding: PersonalLoginBinding());
+    }else{
+      Get.off(() => CompanyLoginPage(), binding: CompanyLoginBinding());
     }
   }
 }

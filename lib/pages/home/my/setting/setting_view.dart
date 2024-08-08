@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:iot/pages/common/login/company/company_login_binding.dart';
+import 'package:iot/pages/common/login/company/company_login_view.dart';
 import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
@@ -742,7 +744,7 @@ class SettingPage extends StatelessWidget {
                   onTap: () async {
                     final SharedPreferences prefs = await SharedPreferences.getInstance();
                     prefs.remove(SPKeys().token);
-                    Get.offAll(() => LoginPage(),binding: LoginBinding());
+                    CommonUtils().toLogin();
                   },
                   child: Container(
                     width: 1.sw,

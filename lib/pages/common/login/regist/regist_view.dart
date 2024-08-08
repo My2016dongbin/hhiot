@@ -47,71 +47,45 @@ class RegisterPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Stack(
         children: [
-          Image.asset('assets/images/common/back_login.png',width:1.sw,height: 1.sh,fit: BoxFit.fill,),
+          ///title
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh, 0, 0),
-              child: Text('用户注册',style: TextStyle(color: HhColors.blackColor,fontSize: 40.sp,fontWeight: FontWeight.bold),),
+              margin: EdgeInsets.only(top: 90.w),
+              color: HhColors.trans,
+              child: Text(
+                '用户注册',
+                style: TextStyle(
+                    color: HhColors.blackTextColor,
+                    fontSize: 30.sp,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
+          InkWell(
+            onTap: () {
+              Get.back();
+            },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh+66.w, 0, 0),
-              child: Text('未注册手机号验证后将创建浩海通行证',style: TextStyle(color: HhColors.textBlackColor,fontSize: 23.sp,),)
+              margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+              padding: EdgeInsets.all(10.w),
+              color: HhColors.trans,
+              child: Image.asset(
+                "assets/images/common/back.png",
+                width: 18.w,
+                height: 30.w,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh+66.w+100.w, 0.1.sw, 0),
+            decoration: BoxDecoration(color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(12.w))),
+            margin: EdgeInsets.fromLTRB(20.w, 66.w+100.w, 20.w, 0),
+            padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                /*///租户
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 11,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.tenantController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
-                          counterText: '',
-                          hintText: '请输入租户名称',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
-                        ),
-                        style:
-                        TextStyle(color: HhColors.gray6TextColor, fontSize: 28.sp,fontWeight: FontWeight.w600),
-                        onChanged: (s){
-                          logic.tenantStatus.value = s.isNotEmpty;
-                        },
-                      ),
-                    ),
-                    logic.tenantStatus.value? BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.tenantController!.clear();
-                        logic.tenantStatus.value = false;
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
-                      ),
-                    ):const SizedBox()
-                  ],
-                ),
-                Container(
-                  color: HhColors.grayCCTextColor,
-                  height: 0.5.w,
-                ),*/
-                SizedBox(height: 30.w,),
                 ///账号
                 Row(
                   children: [
@@ -156,7 +130,7 @@ class RegisterPage extends StatelessWidget {
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
                 ),
-                SizedBox(height: 30.w,),
+                SizedBox(height: 10.w,),
                 ///密码
                 Row(
                   children: [
@@ -215,7 +189,7 @@ class RegisterPage extends StatelessWidget {
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
                 ),
-                SizedBox(height: 26.w,),
+                SizedBox(height: 10.w,),
                 ///手机号
                 Row(
                   children: [
@@ -292,7 +266,7 @@ class RegisterPage extends StatelessWidget {
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
                 ),
-                SizedBox(height: 30.w,),
+                SizedBox(height: 10.w,),
                 ///验证码
                 Row(
                   children: [
@@ -333,11 +307,14 @@ class RegisterPage extends StatelessWidget {
                     ):const SizedBox()
                   ],
                 ),
-                Container(
-                  color: HhColors.grayCCTextColor,
-                  height: 0.5.w,
-                ),
-                SizedBox(height: 30.w,),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20.w, 620.w, 20.w, 50.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 ///协议
                 Row(
                   children: [

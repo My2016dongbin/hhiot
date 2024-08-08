@@ -14,7 +14,7 @@ import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginController extends GetxController {
+class CompanyLoginController extends GetxController {
   late BuildContext context;
   final Rx<bool> testStatus = true.obs;
   final Rx<bool> pageStatus = false.obs;
@@ -23,7 +23,6 @@ class LoginController extends GetxController {
   final Rx<bool> passwordStatus = false.obs;
   final Rx<bool> passwordShowStatus = false.obs;
   final Rx<bool> confirmStatus = false.obs;
-  final Rx<bool> userType = true.obs;///true企业  false个人用户
   TextEditingController? tenantController = TextEditingController();
   TextEditingController? accountController = TextEditingController();
   TextEditingController? passwordController = TextEditingController();
@@ -35,9 +34,6 @@ class LoginController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    /*Future.delayed(const Duration(seconds: 2),(){
-      Get.off(HomePage(),binding: HomeBinding());
-    });*/
 
     showToastSubscription =
         EventBusUtil.getInstance().on<HhToast>().listen((event) {
@@ -140,11 +136,6 @@ class LoginController extends GetxController {
 
       info();
 
-      /*EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
-
-      Future.delayed(const Duration(seconds: 1),(){
-        Get.off(HomePage(),binding: HomeBinding());
-      });*/
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));

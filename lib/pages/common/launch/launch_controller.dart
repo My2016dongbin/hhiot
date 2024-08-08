@@ -5,6 +5,8 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/common/login/company/company_login_binding.dart';
+import 'package:iot/pages/common/login/company/company_login_view.dart';
 import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/pages/home/home_binding.dart';
@@ -77,7 +79,7 @@ class LaunchController extends GetxController {
     } else {
       Future.delayed(const Duration(seconds: 2), () {
         // Get.off(HomePage(),binding: HomeBinding());
-        Get.off(() => LoginPage(), binding: LoginBinding());
+        CommonUtils().toLogin();
       });
     }
   }
