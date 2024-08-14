@@ -82,7 +82,7 @@ class DeviceController extends GetxController {
   }
 
   Future<void> deviceList(int pageKey) async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '设备加载中..'));
+    // EventBusUtil.getInstance().fire(HhLoading(show: true,title: '设备加载中..'));
     Map<String, dynamic> map = {};
     if(spaceList[tabIndex.value]['id']!=-999){
       map['spaceId'] = spaceList[tabIndex.value]['id'];
@@ -91,9 +91,9 @@ class DeviceController extends GetxController {
     map['pageSize'] = '$pageSize';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList -- $result");
-    Future.delayed(const Duration(seconds: 1),(){
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
-    });
+    // Future.delayed(const Duration(seconds: 1),(){
+    //   EventBusUtil.getInstance().fire(HhLoading(show: false));
+    // });
     if(result["code"]==0 && result["data"]!=null){
       List<dynamic> newItems = [];
       try{

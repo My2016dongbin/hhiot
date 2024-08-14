@@ -52,7 +52,7 @@ class LaunchController extends GetxController {
           SPKeys().socialUsers, '${result["data"]["socialUsers"]}');
       await prefs.setString(SPKeys().posts, '${result["data"]["posts"]}');
 
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 2), () {
         Get.off(() => HomePage(), binding: HomeBinding());
       });
     } else {

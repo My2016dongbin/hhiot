@@ -52,7 +52,7 @@ class CompanyLoginController extends GetxController {
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
       if (event.show) {
-        EasyLoading.show(status: '${event.title}');
+        EasyLoading.show(/*status: '${event.title}'*/);
       } else {
         EasyLoading.dismiss();
       }

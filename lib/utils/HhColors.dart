@@ -41,6 +41,7 @@ class HhColors {
   static const themeSe = Color(0xFFF9605F); //主题选中颜色
   static const themeUn = Color(0xFFD6D7D9); //主题未选颜色
   static const questionColor = Color(0xFF049594); //主题颜色
+  static const loadingColor = Color(0xFFfbfbfb); //主题颜色
   static const whiteColor = Colors.white;
   static const blackColor = Colors.black;
   static const backBlueInColor = Color(0xFFE1E9F7);

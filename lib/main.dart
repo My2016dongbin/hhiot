@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:iot/pages/home/home_controller.dart';
@@ -51,19 +52,20 @@ void main() {
   //全局dialog样式配置
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorType = EasyLoadingIndicatorType.circle //dualRing chasingDots
+    ..indicatorWidget = Image.asset("assets/images/common/loading.gif",width: 100,height: 100,)
+    // ..indicatorType = EasyLoadingIndicatorType.spinningCircle //dualRing chasingDots ripple pulse foldingCube
     ..loadingStyle = EasyLoadingStyle.custom
     ..userInteractions = false
     ..lineWidth = 4
     ..indicatorSize = 50.0
-    ..radius = 10.0
+    ..radius = 14.0
     ..fontSize = 12.0
-    ..contentPadding = const EdgeInsets.fromLTRB(50, 30, 50, 30)
+    ..contentPadding = const EdgeInsets.fromLTRB(15, 5, 15, 5)
     ..progressColor = HhColors.mainTabTextSe
-    ..indicatorColor = HhColors.titleColor_99
+    ..indicatorColor = HhColors.mainBlueColor
     ..textColor = HhColors.titleColor_99
-    ..backgroundColor = HhColors.whiteColor
-    ..successWidget = const Text("yes")
+    ..backgroundColor = HhColors.loadingColor
+    // ..successWidget = const Text("yes")
     ..dismissOnTap = true
     ..maskType = EasyLoadingMaskType.black;
 

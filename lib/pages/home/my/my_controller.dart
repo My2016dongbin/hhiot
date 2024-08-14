@@ -60,15 +60,15 @@ class MyController extends GetxController {
   }
 
   Future<void> deviceList() async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '数据加载中..'));
+    // EventBusUtil.getInstance().fire(HhLoading(show: true,title: '数据加载中..'));
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '100';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList $result");
-    Future.delayed(const Duration(seconds: 1),(){
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
-    });
+    // Future.delayed(const Duration(seconds: 1),(){
+    //   EventBusUtil.getInstance().fire(HhLoading(show: false));
+    // });
     if(result["code"]==0 && result["data"]!=null){
       try{
         List<dynamic> deviceList = result["data"]["list"];
