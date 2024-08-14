@@ -90,11 +90,11 @@ android {
         haohaiVersion {
             dimension 'app'
             applicationId "com.ehaohai.iot"//包名
-//            resValue "string", "app_name", "物联网"   // 设置默认的app_name
+//            resValue "string", "app_name", "浩海万联"   // 设置默认的app_name
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
                     CHANNEL_NAME: "haohaiVersion",
-                    APP_NAME: "物联网",
+                    APP_NAME: "浩海万联",
                     AUTHORITIES: "com.ehaohai.iot.fileprovider",
             ]
 //            buildConfigField("String", "NET_TYPE", "ONLINE")//网络
@@ -105,7 +105,7 @@ android {
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
                     CHANNEL_NAME: "onceVersion",
-                    APP_NAME: "物联网临时测试版${defaultConfig.versionName}",
+                    APP_NAME: "浩海万联临时测试版${defaultConfig.versionName}",
                     AUTHORITIES: "com.ehaohai.iot.fileprovider",
             ]
         }

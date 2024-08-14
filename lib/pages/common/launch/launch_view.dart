@@ -31,7 +31,7 @@ class LaunchPage extends StatelessWidget {
   launchView() {
     return Stack(
       children: [
-        CommonData.personal?Image.asset('assets/images/common/icon_bg.png',fit: BoxFit.fill,):const SizedBox(),
+        CommonData.personal?SizedBox(height: 1.sh,width: 1.sw,child: Image.asset('assets/images/common/icon_bg.png',fit: BoxFit.fill,)):const SizedBox(),
         Image.asset(CommonData.personal?'assets/images/common/icon_launch.png':'assets/images/common/icon_launch_blue.png',fit: BoxFit.fill,),
         Align(
           alignment: Alignment.topCenter,
@@ -46,7 +46,7 @@ class LaunchPage extends StatelessWidget {
                       child: Image.asset('assets/images/common/logo.png',fit: BoxFit.fill,)
                   ),
                   SizedBox(height: 10.w,),
-                  Text('浩海物联',style: TextStyle(color: HhColors.whiteColor,fontSize: 30.sp),)
+                  Text('浩海万联',style: TextStyle(color: HhColors.whiteColor,fontSize: 30.sp),)
                 ],
               )
           ),

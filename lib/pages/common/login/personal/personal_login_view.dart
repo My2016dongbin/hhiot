@@ -57,7 +57,7 @@ class PersonalLoginPage extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Container(
               margin: EdgeInsets.fromLTRB(0.1.sw, 0.12.sh, 0, 0),
-              child: Text('浩海',style: TextStyle(color: HhColors.blackColor,fontSize: 70.sp,fontWeight: FontWeight.bold),),
+              child: Text('浩海万联',style: TextStyle(color: HhColors.blackColor,fontSize: 70.sp,fontWeight: FontWeight.bold),),
             ),
           ),
           Align(

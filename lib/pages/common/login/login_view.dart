@@ -56,7 +56,7 @@ class LoginPage extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Container(
               margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh, 0, 0),
-              child: Text('欢迎登录浩海物联',style: TextStyle(color: HhColors.blackColor,fontSize: 40.sp,fontWeight: FontWeight.bold),),
+              child: Text('欢迎登录浩海万联',style: TextStyle(color: HhColors.blackColor,fontSize: 40.sp,fontWeight: FontWeight.bold),),
             ),
           ),
           Align(

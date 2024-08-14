@@ -139,7 +139,7 @@ class MyAppState extends State<HhApp> {
     return AppView(
         builder: (locale, builder) => GetMaterialApp(
           navigatorObservers: [CustomNavigatorObserver.getInstance()],
-          title: '物联网平台',
+          title: '浩海万联',
           theme: ThemeData(
             fontFamily: '.SF UI Display', // 使用系统默认字体
             // bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: CXColors.WhiteColor),
