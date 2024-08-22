@@ -26,7 +26,6 @@ class HomeController extends GetxController {
 
   Function()? onScrollToUnreadMessage;
   late StreamSubscription showToastSubscription;
-  late StreamSubscription showLoadingSubscription;
 
   switchTab(index) {
     this.index.value = index;
@@ -74,15 +73,6 @@ class HomeController extends GetxController {
           curve: Curves.elasticOut,
           reverseCurve: Curves.linear,
         );
-      });
-      showLoadingSubscription = EventBusUtil.getInstance()
-          .on<HhLoading>()
-          .listen((event) {
-        if(event.show){
-          EasyLoading.show(/*status: '${event.title}'*/);
-        }else{
-          EasyLoading.dismiss();
-        }
       });
     });
     getLocation();

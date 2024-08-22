@@ -1,18 +1,21 @@
 import 'dart:ui';
 
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/login/code/code_binding.dart';
 import 'package:iot/pages/common/login/code/code_view.dart';
 import 'package:iot/pages/common/login/login_controller.dart';
 import 'package:iot/pages/common/login/personal/personal_login_controller.dart';
 import 'package:iot/pages/common/login/regist/regist_binding.dart';
 import 'package:iot/pages/common/login/regist/regist_view.dart';
+import 'package:iot/pages/common/web/WebViewPage.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
@@ -207,8 +210,16 @@ class PersonalLoginPage extends StatelessWidget {
                     Text('我已阅读并同意',
                       style: TextStyle(color: HhColors.gray9TextColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                     ),
-                    Text('《FM52隐私协议》',
-                      style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
+                        // showWebDialog();
+                        Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
+                      },
+                      child: Text('《浩海物联平台隐私政策》',
+                        style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -234,7 +245,9 @@ class PersonalLoginPage extends StatelessWidget {
                         EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
                         return;
                       }
-                      Get.to(()=>CodePage(logic.accountController!.text),binding: CodeBinding());
+                      Future.delayed(const Duration(milliseconds: 500),(){
+                        logic.sendCode();
+                      });
                     }else{
                       ///登录点击
                       if(logic.accountController!.text.isEmpty){
@@ -329,6 +342,31 @@ class PersonalLoginPage extends StatelessWidget {
       exit = true;
     }
     return Future.value(exit);
+  }
+
+  void showWebDialog() {
+    showCupertinoDialog(context: logic.context, builder: (context) => Center(
+      child: Container(
+        width: 1.sw,
+        height: 360.w,
+        margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+        padding: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 25.w),
+        decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(20.w))),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(CommonData.info,
+                style: TextStyle(color: HhColors.textColor,fontSize: 21.sp),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ));
   }
 
 }

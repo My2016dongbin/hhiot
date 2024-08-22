@@ -11,6 +11,7 @@ import 'package:iot/pages/common/login/code/code_binding.dart';
 import 'package:iot/pages/common/login/code/code_view.dart';
 import 'package:iot/pages/common/login/login_controller.dart';
 import 'package:iot/pages/common/login/regist/regist_controller.dart';
+import 'package:iot/pages/common/web/WebViewPage.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
@@ -241,7 +242,9 @@ class RegisterPage extends StatelessWidget {
                         if(logic.time.value!=0){
                           return;
                         }
-                        logic.sendCode();
+                        Future.delayed(const Duration(milliseconds: 500),(){
+                          logic.sendCode();
+                        });
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
@@ -332,8 +335,15 @@ class RegisterPage extends StatelessWidget {
                     Text('我已阅读并同意',
                       style: TextStyle(color: HhColors.grayBBTextColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                     ),
-                    Text('《FM52隐私协议》',
-                      style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
+                        Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
+                      },
+                      child: Text('《浩海物联平台隐私政策》',
+                        style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -368,7 +378,9 @@ class RegisterPage extends StatelessWidget {
                       EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
                       return;
                     }
-                    logic.register();
+                    Future.delayed(const Duration(milliseconds: 500),(){
+                      logic.register();
+                    });
                   },
                   child: Container(
                     width: 1.sw,

@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:iot/pages/common/launch/launch_controller.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/res/strings.dart';
@@ -198,6 +199,7 @@ class MyAppState extends State<HhApp> {
 class InitBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<HomeController>(HomeController());
+    // Get.put<HomeController>(HomeController());
+    Get.put<LaunchController>(LaunchController());
   }
 }

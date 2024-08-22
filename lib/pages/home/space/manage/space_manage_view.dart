@@ -84,8 +84,16 @@ class SpaceManagePage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   width: 1.sw,
+                  height: 140.w,
+                  color: HhColors.whiteColor,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 1.sw,
                   height: 1.w,
-                  margin: EdgeInsets.only(bottom: 160.w),
+                  margin: EdgeInsets.only(bottom: 140.w),
                   color: HhColors.grayDDTextColor,
                 ),
               ),
@@ -102,7 +110,7 @@ class SpaceManagePage extends StatelessWidget {
                   child: Container(
                     height: 80.w,
                     width: 1.sw,
-                    margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 50.w),
+                    margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 30.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
                         borderRadius: BorderRadius.all(Radius.circular(20.w))),
@@ -190,36 +198,37 @@ class SpaceManagePage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
+              margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    "${item['name']}",
-                    style: TextStyle(
-                        color: HhColors.blackTextColor,
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(width: 10.w,),
                   Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                          decoration: BoxDecoration(
-                              color: HhColors.grayEFBackColor,
-                              borderRadius: BorderRadius.all(Radius.circular(8.w))
-                          ),
-                          child: Text(
-                            "${item['deviceCount']}个设备",
-                            style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      "${item['name']}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: HhColors.blackColor,
+                        fontSize: 30.sp,),
                     ),
+                  ),
+                  SizedBox(width: 8.w,),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                        decoration: BoxDecoration(
+                            color: HhColors.grayEFBackColor,
+                            borderRadius: BorderRadius.all(Radius.circular(8.w))
+                        ),
+                        child: Text(
+                          "${item['deviceCount']}个设备",
+                          style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                        ),
+                      ),
+                    ],
                   ),
                   item['deviceCount']==0?const SizedBox():Image.asset(
                     "assets/images/common/icon_red.png",

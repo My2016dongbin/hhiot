@@ -38,8 +38,8 @@ class HhHttp {
     // 初始化基本选项
     BaseOptions options = BaseOptions(
         baseUrl: 'http://你的服务器地址',
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10));
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 15));
     _instance = this;
     // 初始化dio
     _dio = Dio(options);

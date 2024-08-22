@@ -12,6 +12,6 @@ class LaunchBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => LaunchController());
-    Get.lazyPut(() => MainController());
+    // Get.lazyPut(() => MainController());
   }
 }

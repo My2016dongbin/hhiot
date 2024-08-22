@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Container(
               margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh+66.w, 0, 0),
-              child: Text('未注册手机号验证后将创建浩海通行证',style: TextStyle(color: HhColors.textBlackColor,fontSize: 23.sp,),)
+              child: Text('未注册手机号清先注册浩海通行证',style: TextStyle(color: HhColors.textBlackColor,fontSize: 23.sp,),)
             ),
           ),
           Container(
@@ -237,7 +237,7 @@ class LoginPage extends StatelessWidget {
                     Text('我已阅读并同意',
                       style: TextStyle(color: HhColors.grayBBTextColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                     ),
-                    Text('《FM52隐私协议》',
+                    Text('《浩海物联平台隐私政策》',
                       style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -268,7 +268,10 @@ class LoginPage extends StatelessWidget {
                         EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
                         return;
                       }
-                      Get.to(()=>CodePage(logic.accountController!.text),binding: CodeBinding());
+                      Future.delayed(const Duration(milliseconds: 500),(){
+                        Get.to(()=>CodePage(logic.accountController!.text),binding: CodeBinding());
+                      });
+
                     }else{
                       ///登录点击
                       if(logic.accountController!.text.isEmpty){
@@ -283,7 +286,9 @@ class LoginPage extends StatelessWidget {
                         EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
                         return;
                       }
-                      logic.getTenant();
+                      Future.delayed(const Duration(milliseconds: 500),(){
+                        logic.getTenant();
+                      });
                     }
                   },
                   child: Container(

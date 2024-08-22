@@ -108,7 +108,9 @@ class SpacePage extends StatelessWidget {
                 logic.longitude = logicLocation.longitude.value;
                 logic.latitude = logicLocation.latitude.value;
               }
-              logic.createSpace();
+              Future.delayed(const Duration(milliseconds: 500),(){
+                logic.createSpace();
+              });
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(0,90.w,20.w,0),

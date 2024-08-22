@@ -4,6 +4,8 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/common/login/code/code_binding.dart';
+import 'package:iot/pages/common/login/code/code_view.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
@@ -86,6 +88,23 @@ class PersonalLoginController extends GetxController {
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/)));
+    }
+  }
+
+  Future<void> sendCode() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在发送短信..'));
+    var result = await HhHttp().request(
+      RequestUtils.codeSend,
+      method: DioMethod.post,
+      data: {'mobile':accountController!.text,'scene':21},
+    );
+    HhLog.d("sendCode -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if (result["code"] == 0 && result["data"] != null) {
+      Get.to(()=>CodePage(accountController!.text),binding: CodeBinding());
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 

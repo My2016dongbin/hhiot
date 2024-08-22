@@ -144,8 +144,10 @@ class EditPage extends StatelessWidget {
                       EventBusUtil.getInstance().fire(HhToast(title: '请输入修改内容'));
                       return;
                     }
-                    logic.values = logic.accountController!.text;
-                    logic.userEdit();
+                    Future.delayed(const Duration(milliseconds: 500),(){
+                      logic.values = logic.accountController!.text;
+                      logic.userEdit();
+                    });
                   },
                   child: Container(
                     width: 1.sw,

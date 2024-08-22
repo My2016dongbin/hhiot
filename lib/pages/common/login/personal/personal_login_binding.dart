@@ -12,6 +12,6 @@ class PersonalLoginBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => PersonalLoginController());
-    Get.lazyPut(() => MainController());
+    // Get.lazyPut(() => MainController());
   }
 }
