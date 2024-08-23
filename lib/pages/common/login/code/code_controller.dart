@@ -88,13 +88,13 @@ class CodeController extends GetxController {
       prefs.remove(SPKeys().account);
       prefs.remove(SPKeys().password);
 
-      EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '登录成功',type: 1));
 
       Future.delayed(const Duration(seconds: 1),(){
         Get.offAll(() => HomePage(),binding: HomeBinding());
       });
     }else{
-      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"]),type: 2));
     }
   }
 

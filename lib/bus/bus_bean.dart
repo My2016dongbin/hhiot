@@ -1,7 +1,8 @@
 class HhToast{
   String title;
+  int ?type;//1 success 2 error 3 warn
 
-  HhToast({required this.title});
+  HhToast({required this.title,this.type});
 }
 class HhLoading{
   bool show;

@@ -115,7 +115,7 @@ class HhHttp {
           options: options,
           onSendProgress: onSendProgress,
           onReceiveProgress: onReceiveProgress);
-      if('${response.data}'.contains('401')){
+      if(parse401('${response.data}')){
         CommonUtils().tokenDown();
       }
       return response.data;
@@ -132,5 +132,15 @@ class HhHttp {
   void openLog() {
     _dio.interceptors
         .add(LogInterceptor(responseHeader: false, responseBody: true));
+  }
+
+  bool parse401(String data) {
+    String str = "";
+    try{
+      str = data.substring(0,10);
+    }catch(e){
+      HhLog.e(e.toString());
+    }
+    return str.contains("401");
   }
 }

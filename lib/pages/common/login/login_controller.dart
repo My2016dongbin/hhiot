@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -8,6 +9,7 @@ import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
@@ -41,17 +43,45 @@ class LoginController extends GetxController {
 
     showToastSubscription =
         EventBusUtil.getInstance().on<HhToast>().listen((event) {
-      showToast(
-        event.title,
-        context: context,
-        animation: StyledToastAnimation.slideFromBottomFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        position: StyledToastPosition.bottom,
-        animDuration: const Duration(seconds: 1),
-        duration: const Duration(seconds: 2),
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linear,
-      );
+
+          showToastWidget(
+            Container(
+              padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
+              decoration: BoxDecoration(
+                  color: HhColors.blackColor,
+                  borderRadius: BorderRadius.all(Radius.circular(16.w))),
+              constraints: BoxConstraints(
+                  minWidth: 0.36.sw
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 40.w,),
+                  Image.asset(
+                    event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
+                    height: 40.w,
+                    width: 40.w,
+                    fit: BoxFit.fill,
+                  ),
+                  SizedBox(height: 40.w,),
+                  Text(
+                    event.title,
+                    style: TextStyle(
+                        color: HhColors.textColor,
+                        fontSize: 26.sp),
+                  ),
+                ],
+              ),
+            ),
+            context: context,
+            animation: StyledToastAnimation.slideFromBottomFade,
+            reverseAnimation: StyledToastAnimation.fade,
+            position: StyledToastPosition.center,
+            animDuration: const Duration(seconds: 1),
+            duration: const Duration(seconds: 2),
+            curve: Curves.elasticOut,
+            reverseCurve: Curves.linear,
+          );
     });
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
@@ -95,7 +125,7 @@ class LoginController extends GetxController {
       login();
     } else {
       EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/)));
+          .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/),type: 2));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
   }
@@ -116,7 +146,7 @@ class LoginController extends GetxController {
       CommonData.tenantName = tenantController!.text;
     } else {
       EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/)));
+          .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/),type: 2));
     }
   }
 
@@ -140,14 +170,9 @@ class LoginController extends GetxController {
 
       info();
 
-      /*EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
-
-      Future.delayed(const Duration(seconds: 1),(){
-        Get.off(HomePage(),binding: HomeBinding());
-      });*/
     } else {
       EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"]),type: 2));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
   }
@@ -173,14 +198,14 @@ class LoginController extends GetxController {
           SPKeys().socialUsers, '${result["data"]["socialUsers"]}');
       await prefs.setString(SPKeys().posts, '${result["data"]["posts"]}');
 
-      EventBusUtil.getInstance().fire(HhToast(title: '登录成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '登录成功',type: 1));
 
       Future.delayed(const Duration(seconds: 1), () {
         Get.offAll(() => HomePage(), binding: HomeBinding());
       });
     } else {
       EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"]),type: 2));
     }
   }
 }

@@ -93,7 +93,9 @@ class MessagePage extends StatelessWidget {
         child: PagedListView<int, dynamic>(
           pagingController: logic.deviceController,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
-            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(),
+            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+              height: 0.32.sw,
+              width: 0.6.sw,),
             itemBuilder: (context, item, index) => Container(
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
               padding: EdgeInsets.all(20.w),
@@ -160,7 +162,9 @@ class MessagePage extends StatelessWidget {
         child: PagedListView<int, dynamic>(
           pagingController: logic.warnController,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
-            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(),
+            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+              height: 0.32.sw,
+              width: 0.6.sw,),
             itemBuilder: (context, item, index) => Container(
               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
               padding: EdgeInsets.all(20.w),

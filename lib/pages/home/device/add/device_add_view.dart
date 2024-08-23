@@ -325,33 +325,35 @@ class DeviceAddPage extends StatelessWidget {
                   ),
               builderDelegate: PagedChildBuilderDelegate<dynamic>(
                 itemBuilder: (context, item, index) =>
-                    BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
+                    InkWell(
+                      onTap: (){
                         logic.index.value = -1;
                         logic.index.value = index;
                         logic.spaceId = '${item['id']}';
                       },
-                  child: Container(
-                    height: 90.w,
-                    margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                    padding: EdgeInsets.all(20.w),
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                        color: logic.index.value==index?HhColors.backBlueInColor:HhColors.whiteColor,
-                        border:logic.index.value==index?Border.all(color: HhColors.backBlueOutColor):null,
-                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                    child: Center(
-                      child: Text(
-                        "${item['name']}",
-                        style: TextStyle(
-                            color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
-                            fontSize: 26.sp),
+                      child: Container(
+                        height: 90.w,
+                        margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                        padding: EdgeInsets.all(20.w),
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            color: logic.index.value==index?HhColors.backBlueInColor:HhColors.whiteColor,
+                            border:logic.index.value==index?Border.all(color: HhColors.backBlueOutColor):null,
+                            borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                        child: Center(
+                          child: Expanded(
+                            child: Text(
+                              "${item['name']}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
+                                  fontSize: 26.sp),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
               ),
             ),
           ),

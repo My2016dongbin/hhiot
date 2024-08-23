@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -63,11 +65,40 @@ class HomeController extends GetxController {
       showToastSubscription = EventBusUtil.getInstance()
           .on<HhToast>()
           .listen((event) {
-        showToast(event.title,
+
+        showToastWidget(
+          Container(
+            padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
+            decoration: BoxDecoration(
+                color: HhColors.blackColor,
+                borderRadius: BorderRadius.all(Radius.circular(16.w))),
+            constraints: BoxConstraints(
+                minWidth: 0.36.sw
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 40.w,),
+                Image.asset(
+                  event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
+                  height: 40.w,
+                  width: 40.w,
+                  fit: BoxFit.fill,
+                ),
+                SizedBox(height: 40.w,),
+                Text(
+                  event.title,
+                  style: TextStyle(
+                      color: HhColors.textColor,
+                      fontSize: 26.sp),
+                ),
+              ],
+            ),
+          ),
           context: context,
           animation: StyledToastAnimation.slideFromBottomFade,
           reverseAnimation: StyledToastAnimation.fade,
-          position: StyledToastPosition.bottom,
+          position: StyledToastPosition.center,
           animDuration: const Duration(seconds: 1),
           duration: const Duration(seconds: 2),
           curve: Curves.elasticOut,

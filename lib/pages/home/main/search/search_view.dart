@@ -9,6 +9,7 @@ import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/pages/home/main/search/search_controller.dart';
 import 'package:iot/utils/HhLog.dart';
@@ -145,69 +146,6 @@ class SearchPage extends StatelessWidget {
             ),
           ),
         ),
-        /*///历史搜索记录列表
-        Container(
-          margin: EdgeInsets.only(top: 270.w),
-          color: HhColors.backColorF5,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(25.w, 25.w, 0, 0),
-                  child: Text(
-                    "历史搜索记录",
-                    style: TextStyle(
-                        color: HhColors.gray9TextColor,
-                        fontSize: 23.sp),
-                  ),
-                ),
-                InkWell(
-                  onTap: (){
-                    logic.searchController!.text = "林场";
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(25.w, 25.w, 0, 0),
-                    color: HhColors.trans,
-                    child: Text(
-                      "林场",
-                      style: TextStyle(
-                          color: HhColors.textBlackColor2,
-                          fontSize: 24.sp),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 1.w,
-                  width: 1.sw,
-                  margin: EdgeInsets.fromLTRB(25.w, 20.w, 25.w, 0),
-                  color: HhColors.grayDDTextColor,
-                ),
-                InkWell(
-                  onTap: (){
-                    logic.searchController!.text = "护林房";
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(25.w, 25.w, 0, 0),
-                    color: HhColors.trans,
-                    child: Text(
-                      "护林房",
-                      style: TextStyle(
-                          color: HhColors.textBlackColor2,
-                          fontSize: 24.sp),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 1.w,
-                  width: 1.sw,
-                  margin: EdgeInsets.fromLTRB(25.w, 20.w, 25.w, 0),
-                  color: HhColors.grayDDTextColor,
-                ),
-              ],
-            ),
-          ),
-        ),*/
         logic.listStatus.value?Container(
           margin: EdgeInsets.only(top: 270.w),
           child: EasyRefresh(
@@ -216,7 +154,9 @@ class SearchPage extends StatelessWidget {
             },
             child: SingleChildScrollView(
               key: const Key("out"),
-              child: Column(
+              child: (logic.deviceList.isEmpty&&logic.spaceList.isEmpty&&logic.messageList.isEmpty)?SizedBox(
+                child: Center(child: CommonUtils().noneWidget(image: 'assets/images/common/no_search.png',info: '没有找到匹配的结果',height: 0.5.sw,top: 0.4.sw),),
+              ):Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: getListWidgets(),
@@ -387,38 +327,39 @@ class SearchPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 15.w),
+                        margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              "${itemLeft['name']}",
-                              style: TextStyle(
-                                  color: HhColors.blackTextColor,
-                                  fontSize: 30.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(width: 10.w,),
                             Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                                    decoration: BoxDecoration(
-                                        color: HhColors.grayEFBackColor,
-                                        borderRadius: BorderRadius.all(Radius.circular(8.w))
-                                    ),
-                                    child: Text(
-                                      "${itemLeft['deviceCount']??"0"}个设备",
-                                      style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                                    ),
-                                  ),
-                                ],
+                              child: Text(
+                                "${itemLeft['name']}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: HhColors.blackColor,
+                                  fontSize: 30.sp,),
                               ),
                             ),
-                            (itemLeft['deviceCount']==0 || itemLeft['deviceCount']=='' || itemLeft['deviceCount']==null)?const SizedBox():Image.asset(
+                            SizedBox(width: 8.w,),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                                  decoration: BoxDecoration(
+                                      color: HhColors.grayEFBackColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(8.w))
+                                  ),
+                                  child: Text(
+                                    "${itemLeft['deviceCount']??0}个设备",
+                                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            (itemLeft['deviceCount']==null || itemLeft['deviceCount']==0)?const SizedBox():Image.asset(
                               "assets/images/common/icon_red.png",
                               width: 30.w,
                               height: 30.w,
@@ -426,7 +367,8 @@ class SearchPage extends StatelessWidget {
                             )
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(height: 20.w,),
                     ],
                   ),
                 ),
@@ -457,38 +399,39 @@ class SearchPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 15.w),
+                        margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              "${itemRight['name']}",
-                              style: TextStyle(
-                                  color: HhColors.blackTextColor,
-                                  fontSize: 30.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(width: 10.w,),
                             Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                                    decoration: BoxDecoration(
-                                        color: HhColors.grayEFBackColor,
-                                        borderRadius: BorderRadius.all(Radius.circular(8.w))
-                                    ),
-                                    child: Text(
-                                      "${itemRight['deviceCount']??"0"}个设备",
-                                      style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                                    ),
-                                  ),
-                                ],
+                              child: Text(
+                                "${itemRight['name']}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: HhColors.blackColor,
+                                  fontSize: 30.sp,),
                               ),
                             ),
-                            (itemRight['deviceCount']==0 || itemRight['deviceCount']=='' || itemRight['deviceCount']==null)?const SizedBox():Image.asset(
+                            SizedBox(width: 8.w,),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                                  decoration: BoxDecoration(
+                                      color: HhColors.grayEFBackColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(8.w))
+                                  ),
+                                  child: Text(
+                                    "${itemRight['deviceCount']??0}个设备",
+                                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            (itemLeft['deviceCount']==null || itemLeft['deviceCount']==0)?const SizedBox():Image.asset(
                               "assets/images/common/icon_red.png",
                               width: 30.w,
                               height: 30.w,
@@ -496,7 +439,8 @@ class SearchPage extends StatelessWidget {
                             )
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(height: 20.w,),
                     ],
                   ),
                 ),
@@ -535,7 +479,7 @@ class SearchPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
                 child: Text(
-                  "${item['name']}",
+                  CommonUtils().parseMessageType("${item['messageType']}"),
                   style: TextStyle(
                       color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                 ),
@@ -551,7 +495,7 @@ class SearchPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '${item['time']}',
+                  CommonUtils().parseLongTime('${item['createTime']}'),
                   style: TextStyle(
                       color: HhColors.textColor, fontSize: 22.sp),
                 ),

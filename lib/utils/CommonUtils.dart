@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +17,23 @@ import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 
 class CommonUtils{
+  String parseMessageType(String s){
+    String type = "设备报警";
+    if(s == 'deviceAlarm'){
+      type = "设备报警";
+    }
+    if(s == 'spaceAlarm'){
+      type = "空间报警";
+    }
+    return type;
+  }
+  String parseLongTime(String s){
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+    String time = date.toIso8601String();
+    time = time.substring(0,19);
+    time = time.replaceAll("T", " ");
+    return time;
+  }
   String msgString(String s){
     s = s.substring(s.indexOf(':')+1,s.length);
     return s;
@@ -27,14 +46,15 @@ class CommonUtils{
     }
     return s;
   }
-  Widget noneWidget({double? top}){
+  Widget noneWidget({double? top,double? mid,String? image,String? info,double? height,double? width}){
     return Column(
       children: [
         SizedBox(height: top??0.5.sw,),
-        Image.asset('assets/images/common/ic_none.png',fit: BoxFit.fill,
-          height: 0.4.sw,
-          width: 0.5.sw,),
-        Text('暂无数据',style: TextStyle(
+        Image.asset(image??'assets/images/common/ic_none.png',fit: BoxFit.fill,
+          height: height??0.4.sw,
+          width: width??0.5.sw,),
+        SizedBox(height: mid??0,),
+        Text(info??'暂无数据',style: TextStyle(
             color: HhColors.grayBBTextColor,
             fontSize: 26.sp
         ),),
@@ -150,9 +170,9 @@ class CommonUtils{
 
   toLogin(){
     if(CommonData.personal){
-      Get.off(() => PersonalLoginPage(), binding: PersonalLoginBinding());
+      Get.offAll(() => PersonalLoginPage(), binding: PersonalLoginBinding());
     }else{
-      Get.off(() => CompanyLoginPage(), binding: CompanyLoginBinding());
+      Get.offAll(() => CompanyLoginPage(), binding: CompanyLoginBinding());
     }
   }
 }

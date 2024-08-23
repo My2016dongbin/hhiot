@@ -86,12 +86,14 @@ class DeviceDetailPage extends StatelessWidget {
                       SizedBox(
                         width: 10.w,
                       ),
-                      Text(
-                        logic.name.value,
-                        style: TextStyle(
-                            color: HhColors.whiteColor,
-                            fontSize: 30.sp,
-                            fontWeight: FontWeight.bold),
+                      Expanded(
+                        child: Text(
+                          logic.name.value,
+                          style: TextStyle(
+                              color: HhColors.whiteColor,
+                              fontSize: 30.sp,
+                              fontWeight: FontWeight.bold),
+                        ),
                       )
                     ],
                   ),

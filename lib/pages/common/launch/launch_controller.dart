@@ -1,6 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -13,6 +14,7 @@ import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
@@ -97,11 +99,40 @@ class LaunchController extends GetxController {
     if(statuses[Permission.location] != PermissionStatus.denied && statuses[Permission.storage] != PermissionStatus.denied && statuses[Permission.camera] != PermissionStatus.denied&& statuses[Permission.microphone] != PermissionStatus.denied){
       next();
     }else{
-      showToast('请授权',
+
+      showToastWidget(
+        Container(
+          padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
+          decoration: BoxDecoration(
+              color: HhColors.blackColor,
+              borderRadius: BorderRadius.all(Radius.circular(16.w))),
+          constraints: BoxConstraints(
+              minWidth: 0.36.sw
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 40.w,),
+              Image.asset(
+                'assets/images/common/icon_warn.png',
+                height: 40.w,
+                width: 40.w,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(height: 40.w,),
+              Text(
+                '请授权',
+                style: TextStyle(
+                    color: HhColors.textColor,
+                    fontSize: 26.sp),
+              ),
+            ],
+          ),
+        ),
         context: context,
         animation: StyledToastAnimation.slideFromBottomFade,
         reverseAnimation: StyledToastAnimation.fade,
-        position: StyledToastPosition.bottom,
+        position: StyledToastPosition.center,
         animDuration: const Duration(seconds: 1),
         duration: const Duration(seconds: 2),
         curve: Curves.elasticOut,

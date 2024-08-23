@@ -8,6 +8,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
+import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
@@ -108,7 +110,37 @@ class DevicePage extends StatelessWidget {
           pagingController: logic.deviceController,
           padding: EdgeInsets.zero,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
-            noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidget(),
+            noItemsFoundIndicatorBuilder: (context) =>Column(
+              children: [
+                SizedBox(height:0.4.sw,),
+                Image.asset('assets/images/common/no_message.png',fit: BoxFit.fill,
+                  height: 0.32.sw,
+                  width: 0.6.sw,),
+                SizedBox(height: 100.w,),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    width: 1.sw,
+                    height: 90.w,
+                    margin: EdgeInsets.fromLTRB(60.w, 20.w, 60.w, 50.w),
+                    decoration: BoxDecoration(
+                        color: HhColors.mainBlueColor,
+                        borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                    child: Center(
+                      child: Text(
+                        "没有设备？去添加",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: HhColors.grayEEBackColor, fontSize: 26.sp),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Get.to(()=>DeviceAddPage(snCode: ""),binding: DeviceAddBinding());
+                  },
+                ),
+              ],
+            ),
             itemBuilder: (context, item, index) =>
                 InkWell(
                   onTap: (){
