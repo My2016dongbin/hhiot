@@ -13,7 +13,7 @@ import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditController extends GetxController {
+class PhoneController extends GetxController {
   late BuildContext context;
   final Rx<bool> testStatus = true.obs;
   final Rx<bool> pageStatus = false.obs;

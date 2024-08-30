@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
@@ -11,6 +10,7 @@ import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../bus/event_class.dart';
@@ -28,6 +28,7 @@ class HomeController extends GetxController {
 
   Function()? onScrollToUnreadMessage;
   late StreamSubscription showToastSubscription;
+  late StreamSubscription showLoadingSubscription;
 
   switchTab(index) {
     this.index.value = index;
@@ -105,6 +106,15 @@ class HomeController extends GetxController {
           reverseCurve: Curves.linear,
         );
       });
+    });
+    showLoadingSubscription = EventBusUtil.getInstance()
+        .on<HhLoading>()
+        .listen((event) {
+      if (event.show) {
+        context.loaderOverlay.show();
+      } else {
+        context.loaderOverlay.hide();
+      }
     });
     getLocation();
     super.onInit();

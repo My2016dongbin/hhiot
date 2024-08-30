@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -84,7 +83,7 @@ class RegisterController extends GetxController {
     HhLog.d("codeRegisterSend -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
-      EventBusUtil.getInstance().fire(HhToast(title: '注册成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '注册成功',type: 1));
       Get.back();
     } else {
       EventBusUtil.getInstance()

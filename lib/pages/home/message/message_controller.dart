@@ -117,7 +117,7 @@ class MessageController extends GetxController {
 
   Future<void> fetchPageDevice(int pageKey) async {
     Map<String, dynamic> map = {};
-    map['messageType'] = '1';
+    // map['messageType'] = '1';
     var result = await HhHttp()
         .request(RequestUtils.message, method: DioMethod.get, params: map);
     HhLog.d("fetchPageDevice -- $result");

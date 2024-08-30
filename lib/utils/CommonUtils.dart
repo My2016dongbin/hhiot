@@ -15,6 +15,8 @@ import 'package:iot/pages/common/login/personal/personal_login_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonUtils{
   String parseMessageType(String s){
@@ -26,6 +28,13 @@ class CommonUtils{
       type = "空间报警";
     }
     return type;
+  }
+  String parseNull(String s,String def){
+    String r = s;
+    if(s == "null"){
+      r = def;
+    }
+    return r;
   }
   String parseLongTime(String s){
     DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
@@ -76,73 +85,145 @@ class CommonUtils{
     );
   }
 
+  /*
+    showCupertinoDialog(context: logic.context, builder: (BuildContext context) {
+      return Center(
+        child: Container(
+          width: 1.sw,
+          height: 300.w,
+          margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 0),
+          decoration: BoxDecoration(
+              color: HhColors.whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(20.w))
+          ),
+          child: Stack(
+            children: [
+              Align(
+                alignment:Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 80.w, 0, 0),
+                  child: Text('确定要重启设备吗？',style: TextStyle(
+                    color: HhColors.grayAATextColor,
+                    fontSize: 28.sp,
+                    decoration: TextDecoration.none
+                  ),),),
+              ),
+              Align(
+                alignment:Alignment.bottomLeft,
+                child: BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(50.w, 0, 0, 40.w),
+                    padding: EdgeInsets.fromLTRB(60.w, 15.w, 60.w, 15.w),
+                    decoration: BoxDecoration(
+                      color: HhColors.whiteColor,
+                      border: Border.all(color: HhColors.gray9TextColor,width: 1.w),
+                      borderRadius: BorderRadius.all(Radius.circular(16.w)),
+                    ),
+                    child: Text('取消',style: TextStyle(
+                      color: HhColors.gray9TextColor,
+                      fontSize: 28.sp,
+                      decoration: TextDecoration.none
+                    ),),),
+                ),
+              ),
+              Align(
+                alignment:Alignment.bottomRight,
+                child: BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 50.w, 40.w),
+                    padding: EdgeInsets.fromLTRB(60.w, 15.w, 60.w, 15.w),
+                    decoration: BoxDecoration(
+                      color: HhColors.mainBlueColor,
+                      borderRadius: BorderRadius.all(Radius.circular(16.w)),
+                    ),
+                    child: Text('确定',style: TextStyle(
+                      color: HhColors.whiteColor,
+                      fontSize: 28.sp,
+                        decoration: TextDecoration.none
+                    ),),),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },);*/
+
   ///通用Dialog（取消/确认）
   showCommonDialog(context,title,leftClick,rightClick,{String? leftStr,String? rightStr,String? hint}){
     showCupertinoDialog(context: context, builder: (BuildContext context) {
-      return Container(
-        child: Center(
-          child: Container(
-            height: hint==null?240.w:270.w,
-            margin: EdgeInsets.fromLTRB(0.15.sw, 0, 0.15.sw, 0),
-            child: Card(
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14.w))),
-              color: HhColors.whiteColor,
-              shadowColor: HhColors.lineColor,
-              elevation: 5,
-              child: Stack(
-                children: <Widget>[
-                  Align(
-                    alignment:Alignment.center,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 60.w),
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Material(color: HhColors.whiteColor,child: Text("$title",style: TextStyle(color: HhColors.titleColor_99,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,)),
-                          Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
-                          Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
-                        ],
-                      ),
+      return Center(
+        child: Container(
+          height: hint==null?240.w:270.w,
+          margin: EdgeInsets.fromLTRB(0.15.sw, 0, 0.15.sw, 0),
+          child: Card(
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14.w))),
+            color: HhColors.whiteColor,
+            //shadowColor: HhColors.lineColor,
+            elevation: 5,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment:Alignment.center,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 60.w),
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("$title",style: TextStyle(color: HhColors.titleColor_99,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
+                        Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
+                        Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
+                      ],
                     ),
                   ),
-                  Align(
-                    alignment:Alignment.bottomCenter,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 15.w),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: CommonButton(
-                              height: 65.w,
-                              fontSize: 26.sp,
-                              backgroundColor: HhColors.whiteColor,
-                              margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
-                              solid:true,
-                              borderRadius: 35.w,
-                              solidColor: HhColors.grayEDBackColor,
-                              textColor: HhColors.titleColor_99,
-                              text: leftStr??"取消", onPressed: leftClick,
-                            ),
+                ),
+                Align(
+                  alignment:Alignment.bottomCenter,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 15.w),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: CommonButton(
+                            height: 65.w,
+                            fontSize: 26.sp,
+                            backgroundColor: HhColors.whiteColor,
+                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                            solid:true,
+                            borderRadius: 35.w,
+                            solidColor: HhColors.grayEDBackColor,
+                            textColor: HhColors.titleColor_99,
+                            text: leftStr??"取消", onPressed: leftClick,
                           ),
-                          Expanded(
-                            child: CommonButton(
-                              height: 65.w,
-                              fontSize: 26.sp,
-                              backgroundColor: HhColors.mainBlueColor,
-                              margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
-                              borderRadius: 35.w,
-                              textColor: HhColors.whiteColor,
-                              text: rightStr??"确定", onPressed: rightClick,
-                            ),
+                        ),
+                        Expanded(
+                          child: CommonButton(
+                            height: 65.w,
+                            fontSize: 26.sp,
+                            backgroundColor: HhColors.mainBlueColor,
+                            margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
+                            borderRadius: 35.w,
+                            textColor: HhColors.whiteColor,
+                            text: rightStr??"确定", onPressed: rightClick,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -157,7 +238,12 @@ class CommonUtils{
     return s;
   }
 
-  tokenDown(){
+  tokenDown() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(SPKeys().token);
+    CommonData.tenant = null;
+    CommonData.tenantName = null;
+    CommonData.token = null;
     int now = DateTime.now().millisecondsSinceEpoch;
     if(now - CommonData.time > 2000){
       CommonData.time = now;

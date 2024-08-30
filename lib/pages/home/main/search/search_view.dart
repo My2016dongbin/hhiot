@@ -270,7 +270,7 @@ class SearchPage extends StatelessWidget {
                         ),
                       ),
                     ),*/
-                item['shared']==true?const SizedBox():Align(
+                /*item['shared']==true?const SizedBox():Align(
                   alignment: Alignment.centerRight,
                   child: Image.asset(
                     "assets/images/common/close.png",
@@ -278,7 +278,7 @@ class SearchPage extends StatelessWidget {
                     height: 50.w,
                     fit: BoxFit.fill,
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

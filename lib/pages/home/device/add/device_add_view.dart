@@ -341,15 +341,13 @@ class DeviceAddPage extends StatelessWidget {
                             border:logic.index.value==index?Border.all(color: HhColors.backBlueOutColor):null,
                             borderRadius: BorderRadius.all(Radius.circular(20.w))),
                         child: Center(
-                          child: Expanded(
-                            child: Text(
-                              "${item['name']}",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
-                                  fontSize: 26.sp),
-                            ),
+                          child: Text(
+                            "${item['name']}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
+                                fontSize: 26.sp),
                           ),
                         ),
                       ),

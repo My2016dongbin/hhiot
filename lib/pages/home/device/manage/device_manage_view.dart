@@ -139,7 +139,7 @@ class DeviceManagePage extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.fromLTRB(100.w, 0, 0, item['productName']==""?0:50.w),
                         child: Text(
-                          '${item['name']}',
+                          CommonUtils().parseNull('${item['name']}',""),
                           style: TextStyle(
                               color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                         ),
@@ -190,7 +190,7 @@ class DeviceManagePage extends StatelessWidget {
                         ),
                       ),
                     ),*/
-                    item['shared']==true?const SizedBox():Align(
+                    /*item['shared']==true?const SizedBox():Align(
                       alignment: Alignment.centerRight,
                       child: Image.asset(
                         "assets/images/common/close.png",
@@ -198,7 +198,7 @@ class DeviceManagePage extends StatelessWidget {
                         height: 50.w,
                         fit: BoxFit.fill,
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),

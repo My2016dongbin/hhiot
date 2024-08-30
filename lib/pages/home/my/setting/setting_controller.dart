@@ -12,6 +12,7 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class SettingController extends GetxController {
   final index = 0.obs;
@@ -30,7 +31,7 @@ class SettingController extends GetxController {
   Future<void> onInit() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     nickname!.value = prefs.getString(SPKeys().nickname)!;
-    account!.value = prefs.getString(SPKeys().account)!;
+    account!.value = prefs.getString(SPKeys().nickname)!;
     mobile!.value = prefs.getString(SPKeys().mobile)!;
     email!.value = prefs.getString(SPKeys().email)!;
     avatar!.value = prefs.getString(SPKeys().avatar)!;
@@ -46,16 +47,24 @@ class SettingController extends GetxController {
         });
     super.onInit();
   }
-
+  // 将文件转换为字节数组
+  Future<List<int>> readFileByte(File file) async {
+    List<int> bytes = await file.readAsBytes();
+    return bytes;
+  }
   Future<void> fileUpload() async {
     Map<String, dynamic> map = {};
-    map['path'] = File(file.path);
-    FormData({
-      "path":MultipartFile(file.path,filename: "fireName.png")
+    List<int> byteData = await readFileByte(File(file.path));
+    var multipartFile = http.MultipartFile.fromBytes(
+      'file',
+      byteData,
+      filename: file.path.split('/').last,
+    );
+    map['avatarFile'] = multipartFile;
+    var result = await HhHttp().request(RequestUtils.headerUpload,method: DioMethod.put,/*params: map,*/data: {
+      "avatarFile":multipartFile
     });
-    var result = await HhHttp().request(RequestUtils.fileUpload,method: DioMethod.post,params: map,data: {
-      "path":MultipartFile(file.path,filename: "fireName.png")
-    });
+
     HhLog.d("fileUpload -- $result");
     if(result["code"]==0 && result["data"]!=null){
 

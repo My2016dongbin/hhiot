@@ -23,12 +23,13 @@ class SpaceController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在添加..'));
     var result = await HhHttp().request(RequestUtils.spaceCreate,method: DioMethod.post,data: {
       'name':nameController!.text,
-      'location':'$longitude,$latitude',
+      'longitude':'$longitude',
+      'latitude':'$latitude',
       // 'imgUrl':'',
     });
     HhLog.d("createSpace -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      EventBusUtil.getInstance().fire(HhToast(title: '添加成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '添加成功',type: 1));
       EventBusUtil.getInstance().fire(SpaceList());
       Get.back();
       picture.value = false;

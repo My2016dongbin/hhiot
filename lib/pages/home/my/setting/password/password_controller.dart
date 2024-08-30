@@ -13,21 +13,21 @@ import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditController extends GetxController {
+class PasswordController extends GetxController {
   late BuildContext context;
   final Rx<bool> testStatus = true.obs;
   final Rx<bool> pageStatus = false.obs;
-  final Rx<bool> tenantStatus = false.obs;
-  final Rx<bool> accountStatus = false.obs;
   final Rx<bool> passwordStatus = false.obs;
   final Rx<bool> passwordShowStatus = false.obs;
+  final Rx<bool> passwordNew1Status = false.obs;
+  final Rx<bool> passwordShowNew1Status = false.obs;
+  final Rx<bool> passwordNew2Status = false.obs;
+  final Rx<bool> passwordShowNew2Status = false.obs;
   final Rx<bool> confirmStatus = false.obs;
   final Rx<String> titles = ''.obs;
-  TextEditingController? tenantController = TextEditingController();
-  TextEditingController? accountController = TextEditingController();
   TextEditingController? passwordController = TextEditingController();
-  late StreamSubscription showToastSubscription;
-  late StreamSubscription showLoadingSubscription;
+  TextEditingController? passwordNew1Controller = TextEditingController();
+  TextEditingController? passwordNew2Controller = TextEditingController();
   late String? account;
   late String? password;
   late String? tenantName;

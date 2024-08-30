@@ -454,6 +454,7 @@ class CompanyLoginPage extends StatelessWidget {
                               style: TextStyle(
                                   color: HhColors.textBlackColor,
                                   fontSize: 32.sp,
+                                  decoration: TextDecoration.none,
                                   fontWeight: FontWeight.bold),
                             ))),
                     Align(
@@ -465,6 +466,7 @@ class CompanyLoginPage extends StatelessWidget {
                                 Text(
                                   '请您阅读并同意',
                                   style: TextStyle(
+                                      decoration: TextDecoration.none,
                                       color: HhColors.textColor,
                                       fontSize: 26.sp),
                                 ),
@@ -477,6 +479,7 @@ class CompanyLoginPage extends StatelessWidget {
                                   child: Text(
                                     '《浩海物联平台隐私政策》',
                                     style: TextStyle(
+                                        decoration: TextDecoration.none,
                                         color: HhColors.mainBlueColor,
                                         fontSize: 26.sp),
                                   ),
@@ -534,6 +537,7 @@ class CompanyLoginPage extends StatelessWidget {
                               style: TextStyle(
                                   color: HhColors.whiteColor,
                                   fontSize: 28.sp,
+                                  decoration: TextDecoration.none,
                                   fontWeight: FontWeight.w200),
                             ),
                           ),

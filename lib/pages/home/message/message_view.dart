@@ -106,7 +106,7 @@ class MessagePage extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  Container(
+                  item['status'] == true?const SizedBox():Container(
                     height: 10.w,
                     width: 10.w,
                     margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
@@ -118,7 +118,7 @@ class MessagePage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
                     child: Text(
-                      '${item['name']}',
+                      '设备报警',
                       style: TextStyle(
                           color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                     ),
@@ -134,7 +134,7 @@ class MessagePage extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      '${item['time']}',
+                      CommonUtils().parseLongTime('${item['createTime']}'),
                       style: TextStyle(
                           color: HhColors.textColor, fontSize: 22.sp),
                     ),

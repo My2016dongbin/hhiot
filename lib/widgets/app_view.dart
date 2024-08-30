@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:iot/utils/HhColors.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 
 class AppView extends StatelessWidget {
@@ -21,33 +23,43 @@ class AppView extends StatelessWidget {
     );
   }
 
-  static TransitionBuilder _builder() => EasyLoading.init(
-        builder: (context, widget) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              //textScaleFactor: Config.textScaleFactor,
-            ),
-            child: FlutterEasyLoading(
-              child: GestureDetector(
-                onTap: () {
-                  //全局空白焦点
-                  FocusScopeNode focusScopeNode = FocusScope.of(context);
-                  if (!focusScopeNode.hasPrimaryFocus &&
-                      focusScopeNode.focusedChild != null) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  }
-                  //easyLoading
-                  FocusScopeNode currentFocus = FocusScope.of(context);
-                  if (!currentFocus.hasPrimaryFocus) {
-                    currentFocus.unfocus();
-                  }
-                },
-                child: widget!,
-              ),
+  static TransitionBuilder _builder() => (context,widget){
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        //textScaleFactor: Config.textScaleFactor,
+      ),
+      child: LoaderOverlay(
+        overlayColor: HhColors.backTransColor,
+        closeOnBackButton: true,
+        useDefaultLoading: false,
+        overlayWidgetBuilder: (_) { //ignored progress for the moment
+          return const Center(
+            child: SpinKitDualRing(
+              color: HhColors.mainBlueColor,
+              size: 50.0,
+              lineWidth: 5,
             ),
           );
         },
-      );
+        child: GestureDetector(
+          onTap: () {
+            //全局空白焦点
+            FocusScopeNode focusScopeNode = FocusScope.of(context);
+            if (!focusScopeNode.hasPrimaryFocus &&
+                focusScopeNode.focusedChild != null) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
+            //easyLoading
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: widget!,
+        ),
+      ),
+    );
+  };
 }
 
 class AppController extends GetxController {

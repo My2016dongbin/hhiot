@@ -4,7 +4,6 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,6 +17,7 @@ import 'package:iot/utils/CustomNavigatorObserver.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/widgets/app_view.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tpns_flutter_plugin/tpns_flutter_plugin.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 
@@ -50,25 +50,6 @@ void main() {
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-  //全局dialog样式配置
-  EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorWidget = Image.asset("assets/images/common/loading.gif",width: 100,height: 100,)
-    // ..indicatorType = EasyLoadingIndicatorType.spinningCircle //dualRing chasingDots ripple pulse foldingCube
-    ..loadingStyle = EasyLoadingStyle.custom
-    ..userInteractions = false
-    ..lineWidth = 4
-    ..indicatorSize = 50.0
-    ..radius = 14.0
-    ..fontSize = 12.0
-    ..contentPadding = const EdgeInsets.fromLTRB(15, 5, 15, 5)
-    ..progressColor = HhColors.mainTabTextSe
-    ..indicatorColor = HhColors.mainBlueColor
-    ..textColor = HhColors.titleColor_99
-    ..backgroundColor = HhColors.loadingColor
-    // ..successWidget = const Text("yes")
-    ..dismissOnTap = true
-    ..maskType = EasyLoadingMaskType.black;
 
 }
 
@@ -130,7 +111,6 @@ class MyAppState extends State<HhApp> {
         //EventBusUtil.getInstance().fire(PushTouch());
       },
     );
-    EasyLoading.init();
     // 全局设置
     EasyRefresh.defaultHeaderBuilder = () => const CupertinoHeader();
     EasyRefresh.defaultFooterBuilder = () => const CupertinoFooter();

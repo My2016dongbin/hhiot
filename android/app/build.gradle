@@ -53,7 +53,7 @@ android {
 
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi-v7a'//, 'arm64-v8a', 'x86', 'x86_64'
+            abiFilters  "armeabi-v7a","arm64-v8a", "x86"
         }
 //        manifestPlaceholders = [
 //                XG_ACCESS_ID : "1500022588",
@@ -120,7 +120,7 @@ android {
 
             ndk{
                 //QQ微信等大佬都只用"armeabi"
-                abiFilters "armeabi-v7a"
+                abiFilters  "armeabi-v7a","arm64-v8a", "x86"
             }
         }
         debug {

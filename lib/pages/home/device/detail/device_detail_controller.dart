@@ -59,9 +59,9 @@ class DeviceDetailController extends GetxController {
 
   void fetchPageDevice(int pageKey) {
     List<Device> newItems = [
-      Device("检测到画面变化", "08:59:06", "", "",true,true),
+      Device("人员入侵报警", "08:59:06", "", "",true,true),
       Device("区域入侵", "19:36:06", "", "",false,true),
-      Device("检测到画面变化", "10:59:06", "", "",false,false),
+      Device("人员入侵报警", "10:59:06", "", "",false,false),
       Device("区域入侵", "12:59:06", "", "",false,false),
     ];
     final isLastPage = newItems.length < pageSize;
@@ -92,7 +92,7 @@ class DeviceDetailController extends GetxController {
     }
   }
   Future<void> getPlayUrl(String ids,String number) async {
-    var result = await HhHttp().request(RequestUtils.devicePlayUrl,method: DioMethod.post,data: {
+    dynamic data = {
       'deviceId':ids,
       'channelNumber':number,
       // 'deviceId':'2096e4bf4af411efa74f2a37f6c892cc',
@@ -100,8 +100,10 @@ class DeviceDetailController extends GetxController {
       'streamProtocol': "RTSP",
       'streamType': 0,
       'transMode': "TCP"
-    });
-    HhLog.d("getPlayUrl -- $result");
+    };
+    var result = await HhHttp().request(RequestUtils.devicePlayUrl,method: DioMethod.post,data: data);
+    HhLog.d("getPlayUrl data -- $data");
+    HhLog.d("getPlayUrl result -- $result");
     if(result["code"]==200 && result["data"]!=null){
       try{
         String url = result["data"][0]['url'];
@@ -177,7 +179,7 @@ class DeviceDetailController extends GetxController {
   }
 
   String parseType(type) {
-    String s = '检测到画面变化';
+    String s = '人员入侵报警';
 
     return s;
   }

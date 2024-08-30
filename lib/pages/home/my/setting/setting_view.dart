@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/login/company/company_login_binding.dart';
 import 'package:iot/pages/common/login/company/company_login_view.dart';
 import 'package:iot/pages/common/login/login_binding.dart';
 import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_view.dart';
+import 'package:iot/pages/home/my/setting/password/password_binding.dart';
+import 'package:iot/pages/home/my/setting/password/password_view.dart';
+import 'package:iot/pages/home/my/setting/phone/phone_binding.dart';
+import 'package:iot/pages/home/my/setting/phone/phone_view.dart';
 import 'package:iot/pages/home/my/setting/setting_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -314,56 +319,61 @@ class SettingPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ///安全手机
-                      SizedBox(
-                        height:110.w,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin:EdgeInsets.only(left: 30.w),
-                                child: Text(
-                                  "安全手机",
-                                  style: TextStyle(
-                                      color: HhColors.textBlackColor,
-                                      fontSize: 28.sp,fontWeight: FontWeight.bold),
+                      InkWell(
+                        onTap: (){
+                          Get.to(() => PhonePage(keys: 'phone',titles: '修改手机号',), binding: PhoneBinding());
+                        },
+                        child: SizedBox(
+                          height:110.w,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin:EdgeInsets.only(left: 30.w),
+                                  child: Text(
+                                    "安全手机",
+                                    style: TextStyle(
+                                        color: HhColors.textBlackColor,
+                                        fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.only(right: 65.w),
-                                child: Text(
-                                  CommonUtils().mobileString(logic.mobile!.value),
-                                  style: TextStyle(
-                                      color: HhColors.gray9TextColor,
-                                      fontSize: 26.sp),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.only(right: 65.w),
+                                  child: Text(
+                                    CommonUtils().mobileString(logic.mobile!.value),
+                                    style: TextStyle(
+                                        color: HhColors.gray9TextColor,
+                                        fontSize: 26.sp),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
-                                child: Image.asset(
-                                  "assets/images/common/back_role.png",
-                                  width: 25.w,
-                                  height: 25.w,
-                                  fit: BoxFit.fill,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                                  child: Image.asset(
+                                    "assets/images/common/back_role.png",
+                                    width: 25.w,
+                                    height: 25.w,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child:Container(
-                                height: 0.5.w,
-                                width: 1.sw,
-                                margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                color: HhColors.grayDDTextColor,
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child:Container(
+                                  height: 0.5.w,
+                                  width: 1.sw,
+                                  margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                                  color: HhColors.grayDDTextColor,
+                                )
                               )
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       ///安全邮箱
@@ -427,54 +437,59 @@ class SettingPage extends StatelessWidget {
                       ///安全邮箱
                       SizedBox(
                         height:110.w,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin:EdgeInsets.only(left: 30.w),
-                                child: Text(
-                                  "设置新密码",
-                                  style: TextStyle(
-                                      color: HhColors.textBlackColor,
-                                      fontSize: 28.sp,fontWeight: FontWeight.bold),
+                        child: InkWell(
+                          onTap: (){
+                            Get.to(() => PasswordPage(keys: 'password',titles: '修改密码',), binding: PasswordBinding());
+                          },
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  margin:EdgeInsets.only(left: 30.w),
+                                  child: Text(
+                                    "设置新密码",
+                                    style: TextStyle(
+                                        color: HhColors.textBlackColor,
+                                        fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.only(right: 65.w),
-                                child: Text(
-                                  "",
-                                  style: TextStyle(
-                                      color: HhColors.gray9TextColor,
-                                      fontSize: 26.sp),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.only(right: 65.w),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                        color: HhColors.gray9TextColor,
+                                        fontSize: 26.sp),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
-                                child: Image.asset(
-                                  "assets/images/common/back_role.png",
-                                  width: 25.w,
-                                  height: 25.w,
-                                  fit: BoxFit.fill,
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin:EdgeInsets.fromLTRB(0,6.w,30.w,0),
+                                  child: Image.asset(
+                                    "assets/images/common/back_role.png",
+                                    width: 25.w,
+                                    height: 25.w,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child:Container(
-                                height: 0.5.w,
-                                width: 1.sw,
-                                margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                color: HhColors.grayDDTextColor,
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child:Container(
+                                  height: 0.5.w,
+                                  width: 1.sw,
+                                  margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                                  color: HhColors.grayDDTextColor,
+                                )
                               )
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -744,6 +759,9 @@ class SettingPage extends StatelessWidget {
                   onTap: () async {
                     final SharedPreferences prefs = await SharedPreferences.getInstance();
                     prefs.remove(SPKeys().token);
+                    CommonData.tenant = null;
+                    CommonData.tenantName = null;
+                    CommonData.token = null;
                     CommonUtils().toLogin();
                   },
                   child: Container(

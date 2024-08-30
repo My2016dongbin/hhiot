@@ -61,7 +61,7 @@ class MainPage extends StatelessWidget {
       width: 0.6.sw,
       height: logic.searchDown.value?0.8.sw:150.w,
       margin: EdgeInsets.fromLTRB(30.w, logic.marginTop + 70.w, 0, 0),
-      padding: EdgeInsets.fromLTRB(20.w, 20.w, 50.w, 20.w),
+      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
       decoration: BoxDecoration(
           boxShadow: const [
             BoxShadow(
@@ -76,155 +76,171 @@ class MainPage extends StatelessWidget {
           ],
           color: HhColors.whiteColor,
           borderRadius: BorderRadius.all(Radius.circular(20.w))),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Row(
         children: [
-          ///搜索框
-          Container(
-            padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
-            decoration: BoxDecoration(
-                color: HhColors.whiteColor,
-                border: Border.all(color: HhColors.mainBlueColor),
-                borderRadius: BorderRadius.all(Radius.circular(50.w))),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          Expanded(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                BouncingWidget(
-                  duration: const Duration(milliseconds: 100),
-                  scaleFactor: 1.2,
-                  onPressed: logic.restartSearchClick,
-                  child: Image.asset(
-                    "assets/images/common/icon_search.png",
-                    width: 35.w,
-                    height: 35.w,
-                    fit: BoxFit.fill,
+                ///搜索框
+                Container(
+                  padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  decoration: BoxDecoration(
+                      color: HhColors.whiteColor,
+                      border: Border.all(color: HhColors.mainBlueColor),
+                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/common/icon_search.png",
+                        width: 35.w,
+                        height: 35.w,
+                        fit: BoxFit.fill,
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.searchController,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.search,
+                          onSubmitted: (s){
+                            // if(logic.searchController!.text.isEmpty){
+                            //   EventBusUtil.getInstance().fire(HhToast(title: '请输入名称'));
+                            //   return;
+                            // }
+                            logic.deviceSearch();
+                          },
+                          decoration: InputDecoration(
+                            //contentPadding: EdgeInsets.zero,
+                            border: InputBorder.none,
+                            hintText: '请输入名称',
+                            hintStyle: TextStyle(
+                                color: HhColors.gray9TextColor, fontSize: 24.sp),
+                          ),
+                          style:
+                              TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          logic.searchDown.value = !logic.searchDown.value;
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5.w),
+                          child: Image.asset(
+                            logic.searchDown.value?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
+                            width: 35.w,
+                            height: 35.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20.w,),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Expanded(
-                  child: TextField(
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    cursorColor: HhColors.titleColor_99,
-                    controller: logic.searchController,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (s){
-                      // if(logic.searchController!.text.isEmpty){
-                      //   EventBusUtil.getInstance().fire(HhToast(title: '请输入名称'));
-                      //   return;
-                      // }
-                      logic.deviceSearch();
-                    },
-                    decoration: InputDecoration(
-                      //contentPadding: EdgeInsets.zero,
-                      border: InputBorder.none,
-                      hintText: '请输入名称',
-                      hintStyle: TextStyle(
-                          color: HhColors.gray9TextColor, fontSize: 24.sp),
+                ///列表数据
+                logic.searchDown.value?Expanded(
+                  child: PagedListView<int, dynamic>(
+                    pagingController: logic.deviceController,
+                    padding: EdgeInsets.zero,
+                    builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                      noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(),
+                      itemBuilder: (context, item, index) =>
+                          InkWell(
+                            onTap: (){
+                              HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
+                              logic.controller?.setCenterCoordinate(
+                                BMFCoordinate(double.parse('${item["latitude"]}'),double.parse('${item["longitude"]}')), false,
+                              );
+                              logic.controller?.setZoomTo(17);
+                              logic.searchDown.value = false;
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(15.w),
+                                  decoration: BoxDecoration(
+                                      color: HhColors.blueBackColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                                  margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          "${item['name']}",
+                                          style: TextStyle(
+                                              color: HhColors.textBlackColor,
+                                              fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Container(
+                                          margin: EdgeInsets.only(top: 10.w),
+                                          child: Text(
+                                            "${item['spaceName']}",
+                                            style: TextStyle(
+                                                color: HhColors.gray9TextColor,
+                                                fontSize: 23.sp),
+                                          ),
+                                        ),
+                                      ),
+                                      "${item['longitude']}"=="null"?const SizedBox():Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Container(
+                                          margin: EdgeInsets.only(top: 10.w),
+                                          child: Text(
+                                            "(${CommonUtils().subString("${item['longitude']}", 8)},${CommonUtils().subString("${item['latitude']}", 8)})",
+                                            style: TextStyle(
+                                                color: HhColors.gray9TextColor,
+                                                fontSize: 23.sp),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 0.5.w,
+                                  width: 1.sw,
+                                  margin: EdgeInsets.fromLTRB(20.w, 5.w, 20.w, 0),
+                                  color: HhColors.grayDDTextColor,
+                                )
+                              ],
+                            ),
+                          )
                     ),
-                    style:
-                        TextStyle(color: HhColors.textColor, fontSize: 24.sp),
                   ),
-                ),
-                InkWell(
-                  onTap: (){
-                    logic.searchDown.value = !logic.searchDown.value;
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(5.w),
-                    child: Image.asset(
-                      logic.searchDown.value?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
-                      width: 35.w,
-                      height: 35.w,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 20.w,),
+                ):const SizedBox(),
               ],
             ),
           ),
-          ///列表数据
-          logic.searchDown.value?Expanded(
-            child: PagedListView<int, dynamic>(
-              pagingController: logic.deviceController,
-              padding: EdgeInsets.zero,
-              builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(),
-                itemBuilder: (context, item, index) =>
-                    InkWell(
-                      onTap: (){
-                        HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
-                        logic.controller?.setCenterCoordinate(
-                          BMFCoordinate(double.parse('${item["latitude"]}'),double.parse('${item["longitude"]}')), false,
-                        );
-                        logic.controller?.setZoomTo(17);
-                        logic.searchDown.value = false;
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(15.w),
-                            decoration: BoxDecoration(
-                                color: HhColors.blueBackColor,
-                                borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                            margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "${item['name']}",
-                                    style: TextStyle(
-                                        color: HhColors.textBlackColor,
-                                        fontSize: 26.sp,fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 50.w),
-                                    child: Text(
-                                      "${item['spaceName']}",
-                                      style: TextStyle(
-                                          color: HhColors.gray9TextColor,
-                                          fontSize: 23.sp),
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 90.w),
-                                    child: Text(
-                                      "(${CommonUtils().subString("${item['longitude']}", 8)},${CommonUtils().subString("${item['latitude']}", 8)})",
-                                      style: TextStyle(
-                                          color: HhColors.gray9TextColor,
-                                          fontSize: 23.sp),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 0.5.w,
-                            width: 1.sw,
-                            margin: EdgeInsets.fromLTRB(20.w, 5.w, 20.w, 0),
-                            color: HhColors.grayDDTextColor,
-                          )
-                        ],
-                      ),
-                    )
+          InkWell(
+            onTap: (){
+              logic.restartSearchClick();
+            },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
+              child: Image.asset(
+                'assets/images/common/icon_map_left.png',
+                width: 30.w,
+                height: 30.w,
+                fit: BoxFit.fill,
               ),
             ),
-          ):const SizedBox(),
+          ),
         ],
       ),
     );
@@ -529,12 +545,12 @@ class MainPage extends StatelessWidget {
                     SizedBox(
                       width: 15.w,
                     ),
-                    Image.asset(
+                    /*Image.asset(
                       "assets/images/common/ic_record.png",
                       width: 44.w,
                       height: 44.w,
                       fit: BoxFit.fill,
-                    ),
+                    ),*/
                     SizedBox(
                       width: 40.w,
                     )
@@ -779,6 +795,10 @@ class MainPage extends StatelessWidget {
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
                       itemBuilder: (context, item, index) =>
                           gridItemView(context, item, index),
+                      noItemsFoundIndicatorBuilder:  (context) =>
+                          CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无空间数据',mid: 50.w,top: 0.3.sw,
+                            height: 0.32.sw,
+                            width: 0.6.sw,),
                     ),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2, //横轴n个子widget

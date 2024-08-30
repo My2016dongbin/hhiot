@@ -25,6 +25,7 @@ class RequestUtils{
   static const userEdit = '$base/admin-api/system/user/profile/update';//修改个人信息
   static const mainSearch = '$base/admin-api/mid/space/getListByKeyWord';//主页查询空间设备及消息
   static const fileUpload = '$base/admin-api/infra/file/upload';//文件上传
+  static const headerUpload = '$base/admin-api/system/user/profile/update-avatar';//个人头像上传
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -31,11 +30,16 @@ class LocationController extends GetxController {
 
   void onBMFMapCreated(BMFMapController controller_) {
     controller = controller_;
+    userMarker();
+    controller?.setCenterCoordinate(BMFCoordinate(CommonData.latitude!,CommonData.longitude!),false);
+    controller?.setZoomTo(17);
     controller?.setMapOnClickedMapBlankCallback(callback: (BMFCoordinate coordinate) {
       controller?.cleanAllMarkers();
 
       latitude.value = coordinate.latitude;
       longitude.value = coordinate.longitude;
+
+      userMarker();
 
       /// 创建BMFMarker
       BMFMarker marker = BMFMarker(
@@ -65,5 +69,18 @@ class LocationController extends GetxController {
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
+  }
+
+  void userMarker() {
+    /// 创建BMFMarker
+    BMFMarker point = BMFMarker(
+        position: BMFCoordinate(CommonData.latitude!,CommonData.longitude!),
+        enabled: false,
+        visible: true,
+        identifier: "location",
+        icon: 'assets/images/common/icon_point.png');
+
+    /// 添加Marker
+    controller?.addMarker(point);
   }
 }

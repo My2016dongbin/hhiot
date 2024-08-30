@@ -82,8 +82,6 @@ class MainController extends GetxController {
     getUnRead();
     //获取空间列表
     getSpaceList(1);
-    //获取设备检索列表
-    deviceSearch();
     super.onInit();
   }
   BaiduLocationAndroidOption initAndroidOptions() {
@@ -141,6 +139,9 @@ class MainController extends GetxController {
 
   void onBMFMapCreated(BMFMapController controller_) {
     controller = controller_;
+
+    //获取设备检索列表
+    deviceSearch();
   }
 
   void onSearchClick() {
@@ -216,7 +217,7 @@ class MainController extends GetxController {
     HhLog.d("getSpaceList -- $result");
     if(result["code"]==0 && result["data"]!=null){
       List<dynamic> newItems = result["data"]["list"];
-
+      HhLog.d("getSpaceList newItems.length -- ${newItems.length}");
       if(pageNum == 1){
         pagingController.itemList = [];
       }

@@ -19,6 +19,7 @@ import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/space/manage/space_manage_controller.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class SpaceManagePage extends StatelessWidget {
@@ -148,7 +149,7 @@ class SpaceManagePage extends StatelessWidget {
 
   deviceList() {
     return Container(
-      margin: EdgeInsets.only(top: 100.w),
+      margin: EdgeInsets.only(top: 150.w),
       child: EasyRefresh(
         onRefresh: (){
           logic.pageNum = 1;
@@ -159,10 +160,15 @@ class SpaceManagePage extends StatelessWidget {
           logic.getSpaceList(logic.pageNum);
         },
         child: PagedGridView<int, dynamic>(
+          padding: EdgeInsets.zero,
             pagingController: logic.pagingController,
             builderDelegate: PagedChildBuilderDelegate<dynamic>(
               itemBuilder: (context, item, index) =>
                   gridItemView(context, item, index),
+              noItemsFoundIndicatorBuilder:  (context) =>
+                  CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无空间数据',mid: 50.w,top: 0.4.sw,
+                    height: 0.32.sw,
+                    width: 0.6.sw,),
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, //横轴三个子widget

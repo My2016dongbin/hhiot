@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -28,9 +27,18 @@ class LiGanDetailController extends GetxController {
   final Rx<bool> warnSENSOR = false.obs;
   final Rx<bool> warnOPEN = false.obs;
   final Rx<int> tabIndex = 0.obs;
+  final Rx<int> fireLevel = 0.obs;//防火等级
+  final Rx<int> circle = 0.obs;//枪球联动 0关 1开
+  final Rx<int> version = 0.obs;//固件版本号
+  final Rx<int> playing = 0.obs;//播放1 停止0
+  final Rx<int> voice = 85.obs;//音量
+  final Rx<int> speed = 60.obs;//滑动速度
+  final Rx<bool> close = false.obs;//息屏开关
+  final Rx<int> direction = 0.obs;//滑动方向 0向上  1向下
   final Rx<String> name = ''.obs;
   late String deviceNo = '24070888';
   late WebSocketManager manager;
+  late TextEditingController showContentController = TextEditingController();
   late List<dynamic> warnSettingList = [];
   late String id;
   TextEditingController? time1Controller = TextEditingController();

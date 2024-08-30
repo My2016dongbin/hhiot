@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
@@ -16,6 +15,7 @@ import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CompanyLoginController extends GetxController {
@@ -82,11 +82,11 @@ class CompanyLoginController extends GetxController {
     });
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
-      if (event.show) {
-        EasyLoading.show(/*status: '${event.title}'*/);
-      } else {
-        EasyLoading.dismiss();
-      }
+          if (event.show) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
     });
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -112,6 +112,9 @@ class CompanyLoginController extends GetxController {
       method: DioMethod.get,
       params: map,
     );
+    HhLog.d("tenant map -- $map");
+    HhLog.d("tenant CommonData.tenant -- ${CommonData.tenant}");
+    HhLog.d("tenant CommonData.tenantName -- ${CommonData.tenantName}");
     HhLog.d("tenant -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -122,7 +125,7 @@ class CompanyLoginController extends GetxController {
       login();
     } else {
       EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/),type: 2));
+          .fire(HhToast(title: CommonUtils().msgString(/*"租户信息不存在"*/tenantResult["msg"]),type: 2));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
   }
@@ -134,7 +137,7 @@ class CompanyLoginController extends GetxController {
       method: DioMethod.get,
       params: map,
     );
-    HhLog.d("tenant -- $tenantResult");
+    HhLog.d("tenant id -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');

@@ -252,7 +252,7 @@ class DeviceDetailPage extends StatelessWidget {
 
   livePage() {
     final size = MediaQuery.of(logic.context).size;
-    return Column(
+    return Stack(
       children: [
         SizedBox(
           width: 1.sw,
@@ -274,8 +274,13 @@ class DeviceDetailPage extends StatelessWidget {
                   },
                   child: Container(
                       padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                      margin: EdgeInsets.fromLTRB(20.w, 10.w, 0, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.whiteColor,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(12.w))),
                       child: Text(
-                        '枪机${logic.liveIndex.value + 1}',
+                        '摄像头${logic.liveIndex.value + 1}',
                         style: TextStyle(
                             color: HhColors.gray9TextColor, fontSize: 23.w),
                       )),
@@ -418,153 +423,159 @@ class DeviceDetailPage extends StatelessWidget {
             ],
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {
-                  logic.videoTag.value = !logic.videoTag.value;
-                  if(logic.videoTag.value){
-                    //开启录像
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: EdgeInsets.only(bottom: 20.w),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      logic.videoTag.value = !logic.videoTag.value;
+                      if(logic.videoTag.value){
+                        //开启录像
 
-                  }else{
-                    //关闭录像
+                      }else{
+                        //关闭录像
 
-                  }
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/ic_video.png",
-                      width: 130.w,
-                      height: 130.w,
-                      fit: BoxFit.fill,
+                      }
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/ic_video.png",
+                          width: 130.w,
+                          height: 130.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Text(
+                          logic.videoTag.value?'正在录像':'录像',
+                          style: TextStyle(
+                              color: HhColors.gray9TextColor, fontSize: 23.sp),
+                        )
+                      ],
                     ),
-                    Text(
-                      logic.videoTag.value?'正在录像':'录像',
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor, fontSize: 23.sp),
-                    )
-                  ],
-                ),
-              ),
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {},
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/ic_picture.png",
-                      width: 130.w,
-                      height: 130.w,
-                      fit: BoxFit.fill,
+                  ),
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {},
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/ic_picture.png",
+                          width: 130.w,
+                          height: 130.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Text(
+                          '截图',
+                          style: TextStyle(
+                              color: HhColors.gray9TextColor, fontSize: 23.sp),
+                        )
+                      ],
                     ),
-                    Text(
-                      '截图',
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor, fontSize: 23.sp),
-                    )
-                  ],
-                ),
-              ),
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {
-                  logic.recordTag.value = !logic.recordTag.value;
-                  if(logic.recordTag.value){
-                    //开始
-                    logic.chatStatus();
-                  }else{
-                    //结束
-                    logic.manager.stopRecording();
-                    logic.chatClose();
-                  }
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/ic_yy.png",
-                      width: 130.w,
-                      height: 130.w,
-                      fit: BoxFit.fill,
+                  ),
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      logic.recordTag.value = !logic.recordTag.value;
+                      if(logic.recordTag.value){
+                        //开始
+                        logic.chatStatus();
+                      }else{
+                        //结束
+                        logic.manager.stopRecording();
+                        logic.chatClose();
+                      }
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/ic_yy.png",
+                          width: 130.w,
+                          height: 130.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Text(
+                          logic.recordTag.value?'正在对讲':'对讲',
+                          style: TextStyle(
+                              color: HhColors.gray9TextColor, fontSize: 23.sp),
+                        )
+                      ],
                     ),
-                    Text(
-                      logic.recordTag.value?'正在对讲':'对讲',
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor, fontSize: 23.sp),
-                    )
-                  ],
-                ),
-              ),
-              BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {
-                  logic.voiceTag.value = !logic.voiceTag.value;
-                  if(logic.voiceTag.value){
-                    //开启声音
+                  ),
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      logic.voiceTag.value = !logic.voiceTag.value;
+                      if(logic.voiceTag.value){
+                        //开启声音
 
-                  }else{
-                    //关闭声音
+                      }else{
+                        //关闭声音
 
-                  }
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/ic_voice.png",
-                      width: 130.w,
-                      height: 130.w,
-                      fit: BoxFit.fill,
+                      }
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/ic_voice.png",
+                          width: 130.w,
+                          height: 130.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Text(
+                          logic.voiceTag.value?'声音':'已关闭',
+                          style: TextStyle(
+                              color: HhColors.gray9TextColor, fontSize: 23.sp),
+                        )
+                      ],
                     ),
-                    Text(
-                      logic.voiceTag.value?'声音':'已关闭',
-                      style: TextStyle(
-                          color: HhColors.gray9TextColor, fontSize: 23.sp),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 20.w,
-              ),
-              logic.productName.value != '智慧立杆'
-                  ? const SizedBox()
-                  : BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: () {
-                        Get.to(() => LiGanDetailPage(logic.deviceNo, logic.id),
-                            binding: LiGanDetailBinding());
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            "assets/images/common/icon_setting_video.png",
-                            width: 130.w,
-                            height: 130.w,
-                            fit: BoxFit.fill,
+                  ),
+                  SizedBox(
+                    width: 20.w,
+                  ),
+                  logic.productName.value != '浩海智慧立杆'
+                      ? const SizedBox()
+                      : BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            Get.to(() => LiGanDetailPage(logic.deviceNo, logic.id),
+                                binding: LiGanDetailBinding());
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                "assets/images/common/icon_setting_video.png",
+                                width: 130.w,
+                                height: 130.w,
+                                fit: BoxFit.fill,
+                              ),
+                              Text(
+                                '设置',
+                                style: TextStyle(
+                                    color: HhColors.gray9TextColor, fontSize: 23.sp),
+                              )
+                            ],
                           ),
-                          Text(
-                            '设置',
-                            style: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 23.sp),
-                          )
-                        ],
-                      ),
-                    ),
-            ],
+                        ),
+                ],
+              ),
+            ),
           ),
         ),
       ],

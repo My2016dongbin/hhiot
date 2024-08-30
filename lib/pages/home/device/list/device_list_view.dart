@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/location/map/map_binding.dart';
 import 'package:iot/pages/common/location/map/map_view.dart';
 import 'package:iot/pages/common/model/model_class.dart';
@@ -311,7 +312,7 @@ class DeviceListPage extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.fromLTRB(100.w, 0, 0, item['productName']==""?0:50.w),
                         child: Text(
-                          '${item['name']}',
+                          CommonUtils().parseNull('${item['name']}',''),
                           style: TextStyle(
                               color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                         ),
@@ -362,7 +363,7 @@ class DeviceListPage extends StatelessWidget {
                         ),
                       ),
                     ),*/
-                    item['shared']==true?const SizedBox():Align(
+                    /*item['shared']==true?const SizedBox():Align(
                       alignment: Alignment.centerRight,
                       child: Image.asset(
                         "assets/images/common/close.png",
@@ -370,7 +371,7 @@ class DeviceListPage extends StatelessWidget {
                         height: 50.w,
                         fit: BoxFit.fill,
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),

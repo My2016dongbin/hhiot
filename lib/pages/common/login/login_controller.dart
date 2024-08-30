@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
@@ -85,11 +85,11 @@ class LoginController extends GetxController {
     });
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
-      if (event.show) {
-        EasyLoading.show(/*status: '${event.title}'*/);
-      } else {
-        EasyLoading.dismiss();
-      }
+          if (event.show) {
+            context.loaderOverlay.show();
+          } else {
+            context.loaderOverlay.hide();
+          }
     });
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -114,7 +114,7 @@ class DeviceAddController extends GetxController {
       addingStatus.value = 1;
       addingStep.value = 3;
       EventBusUtil.getInstance().fire(SpaceList());
-      EventBusUtil.getInstance().fire(HhToast(title: '添加成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '添加成功',type: 1));
       // Get.back();
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));

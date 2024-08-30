@@ -12,6 +12,7 @@ import 'package:iot/pages/common/location/location_binding.dart';
 import 'package:iot/pages/common/location/location_controller.dart';
 import 'package:iot/pages/common/location/location_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhLog.dart';
 import '../../../utils/HhColors.dart';
 import 'space_controller.dart';
 
@@ -58,6 +59,182 @@ class SpacePage extends StatelessWidget {
         Container(
           height: 160.w,
           color: HhColors.whiteColor,
+        ),
+
+        ///添加
+        SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(20.w, 180.w, 20.w, 20.w),
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.w))
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 100.w,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 5.w,),
+                      Text(
+                        "空间名称",
+                        style: TextStyle(
+                            color: HhColors.textBlackColor,
+                            fontSize: 28.sp,fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.right,
+                          maxLines: 1,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.nameController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            //contentPadding: EdgeInsets.zero,
+                            border: InputBorder.none,
+                            hintText: '请输入空间名称',
+                            hintStyle: TextStyle(
+                                color: HhColors.gray9TextColor, fontSize: 24.sp),
+                          ),
+                          style:
+                          TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10.w, 3.w, 0, 0),
+                        child: Image.asset(
+                          "assets/images/common/back_role.png",
+                          width: 25.w,
+                          height: 25.w,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: (){
+                    Get.to(()=>LocationPage(),binding: LocationBinding());
+                  },
+                  child: SizedBox(
+                    height: 100.w,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 5.w,),
+                        Text(
+                          "空间定位",
+                          style: TextStyle(
+                              color: HhColors.textBlackColor,
+                              fontSize: 28.sp,fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Expanded(
+                          child: Text(
+                            logicLocation.longitude.value == 0.0?'请选择空间定位':'${logicLocation.longitude.value},${logicLocation.latitude.value}',
+                            textAlign: TextAlign.end,
+                            style:
+                            TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10.w, 3.w, 0, 0),
+                          child: Image.asset(
+                            "assets/images/common/back_role.png",
+                            width: 25.w,
+                            height: 25.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 0.5.w,
+                  width: 1.sw,
+                  margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  color: HhColors.grayDDTextColor,
+                ),
+                SizedBox(
+                  height: 100.w,
+                  child:
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: (){
+                      getImageFromGallery(1);
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 5.w,),
+                        Text(
+                          "空间图片",
+                          style: TextStyle(
+                              color: HhColors.textBlackColor,
+                              fontSize: 28.sp,fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Expanded(
+                          child: Text(
+                            "",
+                            style: TextStyle(
+                                color: HhColors.gray9TextColor,
+                                fontSize: 26.sp),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10.w, 6.w, 0, 0),
+                          child: Image.asset(
+                            "assets/images/common/back_role.png",
+                            width: 25.w,
+                            height: 25.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 0.5.w,
+                  width: 1.sw,
+                  margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  color: HhColors.grayDDTextColor,
+                ),
+                Container(
+                  height: 0.6.sw,
+                  width: 1.sw,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10.w))
+                  ),
+                  margin: EdgeInsets.only(top: 20.w),
+                  child: logic.picture.value==true?Image.file(File(logic.file.path)):Image.asset(
+                    "assets/images/common/test_video.jpg",
+                    fit: BoxFit.fill,
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
         ///title
         InkWell(
@@ -107,6 +284,9 @@ class SpacePage extends StatelessWidget {
               if(logicLocation.longitude.value!=0.0){
                 logic.longitude = logicLocation.longitude.value;
                 logic.latitude = logicLocation.latitude.value;
+              }else{
+                EventBusUtil.getInstance().fire(HhToast(title: '请选择空间定位'));
+                return;
               }
               Future.delayed(const Duration(milliseconds: 500),(){
                 logic.createSpace();
@@ -126,179 +306,6 @@ class SpacePage extends StatelessWidget {
                     fontSize: 24.sp),
               ),
             ),
-          ),
-        ),
-        ///添加
-        Container(
-          margin: EdgeInsets.fromLTRB(20.w, 180.w, 20.w, 20.w),
-          padding: EdgeInsets.all(20.w),
-          decoration: BoxDecoration(
-            color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(20.w))
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 100.w,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 5.w,),
-                    Text(
-                      "空间名称",
-                      style: TextStyle(
-                          color: HhColors.textBlackColor,
-                          fontSize: 28.sp,fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.right,
-                        maxLines: 1,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.nameController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
-                          hintText: '请输入空间名称',
-                          hintStyle: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 24.sp),
-                        ),
-                        style:
-                        TextStyle(color: HhColors.textColor, fontSize: 24.sp),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(10.w, 3.w, 0, 0),
-                      child: Image.asset(
-                        "assets/images/common/back_role.png",
-                        width: 25.w,
-                        height: 25.w,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: (){
-                  Get.to(()=>LocationPage(),binding: LocationBinding());
-                },
-                child: SizedBox(
-                  height: 100.w,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 5.w,),
-                      Text(
-                        "空间定位",
-                        style: TextStyle(
-                            color: HhColors.textBlackColor,
-                            fontSize: 28.sp,fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Expanded(
-                        child: Text(
-                          logicLocation.longitude.value == 0.0?'请选择空间定位':'${logicLocation.longitude.value},${logicLocation.latitude.value}',
-                          textAlign: TextAlign.end,
-                          style:
-                          TextStyle(color: HhColors.textColor, fontSize: 24.sp),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10.w, 3.w, 0, 0),
-                        child: Image.asset(
-                          "assets/images/common/back_role.png",
-                          width: 25.w,
-                          height: 25.w,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                height: 0.5.w,
-                width: 1.sw,
-                margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
-                color: HhColors.grayDDTextColor,
-              ),
-              SizedBox(
-                height: 100.w,
-                child:
-                BouncingWidget(
-                  duration: const Duration(milliseconds: 100),
-                  scaleFactor: 1.2,
-                  onPressed: (){
-                    getImageFromGallery(1);
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 5.w,),
-                      Text(
-                        "空间图片",
-                        style: TextStyle(
-                            color: HhColors.textBlackColor,
-                            fontSize: 28.sp,fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Expanded(
-                        child: Text(
-                          "",
-                          style: TextStyle(
-                              color: HhColors.gray9TextColor,
-                              fontSize: 26.sp),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10.w, 6.w, 0, 0),
-                        child: Image.asset(
-                          "assets/images/common/back_role.png",
-                          width: 25.w,
-                          height: 25.w,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                height: 0.5.w,
-                width: 1.sw,
-                margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
-                color: HhColors.grayDDTextColor,
-              ),
-              Container(
-                height: 0.6.sw,
-                width: 1.sw,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.w))
-                ),
-                margin: EdgeInsets.only(top: 20.w),
-                child: logic.picture.value==true?Image.file(File(logic.file.path)):Image.asset(
-                  "assets/images/common/test_video.jpg",
-                  fit: BoxFit.fill,
-                ),
-              )
-            ],
           ),
         ),
       ],
