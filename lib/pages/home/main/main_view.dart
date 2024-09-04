@@ -25,6 +25,7 @@ import 'package:iot/routes/app_navigator.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/CustomRoute.dart';
 import '../../../utils/HhColors.dart';
@@ -570,11 +571,27 @@ class MainPage extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
-                            "assets/images/common/icon_weather.png",
+                          SizedBox(
                             width: 44.w,
                             height: 44.w,
-                            fit: BoxFit.fill,
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                    width: 44.w,
+                                    height: 44.w,
+                                    child: WebViewWidget(controller: logic.webController,)),
+                                logic.iconStatus.value?const SizedBox():Image.asset(
+                                  "assets/images/common/icon_weather.png",
+                                  width: 44.w,
+                                  height: 44.w,
+                                  fit: BoxFit.fill,
+                                ),
+                                Container(
+                                  color: HhColors.trans,
+                                    width: 44.w,
+                                    height: 44.w),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             width: 10.w,

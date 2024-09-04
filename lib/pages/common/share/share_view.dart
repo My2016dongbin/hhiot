@@ -77,7 +77,7 @@ class SharePage extends StatelessWidget {
             ),
           ),
         ),
-        Align(
+        /*Align(
           alignment: Alignment.topRight,
           child: InkWell(
             onTap: (){
@@ -95,7 +95,7 @@ class SharePage extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        ),*/
         ///菜单
         Container(
           margin: EdgeInsets.fromLTRB(20.w, 180.w, 20.w, 0),
@@ -127,8 +127,8 @@ class SharePage extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(20.w, 50.w, 20.w, 0),
                   padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                   decoration: BoxDecoration(
-                      color: HhColors.grayEEBackColor,
-                      borderRadius: BorderRadius.all(Radius.circular(40.w))),
+                      color: HhColors.grayEFBackColor,
+                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -144,9 +144,9 @@ class SharePage extends StatelessWidget {
                           enabled: false,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '大涧林场一体机',
+                            hintText: '${logic.arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}',
                             hintStyle: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 26.sp),
+                                color: HhColors.blackTextColor, fontSize: 26.sp),
                           ),
                           style:
                           TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
@@ -177,18 +177,16 @@ class SharePage extends StatelessWidget {
               children: [
                 SizedBox(height: 40.w,),
                 Text(
-                  "或者由被分享者扫描您的共享码",
+                  "由被分享者扫描您的共享码",
                   style: TextStyle(
                       color: HhColors.gray9TextColor,
                       fontSize: 26.sp),
                 ),
                 SizedBox(height: 40.w,),
-                Image.asset(
-                  "assets/images/common/code.jpg",
-                  width: 220.w,
-                  height: 220.w,
-                  fit: BoxFit.fill,
-                ),
+                logic.codeUrl.value == ""?const SizedBox():Image.network("${logic.codeUrl}",
+                  width: 260.w,
+                  height: 260.w,
+                  fit: BoxFit.fill,),
                 SizedBox(height: 60.w,),
               ],
             ),

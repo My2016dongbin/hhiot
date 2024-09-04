@@ -318,6 +318,10 @@ class PasswordPage extends StatelessWidget {
                       EventBusUtil.getInstance().fire(HhToast(title: '请再次输入新密码'));
                       return;
                     }
+                    if(logic.passwordNew1Controller!.text != logic.passwordNew2Controller!.text){
+                      EventBusUtil.getInstance().fire(HhToast(title: '新密码输入不一致'));
+                      return;
+                    }
                     Future.delayed(const Duration(milliseconds: 500),(){
                       logic.values = logic.passwordController!.text;
                       logic.userEdit();

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,8 @@ import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/RequestUtils.dart';
 import '../../../utils/HhColors.dart';
 import 'my_controller.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -74,8 +78,15 @@ class MyPage extends StatelessWidget {
             scaleFactor: 1.2,
             onPressed: () async {
               String? barcodeScanRes = await scanner.scan();
+              HhLog.d("barCode $barcodeScanRes");
               if(barcodeScanRes!.isNotEmpty){
-                Get.to(()=>DeviceAddPage(snCode: barcodeScanRes,),binding: DeviceAddBinding());
+                dynamic model = jsonDecode(barcodeScanRes);
+                if(model["type"] == "share"){
+                  String requestUrl = RequestUtils.base + model["shareUrl"];
+                  logic.getShareDetail(requestUrl);
+                }else{
+                  Get.to(()=>DeviceAddPage(snCode: barcodeScanRes,),binding: DeviceAddBinding());
+                }
               }
             },
             child: Container(

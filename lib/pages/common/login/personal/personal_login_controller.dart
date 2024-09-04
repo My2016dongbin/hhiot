@@ -52,20 +52,22 @@ class PersonalLoginController extends GetxController {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(height: 40.w,),
-                  Image.asset(
+                  event.type==0?const SizedBox():SizedBox(height: 40.w,),
+                  event.type==0?const SizedBox():Image.asset(
                     event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
                     height: 40.w,
                     width: 40.w,
                     fit: BoxFit.fill,
                   ),
-                  SizedBox(height: 40.w,),
+                  event.type==0?const SizedBox():SizedBox(height: 40.w,),
+                  event.type==0?SizedBox(height: 15.w,):const SizedBox(),
                   Text(
                     event.title,
                     style: TextStyle(
                         color: HhColors.textColor,
                         fontSize: 26.sp),
                   ),
+                  event.type==0?SizedBox(height: 10.w,):const SizedBox(),
                 ],
               ),
             ),
@@ -199,6 +201,7 @@ class PersonalLoginController extends GetxController {
     if (result["code"] == 0 && result["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(SPKeys().id, '${result["data"]["id"]}');
+      await prefs.setString(SPKeys().username, '${result["data"]["username"]}');
       await prefs.setString(SPKeys().nickname, '${result["data"]["nickname"]}');
       await prefs.setString(SPKeys().email, '${result["data"]["email"]}');
       await prefs.setString(SPKeys().mobile, '${result["data"]["mobile"]}');

@@ -314,33 +314,40 @@ class DeviceDetailPage extends StatelessWidget {
 
                       String msg = '';
                       double offset = 20;
-                      double x = details.localPosition.dx;
-                      double y = details.localPosition.dy;
-                      HhLog.d("move $x , $y");
-
-                      ///上
-                      if (x > -1 * offset && x < 1 * offset && y > 0) {
-                        msg = '上';
+                      double x = details.delta.dx;
+                      double y = details.delta.dy;
+                      int time = DateTime.now().millisecondsSinceEpoch;
+                      if(time - logic.controlTime > 1000){
+                        HhLog.d("move ${details.delta.dx} , ${details.delta.dy}");
+                        logic.controlTime = time;
+                        if(x > 0 && y < 0){
+                          msg = "右上";
+                        }
+                        if(x > 0 && y == 0){
+                          msg = "右";
+                        }
+                        if(x > 0 && y > 0){
+                          msg = "右下";
+                        }
+                        if(x == 0 && y > 0){
+                          msg = "下";
+                        }
+                        if(x < 0 && y > 0){
+                          msg = "左下";
+                        }
+                        if(x < 0 && y < 0){
+                          msg = "左上";
+                        }
+                        if(x < 0 && y == 0){
+                          msg = "左";
+                        }
+                        if(x == 0 && y < 0){
+                          msg = "上";
+                        }
+                        // EventBusUtil.getInstance().fire(HhToast(title: msg));
                       }
-
-                      ///下
-                      if (x > -1 * offset && x < 1 * offset && y < 0) {
-                        msg = '下';
-                      }
-
-                      ///左
-                      if (y > -1 * offset && y < 1 * offset && x < 0) {
-                        msg = '左';
-                      }
-
-                      ///右
-                      if (y > -1 * offset && y < 1 * offset && x > 0) {
-                        msg = '右';
-                      }
-                      // EventBusUtil.getInstance().fire(HhToast(title: msg));
                     },
                     onPanEnd: (details) {
-                      // runAnimation(details.velocity.pixelsPerSecond);
                       logic.animateAlign = Alignment.center;
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
@@ -684,31 +691,5 @@ class DeviceDetailPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void runAnimation(Offset pixelsPerSec) {
-    logic.animationController.addListener(() {
-      logic.dragAlignment.value = logic.animation.value;
-    });
-    final size = Get.size;
-    logic.animation = logic.animationController.drive(
-      AlignmentTween(
-        begin: logic.animateAlign,
-        end: Alignment.center,
-      ),
-    );
-    const spring = SpringDescription(
-      mass: 30,
-      stiffness: 1,
-      damping: 1,
-    );
-
-    final unitsPerSecX = pixelsPerSec.dx / size.width;
-    final unitsPerSecY = pixelsPerSec.dy / size.height;
-    final unitsPerSec = Offset(unitsPerSecX, unitsPerSecY);
-    final unitVelocity = unitsPerSec.distance;
-
-    final simulation = SpringSimulation(spring, 0, 1, -unitVelocity);
-    logic.animationController.animateWith(simulation);
   }
 }

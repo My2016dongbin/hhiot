@@ -31,7 +31,7 @@ class SettingController extends GetxController {
   Future<void> onInit() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     nickname!.value = prefs.getString(SPKeys().nickname)!;
-    account!.value = prefs.getString(SPKeys().nickname)!;
+    account!.value = prefs.getString(SPKeys().username)!;
     mobile!.value = prefs.getString(SPKeys().mobile)!;
     email!.value = prefs.getString(SPKeys().email)!;
     avatar!.value = prefs.getString(SPKeys().avatar)!;

@@ -275,95 +275,122 @@ class DeviceListPage extends StatelessWidget {
                 InkWell(
                   onTap: (){
                     Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
-                    /*if(item['productName']=='浩海一体机'){
-                      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
-                    }else if(item['productName']=='智慧立杆'){
-                      Get.to(()=>LiGanDetailPage('${item['deviceNo']}','${item['id']}'),binding: LiGanDetailBinding());
-                    }*/
                   },
-              child: Container(
-                height: 160.w,
-                margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                padding: EdgeInsets.all(20.w),
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20.w))
-                ),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5.w))
-                        ),
-                        child: Image.asset(
-                          item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
-                          width: 80.w,
-                          height: 80.w,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                  child: Container(
+                    height: 180.w,
+                    margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                    padding: EdgeInsets.all(20.w),
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10.w))
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(100.w, 0, 0, item['productName']==""?0:50.w),
-                        child: Text(
-                          CommonUtils().parseNull('${item['name']}',''),
-                          style: TextStyle(
-                              color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    item['productName']==""?const SizedBox():Container(
-                      margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
-                      child: Text(
-                        '${item['productName']}-${item['categoryName']}',
-                        style: TextStyle(
-                            color: HhColors.textColor, fontSize: 22.sp),
-                      ),
-                    ),
-                    ///分享
-                    item['shared']==true?Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        margin: EdgeInsets.only(right:70.w),
-                        padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
-                        decoration: BoxDecoration(
-                          color: HhColors.mainBlueColor,
-                            borderRadius: BorderRadius.all(Radius.circular(5.w))
-                        ),
-                        child: Text(
-                          '已共享*1',
-                          style: TextStyle(
-                              color: HhColors.whiteColor, fontSize: 23.sp),
-                        ),
-                      ),
-                    ):const SizedBox(),
-                    /*Align(
-                      alignment: Alignment.centerRight,
-                      child:
-                      BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: (){
-                          Get.to(()=>SharePage(),binding: ShareBinding());
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(right: item['shared']==true?0:80.w),
-                          child: Image.asset(
-                            item['shared']==true?"assets/images/common/shared.png":"assets/images/common/share.png",
-                            width: 50.w,
-                            height: 50.w,
-                            fit: BoxFit.fill,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(5.w))
+                            ),
+                            child: Image.asset(
+                              item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
+                              width: 80.w,
+                              height: 80.w,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
-                      ),
-                    ),*/
-                    /*item['shared']==true?const SizedBox():Align(
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(100.w, 0, 0, 50.w),
+                            child: Text(
+                              CommonUtils().parseNull('${item['name']}',""),
+                              style: TextStyle(
+                                  color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              item['spaceName']==""?const SizedBox():Container(
+                                constraints: BoxConstraints(maxWidth: 0.25.sw),
+                                child: Text(
+                                  CommonUtils().parseNull('${item['spaceName']}', ""),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: HhColors.textColor, fontSize: 22.sp),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10.w, 0, 60.w, 0),
+                                padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                                decoration: BoxDecoration(
+                                  color: item['activeStatus']==1?HhColors.transBlueColors:HhColors.transRedColors,
+                                  border: Border.all(color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor,width: 1.w),
+                                  borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                                ),
+                                child: Text(
+                                  item['activeStatus']==1?'在线':"离线",
+                                  style: TextStyle(
+                                      color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
+                                ),
+                              ),
+                              item['shared']==true?Container(
+                                margin: EdgeInsets.only(left:10.w),
+                                padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                                decoration: BoxDecoration(
+                                    color: HhColors.mainBlueColor,
+                                    borderRadius: BorderRadius.all(Radius.circular(5.w))
+                                ),
+                                child: Text(
+                                  '分享中*1',
+                                  style: TextStyle(
+                                      color: HhColors.whiteColor, fontSize: 23.sp),
+                                ),
+                              ):const SizedBox(),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child:
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: (){
+                              DateTime date = DateTime.now();
+                              String time = date.toIso8601String().substring(0,19).replaceAll("T", " ");
+                              Get.to(()=>SharePage(),binding: ShareBinding(),arguments: {
+                                "shareType": "2",
+                                "expirationTime": time,
+                                "appShareDetailSaveReqVOList": [
+                                  {
+                                    "spaceId": "${item["spaceId"]}",
+                                    "spaceName": "${item["spaceName"]}",
+                                    "deviceId": "${item["id"]}",
+                                    "deviceName": "${item["name"]}"
+                                  }
+                                ]
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(right: 0.w),
+                              child: Image.asset(
+                                item['shared']==true?"assets/images/common/shared.png":"assets/images/common/share.png",
+                                width: 50.w,
+                                height: 50.w,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        /*item['shared']==true?const SizedBox():Align(
                       alignment: Alignment.centerRight,
                       child: Image.asset(
                         "assets/images/common/close.png",
@@ -372,10 +399,10 @@ class DeviceListPage extends StatelessWidget {
                         fit: BoxFit.fill,
                       ),
                     ),*/
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
           ),
         ),
       ),

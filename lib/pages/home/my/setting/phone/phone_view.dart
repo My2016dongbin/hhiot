@@ -82,41 +82,120 @@ class PhonePage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ///修改内容
+                ///手机号
                 Row(
                   children: [
                     Expanded(
                       child: TextField(
                         textAlign: TextAlign.left,
                         maxLines: 1,
-                        maxLength: 30,
+                        maxLength: 11,
                         cursorColor: HhColors.titleColor_99,
-                        controller: logic.accountController,
-                        keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
+                        controller: logic.phoneController,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           //contentPadding: EdgeInsets.zero,
                           border: InputBorder.none,
                           counterText: '',
-                          hintText: '请输入修改内容',
+                          hintText: '请输入手机号',
                           hintStyle: TextStyle(
                               color: HhColors.grayCCTextColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
                         ),
                         style:
                         TextStyle(color: HhColors.textBlackColor, fontSize: 32.sp,fontWeight: FontWeight.bold),
                         onChanged: (s){
-                          logic.accountStatus.value = s.isNotEmpty;
+                          logic.phoneStatus.value = s.isNotEmpty;
                         },
                       ),
                     ),
-                    logic.accountStatus.value? BouncingWidget(
+                    logic.phoneStatus.value? BouncingWidget(
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.2,
                       onPressed: (){
-                        logic.accountController!.clear();
-                        logic.accountStatus.value = false;
+                        logic.phoneController!.clear();
+                        logic.phoneStatus.value = false;
                       },
                       child: Container(
-                        padding: EdgeInsets.all(5.w),
+                          padding: EdgeInsets.all(5.w),
+                          child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
+                      ),
+                    ):const SizedBox(),
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
+                        //隐藏输入法
+                        FocusScope.of(logic.context).requestFocus(FocusNode());
+                        if(logic.phoneController!.text.length<11){
+                          EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的手机号'));
+                          return;
+                        }
+                        if(logic.time.value!=0){
+                          return;
+                        }
+                        Future.delayed(const Duration(milliseconds: 500),(){
+                          logic.sendCode();
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                        decoration: BoxDecoration(
+                          color: HhColors.mainBlueColor,
+                          borderRadius: BorderRadius.all(Radius.circular(8.w),),
+                        ),
+                        child: Center(
+                          child: Text(
+                            logic.time.value==0?'发送验证码':"${logic.time.value}s后重新发送",
+                            style: TextStyle(
+                              color: HhColors.whiteColor,
+                              fontSize: 20.sp,),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  color: HhColors.grayCCTextColor,
+                  height: 0.5.w,
+                ),
+                SizedBox(height: 10.w,),
+                ///验证码
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                        maxLength: 6,
+                        cursorColor: HhColors.titleColor_99,
+                        controller: logic.codeController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          //contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                          counterText: '',
+                          hintText: '请输入验证码',
+                          hintStyle: TextStyle(
+                              color: HhColors.grayCCTextColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        ),
+                        style:
+                        TextStyle(color: HhColors.textBlackColor, fontSize: 32.sp,fontWeight: FontWeight.bold),
+                        onChanged: (s){
+                          logic.codeStatus.value = s.isNotEmpty;
+                        },
+                      ),
+                    ),
+                    logic.codeStatus.value? BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
+                        logic.codeController!.clear();
+                        logic.codeStatus.value = false;
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(5.w),
                           child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
                       ),
                     ):const SizedBox()
@@ -134,13 +213,17 @@ class PhonePage extends StatelessWidget {
                   onPressed: (){
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
-                    if(logic.accountController!.text.isEmpty){
-                      EventBusUtil.getInstance().fire(HhToast(title: '请输入修改内容'));
+                    if(logic.phoneController!.text.isEmpty){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入修改手机号'));
+                      return;
+                    }
+                    if(logic.codeController!.text.isEmpty){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入验证码'));
                       return;
                     }
                     Future.delayed(const Duration(milliseconds: 500),(){
-                      logic.values = logic.accountController!.text;
-                      logic.userEdit();
+                      logic.values = logic.phoneController!.text;
+                      logic.codeCheck();
                     });
                   },
                   child: Container(

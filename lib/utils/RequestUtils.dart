@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  // static const base = 'http://172.16.50.87:10008';//debug
-  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  static const base = 'http://172.16.50.87:10008';//debug
+  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
   static const tenantId = '$base/admin-api/system/tenant/get-id-by-name';//获取租户id
@@ -26,10 +26,16 @@ class RequestUtils{
   static const mainSearch = '$base/admin-api/mid/space/getListByKeyWord';//主页查询空间设备及消息
   static const fileUpload = '$base/admin-api/infra/file/upload';//文件上传
   static const headerUpload = '$base/admin-api/system/user/profile/update-avatar';//个人头像上传
+  static const password = '$base/admin-api/system/user/profile/update-password';//修改个人密码
+  static const codeSendPersonal = '$base/admin-api/system/captcha/get';//发送验证码
+  static const codeCheckPersonal = '$base/admin-api/system/captcha/check';//校验验证码
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET
   static const chatCreate = '$base/admin-api/mid/device-info/chatState';//调用语音服务创建会话POST
+
+  static const shareCreate = '$base/app-api/mid/share-log/create';//分享创建
+  static const shareReceive = '$base/app-api/mid/receive-log/create';//分享接收
 
 
   /*

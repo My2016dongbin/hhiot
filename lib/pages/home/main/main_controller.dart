@@ -9,9 +9,11 @@ import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/bus/event_class.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/CommonUtils.dart';
+import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../utils/EventBusUtils.dart';
 import '../../common/model/model_class.dart';
@@ -31,6 +33,7 @@ class MainController extends GetxController {
   final Rx<bool> pageMapStatus = false.obs;
   final Rx<String> temp = '23'.obs;
   final Rx<String> icon = '305'.obs;
+  final Rx<bool> iconStatus = false.obs;
   final Rx<String> text = '多云'.obs;
   final Rx<String> count = '0'.obs;
   final Rx<bool> searchDown = true.obs;
@@ -41,6 +44,7 @@ class MainController extends GetxController {
   late int pageSize = 20;
   late BuildContext context;
   final LocationFlutterPlugin _myLocPlugin = LocationFlutterPlugin();
+  late WebViewController webController = WebViewController()..setBackgroundColor(HhColors.trans);
   late bool _suc;
   late List<dynamic> newItems = [];
 
@@ -179,6 +183,14 @@ class MainController extends GetxController {
           temp.value = '${now['temp']}';
           icon.value = '${now['icon']}';
           text.value = '${now['text']}';
+          HhLog.d("weatherUrl now['icon'] = ${now['icon']}");
+          String weatherUrl = CommonUtils().getHeFengIcon((now['text']=="晴"?"FFF68F":"F5CD5B"),now['icon'],"80");
+          HhLog.d("weatherUrl = $weatherUrl");
+          webController.loadRequest(Uri.parse(weatherUrl));
+          webController.enableZoom(false);
+          webController.setBackgroundColor(HhColors.trans);
+          iconStatus.value = false;
+          iconStatus.value = true;
         }
       }else{
         EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));

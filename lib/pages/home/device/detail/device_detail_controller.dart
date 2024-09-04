@@ -35,6 +35,7 @@ class DeviceDetailController extends GetxController {
   late BuildContext context;
   late String deviceNo;
   late String id;
+  late int controlTime = 0;
   late String nickname='';
   late Rx<String> productName = ''.obs;
   FijkPlayer player = FijkPlayer();
@@ -131,7 +132,7 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceInfo -- $id");
     HhLog.d("getDeviceInfo -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      name.value = "${result["data"]["spaceName"]}-${result["data"]["name"]}";
+      name.value = "${CommonUtils().parseNull(result["data"]["spaceName"],"")}-${CommonUtils().parseNull(result["data"]["name"], "")}";
       productName.value = result["data"]["productName"];
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));

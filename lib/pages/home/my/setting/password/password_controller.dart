@@ -42,10 +42,11 @@ class PasswordController extends GetxController {
   Future<void> userEdit() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true, title: '正在保存..'));
     var tenantResult = await HhHttp().request(
-      RequestUtils.userEdit,
+      RequestUtils.password,
       method: DioMethod.put,
       data: {
-        keys:values
+        "oldPassword":passwordController!.text,
+        "newPassword":passwordNew1Controller!.text,
       }
     );
     HhLog.d("userEdit -- $tenantResult");
@@ -69,7 +70,9 @@ class PasswordController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(SPKeys().password, passwordNew1Controller!.text);
       await prefs.setString(SPKeys().id, '${result["data"]["id"]}');
+      await prefs.setString(SPKeys().username, '${result["data"]["username"]}');
       await prefs.setString(SPKeys().nickname, '${result["data"]["nickname"]}');
       await prefs.setString(SPKeys().email, '${result["data"]["email"]}');
       await prefs.setString(SPKeys().mobile, '${result["data"]["mobile"]}');

@@ -79,20 +79,22 @@ class HomeController extends GetxController {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 40.w,),
-                Image.asset(
+                event.type==0?const SizedBox():SizedBox(height: 40.w,),
+                event.type==0?const SizedBox():Image.asset(
                   event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
                   height: 40.w,
                   width: 40.w,
                   fit: BoxFit.fill,
                 ),
-                SizedBox(height: 40.w,),
+                event.type==0?const SizedBox():SizedBox(height: 40.w,),
+                event.type==0?SizedBox(height: 15.w,):const SizedBox(),
                 Text(
                   event.title,
                   style: TextStyle(
                       color: HhColors.textColor,
                       fontSize: 26.sp),
                 ),
+                event.type==0?SizedBox(height: 10.w,):const SizedBox(),
               ],
             ),
           ),
