@@ -29,9 +29,9 @@ class CommonUtils{
     }
     return type;
   }
-  String parseNull(String s,String def){
-    String r = s;
-    if(s == "null"){
+  String parseNull(dynamic s,String def){
+    String r = "$s";
+    if(s == null || s == "null"){
       r = def;
     }
     return r;

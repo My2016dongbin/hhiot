@@ -15,6 +15,8 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
@@ -27,6 +29,7 @@ class DeviceDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logic.context = context;
+    logic.initData();
     // 在这里设置状态栏字体为深色
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏背景色
@@ -322,29 +325,46 @@ class DeviceDetailPage extends StatelessWidget {
                         logic.controlTime = time;
                         if(x > 0 && y < 0){
                           msg = "右上";
+                          logic.commandLast = logic.command;
+                          logic.command = "RIGHT_UP";
                         }
                         if(x > 0 && y == 0){
                           msg = "右";
+                          logic.commandLast = logic.command;
+                          logic.command = "RIGHT";
                         }
                         if(x > 0 && y > 0){
                           msg = "右下";
+                          logic.commandLast = logic.command;
+                          logic.command = "RIGHT_DOWN";
                         }
                         if(x == 0 && y > 0){
                           msg = "下";
+                          logic.commandLast = logic.command;
+                          logic.command = "DOWN";
                         }
                         if(x < 0 && y > 0){
                           msg = "左下";
-                        }
-                        if(x < 0 && y < 0){
-                          msg = "左上";
+                          logic.commandLast = logic.command;
+                          logic.command = "LEFT_DOWN";
                         }
                         if(x < 0 && y == 0){
                           msg = "左";
+                          logic.commandLast = logic.command;
+                          logic.command = "LEFT";
+                        }
+                        if(x < 0 && y < 0){
+                          msg = "左上";
+                          logic.commandLast = logic.command;
+                          logic.command = "LEFT_UP";
                         }
                         if(x == 0 && y < 0){
                           msg = "上";
+                          logic.commandLast = logic.command;
+                          logic.command = "UP";
                         }
                         // EventBusUtil.getInstance().fire(HhToast(title: msg));
+                        logic.controlPost(0);
                       }
                     },
                     onPanEnd: (details) {
@@ -352,6 +372,7 @@ class DeviceDetailPage extends StatelessWidget {
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
                       // EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
+                      logic.controlPost(1);
                     },
                     child: SizedBox(
                       width: 0.66.sw,
@@ -623,7 +644,7 @@ class DeviceDetailPage extends StatelessWidget {
                           borderRadius:
                               BorderRadius.all(Radius.circular(20.w))),
                       child: Image.network(
-                        '${item['alarmImageUrl']}',
+                        '${logic.endpoint}${item['alarmImageUrl']}',
                         width: 250.w,
                         height: 150.w,
                         fit: BoxFit.fill,

@@ -35,14 +35,14 @@ class MyController extends GetxController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     nickname!.value = prefs.getString(SPKeys().nickname)!;
     mobile!.value = prefs.getString(SPKeys().mobile)!;
-    avatar!.value = prefs.getString(SPKeys().avatar)!;
+    avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
 
     infoSubscription =
         EventBusUtil.getInstance().on<UserInfo>().listen((event) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           nickname!.value = prefs.getString(SPKeys().nickname)!;
           mobile!.value = prefs.getString(SPKeys().mobile)!;
-          avatar!.value = prefs.getString(SPKeys().avatar)!;
+          avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
         });
     getSpaceList();
     deviceList();
@@ -70,6 +70,7 @@ class MyController extends GetxController {
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '100';
+    map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList $result");
     if(result["code"]==0 && result["data"]!=null){

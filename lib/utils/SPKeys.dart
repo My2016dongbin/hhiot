@@ -1,4 +1,5 @@
 class SPKeys{
+  final String endpoint = 'endpoint';
   final String id = 'id';
   final String username = 'username';
   final String nickname = 'nickname';

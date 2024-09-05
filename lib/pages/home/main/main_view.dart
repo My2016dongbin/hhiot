@@ -14,6 +14,8 @@ import 'package:iot/pages/common/socket/socket_page/socket_binding.dart';
 import 'package:iot/pages/common/socket/socket_page/socket_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
+import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
@@ -436,6 +438,7 @@ class MainPage extends StatelessWidget {
                   scaleFactor: 1.2,
                   onPressed: () {
                     logic.videoStatus.value = !logic.videoStatus.value;
+                    Get.to(()=>DeviceDetailPage('${logic.model['deviceNo']}','${logic.model['id']}'),binding: DeviceDetailBinding());
                   },
                   child: Container(
                     width: 0.9.sw,
@@ -454,6 +457,23 @@ class MainPage extends StatelessWidget {
                             width: 0.9.sw,
                             height: 0.4.sw,
                             color: HhColors.blackColor,
+                            child: Image.asset(
+                              "assets/images/common/test_video.jpg",
+                              width: 50.w,
+                              height: 50.w,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 20.w, 0, 0),
+                            child: Text(
+                              "${logic.model["name"]}",
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         Align(
@@ -472,7 +492,7 @@ class MainPage extends StatelessWidget {
                                   color: HhColors.whiteColor, fontSize: 24.sp),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
@@ -25,9 +27,9 @@ class MainController extends GetxController {
   final title = "主页".obs;
   final Rx<double?> latitude = CommonData.latitude.obs;
   final Rx<double?> longitude = CommonData.longitude.obs;
-  BMFMapController ?controller;
-  StreamSubscription ?pushTouchSubscription;
-  StreamSubscription ?spaceListSubscription;
+  BMFMapController? controller;
+  StreamSubscription? pushTouchSubscription;
+  StreamSubscription? spaceListSubscription;
   final Rx<bool> searchStatus = false.obs;
   final Rx<bool> videoStatus = false.obs;
   final Rx<bool> pageMapStatus = false.obs;
@@ -37,14 +39,17 @@ class MainController extends GetxController {
   final Rx<String> text = '多云'.obs;
   final Rx<String> count = '0'.obs;
   final Rx<bool> searchDown = true.obs;
-  TextEditingController ?searchController = TextEditingController();
-  final PagingController<int, dynamic> pagingController = PagingController(firstPageKey: 1);
-  final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
+  TextEditingController? searchController = TextEditingController();
+  final PagingController<int, dynamic> pagingController =
+  PagingController(firstPageKey: 1);
+  final PagingController<int, dynamic> deviceController =
+  PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 20;
   late BuildContext context;
   final LocationFlutterPlugin _myLocPlugin = LocationFlutterPlugin();
-  late WebViewController webController = WebViewController()..setBackgroundColor(HhColors.trans);
+  late WebViewController webController = WebViewController()
+    ..setBackgroundColor(HhColors.trans);
   late bool _suc;
   late List<dynamic> newItems = [];
 
@@ -58,24 +63,22 @@ class MainController extends GetxController {
     });
     //定位
     location();
-    pushTouchSubscription = EventBusUtil.getInstance()
-        .on<Location>()
-        .listen((event) {
-      if (CommonData.latitude != null && CommonData.latitude! > 0) {
-        controller!.updateMapOptions(BMFMapOptions(
-            center: BMFCoordinate(CommonData.latitude ?? 36.30865,
-                CommonData.longitude ?? 120.314037),
-            zoomLevel: 12,
-            mapType: BMFMapType.Standard,
-            mapPadding: BMFEdgeInsets(
-                left: 30, top: 0, right: 30, bottom: 0)));
-      }
-    });
-    spaceListSubscription = EventBusUtil.getInstance()
-        .on<SpaceList>()
-        .listen((event) {
+    pushTouchSubscription =
+        EventBusUtil.getInstance().on<Location>().listen((event) {
+          if (CommonData.latitude != null && CommonData.latitude! > 0) {
+            controller!.updateMapOptions(BMFMapOptions(
+                center: BMFCoordinate(CommonData.latitude ?? 36.30865,
+                    CommonData.longitude ?? 120.314037),
+                zoomLevel: 12,
+                mapType: BMFMapType.Standard,
+                mapPadding: BMFEdgeInsets(
+                    left: 30, top: 0, right: 30, bottom: 0)));
+          }
+        });
+    spaceListSubscription =
+        EventBusUtil.getInstance().on<SpaceList>().listen((event) {
           getSpaceList(1);
-    });
+        });
     // pagingController.addPageRequestListener((pageKey) {
     //   // fetchPage(pageKey);
     //   getSpaceList(pageKey);
@@ -88,6 +91,7 @@ class MainController extends GetxController {
     getSpaceList(1);
     super.onInit();
   }
+
   BaiduLocationAndroidOption initAndroidOptions() {
     BaiduLocationAndroidOption options = BaiduLocationAndroidOption(
       // 定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
@@ -110,10 +114,10 @@ class MainController extends GetxController {
         coordType: BMFLocationCoordType.bd09ll,
         // 设置发起定位请求的间隔，int类型，单位ms
         // 如果设置为0，则代表单次定位，即仅定位一次，默认为0
-        scanspan: 4000
-    );
+        scanspan: 4000);
     return options;
   }
+
   BaiduLocationIOSOption initIOSOptions() {
     BaiduLocationIOSOption options = BaiduLocationIOSOption(
       // 坐标系
@@ -140,9 +144,25 @@ class MainController extends GetxController {
     return options;
   }
 
+  late dynamic model;
 
-  void onBMFMapCreated(BMFMapController controller_) {
+  void onBMFMapCreated(BMFMapController controller_){
     controller = controller_;
+    controller?.setMapClickedMarkerCallback(
+        callback: (BMFMarker marker){
+      for (int i = 0; i < newItems.length; i++) {
+        if(newItems[i]["deviceNo"] == marker.customMap!["deviceNo"]){
+          model = newItems[i];
+          controller?.setCenterCoordinate(
+            BMFCoordinate(double.parse('${model["latitude"]}'),double.parse('${model["longitude"]}')), false,
+          );
+          controller?.setZoomTo(17);
+          searchDown.value = false;
+
+          videoStatus.value = true;
+        }
+      }
+    });
 
     //获取设备检索列表
     deviceSearch();
@@ -151,16 +171,37 @@ class MainController extends GetxController {
   void onSearchClick() {
     searchStatus.value = true;
   }
+
   void restartSearchClick() {
     searchStatus.value = false;
   }
 
   void fetchPage(int pageKey) {
     List<dynamic> newItems = [
-      MainGridModel("青岛林场", "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img", "", 10, false),
-      MainGridModel("城阳林场", "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img", "", 6, true),
-      MainGridModel("高新林场", "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img", "", 8, true),
-      MainGridModel("崂山林场", "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img", "", 2, false),
+      MainGridModel(
+          "青岛林场",
+          "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img",
+          "",
+          10,
+          false),
+      MainGridModel(
+          "城阳林场",
+          "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img",
+          "",
+          6,
+          true),
+      MainGridModel(
+          "高新林场",
+          "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img",
+          "",
+          8,
+          true),
+      MainGridModel(
+          "崂山林场",
+          "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEhRG.img",
+          "",
+          2,
+          false),
     ];
     final isLastPage = newItems.length < pageSize;
     if (isLastPage) {
@@ -174,17 +215,22 @@ class MainController extends GetxController {
   Future<void> getWeather() async {
     Map<String, dynamic> map = {};
     map["location"] = '${CommonData.longitude},${CommonData.latitude}';
-    if(CommonData.latitude != null){
-      var result = await HhHttp().request(RequestUtils.weatherLocation,method: DioMethod.get,params:map,);
+    if (CommonData.latitude != null) {
+      var result = await HhHttp().request(
+        RequestUtils.weatherLocation,
+        method: DioMethod.get,
+        params: map,
+      );
       HhLog.d("getWeather -- $result");
-      if(result["code"]==0 && result["data"]!=null){
+      if (result["code"] == 0 && result["data"] != null) {
         var now = result["data"]['now'];
-        if(now != null){
+        if (now != null) {
           temp.value = '${now['temp']}';
           icon.value = '${now['icon']}';
           text.value = '${now['text']}';
           HhLog.d("weatherUrl now['icon'] = ${now['icon']}");
-          String weatherUrl = CommonUtils().getHeFengIcon((now['text']=="晴"?"FFF68F":"F5CD5B"),now['icon'],"80");
+          String weatherUrl = CommonUtils().getHeFengIcon(
+              (now['text'] == "晴" ? "FFF68F" : "F5CD5B"), now['icon'], "80");
           HhLog.d("weatherUrl = $weatherUrl");
           webController.loadRequest(Uri.parse(weatherUrl));
           webController.enableZoom(false);
@@ -192,11 +238,12 @@ class MainController extends GetxController {
           iconStatus.value = false;
           iconStatus.value = true;
         }
-      }else{
-        EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      } else {
+        EventBusUtil.getInstance()
+            .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
       }
-    }else{
-      Future.delayed(const Duration(seconds: 2),(){
+    } else {
+      Future.delayed(const Duration(seconds: 2), () {
         getWeather();
       });
     }
@@ -212,12 +259,16 @@ class MainController extends GetxController {
   }
 
   Future<void> getUnRead() async {
-    var result = await HhHttp().request(RequestUtils.unReadCount,method: DioMethod.get,);
+    var result = await HhHttp().request(
+      RequestUtils.unReadCount,
+      method: DioMethod.get,
+    );
     HhLog.d("getUnRead -- $result");
-    if(result["code"]==0 && result["data"]!=null){
+    if (result["code"] == 0 && result["data"] != null) {
       count.value = '${result["data"]}';
-    }else{
-      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -225,83 +276,94 @@ class MainController extends GetxController {
     Map<String, dynamic> map = {};
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
-    var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
+    var result = await HhHttp().request(RequestUtils.mainSpaceList,
+        method: DioMethod.get, params: map);
     HhLog.d("getSpaceList -- $result");
-    if(result["code"]==0 && result["data"]!=null){
+    if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = result["data"]["list"];
       HhLog.d("getSpaceList newItems.length -- ${newItems.length}");
-      if(pageNum == 1){
+      if (pageNum == 1) {
         pagingController.itemList = [];
       }
       pagingController.appendLastPage(newItems);
-    }else{
-      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
-
-
   Future<void> deviceSearch() async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '设备加载中..'));
+    EventBusUtil.getInstance().fire(HhLoading(show: true, title: '设备加载中..'));
     Map<String, dynamic> map = {};
     map['name'] = searchController!.text;
     map['pageNo'] = '1';
     map['pageSize'] = '100';
-    var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
+    map['activeStatus'] = '-1';
+    var result = await HhHttp()
+        .request(RequestUtils.deviceList, method: DioMethod.get, params: map);
     HhLog.d("deviceSearch -- $result");
-    Future.delayed(const Duration(seconds: 1),(){
+    Future.delayed(const Duration(seconds: 1), () {
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     });
-    if(result["code"]==0 && result["data"]!=null){
+    if (result["code"] == 0 && result["data"] != null) {
       newItems = [];
-      try{
+      try {
         newItems = result["data"]["list"];
-      }catch(e){
+      } catch (e) {
         HhLog.e(e.toString());
       }
 
-      if(pageNum == 1){
+      if (pageNum == 1) {
         deviceController.itemList = [];
       }
       deviceController.appendLastPage(newItems);
       searchDown.value = true;
+
       ///地图打点
       refreshMarkers();
-
-    }else{
-      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
   void refreshMarkers() {
-    if(newItems.isEmpty){
+    if (newItems.isEmpty) {
       return;
     }
 
     ///地图打点
     controller?.cleanAllMarkers();
-    for(int i = 0; i < newItems.length; i++){
-      try{
+    for (int i = 0; i < newItems.length; i++) {
+      try {
         dynamic model = newItems[i];
-        if(model['latitude']==null
-            ||model['longitude'] == null
-            ||model['latitude'] == ''
-            ||model['longitude'] == ''){
+        if (model['latitude'] == null ||
+            model['longitude'] == null ||
+            model['latitude'] == '' ||
+            model['longitude'] == '') {
           continue;
         }
         HhLog.d('BMFMarker ${model['longitude']} , ${model['latitude']}');
+
         /// 创建BMFMarker
 
+        Map<String, dynamic> map = {};
+        map["deviceNo"] = "${model['deviceNo']}";
         BMFMarker marker = BMFMarker(
-            position: BMFCoordinate(double.parse('${model['latitude']}'),double.parse('${model['longitude']}')),
-            enabled: false,
+            position: BMFCoordinate(double.parse('${model['latitude']}'),
+                double.parse('${model['longitude']}')),
+            enabled: true,
             visible: true,
+            title: "${model['name']}",
+            customMap: map,
             identifier: "location",
-            icon: '${model['activeStatus']}'=='1'?'assets/images/common/ic_device_online.png':'assets/images/common/ic_device_offline.png');
+            icon: '${model['activeStatus']}' == '1'
+                ? 'assets/images/common/ic_device_online.png'
+                : 'assets/images/common/ic_device_offline.png');
 
         /// 添加Marker
         controller?.addMarker(marker);
-      }catch(e){
+      } catch (e) {
         HhLog.e("search ${e.toString()}");
         continue;
       }

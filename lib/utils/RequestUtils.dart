@@ -1,7 +1,8 @@
 
 class RequestUtils{
-  static const base = 'http://172.16.50.87:10008';//debug
-  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  // static const base = 'http://172.16.50.87:10008';//debug
+  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
   static const tenantId = '$base/admin-api/system/tenant/get-id-by-name';//获取租户id
@@ -17,9 +18,13 @@ class RequestUtils{
   static const message = '$base/admin-api/system/message-log/page';//主页-消息-设备信息&&报警信息查询
   static const spaceInfo = '$base/admin-api/mid/space/get';//主页-空间-空间信息
   static const deviceInfo = '$base/admin-api/mid/device-base/get';//设备详情
+  static const deviceConfig = '$base/admin-api/mid/device-config/get';//设备配置
+  static const deviceConfigScreenTop = '$base/admin-api/mid/device-info/sendDeviceCmd';//设备配置修改
+  static const deviceVoiceTop = '$base/admin-api/mid/voice-resource/page';
+  static const deviceVersion = '$base/admin-api/mid/device-ota-file/page';//设备固件版本号
   static const deviceHistory = '$base/admin-api/mid/device-alarm-info/page';//设备详情-历史消息
   static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceNo';//设备通道查询
-  static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrl';//设备视频流查询
+  static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrlApp';//设备视频流查询
   static const deviceCreate = '$base/admin-api/mid/device-base/create';//设备添加
   static const deviceList = '$base/admin-api/mid/device-base/page';//设备查询
   static const userEdit = '$base/admin-api/system/user/profile/update';//修改个人信息
@@ -29,6 +34,8 @@ class RequestUtils{
   static const password = '$base/admin-api/system/user/profile/update-password';//修改个人密码
   static const codeSendPersonal = '$base/admin-api/system/captcha/get';//发送验证码
   static const codeCheckPersonal = '$base/admin-api/system/captcha/check';//校验验证码
+  static const codeCheckChangePhone = '$base/admin-api/system/user/update-mobile';//修改手机号
+  static const videoControl = '$base/admin-api/mid/videoAggregation/deviceControl';//视频控制
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET

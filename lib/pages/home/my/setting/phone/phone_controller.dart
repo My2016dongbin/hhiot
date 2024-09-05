@@ -47,9 +47,9 @@ class PhoneController extends GetxController {
   Future<void> sendCode() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在发送短信..'));
     var result = await HhHttp().request(
-      RequestUtils.codeSendPersonal,
+      RequestUtils.codeSend,
       method: DioMethod.post,
-      data: {'mobile':phoneController!.text,'scene':22},
+      data: {'mobile':phoneController!.text,'scene':23},
     );
     HhLog.d("codeRegisterSend -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
@@ -76,14 +76,13 @@ class PhoneController extends GetxController {
 
   Future<void> codeCheck() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true, title: '正在保存..'));
-    Map<String, dynamic> map = {};
-    map['mobile'] = phoneController!.text;
-    map['scene'] = 22;
-    map['code'] = codeController!.text;
     var tenantResult = await HhHttp().request(
-      RequestUtils.codeCheckPersonal,
-      method: DioMethod.get,
-      params: map
+      RequestUtils.codeCheckChangePhone,
+      method: DioMethod.put,
+      data:{
+        "mobile":phoneController!.text,
+        "code":codeController!.text,
+      }
     );
     HhLog.d("codeCheck -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
@@ -125,6 +124,7 @@ class PhoneController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(SPKeys().endpoint, '${result["data"]["endpoint"]}');
       await prefs.setString(SPKeys().id, '${result["data"]["id"]}');
       await prefs.setString(SPKeys().username, '${result["data"]["username"]}');
       await prefs.setString(SPKeys().nickname, '${result["data"]["nickname"]}');

@@ -306,202 +306,10 @@ class LiGanDetailPage extends StatelessWidget {
                                 color: HhColors.whiteColor,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(16.w))),
-                            child: Column(
+                            child: logic.voiceTopStatus.value?Column(
                               mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '名称',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '描述',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '操作',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 1.w,
-                                  color: HhColors.backColor,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 20.w, 20.w, 20.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '摄像机位置类型',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 26.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          logic.playing.value = 1;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          child: Text(
-                                            '播放',
-                                            style: TextStyle(
-                                              color: HhColors.mainBlueColor,
-                                              fontSize: 26.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Text(
-                                        '上传',
-                                        style: TextStyle(
-                                          color: HhColors.mainBlueColor,
-                                          fontSize: 26.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 1.w,
-                                  color: HhColors.backColor,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 20.w, 20.w, 20.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '设备场景预设照片',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 26.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          logic.playing.value = 1;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          child: Text(
-                                            '播放',
-                                            style: TextStyle(
-                                              color: HhColors.mainBlueColor,
-                                              fontSize: 26.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Text(
-                                        '上传',
-                                        style: TextStyle(
-                                          color: HhColors.mainBlueColor,
-                                          fontSize: 26.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 1.w,
-                                  color: HhColors.backColor,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 20.w, 20.w, 20.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '点位名称',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 26.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          logic.playing.value = 1;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          child: Text(
-                                            '播放',
-                                            style: TextStyle(
-                                              color: HhColors.mainBlueColor,
-                                              fontSize: 26.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Text(
-                                        '上传',
-                                        style: TextStyle(
-                                          color: HhColors.mainBlueColor,
-                                          fontSize: 26.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              children: buildVoiceList(),
+                            ):const SizedBox(),
                           ),
                           //设备提示音
                           Container(
@@ -564,7 +372,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           alignment: Alignment.centerRight,
                                           child: InkWell(
                                             onTap: (){
-                                              logic.playing.value = 0;
+                                              logic.stopVoice();
                                             },
                                             child: Container(
                                               padding: EdgeInsets.fromLTRB(10.w, 3.w, 10.w, 3.w),
@@ -604,199 +412,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '名称',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '描述',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '操作',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 1.w,
-                                  color: HhColors.backColor,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 20.w, 20.w, 20.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '摄像机位置类型',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 26.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          logic.playing.value = 1;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          child: Text(
-                                            '播放',
-                                            style: TextStyle(
-                                              color: HhColors.mainBlueColor,
-                                              fontSize: 26.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Text(
-                                        '上传',
-                                        style: TextStyle(
-                                          color: HhColors.mainBlueColor,
-                                          fontSize: 26.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 1.w,
-                                  color: HhColors.backColor,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 20.w, 20.w, 20.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '设备场景预设照片',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 26.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          logic.playing.value = 1;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          child: Text(
-                                            '播放',
-                                            style: TextStyle(
-                                              color: HhColors.mainBlueColor,
-                                              fontSize: 26.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Text(
-                                        '上传',
-                                        style: TextStyle(
-                                          color: HhColors.mainBlueColor,
-                                          fontSize: 26.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 1.w,
-                                  color: HhColors.backColor,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      20.w, 20.w, 20.w, 20.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '点位名称',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 26.sp,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          logic.playing.value = 1;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          child: Text(
-                                            '播放',
-                                            style: TextStyle(
-                                              color: HhColors.mainBlueColor,
-                                              fontSize: 26.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 30.w,
-                                      ),
-                                      Text(
-                                        '上传',
-                                        style: TextStyle(
-                                          color: HhColors.mainBlueColor,
-                                          fontSize: 26.sp,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                              children: buildVoiceListBottom(),
                             ),
                           ),
                           //配置提示音
@@ -881,7 +497,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '漂洋过海来看你',
+                                          '${logic.config["audioHumanName"]}',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
@@ -914,15 +530,15 @@ class LiGanDetailPage extends StatelessWidget {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.voice.value*1.0, max: 100,min: 0,
+                                          Slider(value: logic.voiceHuman.value*1.0, max: 5,min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
                                               String s = "$value";
-                                              logic.voice.value = int.parse(s.substring(0,s.indexOf(".")));
+                                              logic.voiceHuman.value = int.parse(s.substring(0,s.indexOf(".")));
                                             },),
                                           Text(
-                                            '${logic.voice.value}',
+                                            '${logic.voiceHuman.value}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               color: HhColors.gray9TextColor,
@@ -946,7 +562,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '播放时间',
+                                          '播放时间段',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
                                             fontSize: 26.sp,
@@ -955,7 +571,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '12:00-14:00',
+                                          '${logic.config["audioHumanTime"]}',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
@@ -1027,7 +643,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '滴滴滴',
+                                          '${logic.config["audioCarName"]}',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
@@ -1060,15 +676,15 @@ class LiGanDetailPage extends StatelessWidget {
                                       Row(
                                       mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.voice.value*1.0, max: 100,min: 0,
+                                          Slider(value: logic.voiceCar.value*1.0, max: 5,min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
                                             String s = "$value";
-                                            logic.voice.value = int.parse(s.substring(0,s.indexOf(".")));
+                                            logic.voiceCar.value = int.parse(s.substring(0,s.indexOf(".")));
                                           },),
                                           Text(
-                                            '${logic.voice.value}',
+                                            '${logic.voiceCar.value}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               color: HhColors.gray9TextColor,
@@ -1101,7 +717,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '12:00-14:00',
+                                          '${logic.config["audioCarTime"]}',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
@@ -1116,6 +732,182 @@ class LiGanDetailPage extends StatelessWidget {
                               ],
                             ),
                           ),
+                          Container(
+                            margin: EdgeInsets.only(top: 20.w),
+                            decoration: BoxDecoration(
+                                color: HhColors.whiteColor,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(16.w))),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                      20.w, 25.w, 20.w, 25.w),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '开盖检测',
+                                          style: TextStyle(
+                                            color: HhColors.blackColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          '',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            color: HhColors.gray9TextColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.w,),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 1.w,
+                                  color: HhColors.backColor,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                      20.w, 25.w, 20.w, 25.w),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '提示音',
+                                          style: TextStyle(
+                                            color: HhColors.blackColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          '${logic.config["audioOpenName"]}',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            color: HhColors.gray9TextColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.w,),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 1.w,
+                                  color: HhColors.backColor,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                      20.w, 25.w, 20.w, 25.w),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '音量',
+                                          style: TextStyle(
+                                            color: HhColors.blackColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Slider(value: logic.voiceCap.value*1.0, max: 5,min: 0,
+                                            thumbColor: HhColors.mainBlueColor,
+                                            activeColor: HhColors.mainBlueColor,
+                                            onChanged: (double value) {
+                                            String s = "$value";
+                                            logic.voiceCap.value = int.parse(s.substring(0,s.indexOf(".")));
+                                          },),
+                                          Text(
+                                            '${logic.voiceCap.value}',
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                              color: HhColors.gray9TextColor,
+                                              fontSize: 26.sp,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(width: 10.w,),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 1.w,
+                                  color: HhColors.backColor,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                      20.w, 25.w, 20.w, 25.w),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '播放时间段',
+                                          style: TextStyle(
+                                            color: HhColors.blackColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          '${logic.config["audioOpenTime"]}',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            color: HhColors.gray9TextColor,
+                                            fontSize: 26.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.w,),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              logic.voiceSubmitHuman();
+                              logic.voiceSubmitCar();
+                              logic.voiceSubmitCap();
+                            },
+                            child: Container(
+                              width: 1.sw,
+                              height: 90.w,
+                              margin: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
+                              decoration: BoxDecoration(
+                                  color: HhColors.mainBlueColor,
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(16.w))),
+                              child: Center(
+                                child: Text(
+                                  "确定",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: HhColors.whiteColor,
+                                      fontSize: 28.sp,
+                                      decoration: TextDecoration.none,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       )
                     : const SizedBox(),
@@ -1176,7 +968,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.speed.value*1.0, max: 100,min: 0,
+                                          Slider(value: logic.speed.value*1.0, max: 10,min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
@@ -1314,8 +1106,11 @@ class LiGanDetailPage extends StatelessWidget {
                                       counterText: '',
                                       hintText: '此处设置显示内容',
                                       hintStyle: TextStyle(
-                                          color: HhColors.grayCCTextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
+                                          color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
                                     ),
+                                    onChanged: (s){
+                                      logic.ledContent.value = s;
+                                    },
                                     style:
                                     TextStyle(color: HhColors.textBlackColor, fontSize: 26.sp),
                                   ),
@@ -1422,7 +1217,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '12:00-14:00',
+                                          '${logic.ledTime}',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
@@ -1437,6 +1232,35 @@ class LiGanDetailPage extends StatelessWidget {
                               ],
                             ),
                           ),
+
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              logic.postScreenTop();
+                              logic.postScreenBottom();
+                            },
+                            child: Container(
+                              width: 1.sw,
+                              height: 90.w,
+                              margin: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
+                              decoration: BoxDecoration(
+                                  color: HhColors.mainBlueColor,
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(16.w))),
+                              child: Center(
+                                child: Text(
+                                  "确定",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: HhColors.whiteColor,
+                                      fontSize: 28.sp,
+                                      decoration: TextDecoration.none,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       )
                     : const SizedBox(),
@@ -1502,6 +1326,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                 value: logic.warnGANG1.value,
                                                 onChanged: (s) {
                                                   logic.warnGANG1.value = s;
+                                                  logic.warnSet("gCam1",s?"ON":"OFF");
                                                 },
                                                 activeColor:
                                                     HhColors.mainBlueColor,
@@ -1556,6 +1381,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                   value: logic.warnGANG2.value,
                                                   onChanged: (s) {
                                                     logic.warnGANG2.value = s;
+                                                    logic.warnSet("gCam2",s?"ON":"OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1611,6 +1437,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                   value: logic.warnGANG3.value,
                                                   onChanged: (s) {
                                                     logic.warnGANG3.value = s;
+                                                    logic.warnSet("gCam3",s?"ON":"OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1666,6 +1493,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                   value: logic.warnBALL.value,
                                                   onChanged: (s) {
                                                     logic.warnBALL.value = s;
+                                                    logic.warnSet("sCam1",s?"ON":"OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1721,6 +1549,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                   value: logic.warnSENSOR.value,
                                                   onChanged: (s) {
                                                     logic.warnSENSOR.value = s;
+                                                    logic.warnSet("sensor",s?"ON":"OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1776,6 +1605,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                   value: logic.warnOPEN.value,
                                                   onChanged: (s) {
                                                     logic.warnOPEN.value = s;
+                                                    logic.warnSet("cap",s?"ON":"OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1855,6 +1685,28 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 28.sp,
                                         ),
                                       ),
+                                      SizedBox(width: 20.w,),
+                                      Switch(
+                                        value: logic.energyAction.value,
+                                        onChanged: (s) {
+                                          logic.energyAction.value = s;
+                                        },
+                                        activeColor:
+                                        HhColors.mainBlueColor,
+                                        inactiveThumbColor:
+                                        HhColors.mainBlueColor,
+                                        inactiveTrackColor:
+                                        HhColors.whiteColor,
+                                        focusColor:
+                                        HhColors.mainBlueColor,
+                                        trackOutlineColor:
+                                        MaterialStateProperty
+                                            .resolveWith<Color?>(
+                                                (Set<MaterialState>
+                                            states) {
+                                              return HhColors.mainBlueColor;
+                                            }),
+                                      ),
                                       Expanded(
                                         child: TextField(
                                           textAlign: TextAlign.right,
@@ -1873,6 +1725,9 @@ class LiGanDetailPage extends StatelessWidget {
                                                 fontSize: 28.sp,
                                                 fontWeight: FontWeight.w200),
                                           ),
+                                          onChanged: (s){
+                                            logic.energyDelay.value = s;
+                                          },
                                           style: TextStyle(
                                               color: HhColors.gray6TextColor,
                                               fontSize: 28.sp,
@@ -1901,6 +1756,28 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 28.sp,
                                         ),
                                       ),
+                                      SizedBox(width: 20.w,),
+                                      Switch(
+                                        value: logic.weatherAction.value,
+                                        onChanged: (s) {
+                                          logic.weatherAction.value = s;
+                                        },
+                                        activeColor:
+                                        HhColors.mainBlueColor,
+                                        inactiveThumbColor:
+                                        HhColors.mainBlueColor,
+                                        inactiveTrackColor:
+                                        HhColors.whiteColor,
+                                        focusColor:
+                                        HhColors.mainBlueColor,
+                                        trackOutlineColor:
+                                        MaterialStateProperty
+                                            .resolveWith<Color?>(
+                                                (Set<MaterialState>
+                                            states) {
+                                              return HhColors.mainBlueColor;
+                                            }),
+                                      ),
                                       Expanded(
                                         child: TextField(
                                           textAlign: TextAlign.right,
@@ -1919,6 +1796,9 @@ class LiGanDetailPage extends StatelessWidget {
                                                 fontSize: 28.sp,
                                                 fontWeight: FontWeight.w200),
                                           ),
+                                          onChanged: (s){
+                                            logic.weatherDelay.value = s;
+                                          },
                                           style: TextStyle(
                                               color: HhColors.gray6TextColor,
                                               fontSize: 28.sp,
@@ -1947,6 +1827,28 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 28.sp,
                                         ),
                                       ),
+                                      SizedBox(width: 20.w,),
+                                      Switch(
+                                        value: logic.soilAction.value,
+                                        onChanged: (s) {
+                                          logic.soilAction.value = s;
+                                        },
+                                        activeColor:
+                                        HhColors.mainBlueColor,
+                                        inactiveThumbColor:
+                                        HhColors.mainBlueColor,
+                                        inactiveTrackColor:
+                                        HhColors.whiteColor,
+                                        focusColor:
+                                        HhColors.mainBlueColor,
+                                        trackOutlineColor:
+                                        MaterialStateProperty
+                                            .resolveWith<Color?>(
+                                                (Set<MaterialState>
+                                            states) {
+                                              return HhColors.mainBlueColor;
+                                            }),
+                                      ),
                                       Expanded(
                                         child: TextField(
                                           textAlign: TextAlign.right,
@@ -1961,12 +1863,15 @@ class LiGanDetailPage extends StatelessWidget {
                                             counterText: '',
                                             hintText: '',
                                             hintStyle: TextStyle(
-                                                color: HhColors.grayCCTextColor,
+                                                color: HhColors.gray9TextColor,
                                                 fontSize: 28.sp,
                                                 fontWeight: FontWeight.w200),
                                           ),
+                                          onChanged: (s){
+                                            logic.soilDelay.value = s;
+                                          },
                                           style: TextStyle(
-                                              color: HhColors.gray6TextColor,
+                                              color: HhColors.blackTextColor,
                                               fontSize: 28.sp,
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -1981,6 +1886,48 @@ class LiGanDetailPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+
+                                 BouncingWidget(
+                                  duration: const Duration(milliseconds: 100),
+                                  scaleFactor: 1.2,
+                                  onPressed: () {
+                                    int energy = 0;
+                                    int weather = 0;
+                                    int soil = 0;
+                                    try{
+                                      energy = int.parse(logic.time1Controller!.text) * 60;
+                                      weather = int.parse(logic.time2Controller!.text) * 60;
+                                      soil = int.parse(logic.time3Controller!.text) * 60;
+                                    }catch(e){
+                                      EventBusUtil.getInstance().fire(HhToast(title: "间隔时间格式错误"));
+                                      return;
+                                    }
+                                    logic.warnUploadSet("energy", logic.energyAction.value?"ON":"OFF", energy, logic.config["energyOpenTime"]);
+                                    logic.warnUploadSet("weather", logic.weatherAction.value?"ON":"OFF", weather, logic.config["weatherOpenTime"]);
+                                    logic.warnUploadSet("soil", logic.soilAction.value?"ON":"OFF", soil, logic.config["soilOpenTime"]);
+                                  },
+                                  child: Container(
+                                    width: 1.sw,
+                                    height: 90.w,
+                                    margin: EdgeInsets.fromLTRB(30.w, 10.w, 30.w, 30.w),
+                                    decoration: BoxDecoration(
+                                        color: HhColors.whiteColor,
+                                        border: Border.all(color: HhColors.gray9TextColor,width: 0.5.w),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(16.w))),
+                                    child: Center(
+                                      child: Text(
+                                        "确定",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: HhColors.blackTextColor,
+                                            fontSize: 28.sp,
+                                            decoration: TextDecoration.none,
+                                            fontWeight: FontWeight.w200),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                             // child: ,
@@ -2021,7 +1968,8 @@ class LiGanDetailPage extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    logic.fireLevel.value = 0;
+                                    logic.fireLevel.value = 5;
+                                    logic.settingLevel();
                                   },
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
@@ -2029,7 +1977,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                            logic.fireLevel.value == 0
+                                            logic.fireLevel.value == 5
                                                 ? "assets/images/common/yes.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
@@ -2050,7 +1998,8 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    logic.fireLevel.value = 1;
+                                    logic.fireLevel.value = 4;
+                                    logic.settingLevel();
                                   },
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
@@ -2058,7 +2007,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                            logic.fireLevel.value == 1
+                                            logic.fireLevel.value == 4
                                                 ? "assets/images/common/yes.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
@@ -2079,7 +2028,8 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    logic.fireLevel.value = 2;
+                                    logic.fireLevel.value = 3;
+                                    logic.settingLevel();
                                   },
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
@@ -2087,7 +2037,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                            logic.fireLevel.value == 2
+                                            logic.fireLevel.value == 3
                                                 ? "assets/images/common/yes.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
@@ -2108,7 +2058,8 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    logic.fireLevel.value = 3;
+                                    logic.fireLevel.value = 2;
+                                    logic.settingLevel();
                                   },
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
@@ -2116,7 +2067,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                            logic.fireLevel.value == 3
+                                            logic.fireLevel.value == 2
                                                 ? "assets/images/common/yes.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
@@ -2137,7 +2088,8 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    logic.fireLevel.value = 4;
+                                    logic.fireLevel.value = 1;
+                                    logic.settingLevel();
                                   },
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
@@ -2145,7 +2097,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                            logic.fireLevel.value == 4
+                                            logic.fireLevel.value == 1
                                                 ? "assets/images/common/yes.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
@@ -2167,7 +2119,7 @@ class LiGanDetailPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          //枪球联动
+                          /*//枪球联动
                           Container(
                             margin: EdgeInsets.only(top: 30.w),
                             child: Row(
@@ -2261,7 +2213,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
+                          ),*/
                           //固件版本号
                           Container(
                             margin: EdgeInsets.only(top: 30.w),
@@ -2296,64 +2248,63 @@ class LiGanDetailPage extends StatelessWidget {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    logic.version.value = 0;
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                            logic.version.value == 0
-                                                ? "assets/images/common/yes.png"
-                                                : "assets/images/common/no.png",
-                                            height: 20,
-                                            width: 20),
-                                        SizedBox(
-                                          width: 15.w,
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      30.w, 30.w, 30.w, 10.w),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '当前版本:',
+                                        style: TextStyle(
+                                          color: HhColors.blackColor,
+                                          fontSize: 28.sp,
                                         ),
-                                        Text(
-                                          'V1.0.2387837',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
-                                            fontSize: 28.sp,
-                                          ),
+                                      ),
+                                      SizedBox(
+                                        width: 15.w,
+                                      ),
+                                      Text(
+                                        '${logic.deviceVer}',
+                                        style: TextStyle(
+                                          color: HhColors.blackColor,
+                                          fontSize: 28.sp,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    logic.version.value = 1;
+                                logic.versionStatus.value?Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: buildVersionChild(),
+                                ):const SizedBox(),
+                                 BouncingWidget(
+                                  duration: const Duration(milliseconds: 100),
+                                  scaleFactor: 1.2,
+                                  onPressed: () {
+                                    logic.versionUpdate();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                            logic.version.value == 1
-                                                ? "assets/images/common/yes.png"
-                                                : "assets/images/common/no.png",
-                                            height: 20,
-                                            width: 20),
-                                        SizedBox(
-                                          width: 15.w,
-                                        ),
-                                        Text(
-                                          'V1.0.2387830',
-                                          style: TextStyle(
-                                            color: HhColors.blackColor,
+                                    width: 1.sw,
+                                    height: 90.w,
+                                    margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 20.w),
+                                    decoration: BoxDecoration(
+                                        color: HhColors.whiteColor,
+                                        border: Border.all(color: HhColors.gray9TextColor,width: 0.5.w),
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(16.w))),
+                                    child: Center(
+                                      child: Text(
+                                        "升级",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: HhColors.blackTextColor,
                                             fontSize: 28.sp,
-                                          ),
-                                        ),
-                                      ],
+                                            decoration: TextDecoration.none,
+                                            fontWeight: FontWeight.w200),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                )
                               ],
                             ),
                           ),
@@ -2419,10 +2370,247 @@ class LiGanDetailPage extends StatelessWidget {
       Get.back();
     }, () {
       Get.back();
-      EventBusUtil.getInstance().fire(HhLoading(show: true));
-      Future.delayed(const Duration(seconds: 1), () {
-        EventBusUtil.getInstance().fire(HhLoading(show: false));
-      });
+      logic.resetDevice();
     });
+  }
+
+  buildVoiceList() {
+    List<Widget> list = [];
+    list.add(
+      Container(
+        padding: EdgeInsets.fromLTRB(
+            20.w, 25.w, 20.w, 25.w),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                '名称',
+                style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '描述',
+                style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '操作',
+                style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    for(int i = 0; i < logic.voiceTopList.length;i++){
+      dynamic model = logic.voiceTopList[i];
+      list.add(
+        Container(
+          height: 1.w,
+          color: HhColors.backColor,
+        ),
+      );
+      list.add(
+        Container(
+          padding: EdgeInsets.fromLTRB(
+              20.w, 20.w, 20.w, 20.w),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${model["name"]}',
+                  style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 26.sp,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              InkWell(
+                onTap: (){
+                  logic.uploadVoice(model["name"],model["pcmUrl"]);
+                },
+                child: Text(
+                  '上传',
+                  style: TextStyle(
+                    color: HhColors.mainBlueColor,
+                    fontSize: 26.sp,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    return list;
+  }
+  buildVoiceListBottom() {
+    List<Widget> list = [];
+    list.add(
+      Container(
+        padding: EdgeInsets.fromLTRB(
+            20.w, 25.w, 20.w, 25.w),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                '名称',
+                style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '描述',
+                style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                '操作',
+                style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    for(int i = 0; i < logic.voiceBottomList.length;i++){
+      dynamic model = logic.voiceBottomList[i];
+      list.add(
+        Container(
+          height: 1.w,
+          color: HhColors.backColor,
+        ),
+      );
+      list.add(
+          Container(
+            padding: EdgeInsets.fromLTRB(
+                20.w, 20.w, 20.w, 20.w),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '${model["name"]}',
+                    style: TextStyle(
+                      color: HhColors.blackColor,
+                      fontSize: 26.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30.w,
+                ),
+                InkWell(
+                  onTap: () {
+                    logic.playVoice(model["name"]);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(6.w),
+                    child: Text(
+                      '播放',
+                      style: TextStyle(
+                        color: HhColors.mainBlueColor,
+                        fontSize: 26.sp,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30.w,
+                ),
+                InkWell(
+                  onTap: (){
+                    logic.deleteVoice(model["name"]);
+                  },
+                  child: Text(
+                    '删除',
+                    style: TextStyle(
+                      color: HhColors.mainBlueColor,
+                      fontSize: 26.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+              ],
+            ),
+          ),
+      );
+    }
+    return list;
+  }
+
+  buildVersionChild() {
+    List<Widget> list = [];
+
+    for(int i = 0; i < logic.versionList.length;i++){
+      dynamic model = logic.versionList[i];
+      list.add(
+        Container(
+          height: 1.w,
+          color: HhColors.backColor,
+        ),
+      );
+      list.add(
+          InkWell(
+            onTap: () {
+              logic.version.value = i;
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(
+                  30.w, 30.w, 30.w, 30.w),
+              child: Row(
+                children: [
+                  Image.asset(
+                      logic.version.value == i
+                          ? "assets/images/common/yes.png"
+                          : "assets/images/common/no.png",
+                      height: 20,
+                      width: 20),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  Text(
+                    '${model["version"]}',
+                    style: TextStyle(
+                      color: HhColors.blackColor,
+                      fontSize: 28.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
+    }
+
+    return list;
   }
 }

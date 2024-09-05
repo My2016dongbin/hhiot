@@ -17,6 +17,8 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceDetailController extends GetxController {
   final index = 0.obs;
@@ -35,6 +37,10 @@ class DeviceDetailController extends GetxController {
   late BuildContext context;
   late String deviceNo;
   late String id;
+  late String deviceId;
+  late String channelNumber;
+  late String commandLast;
+  late String command = "";
   late int controlTime = 0;
   late String nickname='';
   late Rx<String> productName = ''.obs;
@@ -46,6 +52,7 @@ class DeviceDetailController extends GetxController {
   late AnimationController animationController;
   late Alignment animateAlign = Alignment.center;
   final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
+  late String? endpoint;
 
   @override
   void onInit() {
@@ -83,8 +90,10 @@ class DeviceDetailController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       liveList = result["data"];
       try{
-        HhLog.d('${result["data"][liveIndex.value]["deviceId"]} , ${result["data"][liveIndex.value]["number"]}');
-        getPlayUrl('${result["data"][liveIndex.value]["deviceId"]}','${result["data"][liveIndex.value]["number"]}');
+        deviceId = result["data"][liveIndex.value]["deviceId"];
+        channelNumber = result["data"][liveIndex.value]["number"];
+        HhLog.d('$deviceId , $channelNumber');
+        getPlayUrl(deviceId,channelNumber);
       }catch(e){
         HhLog.e(e.toString());
       }
@@ -107,7 +116,7 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getPlayUrl result -- $result");
     if(result["code"]==200 && result["data"]!=null){
       try{
-        String url = result["data"][0]['url'];
+        String url = /*RequestUtils.rtsp + */result["data"][0]['url'];
         playTag.value = false;
         player.release();
         player = FijkPlayer();
@@ -132,7 +141,7 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceInfo -- $id");
     HhLog.d("getDeviceInfo -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      name.value = "${CommonUtils().parseNull(result["data"]["spaceName"],"")}-${CommonUtils().parseNull(result["data"]["name"], "")}";
+      name.value = CommonUtils().parseNull(result["data"]["name"], "");
       productName.value = result["data"]["productName"];
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
@@ -239,6 +248,32 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
     }
+  }
+
+  Future<void> controlPost(int action) async {
+    dynamic data = {
+      "action": action,//0 开始  1 结束
+      "channelNumber": channelNumber,
+      "command": command,
+      "deviceId": deviceId,
+      "speed": 10,
+    };
+    var tenantResult = await HhHttp()
+        .request(RequestUtils.videoControl, method: DioMethod.post, data: data);
+    HhLog.d("controlPost data -- $data");
+    HhLog.d("controlPost result -- $tenantResult");
+    /*if (tenantResult["code"] == 200 && tenantResult["data"] != null) {
+      // EventBusUtil.getInstance().fire(HhToast(title: ''));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(tenantResult["data"][0]["msg"])));
+    }*/
+
+  }
+
+  Future<void> initData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    endpoint = prefs.getString(SPKeys().endpoint);
   }
 
 }
