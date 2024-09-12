@@ -32,7 +32,7 @@ class RegisterPage extends StatelessWidget {
       statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
     ));
     return Scaffold(
-      backgroundColor: HhColors.backColor,
+      backgroundColor: HhColors.backColorRegister,
       body: Obx(
             () => Container(
           height: 1.sh,
@@ -55,7 +55,7 @@ class RegisterPage extends StatelessWidget {
               margin: EdgeInsets.only(top: 90.w),
               color: HhColors.trans,
               child: Text(
-                '用户注册',
+                '新用户注册',
                 style: TextStyle(
                     color: HhColors.blackTextColor,
                     fontSize: 30.sp,
@@ -81,7 +81,7 @@ class RegisterPage extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(12.w))),
+            borderRadius: BorderRadius.all(Radius.circular(18.w))),
             margin: EdgeInsets.fromLTRB(20.w, 66.w+100.w, 20.w, 0),
             padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
             child: Column(
@@ -314,7 +314,7 @@ class RegisterPage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(20.w, 620.w, 20.w, 50.w),
+            margin: EdgeInsets.fromLTRB(20.w, 600.w, 20.w, 50.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -341,7 +341,7 @@ class RegisterPage extends StatelessWidget {
                       onPressed: () {
                         Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
                       },
-                      child: Text('《浩海物联平台隐私政策》',
+                      child: Text('《浩海万联平台隐私政策》',
                         style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                       ),
                     ),

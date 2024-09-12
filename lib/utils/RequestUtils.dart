@@ -1,13 +1,16 @@
 
 class RequestUtils{
-  // static const base = 'http://172.16.50.87:10008';//debug
-  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  static const base = 'http://172.16.50.87:10008';//debug
+  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
   static const tenantId = '$base/admin-api/system/tenant/get-id-by-name';//获取租户id
-  static const codeSend = '$base/admin-api/system/auth/send-sms-code';//发送验证码
+  static const tenantSearch = '$base/admin-api/system/tenant/get-id-by-user';//根据手机号/用户名获取租户id
+  static const codeCheckCommon = '$base/admin-api/system/auth/sms-use';//校验验证码-通用
+  static const codeSend = '$base/admin-api/system/auth/send-sms-code';//发送验证码（含通用scene=24）
   static const codeLogin = '$base/admin-api/system/auth/sms-login';//验证码登录
+  static const putBackPassword = '$base/admin-api/system/user/update-password-mobile-app';//找回用户密码
   static const userInfo = '$base/admin-api/system/user/profile/get';//个人信息查询
   static const codeRegisterSend = '$base/admin-api/system/auth/send-sms-code-register';//发送验证码-注册
   static const codeRegister = '$base/admin-api/system/auth/register';//注册

@@ -106,7 +106,7 @@ class CompanyLoginController extends GetxController {
   }
 
   Future<void> getTenant() async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true, title: '正在登录..'));
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
     map['name'] = tenantController!.text;
     var tenantResult = await HhHttp().request(
@@ -129,6 +129,31 @@ class CompanyLoginController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(/*"租户信息不存在"*/tenantResult["msg"]),type: 2));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
+    }
+  }
+
+  Future<void> searchTenant() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['username'] = accountController!.text;
+    var result = await HhHttp().request(
+        RequestUtils.tenantSearch,
+        method: DioMethod.get,
+        params: map
+    );
+    HhLog.d("searchTenant -- ${RequestUtils.tenantSearch}");
+    HhLog.d("searchTenant -- $map");
+    HhLog.d("searchTenant -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if (result["code"] == 0 && result["data"] != null) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(SPKeys().tenant, '${result["data"]}');
+      await prefs.setString(SPKeys().tenantName, tenantController!.text);
+      CommonData.tenant = '${result["data"]}';
+      login();
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"]),type: 2));
     }
   }
   Future<void> getTenantId() async {
@@ -171,16 +196,19 @@ class CompanyLoginController extends GetxController {
   }
 
   Future<void> login() async {
+    dynamic data = {
+      "username": accountController?.text,
+      "password": passwordController?.text
+    };
     var result = await HhHttp().request(
       RequestUtils.login,
       method: DioMethod.post,
-      data: {
-        "username": accountController?.text,
-        "password": passwordController?.text,
-        "tenantName": "${CommonData.tenantName}"
-      },
+      data: data,
     );
-    HhLog.d("login -- $result");
+    HhLog.d("logins RequestUtils -- ${RequestUtils.login}");
+    HhLog.d("logins tenant -- ${CommonData.tenant}");
+    HhLog.d("logins data -- $data");
+    HhLog.d("logins result -- $result");
     if (result["code"] == 0 && result["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(SPKeys().token, result["data"]["accessToken"]);

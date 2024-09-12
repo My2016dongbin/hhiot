@@ -237,7 +237,7 @@ class LoginPage extends StatelessWidget {
                     Text('我已阅读并同意',
                       style: TextStyle(color: HhColors.grayBBTextColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                     ),
-                    Text('《浩海物联平台隐私政策》',
+                    Text('《浩海万联平台隐私政策》',
                       style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                     ),
                   ],

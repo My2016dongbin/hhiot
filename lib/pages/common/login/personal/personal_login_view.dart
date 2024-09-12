@@ -12,6 +12,8 @@ import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/login/code/code_binding.dart';
 import 'package:iot/pages/common/login/code/code_view.dart';
 import 'package:iot/pages/common/login/login_controller.dart';
+import 'package:iot/pages/common/login/personal/forget/personal_forget_binding.dart';
+import 'package:iot/pages/common/login/personal/forget/personal_forget_view.dart';
 import 'package:iot/pages/common/login/personal/personal_login_controller.dart';
 import 'package:iot/pages/common/login/regist/regist_binding.dart';
 import 'package:iot/pages/common/login/regist/regist_view.dart';
@@ -71,7 +73,7 @@ class PersonalLoginPage extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh+66.w+100.w, 0.1.sw, 0),
+            margin: EdgeInsets.fromLTRB(0.08.sw, 0.16.sh+66.w+150.w, 0.08.sw, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -95,7 +97,7 @@ class PersonalLoginPage extends StatelessWidget {
                             contentPadding: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
                             border: InputBorder.none,
                             counterText: '',
-                            hintText: logic.pageStatus.value?'手机号':'用户名',
+                            hintText: logic.pageStatus.value?'手机号':'用户名/手机号',
                             hintStyle: TextStyle(
                                 color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
                           ),
@@ -217,7 +219,7 @@ class PersonalLoginPage extends StatelessWidget {
                         // showWebDialog();
                         Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
                       },
-                      child: Text('《浩海物联平台隐私政策》',
+                      child: Text('《浩海万联平台隐私政策》',
                         style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -267,8 +269,8 @@ class PersonalLoginPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 100.w,
-                    margin: EdgeInsets.fromLTRB(0, 32.w, 0, 50.w),
+                    height: 90.w,
+                    margin: EdgeInsets.fromLTRB(0, 32.w, 0, 20.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColorTrans,
                         borderRadius: BorderRadius.all(Radius.circular(50.w))),
@@ -281,7 +283,7 @@ class PersonalLoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ///切换
+                /*///切换
                 BouncingWidget(
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
@@ -299,6 +301,21 @@ class PersonalLoginPage extends StatelessWidget {
                       padding: EdgeInsets.all(5.w),
                       color: HhColors.trans,
                       child: Text(logic.pageStatus.value?'密码登录':'验证码登录',style: TextStyle(color: HhColors.whiteColor,fontSize: 26.sp,),)
+                  ),
+                ),
+                SizedBox(height: 30.w,),*/
+                ///忘记密码
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
+                    Get.to(()=>PersonalForgetPage(),binding: PersonalForgetBinding());
+                  },
+                  child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 5.w, 0, 0),
+                      padding: EdgeInsets.all(5.w),
+                      color: HhColors.trans,
+                      child: Text('忘记密码',style: TextStyle(color: HhColors.whiteColor,fontSize: 26.sp,),)
                   ),
                 ),
                 SizedBox(height: 30.w,),

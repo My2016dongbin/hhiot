@@ -39,11 +39,14 @@ class HhColors {
 
 
   static const themeColor = Color(0xFF7ad6f2); //主题颜色
+  static const backColorRegister = Color(0xFFF5F7F7); //背景颜色
   static const backColor = Color(0xFFEDEDED); //背景颜色
   static const themeSe = Color(0xFFF9605F); //主题选中颜色
   static const themeUn = Color(0xFFD6D7D9); //主题未选颜色
   static const questionColor = Color(0xFF049594); //主题颜色
   static const loadingColor = Color(0xFFfbfbfb); //主题颜色
+  static const whiteColorTrans = Color(0x88FFFFFF); //主题颜色
+  static const whiteColorTrans2 = Color(0xFFF2F6FE); //主题颜色
   static const whiteColor = Colors.white;
   static const blackColor = Colors.black;
   static const backBlueInColor = Color(0xFFE1E9F7);

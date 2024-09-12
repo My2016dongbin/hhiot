@@ -450,8 +450,8 @@ class CommonUtils{
   tokenDown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(SPKeys().token);
-    CommonData.tenant = null;
-    CommonData.tenantName = null;
+    CommonData.tenant = CommonData.tenantDef;
+    CommonData.tenantName = CommonData.tenantNameDef;
     CommonData.token = null;
     int now = DateTime.now().millisecondsSinceEpoch;
     if(now - CommonData.time > 2000){

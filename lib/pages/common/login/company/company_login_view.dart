@@ -5,18 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/login/code/code_binding.dart';
-import 'package:iot/pages/common/login/code/code_view.dart';
 import 'package:iot/pages/common/login/company/company_login_controller.dart';
-import 'package:iot/pages/common/login/login_controller.dart';
-import 'package:iot/pages/common/login/regist/regist_binding.dart';
-import 'package:iot/pages/common/login/regist/regist_view.dart';
+import 'package:iot/pages/common/login/company/forget/company_forget_binding.dart';
+import 'package:iot/pages/common/login/company/forget/company_forget_view.dart';
 import 'package:iot/pages/common/web/WebViewPage.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -73,83 +67,14 @@ class CompanyLoginPage extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-                margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh + 66.w, 0, 0),
-                child: Text(
-                  '未注册手机号清先注册浩海通行证',
-                  style: TextStyle(
-                    color: HhColors.textBlackColor,
-                    fontSize: 23.sp,
-                  ),
-                )),
-          ),
           Container(
             margin:
-                EdgeInsets.fromLTRB(0.1.sw, 0.16.sh + 66.w + 100.w, 0.1.sw, 0),
+                EdgeInsets.fromLTRB(0.1.sw, 0.16.sh + 66.w + 30.w, 0.1.sw, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ///租户
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 11,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.tenantController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
-                          counterText: '',
-                          hintText: '请输入租户名称',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor,
-                              fontSize: 28.sp,
-                              fontWeight: FontWeight.w200),
-                        ),
-                        style: TextStyle(
-                            color: HhColors.gray6TextColor,
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.w600),
-                        onChanged: (s) {
-                          logic.tenantStatus.value = s.isNotEmpty;
-                        },
-                      ),
-                    ),
-                    logic.tenantStatus.value
-                        ? BouncingWidget(
-                            duration: const Duration(milliseconds: 100),
-                            scaleFactor: 1.2,
-                            onPressed: () {
-                              logic.tenantController!.clear();
-                              logic.tenantStatus.value = false;
-                            },
-                            child: Container(
-                                padding: EdgeInsets.all(5.w),
-                                child: Image.asset(
-                                  'assets/images/common/ic_close.png',
-                                  height: 30.w,
-                                  width: 30.w,
-                                  fit: BoxFit.fill,
-                                )),
-                          )
-                        : const SizedBox()
-                  ],
-                ),
-                Container(
-                  color: HhColors.grayCCTextColor,
-                  height: 0.5.w,
-                ),
-                SizedBox(
-                  height: 30.w,
-                ),
 
-                ///账号
+                ///手机号
                 Row(
                   children: [
                     Expanded(
@@ -167,7 +92,7 @@ class CompanyLoginPage extends StatelessWidget {
                           border: InputBorder.none,
                           counterText: '',
                           hintText:
-                              logic.pageStatus.value ? '请输入手机号码' : '请输入账号',
+                              '手机号',
                           hintStyle: TextStyle(
                               color: HhColors.grayCCTextColor,
                               fontSize: 28.sp,
@@ -291,7 +216,7 @@ class CompanyLoginPage extends StatelessWidget {
                         height: 0.5.w,
                       ),
                 SizedBox(
-                  height: 26.w,
+                  height: 40.w,
                 ),
 
                 ///协议
@@ -328,7 +253,7 @@ class CompanyLoginPage extends StatelessWidget {
                         Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
                       },
                       child: Text(
-                        '《浩海物联平台隐私政策》',
+                        '《浩海万联平台隐私政策》',
                         style: TextStyle(
                             color: HhColors.backBlueOutColor,
                             fontSize: 21.sp,
@@ -345,10 +270,6 @@ class CompanyLoginPage extends StatelessWidget {
                   onPressed: () {
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
-                    if (logic.tenantController!.text.isEmpty) {
-                      EventBusUtil.getInstance().fire(HhToast(title: '租户不能为空'));
-                      return;
-                    }
 
                     Future.delayed(const Duration(milliseconds: 500), () {
                       if (logic.pageStatus.value) {
@@ -363,7 +284,7 @@ class CompanyLoginPage extends StatelessWidget {
                   child: Container(
                     width: 1.sw,
                     height: 90.w,
-                    margin: EdgeInsets.fromLTRB(0, 32.w, 0, 50.w),
+                    margin: EdgeInsets.fromLTRB(0, 32.w, 0, 20.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
                         borderRadius: BorderRadius.all(Radius.circular(16.w))),
@@ -380,7 +301,7 @@ class CompanyLoginPage extends StatelessWidget {
                   ),
                 ),
 
-                ///切换
+                /*///切换
                 BouncingWidget(
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
@@ -407,7 +328,23 @@ class CompanyLoginPage extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 30.w,
+                ),*/
+
+                ///忘记密码
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
+                    Get.to(()=>CompanyForgetPage(),binding: CompanyForgetBinding());
+                  },
+                  child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 5.w, 0, 0),
+                      padding: EdgeInsets.all(5.w),
+                      color: HhColors.trans,
+                      child: Text('忘记密码',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 26.sp,),)
+                  ),
                 ),
+                SizedBox(height: 30.w,),
               ],
             ),
           ),
@@ -438,7 +375,7 @@ class CompanyLoginPage extends StatelessWidget {
         builder: (context) => Center(
               child: Container(
                 width: 1.sw,
-                height: 360.w,
+                height: 335.w,
                 margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
@@ -460,14 +397,15 @@ class CompanyLoginPage extends StatelessWidget {
                     Align(
                         alignment: Alignment.topCenter,
                         child: Container(
-                            margin: EdgeInsets.fromLTRB(40.w, 125.w, 40.w, 0),
+                            margin: EdgeInsets.fromLTRB(40.w, 135.w, 40.w, 0),
                             child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   '请您阅读并同意',
                                   style: TextStyle(
                                       decoration: TextDecoration.none,
-                                      color: HhColors.textColor,
+                                      color: HhColors.grayAATextColor,
                                       fontSize: 26.sp),
                                 ),
                                 BouncingWidget(
@@ -477,7 +415,7 @@ class CompanyLoginPage extends StatelessWidget {
                                     Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
                                   },
                                   child: Text(
-                                    '《浩海物联平台隐私政策》',
+                                    '《浩海万联平台隐私政策》',
                                     style: TextStyle(
                                         decoration: TextDecoration.none,
                                         color: HhColors.mainBlueColor,
@@ -564,7 +502,7 @@ class CompanyLoginPage extends StatelessWidget {
       showAgreeDialog();
       return;
     }
-    logic.getTenant();
+    logic.searchTenant();
   }
 
   void codeClick() {
