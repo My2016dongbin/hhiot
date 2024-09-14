@@ -7,11 +7,7 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/share/share_binding.dart';
-import 'package:iot/pages/common/share/share_view.dart';
-import 'package:iot/pages/common/socket/socket_page/socket_binding.dart';
-import 'package:iot/pages/common/socket/socket_page/socket_view.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
@@ -23,17 +19,13 @@ import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
-import 'package:iot/routes/app_navigator.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../../../routes/app_pages.dart';
-import '../../../utils/CustomRoute.dart';
-import '../../../utils/HhColors.dart';
-import '../../common/common_data.dart';
-import '../../common/model/model_class.dart';
-import '../my/my_view.dart';
 import 'main_controller.dart';
 
 class MainPage extends StatelessWidget {
@@ -52,7 +44,7 @@ class MainPage extends StatelessWidget {
           height: 1.sh,
           width: 1.sw,
           padding: EdgeInsets.zero,
-          child: logic.pageMapStatus.value ? mapPage() : containPage(),
+          child: logic.secondStatus.value?(logic.pageMapStatus.value ? mapPage() : containPage()) : firstPage(),
         ),
       ),
     );
@@ -283,7 +275,7 @@ class MainPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "我的空间",
+                        "默认空间",
                         style: TextStyle(
                             color: HhColors.blackTextColor,
                             fontSize: 36.sp,
@@ -517,17 +509,6 @@ class MainPage extends StatelessWidget {
         ),
         Column(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      HhColors.backTransColor1,
-                      HhColors.backTransColor3
-                    ]),
-              ),
-            ),
             ///搜索
             BouncingWidget(
               duration: const Duration(milliseconds: 100),
@@ -723,7 +704,7 @@ class MainPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "我的空间",
+                            "默认空间",
                             style: TextStyle(
                                 color: HhColors.blackTextColor,
                                 fontSize: 36.sp,
@@ -949,6 +930,227 @@ class MainPage extends StatelessWidget {
       onPressed: () {
         Get.to(()=>SpacePage(),binding: SpaceBinding());
       },
+    );
+  }
+
+  ///首次进入页面
+  firstPage(){
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
+          ),
+        ),
+        Column(
+          children: [
+            Container(
+              height: 50.w,
+            ),
+            ///位置
+            SizedBox(
+              height: 100.w,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(25.w, 0, 0, 10.w),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 44.w,
+                            height: 44.w,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/icon_loc.png",
+                                  width: 44.w,
+                                  height: 44.w,
+                                  fit: BoxFit.fill,
+                                ),
+                                Container(
+                                    color: HhColors.trans,
+                                    width: 44.w,
+                                    height: 44.w),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          Expanded(
+                            child: Text(
+                              logic.locText.value,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor,
+                                  fontSize: 24.sp,fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 180.w,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: (){
+                            homeLogic.index.value = 2;
+                          },
+                          child: Container(
+                            width: 55.w,
+                            height: 50.w,
+                            margin: EdgeInsets.only(bottom: 10.w),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Image.asset(
+                                    "assets/images/common/icon_message_main.png",
+                                    width: 45.w,
+                                    height: 45.w,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                logic.count.value=='0'?const SizedBox():Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: HhColors.mainRedColor,
+                                        borderRadius: BorderRadius.all(Radius.circular(10.w))
+                                    ),
+                                    width: 25.w + ((logic.count.value.length-1) * 6.w),
+                                    height: 25.w,
+                                    child: Center(child: Text(logic.count.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp),)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: (){
+                            Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                            child: Image.asset(
+                              "assets/images/common/ic_add.png",
+                              width: 45.w,
+                              height: 45.w,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 0),
+              width: 1.sw,
+              height: 0.5.sw,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.w)
+              ),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    "assets/images/common/icon_default.png",
+                    width: 1.sw,
+                    height: 0.5.sw,
+                    fit: BoxFit.fill,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () async {
+                        logic.secondStatus.value = true;
+                        //TODO 初次进入设置
+                        // final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        // await prefs.setBool(SPKeys().second, true);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(30.w, 5.w, 30.w, 8.w),
+                        decoration: BoxDecoration(
+                          color: HhColors.transBlack,
+                          borderRadius: BorderRadius.circular(30.w)
+                        ),
+                        child: Text('进入默认空间',style: TextStyle(color: HhColors.whiteColor,fontSize: 26.sp),),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 1.2,
+              onPressed: (){
+                Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
+              },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 0),
+                padding: EdgeInsets.fromLTRB(25.w, 25.w, 25.w, 25.w),
+                width: 1.sw,
+                decoration: BoxDecoration(
+                  color: HhColors.whiteColor,
+                  borderRadius: BorderRadius.circular(20.w),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      "assets/images/common/ic_camera.png",
+                      width: 100.w,
+                      height: 100.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(width: 20.w,),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('添加新设备',style: TextStyle(color: HhColors.textBlackColor,fontSize: 30.sp,fontWeight: FontWeight.bold),),
+                          SizedBox(height: 10.w,),
+                          Text('按步骤将设备添加到APP',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 26.sp),),
+                        ],
+                      ),
+                    ),
+                    Image.asset(
+                      "assets/images/common/icon_go.png",
+                      width: 30.w,
+                      height: 30.w,
+                      fit: BoxFit.fill,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+
+      ],
     );
   }
 }

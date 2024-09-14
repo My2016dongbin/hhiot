@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:iot/pages/common/model/model_class.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/utils/CommonUtils.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../utils/HhColors.dart';
 import '../home_controller.dart';
@@ -51,7 +52,7 @@ class MessagePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
+                /*Align(
                   alignment: Alignment.topCenter,
                   child: Container(
                     margin: EdgeInsets.only(top: 80.w),
@@ -70,6 +71,116 @@ class MessagePage extends StatelessWidget {
                       },
                     ),
                   ),
+                ),*/
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    height: 100.w,
+                    margin: EdgeInsets.only(top: 75.w),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 100.w,),
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.0,
+                          onPressed: (){
+                            logic.tabIndex.value = 0;
+                          },
+                          child: Container(
+                            width: 130.w,
+                            padding: EdgeInsets.fromLTRB(0, 10.w, 0, 10.w),
+                            color: HhColors.trans,
+                            child: Stack(
+                              children: [
+                                Align(alignment: Alignment.topRight,
+                                    child: Container(
+                                        color: HhColors.trans,
+                                      margin: EdgeInsets.fromLTRB(0, logic.tabIndex.value==0?0:10.w, 40.w, 0),
+                                        child: Text("报警",style: TextStyle(color: logic.tabIndex.value==0?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==0?36.sp:28.sp,fontWeight: logic.tabIndex.value==0?FontWeight.bold:FontWeight.w200),))),
+                                logic.warnCount.value=="0"?const SizedBox():Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: HhColors.mainRedColor,
+                                        borderRadius: BorderRadius.all(Radius.circular(20.w))
+                                    ),
+                                    width: 36.w + ((logic.noticeCount.value.length-1) * 8.w),
+                                    height: 30.w,
+                                    child: Center(child: Text(logic.warnCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 18.sp),)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.0,
+                          onPressed: (){
+                            logic.tabIndex.value = 1;
+                          },
+                          child: Container(
+                            width: 130.w,
+                            padding: EdgeInsets.fromLTRB(0, 10.w, 0, 10.w),
+                            color: HhColors.trans,
+                            child: Stack(
+                              children: [
+                                Align(alignment: Alignment.topRight,
+                                    child: Container(
+                                        color: HhColors.trans,
+                                        margin: EdgeInsets.fromLTRB(0, logic.tabIndex.value==1?0:10.w, 40.w, 0),
+                                        child: Text("通知",style: TextStyle(color: logic.tabIndex.value==1?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==1?36.sp:28.sp,fontWeight: logic.tabIndex.value==1?FontWeight.bold:FontWeight.w200),))),
+                                logic.noticeCount.value=="0"?const SizedBox():Align(
+                                  alignment: Alignment.topRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: HhColors.mainRedColor,
+                                        borderRadius: BorderRadius.all(Radius.circular(20.w))
+                                    ),
+                                    width: 36.w + ((logic.noticeCount.value.length-1) * 8.w),
+                                    height: 30.w,
+                                    child: Center(child: Text(logic.noticeCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 18.sp),)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 85.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.0,
+                          onPressed: (){
+                            EventBusUtil.getInstance().fire(HhToast(title: '已全部标记为已读',type: 0));
+                          },
+                          child: Image.asset(
+                            "assets/images/common/icon_clear_message.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        SizedBox(width: 30.w,),
+                        Image.asset(
+                          "assets/images/common/icon_more_message.png",
+                          width: 50.w,
+                          height: 50.w,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(width: 30.w,),
+                      ],
+                    ),
+                  ),
                 ),
                 logic.tabIndex.value==0 ? deviceMessage() : warnMessage(),
               ],
@@ -80,7 +191,7 @@ class MessagePage extends StatelessWidget {
 
   deviceMessage() {
     return Container(
-      margin: EdgeInsets.only(top: 120.w),
+      margin: EdgeInsets.only(top: 160.w),
       child: EasyRefresh(
         onRefresh: (){
           logic.pageNumLeft = 1;
@@ -91,6 +202,7 @@ class MessagePage extends StatelessWidget {
           logic.fetchPageDevice(logic.pageNumLeft);
         },
         child: PagedListView<int, dynamic>(
+          padding: EdgeInsets.zero,
           pagingController: logic.deviceController,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
             noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
@@ -149,7 +261,7 @@ class MessagePage extends StatelessWidget {
   }
   warnMessage() {
     return Container(
-      margin: EdgeInsets.only(top: 120.w),
+      margin: EdgeInsets.only(top: 160.w),
       child: EasyRefresh(
         onRefresh: (){
           logic.pageNumRight = 1;
@@ -160,6 +272,7 @@ class MessagePage extends StatelessWidget {
           logic.fetchPageWarn(logic.pageNumRight);
         },
         child: PagedListView<int, dynamic>(
+          padding: EdgeInsets.zero,
           pagingController: logic.warnController,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
             noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,

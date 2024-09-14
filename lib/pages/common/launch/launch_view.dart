@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/launch/launch_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class LaunchPage extends StatelessWidget {
@@ -58,22 +60,29 @@ class LaunchPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('智能物联设备·一端管理',style: TextStyle(color: CommonData.personal?HhColors.whiteColor:HhColors.blackColor,fontSize: 30.sp,/*fontWeight: FontWeight.bold*/),),
+                //Text('智能物联设备·一端管理',style: TextStyle(color: CommonData.personal?HhColors.whiteColor:HhColors.blackColor,fontSize: 30.sp,/*fontWeight: FontWeight.bold*/),),
                 SizedBox(height: 0.08.sw,),
-                Container(
-                  width: 1.sw,
-                  height: 90.w,
-                  margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 50.w),
-                  decoration: CommonData.personal?BoxDecoration(
-                      color: HhColors.mainBlueColorTrans,
-                      borderRadius: BorderRadius.all(Radius.circular(50.w))):BoxDecoration(
-                      color: HhColors.mainBlueColor,
-                      borderRadius: BorderRadius.all(Radius.circular(16.w))),
-                  child: Center(
-                    child: Text(
-                      "开始体验",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                logic.secondStatus.value?const SizedBox():BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
+                    CommonUtils().toLogin();
+                  },
+                  child: Container(
+                    width: 1.sw,
+                    height: 90.w,
+                    margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 50.w),
+                    decoration: CommonData.personal?BoxDecoration(
+                        color: HhColors.mainBlueColorTrans,
+                        borderRadius: BorderRadius.all(Radius.circular(50.w))):BoxDecoration(
+                        color: HhColors.mainBlueColor,
+                        borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                    child: Center(
+                      child: Text(
+                        "开始体验",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                      ),
                     ),
                   ),
                 ),

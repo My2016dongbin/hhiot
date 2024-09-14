@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -11,14 +7,14 @@ import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 
-import '../../common/model/model_class.dart';
-
 class MessageController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
   final title = "消息".obs;
   final Rx<bool> tabStatus = false.obs;
   final Rx<int> tabIndex = 0.obs;
+  final Rx<String> warnCount = "99+".obs;
+  final Rx<String> noticeCount = "99+".obs;
   final Rx<String> test = 'test'.obs;
   final PagingController<int, dynamic> deviceController =
       PagingController(firstPageKey: 1);

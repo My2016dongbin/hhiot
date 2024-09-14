@@ -24,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LaunchController extends GetxController {
   final Rx<bool> testStatus = true.obs;
+  final Rx<bool> secondStatus = true.obs;
   late BuildContext? context;
 
   @override
@@ -74,6 +75,8 @@ class LaunchController extends GetxController {
     String? token = prefs.getString(SPKeys().token);
     String? tenant = prefs.getString(SPKeys().tenant);
     String? tenantName = prefs.getString(SPKeys().tenantName);
+    bool? second = prefs.getBool(SPKeys().second);
+    secondStatus.value = second == true;
     if (token != null) {
       //获取个人信息
       CommonData.token = token;
@@ -81,10 +84,14 @@ class LaunchController extends GetxController {
       CommonData.tenantName = tenantName;
       info();
     } else {
-      Future.delayed(const Duration(seconds: 2), () {
-        // Get.off(HomePage(),binding: HomeBinding());
-        CommonUtils().toLogin();
-      });
+      if(second == true){
+        Future.delayed(const Duration(seconds: 2), () {
+          CommonUtils().toLogin();
+        });
+      }else{
+        ///首次进入
+
+      }
     }
   }
 

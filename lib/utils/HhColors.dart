@@ -63,6 +63,7 @@ class HhColors {
   static const discoverDiscuss = Color(0xFF00A9DC);
   static const discoverLike = Color(0xFFf01e06);
   static const trans = Color(0x00000000);
+  static const transBlack = Color(0x66000000);
   static const transUn = Color(0x33e8e8e8);
   static const transTextUn = Color(0xaae8e8e8);
   static const transYellow = Color(0x99F5CD5B);

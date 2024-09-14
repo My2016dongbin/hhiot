@@ -94,7 +94,7 @@ class DeviceController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       List<dynamic> newItems = [];
       try{
-        newItems = result["data"]["list"];
+        newItems = result["data"]["list"]??[];
       }catch(e){
         HhLog.e(e.toString());
       }

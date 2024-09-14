@@ -11,6 +11,7 @@ class SPKeys{
   final String socialUsers = 'socialUsers';
   final String posts = 'posts';
 
+  final String second = 'second';
   final String token = 'token';
   final String tenant = 'tenant';
   final String tenantName = 'tenantName';

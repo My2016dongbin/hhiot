@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
+import 'package:flutter_baidu_mapapi_search/flutter_baidu_mapapi_search.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,8 @@ import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../utils/EventBusUtils.dart';
@@ -36,6 +39,7 @@ class MainController extends GetxController {
   final Rx<String> temp = '23'.obs;
   final Rx<String> icon = '305'.obs;
   final Rx<bool> iconStatus = false.obs;
+  final Rx<String> locText = '定位中...'.obs;
   final Rx<String> text = '多云'.obs;
   final Rx<String> count = '0'.obs;
   final Rx<bool> searchDown = true.obs;
@@ -52,14 +56,22 @@ class MainController extends GetxController {
     ..setBackgroundColor(HhColors.trans);
   late bool _suc;
   late List<dynamic> newItems = [];
+  late Rx<bool> secondStatus = true.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    secondStatus.value = prefs.getBool(SPKeys().second) == true;
     //接受定位回调
     _myLocPlugin.seriesLocationCallback(callback: (BaiduLocation result) {
       HhLog.d('BaiduLocation -> ${result.longitude},${result.latitude}');
       CommonData.longitude = result.longitude;
       CommonData.latitude = result.latitude;
+      latitude.value = CommonData.latitude;
+      longitude.value = CommonData.longitude;
+
+      locSearch();
+
     });
     //定位
     location();
@@ -368,5 +380,28 @@ class MainController extends GetxController {
         continue;
       }
     }
+  }
+
+  Future<void> locSearch() async {
+    // 构造检索参数
+    BMFReverseGeoCodeSearchOption reverseGeoCodeSearchOption =
+    BMFReverseGeoCodeSearchOption(
+        location: BMFCoordinate(latitude.value!, longitude.value!));
+    // 检索实例
+    BMFReverseGeoCodeSearch reverseGeoCodeSearch = BMFReverseGeoCodeSearch();
+    // 逆地理编码回调
+    reverseGeoCodeSearch.onGetReverseGeoCodeSearchResult(callback:
+        (BMFReverseGeoCodeSearchResult result,
+        BMFSearchErrorCode errorCode) {
+      HhLog.d("逆地理编码  errorCode = $errorCode, result = ${result.toMap()}");
+      List<BMFPoiInfo> ?poiList = result.poiList;
+      if(poiList!=null && poiList.isNotEmpty){
+        locText.value = CommonUtils().parseNull("${poiList[0].name}", "定位中..");
+      }else{
+        locText.value = CommonUtils().parseNull("${result.address}", "定位中..");
+      }
+    });
+    /// 发起检索
+    bool flag = await reverseGeoCodeSearch.reverseGeoCodeSearch(reverseGeoCodeSearchOption);
   }
 }
