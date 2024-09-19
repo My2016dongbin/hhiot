@@ -90,7 +90,7 @@ class DeviceController extends GetxController {
     map['pageSize'] = '$pageSize';
     map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
-    HhLog.d("deviceList -- $result");
+    HhLog.d("deviceList --- $pageKey , $result");
     if(result["code"]==0 && result["data"]!=null){
       List<dynamic> newItems = [];
       try{

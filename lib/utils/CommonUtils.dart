@@ -43,6 +43,27 @@ class CommonUtils{
     time = time.replaceAll("T", " ");
     return time;
   }
+  String parseLongTimeHourMinute(String s){
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+    String time = date.toIso8601String();
+    time = time.substring(11,16);
+    time = time.replaceAll("T", " ");
+    return time;
+  }
+  String parseLongTimeYearDay(String s){
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+    String time = date.toIso8601String();
+    time = time.substring(0,10);
+    time = time.replaceAll("T", " ");
+    return time;
+  }
+  String parseLongTimeDay(String s){
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+    String time = date.toIso8601String();
+    time = time.substring(5,10);
+    time = time.replaceAll("T", " ").replaceAll("-", "/");
+    return time;
+  }
   String msgString(String s){
     s = s.substring(s.indexOf(':')+1,s.length);
     return s;

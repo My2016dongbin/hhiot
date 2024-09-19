@@ -5,6 +5,8 @@
         android:label="${APP_NAME}"
         android:name=".MyApplication"
         android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:largeHeap="true"
         xmlns:tools="http://schemas.android.com/tools"
         tools:replace="android:icon"
         tools:ignore="GoogleAppIndexingWarning">

@@ -1,6 +1,9 @@
+import 'package:easy_refresh/easy_refresh.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
@@ -11,6 +14,7 @@ class MessageController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
   final title = "消息".obs;
+  final Rx<bool> pageStatus = true.obs;
   final Rx<bool> tabStatus = false.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<String> warnCount = "99+".obs;
@@ -23,11 +27,20 @@ class MessageController extends GetxController {
   late int pageNumLeft = 1;
   late int pageNumRight = 1;
   late int pageSize = 20;
+  late TextEditingController deviceNameController = TextEditingController();
+  List<String> dateListLeft = [];
+  List<String> dateListRight = [];
+  final Rx<int> chooseListLeftNumber = 0.obs;
+  final Rx<int> chooseListRightNumber = 0.obs;
+  List<String> chooseListLeft = [];
+  List<String> chooseListRight = [];
+  final Rx<bool> editLeft = false.obs;
+  final Rx<bool> editRight = false.obs;
 
   @override
   void onInit() {
-    fetchPageDevice(pageNumLeft);
-    fetchPageWarn(pageNumRight);
+    fetchPageLeft(1);
+    fetchPageRight(1);
     super.onInit();
   }
 
@@ -91,40 +104,47 @@ class MessageController extends GetxController {
     }
   }
 
-  Future<void> fetchPageWarn(int pageKey) async {
+  Future<void> fetchPageRight(int pageKey) async {
     Map<String, dynamic> map = {};
-    map['messageType'] = '2';
+    map['pageNo'] = pageKey;
+    map['pageSize'] = pageSize;
     var result = await HhHttp()
         .request(RequestUtils.message, method: DioMethod.get, params: map);
-    HhLog.d("fetchPageWarn -- $result");
+    // HhLog.d("fetchPageRight --  ${RequestUtils.message}");
+    // HhLog.d("fetchPageRight --  $map");
+    // HhLog.d("fetchPageRight --  ${CommonData.token}");
+    HhLog.d("fetchPageRight --  $pageKey , $result");
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = result["data"]["list"];
 
-      if (pageNumRight == 1) {
+      if (pageKey == 1) {
         warnController.itemList = [];
+        chooseListRight = [];
+        chooseListRightNumber.value = 0;
       }
       warnController.appendLastPage(newItems);
-      //fetchPageWarnFuck(pageKey);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
-  Future<void> fetchPageDevice(int pageKey) async {
+  Future<void> fetchPageLeft(int pageKey) async {
     Map<String, dynamic> map = {};
-    // map['messageType'] = '1';
+    map['pageNo'] = pageKey;
+    map['pageSize'] = pageSize;
     var result = await HhHttp()
         .request(RequestUtils.message, method: DioMethod.get, params: map);
-    HhLog.d("fetchPageDevice -- $result");
+    HhLog.d("fetchPageLeft --  $pageKey , $result");
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = result["data"]["list"];
 
-      if (pageNumLeft == 1) {
+      if (pageKey == 1) {
         deviceController.itemList = [];
+        chooseListLeft = [];
+        chooseListLeftNumber.value = 0;
       }
       deviceController.appendLastPage(newItems);
-      //fetchPageDeviceFuck(pageKey);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
