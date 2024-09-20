@@ -1,20 +1,12 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:iot/pages/common/model/model_class.dart';
-import 'package:iot/pages/common/share/share_binding.dart';
-import 'package:iot/pages/common/share/share_view.dart';
-import 'package:iot/pages/home/device/add/device_add_binding.dart';
-import 'package:iot/pages/home/device/add/device_add_view.dart';
-import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/device_detail_view.dart';
-import 'package:iot/pages/home/device/device_view.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
-import 'package:iot/pages/home/device/list/device_list_controller.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/space/manage/space_manage_controller.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
@@ -51,7 +43,7 @@ class SpaceManagePage extends StatelessWidget {
                   margin: EdgeInsets.only(top: 90.w),
                   color: HhColors.trans,
                   child: Text(
-                    "空间管理",
+                    "管理空间",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
                         fontSize: 30.sp,
@@ -114,12 +106,12 @@ class SpaceManagePage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 30.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(50.w))),
                     child: Center(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Container(
+                          /*Container(
                             margin: EdgeInsets.fromLTRB(0, 3.w, 6.w, 0),
                             child: Image.asset(
                               "assets/images/common/icon_add_space.png",
@@ -127,9 +119,9 @@ class SpaceManagePage extends StatelessWidget {
                               height: 30.w,
                               fit: BoxFit.fill,
                             ),
-                          ),
+                          ),*/
                           Text(
-                            "新增空间",
+                            "添加新空间",
                             style: TextStyle(
                               color: HhColors.whiteColor,
                               fontSize: 30.sp,),
@@ -159,21 +151,16 @@ class SpaceManagePage extends StatelessWidget {
           logic.pageNum++;
           logic.getSpaceList(logic.pageNum);
         },
-        child: PagedGridView<int, dynamic>(
+        child: PagedListView<int, dynamic>(
           padding: EdgeInsets.zero,
-            pagingController: logic.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<dynamic>(
-              itemBuilder: (context, item, index) =>
-                  gridItemView(context, item, index),
-              noItemsFoundIndicatorBuilder:  (context) =>
-                  CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无空间数据',mid: 50.w,top: 0.4.sw,
-                    height: 0.32.sw,
-                    width: 0.6.sw,),
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, //横轴三个子widget
-                childAspectRatio: 1.3 //宽高比为1时，子widget
-            )),
+          pagingController: logic.pagingController,
+          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+              height: 0.32.sw,
+              width: 0.6.sw,),
+            itemBuilder: (context, item, index) => gridItemView(context, item, index),
+          ),
+        ),
       ),
     );
   }
@@ -184,69 +171,93 @@ class SpaceManagePage extends StatelessWidget {
         onTap: (){
           Get.to(()=>DeviceListPage(id: "${item['id']}",),binding: DeviceListBinding());
         },
-      child: Container(
-        clipBehavior: Clip.hardEdge, //裁剪
-        margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
-        decoration: BoxDecoration(
-            color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(32.w))),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: 0.25.sw,
-              decoration: BoxDecoration(
-                  color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
-              child: Image.asset(
-                "assets/images/common/test_video.jpg",
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "${item['name']}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: HhColors.blackColor,
-                        fontSize: 30.sp,),
-                    ),
-                  ),
-                  SizedBox(width: 8.w,),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(30.w, 20.w, 30.w, 0),
+            padding: EdgeInsets.fromLTRB(30.w, 20.w, 30.w, 20.w),
+            clipBehavior: Clip.hardEdge, //裁剪
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ///空间名
+                Container(
+                  margin: EdgeInsets.only(bottom: 30.w),
+                  child: Row(
                     children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                        decoration: BoxDecoration(
-                            color: HhColors.grayEFBackColor,
-                            borderRadius: BorderRadius.all(Radius.circular(8.w))
-                        ),
-                        child: Text(
-                          "${item['deviceCount']}个设备",
-                          style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                        ),
+                      Text(
+                        "${item['name']}",
+                        style: TextStyle(
+                          color: HhColors.blackColor,
+                          fontSize: 30.sp,
+                        fontWeight: FontWeight.bold),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      Text(
+                        "修改",
+                        style: TextStyle(
+                          color: HhColors.mainBlueColor,
+                          fontSize: 26.sp,),
                       ),
                     ],
                   ),
-                  item['deviceCount']==0?const SizedBox():Image.asset(
-                    "assets/images/common/icon_red.png",
-                    width: 30.w,
-                    height: 30.w,
-                    fit: BoxFit.fill,
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+                ///设备列表
+
+                Container(
+                  color: HhColors.grayAATextColor,
+                  height: 0.5.w,
+                  width: 1.sw,
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 25.w, 0, 20.w),
+                  child: Row(
+                    children: [
+                      Text(
+                        "高塔一体机",
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 26.sp,
+                            fontWeight: FontWeight.w200),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      Text(
+                        "修改",
+                        style: TextStyle(
+                          color: HhColors.mainBlueColor,
+                          fontSize: 26.sp,),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          ///删除空间
+          Container(
+            height: 1.w,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(1.w)
+            ),
+            margin: EdgeInsets.fromLTRB(40.w, 0, 40.w, 0),
+                  child: DottedDashedLine(height: 0, width: 1.sw, axis: Axis.horizontal,dashColor: HhColors.grayDDTextColor,),
+                ),
+          Container(
+            width: 1.sw,
+            height: 100.w,
+            margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+            child: Center(child: Text('删除空间',style: TextStyle(color: HhColors.mainRedColor,fontSize: 26.sp),)),
+          ),
+        ],
       ),
     );
   }

@@ -17,6 +17,7 @@ import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
+import 'package:overlay_tooltip/overlay_tooltip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -57,6 +58,7 @@ class MainController extends GetxController {
   late bool _suc;
   late List<dynamic> newItems = [];
   late Rx<bool> secondStatus = true.obs;
+  final TooltipController tipController = TooltipController();
 
   @override
   Future<void> onInit() async {

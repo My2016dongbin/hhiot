@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -11,7 +7,6 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
-import 'package:pinput/pinput.dart';
 
 class SpaceManageController extends GetxController {
   final Rx<bool> testStatus = true.obs;

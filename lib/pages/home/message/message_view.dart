@@ -150,7 +150,14 @@ class MessagePage extends StatelessWidget {
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.0,
                           onPressed: (){
-                            EventBusUtil.getInstance().fire(HhToast(title: '已全部标记为已读',type: 0));
+                            CommonUtils().showDeleteDialog(context, "确定要删除所选消息记录？", (){
+                              Get.back();
+                            }, (){
+                              EventBusUtil.getInstance().fire(HhToast(title: '已全部标记为已读',type: 0));
+                              Get.back();
+                            },(){
+                            Get.back();
+                            },leftStr: "取消",rightStr: "删除");
                           },
                           child: Image.asset(
                             "assets/images/common/icon_clear_message.png",
@@ -210,7 +217,7 @@ class MessagePage extends StatelessWidget {
                 children: [
                   SizedBox(width: 20.w,),
                   Container(
-                    width: 260.w,
+                    width: 280.w,
                       padding:EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.w),

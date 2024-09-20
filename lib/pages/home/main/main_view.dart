@@ -7,6 +7,7 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
@@ -17,6 +18,9 @@ import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
+import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
+import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
+import 'package:iot/pages/home/space/manage/space_manage_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
@@ -24,6 +28,7 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/SPKeys.dart';
+import 'package:overlay_tooltip/overlay_tooltip.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'main_controller.dart';
@@ -37,16 +42,34 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logic.context = context;
-    return Scaffold(
-      backgroundColor: HhColors.backColor,
-      body: Obx(
-        () => Container(
-          height: 1.sh,
-          width: 1.sw,
-          padding: EdgeInsets.zero,
-          child: logic.secondStatus.value?(logic.pageMapStatus.value ? mapPage() : containPage()) : firstPage(),
+    return OverlayTooltipScaffold(
+      overlayColor: Colors.red.withOpacity(.4),
+      tooltipAnimationCurve: Curves.linear,
+      tooltipAnimationDuration: const Duration(milliseconds: 1000),
+      controller: logic.tipController,
+      preferredOverlay: GestureDetector(
+        onTap: () {
+          logic.tipController.dismiss();
+        },
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          color: HhColors.mainGrayColor,
         ),
       ),
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: HhColors.backColor,
+          body: Obx(
+                () => Container(
+              height: 1.sh,
+              width: 1.sw,
+              padding: EdgeInsets.zero,
+              child: logic.secondStatus.value?(logic.pageMapStatus.value ? mapPage() : containPage()) : firstPage(),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -340,17 +363,54 @@ class MainPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: (){
-                        //Get.to(()=>SharePage(),binding: ShareBinding());
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
+                        logic.tipController.start();
                       },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
-                        child: Image.asset(
-                          "assets/images/common/icon_menu.png",
-                          width: 50.w,
-                          height: 50.w,
-                          fit: BoxFit.fill,
+                      child: OverlayTooltipItem(
+                        displayIndex: 0,
+                        tooltip: (controller) {
+                          return BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: (){
+                              logic.tipController.dismiss();
+                              Get.to(() => SpaceManagePage(),
+                                  binding: SpaceManageBinding());
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(right: 30.w),
+                              padding: EdgeInsets.fromLTRB(36.w, 38.w, 23.w, 38.w),
+                              decoration: BoxDecoration(
+                                  color: HhColors.whiteColor,
+                                  borderRadius: BorderRadius.circular(26.w)
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 26.w,fontWeight: FontWeight.w200),),
+                                  SizedBox(width: 30.w,),
+                                  Image.asset(
+                                    "assets/images/common/ic_setting.png",
+                                    width: 30.w,
+                                    height: 30.w,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                          child: Image.asset(
+                            "assets/images/common/icon_menu.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     )
@@ -774,20 +834,55 @@ class MainPage extends StatelessWidget {
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.2,
                           onPressed: (){
-                            //Get.to(()=>SharePage(),binding: ShareBinding());
+                            logic.tipController.start();
                           },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
-                            clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                              color: HhColors.trans,
-                              borderRadius: BorderRadius.all(Radius.circular(20.w))
-                            ),
-                            child: Image.asset(
-                              "assets/images/common/icon_menu.png",
-                              width: 55.w,
-                              height: 50.w,
-                              fit: BoxFit.fill,
+                          child: OverlayTooltipItem(
+                            displayIndex: 0,
+                            tooltip: (controller) {
+                              return BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: (){
+                                  logic.tipController.dismiss();
+                                  Get.to(() => SpaceManagePage(),
+                                      binding: SpaceManageBinding());
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 30.w),
+                                  padding: EdgeInsets.fromLTRB(36.w, 38.w, 23.w, 38.w),
+                                  decoration: BoxDecoration(
+                                    color: HhColors.whiteColor,
+                                    borderRadius: BorderRadius.circular(26.w)
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 26.w,fontWeight: FontWeight.w200),),
+                                      SizedBox(width: 30.w,),
+                                      Image.asset(
+                                        "assets/images/common/ic_setting.png",
+                                        width: 30.w,
+                                        height: 30.w,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: HhColors.trans,
+                                borderRadius: BorderRadius.all(Radius.circular(20.w))
+                              ),
+                              child: Image.asset(
+                                "assets/images/common/icon_menu.png",
+                                width: 55.w,
+                                height: 50.w,
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         )
@@ -921,9 +1016,9 @@ class MainPage extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(50.w))),
         child: Center(
           child: Text(
-            "没有我的空间？去添加",
+            "添加新空间",
             textAlign: TextAlign.center,
-            style: TextStyle(color: HhColors.grayEEBackColor, fontSize: 26.sp),
+            style: TextStyle(color: HhColors.grayEEBackColor, fontSize: 28.sp),
           ),
         ),
       ),

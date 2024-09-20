@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -187,65 +188,146 @@ class CommonUtils{
         child: Container(
           height: hint==null?240.w:270.w,
           margin: EdgeInsets.fromLTRB(0.15.sw, 0, 0.15.sw, 0),
-          child: Card(
-            margin: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14.w))),
+          decoration: BoxDecoration(
             color: HhColors.whiteColor,
-            //shadowColor: HhColors.lineColor,
-            elevation: 5,
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment:Alignment.center,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 60.w),
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("$title",style: TextStyle(color: HhColors.titleColor_99,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
-                        Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
-                        Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
-                      ],
-                    ),
+              borderRadius: BorderRadius.all(Radius.circular(14.w)),
+          ),
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment:Alignment.center,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 60.w),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("$title",style: TextStyle(color: HhColors.gray5TextColor,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
+                      Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
+                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
+                    ],
                   ),
                 ),
-                Align(
-                  alignment:Alignment.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 15.w),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: CommonButton(
-                            height: 65.w,
-                            fontSize: 26.sp,
-                            backgroundColor: HhColors.whiteColor,
-                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
-                            solid:true,
-                            borderRadius: 35.w,
-                            solidColor: HhColors.grayEDBackColor,
-                            textColor: HhColors.titleColor_99,
-                            text: leftStr??"取消", onPressed: leftClick,
-                          ),
+              ),
+              Align(
+                alignment:Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 15.w),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: CommonButton(
+                          height: 65.w,
+                          fontSize: 26.sp,
+                          backgroundColor: HhColors.whiteColor,
+                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                          solid:true,
+                          borderRadius: 35.w,
+                          solidColor: HhColors.grayEDBackColor,
+                          textColor: HhColors.titleColor_99,
+                          text: leftStr??"取消", onPressed: leftClick,
                         ),
-                        Expanded(
-                          child: CommonButton(
-                            height: 65.w,
-                            fontSize: 26.sp,
-                            backgroundColor: HhColors.mainBlueColor,
-                            margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
-                            borderRadius: 35.w,
-                            textColor: HhColors.whiteColor,
-                            text: rightStr??"确定", onPressed: rightClick,
-                          ),
+                      ),
+                      Expanded(
+                        child: CommonButton(
+                          height: 65.w,
+                          fontSize: 26.sp,
+                          backgroundColor: HhColors.mainBlueColor,
+                          margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
+                          borderRadius: 35.w,
+                          textColor: HhColors.whiteColor,
+                          text: rightStr??"确定", onPressed: rightClick,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }, );
+  }
+  ///通用Dialog（取消/确认）
+  showDeleteDialog(context,title,leftClick,rightClick,closeClick,{String? leftStr,String? rightStr,String? hint}){
+    showCupertinoDialog(context: context, builder: (BuildContext context) {
+      return Center(
+        child: Container(
+          height: hint==null?260.w:290.w,
+          margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 0),
+          decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(20.w)),
+          ),
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment:Alignment.center,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 60.w),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("$title",style: TextStyle(color: HhColors.gray4TextColor,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
+                      Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
+                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment:Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 25.w),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: CommonButton(
+                          height: 75.w,
+                          fontSize: 26.sp,
+                          backgroundColor: HhColors.whiteColor,
+                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                          solid:true,
+                          borderRadius: 16.w,
+                          solidColor: HhColors.grayEDBackColor,
+                          textColor: HhColors.gray6TextColor,
+                          text: leftStr??"取消", onPressed: leftClick,
+                        ),
+                      ),
+                      Expanded(
+                        child: CommonButton(
+                          height: 75.w,
+                          fontSize: 26.sp,
+                          backgroundColor: HhColors.whiteColor,
+                          margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
+                          solid:true,
+                          borderRadius: 16.w,
+                          solidColor: HhColors.mainRedColor,
+                          textColor: HhColors.mainRedColor,
+                          text: rightStr??"确定", onPressed: rightClick,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: closeClick,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 30.w, 36.w, 0),
+                    child: Image.asset('assets/images/common/ic_x.png',fit: BoxFit.fill,
+                      height: 30.w,
+                      width: 30.w,),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       );

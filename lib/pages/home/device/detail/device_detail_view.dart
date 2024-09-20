@@ -4,6 +4,7 @@ import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_audio_waveforms/flutter_audio_waveforms.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -15,8 +16,6 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
-import 'package:iot/utils/SPKeys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
@@ -459,6 +458,7 @@ class DeviceDetailPage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   BouncingWidget(
                     duration: const Duration(milliseconds: 100),
@@ -473,42 +473,48 @@ class DeviceDetailPage extends StatelessWidget {
 
                       }
                     },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          "assets/images/common/ic_video.png",
-                          width: 130.w,
-                          height: 130.w,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          logic.videoTag.value?'正在录像':'录像',
-                          style: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 23.sp),
-                        )
-                      ],
+                    child: Container(
+                      margin: EdgeInsets.only(left: 30.w),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/images/common/ic_video.png",
+                            width: 130.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,
+                          ),
+                          Text(
+                            logic.videoTag.value?'正在录像':'录像',
+                            style: TextStyle(
+                                color: HhColors.gray9TextColor, fontSize: 23.sp),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
                     onPressed: () {},
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          "assets/images/common/ic_picture.png",
-                          width: 130.w,
-                          height: 130.w,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          '截图',
-                          style: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 23.sp),
-                        )
-                      ],
+                    child: Container(
+                      margin: EdgeInsets.only(left: 30.w),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/images/common/ic_picture.png",
+                            width: 130.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,
+                          ),
+                          Text(
+                            '截图',
+                            style: TextStyle(
+                                color: HhColors.gray9TextColor, fontSize: 23.sp),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   BouncingWidget(
@@ -525,24 +531,40 @@ class DeviceDetailPage extends StatelessWidget {
                         logic.chatClose();
                       }
                     },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          "assets/images/common/ic_yy.png",
-                          width: 130.w,
-                          height: 130.w,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          logic.recordTag.value?'正在对讲':'对讲',
-                          style: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 23.sp),
-                        )
-                      ],
+                    child: Container(
+                      margin: EdgeInsets.only(left: 30.w),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          logic.recordTag.value?Container(
+                              width: 230.w,
+                              height: 80.w,
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: HhColors.whiteColor,
+                                borderRadius: BorderRadius.circular(20.w)
+                              ),
+                              child:  PolygonWaveform(
+                                samples: [1,2,3,444,9999,66,89,6,4,999999,13120],
+                                height: 230.w,
+                                width: 80.w,
+                              )):const SizedBox(),
+                          Image.asset(
+                            logic.recordTag.value?"assets/images/common/ic_yy_ing.png":"assets/images/common/ic_yy.png",
+                            width: 130.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,
+                          ),
+                          Text(
+                            logic.recordTag.value?'正在对讲':'对讲',
+                            style: TextStyle(
+                                color: logic.recordTag.value?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: 23.sp),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                  BouncingWidget(
+                  /*BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
                     onPressed: () {
@@ -574,7 +596,7 @@ class DeviceDetailPage extends StatelessWidget {
                   ),
                   SizedBox(
                     width: 20.w,
-                  ),
+                  ),*/
                   logic.productName.value != '浩海智慧立杆'
                       ? const SizedBox()
                       : BouncingWidget(
@@ -584,21 +606,24 @@ class DeviceDetailPage extends StatelessWidget {
                             Get.to(() => LiGanDetailPage(logic.deviceNo, logic.id),
                                 binding: LiGanDetailBinding());
                           },
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Image.asset(
-                                "assets/images/common/icon_setting_video.png",
-                                width: 130.w,
-                                height: 130.w,
-                                fit: BoxFit.fill,
-                              ),
-                              Text(
-                                '设置',
-                                style: TextStyle(
-                                    color: HhColors.gray9TextColor, fontSize: 23.sp),
-                              )
-                            ],
+                          child: Container(
+                            margin: EdgeInsets.only(left: 30.w),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/icon_setting_video.png",
+                                  width: 130.w,
+                                  height: 130.w,
+                                  fit: BoxFit.fill,
+                                ),
+                                Text(
+                                  '设置',
+                                  style: TextStyle(
+                                      color: HhColors.gray9TextColor, fontSize: 23.sp),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                 ],
