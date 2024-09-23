@@ -10,6 +10,7 @@ class CommonData{
   static String ?tenantDef = personal?'1':null;
   static String ?deviceNo;
   static String ?sessionId;
+  static String ?endpoint;
 
   static String info = "";
 }

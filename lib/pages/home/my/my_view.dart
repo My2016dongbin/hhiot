@@ -248,7 +248,7 @@ class MyPage extends StatelessWidget {
                                       child: Container(
                                         margin: EdgeInsets.fromLTRB(130.w, 45.w, 0.w, 0.w),
                                         child: Text(
-                                          "设备管理",
+                                          "智能设备",
                                           style: TextStyle(
                                               color: HhColors.gray9TextColor,
                                               fontSize: 23.sp),

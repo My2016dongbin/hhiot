@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  static const base = 'http://172.16.50.87:10008';//debug
-  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  // static const base = 'http://172.16.50.87:10008';//debug
+  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
@@ -18,7 +18,8 @@ class RequestUtils{
   static const unReadCount = '$base/admin-api/system/message-log/getUnReadMessageCount';//主页未读消息数量查询
   static const mainSpaceList = '$base/admin-api/mid/space/page';//主页空间列表
   static const spaceCreate = '$base/admin-api/mid/space/create';//添加空间
-  static const message = '$base/admin-api/system/message-log/page';//主页-消息-设备信息&&报警信息查询
+  static const message = '$base/admin-api/system/message-log/page';//主页-消息-通知信息查询
+  static const messageAlarm = '$base/admin-api/mid/device-alarm-info/page';//主页-消息-报警信息查询
   static const spaceInfo = '$base/admin-api/mid/space/get';//主页-空间-空间信息
   static const deviceInfo = '$base/admin-api/mid/device-base/get';//设备详情
   static const deviceConfig = '$base/admin-api/mid/device-config/get';//设备配置
@@ -39,6 +40,10 @@ class RequestUtils{
   static const codeCheckPersonal = '$base/admin-api/system/captcha/check';//校验验证码
   static const codeCheckChangePhone = '$base/admin-api/system/user/update-mobile';//修改手机号
   static const videoControl = '$base/admin-api/mid/videoAggregation/deviceControl';//视频控制
+  static const leftRead = '$base/admin-api/mid/device-alarm-info/batchRead';//报警批量已读
+  static const leftDelete = '$base/admin-api/mid/device-alarm-info/batchDelete';//报警批量删除
+  static const rightRead = '$base/admin-api/system/message-log/batchRead';//通知批量已读
+  static const rightDelete = '$base/admin-api/system/message-log/batchDelete';//通知批量删除
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET

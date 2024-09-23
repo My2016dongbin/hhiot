@@ -1181,9 +1181,9 @@ class MainPage extends StatelessWidget {
                       scaleFactor: 1.2,
                       onPressed: () async {
                         logic.secondStatus.value = true;
-                        //TODO 初次进入设置
-                        // final SharedPreferences prefs = await SharedPreferences.getInstance();
-                        // await prefs.setBool(SPKeys().second, true);
+                        /// 初次进入设置
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool(SPKeys().second, true);
                       },
                       child: Container(
                         padding: EdgeInsets.fromLTRB(30.w, 5.w, 30.w, 8.w),

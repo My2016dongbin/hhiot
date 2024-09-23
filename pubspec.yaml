@@ -65,6 +65,7 @@ dependencies:
 #  slide_to_act: ^2.0.2 滑动解锁
 #  speech_to_text: ^6.6.2 语音转文字
 
+  date_picker_plus: ^4.1.0 #日历
   flutter_audio_waveforms: ^1.2.1+8 #wave
   dotted_dashed_line: ^0.0.3 #虚线
   overlay_tooltip: ^0.2.3 #tips

@@ -57,6 +57,7 @@ class LaunchController extends GetxController {
           SPKeys().socialUsers, '${result["data"]["socialUsers"]}');
       await prefs.setString(SPKeys().posts, '${result["data"]["posts"]}');
 
+      CommonData.endpoint = prefs.getString(SPKeys().endpoint);
       Future.delayed(const Duration(seconds: 2), () {
         Get.off(() => HomePage(), binding: HomeBinding());
       });

@@ -56,7 +56,7 @@ class DeviceManagePage extends StatelessWidget {
                   margin: EdgeInsets.only(top:90.w),
                   color: HhColors.trans,
                   child: Text(
-                    "设备管理",
+                    "智能设备",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
                         fontSize: 30.sp,fontWeight: FontWeight.bold),
