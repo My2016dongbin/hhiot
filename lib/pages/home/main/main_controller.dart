@@ -34,6 +34,7 @@ class MainController extends GetxController {
   BMFMapController? controller;
   StreamSubscription? pushTouchSubscription;
   StreamSubscription? spaceListSubscription;
+  StreamSubscription? deviceListSubscription;
   final Rx<bool> searchStatus = false.obs;
   final Rx<bool> videoStatus = false.obs;
   final Rx<bool> pageMapStatus = false.obs;
@@ -44,6 +45,9 @@ class MainController extends GetxController {
   final Rx<String> text = '多云'.obs;
   final Rx<String> count = '0'.obs;
   final Rx<bool> searchDown = true.obs;
+  final Rx<bool> spaceListStatus = true.obs;
+  late List<dynamic> spaceList = [];
+  final Rx<int> spaceListIndex = 0.obs;
   TextEditingController? searchController = TextEditingController();
   final PagingController<int, dynamic> pagingController =
   PagingController(firstPageKey: 1);
@@ -92,6 +96,11 @@ class MainController extends GetxController {
     spaceListSubscription =
         EventBusUtil.getInstance().on<SpaceList>().listen((event) {
           getSpaceList(1);
+        });
+    deviceListSubscription =
+        EventBusUtil.getInstance().on<DeviceList>().listen((event) {
+          pageNum = 1;
+          getDeviceList(1);
         });
     // pagingController.addPageRequestListener((pageKey) {
     //   // fetchPage(pageKey);
@@ -294,15 +303,41 @@ class MainController extends GetxController {
         method: DioMethod.get, params: map);
     HhLog.d("getSpaceList -- $result");
     if (result["code"] == 0 && result["data"] != null) {
-      List<dynamic> newItems = result["data"]["list"];
-      HhLog.d("getSpaceList newItems.length -- ${newItems.length}");
-      if (pageNum == 1) {
-        pagingController.itemList = [];
-      }
-      pagingController.appendLastPage(newItems);
+      spaceList = result["data"]["list"]??[];
+      spaceListStatus.value = false;
+      spaceListStatus.value = true;
+
+      getDeviceList(1);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  Future<void> getDeviceList(int pageKey) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['spaceId'] = spaceList[spaceListIndex.value]['id'];
+    map['pageNo'] = '$pageKey';
+    map['pageSize'] = '$pageSize';
+    map['activeStatus'] = '-1';
+    var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("deviceList --- $pageKey , $result");
+    if(result["code"]==0 && result["data"]!=null){
+      List<dynamic> newItems = [];
+      try{
+        newItems = result["data"]["list"]??[];
+      }catch(e){
+        HhLog.e(e.toString());
+      }
+
+      if (pageKey == 1) {
+        pagingController.itemList = [];
+      }
+      pagingController.appendLastPage(newItems);
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -405,5 +440,23 @@ class MainController extends GetxController {
     });
     /// 发起检索
     bool flag = await reverseGeoCodeSearch.reverseGeoCodeSearch(reverseGeoCodeSearchOption);
+  }
+
+  Future<void> deleteDevice(item) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['id'] = '${item['id']}';
+    map['shareMark'] = '${item['shareMark']}';
+    var result = await HhHttp().request(RequestUtils.deviceDelete,method: DioMethod.delete,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("deleteDevice -- $map");
+    HhLog.d("deleteDevice -- $result");
+    if(result["code"]==0 && result["data"]!=null){
+      EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
+      pageNum = 1;
+      getDeviceList(1);
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 }

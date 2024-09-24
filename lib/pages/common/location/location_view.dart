@@ -131,6 +131,10 @@ class LocationPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
+                  logic.locText.value
+                ),
+                SizedBox(height: 20.w,),
+                Text(
                   '经度：${logic.longitude.value}'
                 ),
                 SizedBox(height: 20.w,),

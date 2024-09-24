@@ -1,19 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:flutter_baidu_mapapi_search/flutter_baidu_mapapi_search.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
-import 'package:iot/utils/SPKeys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationController extends GetxController {
   late BuildContext context;
@@ -21,6 +17,7 @@ class LocationController extends GetxController {
   final Rx<bool> pageStatus = false.obs;
   final Rx<double> longitude = 0.0.obs;
   final Rx<double> latitude = 0.0.obs;
+  final Rx<String> locText = ''.obs;
   BMFMapController ?controller;
 
   @override
@@ -51,6 +48,7 @@ class LocationController extends GetxController {
 
       /// 添加Marker
       controller?.addMarker(marker);
+      locSearch();
     });
   }
 
@@ -82,5 +80,29 @@ class LocationController extends GetxController {
 
     /// 添加Marker
     controller?.addMarker(point);
+  }
+
+
+  Future<void> locSearch() async {
+    // 构造检索参数
+    BMFReverseGeoCodeSearchOption reverseGeoCodeSearchOption =
+    BMFReverseGeoCodeSearchOption(
+        location: BMFCoordinate(latitude.value!, longitude.value!));
+    // 检索实例
+    BMFReverseGeoCodeSearch reverseGeoCodeSearch = BMFReverseGeoCodeSearch();
+    // 逆地理编码回调
+    reverseGeoCodeSearch.onGetReverseGeoCodeSearchResult(callback:
+        (BMFReverseGeoCodeSearchResult result,
+        BMFSearchErrorCode errorCode) {
+      HhLog.d("逆地理编码  errorCode = $errorCode, result = ${result.toMap()}");
+      List<BMFPoiInfo> ?poiList = result.poiList;
+      if(poiList!=null && poiList.isNotEmpty){
+        locText.value = CommonUtils().parseNull("${poiList[0].name}", "定位中..");
+      }else{
+        locText.value = CommonUtils().parseNull("${result.address}", "定位中..");
+      }
+    });
+    /// 发起检索
+    bool flag = await reverseGeoCodeSearch.reverseGeoCodeSearch(reverseGeoCodeSearchOption);
   }
 }

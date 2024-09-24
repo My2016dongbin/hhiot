@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -339,7 +340,7 @@ class RegisterPage extends StatelessWidget {
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.2,
                       onPressed: () {
-                        Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
+                        Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
                       },
                       child: Text('《浩海万联平台隐私政策》',
                         style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 21.sp,fontWeight: FontWeight.bold),
@@ -374,8 +375,12 @@ class RegisterPage extends StatelessWidget {
                       EventBusUtil.getInstance().fire(HhToast(title: '请输入验证码'));
                       return;
                     }
-                    if(!logic.confirmStatus.value){
+                    /*if(!logic.confirmStatus.value){
                       EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
+                      return;
+                    }*/
+                    if (!logic.confirmStatus.value) {
+                      showAgreeDialog();
                       return;
                     }
                     Future.delayed(const Duration(milliseconds: 500),(){
@@ -404,6 +409,122 @@ class RegisterPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+
+  void showAgreeDialog() {
+    showCupertinoDialog(
+        context: logic.context,
+        builder: (context) => Center(
+          child: Container(
+            width: 1.sw,
+            height: 335.w,
+            margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+            child: Stack(
+              children: [
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 40.w, 0, 0),
+                        child: Text(
+                          '欢迎使用浩海通行证！',
+                          style: TextStyle(
+                              color: HhColors.textBlackColor,
+                              fontSize: 32.sp,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.bold),
+                        ))),
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(40.w, 135.w, 40.w, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '请您阅读并同意',
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  color: HhColors.grayAATextColor,
+                                  fontSize: 26.sp),
+                            ),
+                            BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: () {
+                                Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
+                              },
+                              child: Text(
+                                '《浩海万联平台隐私政策》',
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: HhColors.mainBlueColor,
+                                    fontSize: 26.sp),
+                              ),
+                            ),
+                          ],
+                        ))),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 10.w, 20.w, 0),
+                        padding: EdgeInsets.all(20.w),
+                        child: Image.asset(
+                          'assets/images/common/ic_x.png',
+                          height: 32.w,
+                          width: 32.w,
+                          fit: BoxFit.fill,
+                        )),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      logic.confirmStatus.value = true;
+                      Navigator.pop(context);
+                      //继续
+                      Future.delayed(const Duration(milliseconds: 500),(){
+                        logic.register();
+                      });
+                    },
+                    child: Container(
+                      width: 1.sw,
+                      height: 90.w,
+                      margin: EdgeInsets.fromLTRB(40.w, 0, 40.w, 30.w),
+                      decoration: BoxDecoration(
+                          color: HhColors.mainBlueColor,
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(16.w))),
+                      child: Center(
+                        child: Text(
+                          "同意并继续",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: HhColors.whiteColor,
+                              fontSize: 28.sp,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w200),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
 }

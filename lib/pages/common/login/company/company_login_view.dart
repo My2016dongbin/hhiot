@@ -250,7 +250,7 @@ class CompanyLoginPage extends StatelessWidget {
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.2,
                       onPressed: () {
-                        Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
+                        Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
                       },
                       child: Text(
                         '《浩海万联平台隐私政策》',
@@ -412,7 +412,7 @@ class CompanyLoginPage extends StatelessWidget {
                                   duration: const Duration(milliseconds: 100),
                                   scaleFactor: 1.2,
                                   onPressed: () {
-                                    Get.to(WebViewPage(title: '隐私协议', url: 'https://www.ygspii.cn/page_agreement_regist.html',));
+                                    Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
                                   },
                                   child: Text(
                                     '《浩海万联平台隐私政策》',

@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  static const base = 'http://172.16.50.87:10008';//debug
-  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  // static const base = 'http://172.16.50.87:10008';//debug
+  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
@@ -30,6 +30,8 @@ class RequestUtils{
   static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceNo';//设备通道查询
   static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrlApp';//设备视频流查询
   static const deviceCreate = '$base/admin-api/mid/device-base/create';//设备添加
+  static const deviceUpdate = '$base/admin-api/mid/device-base/update';//设备修改
+  static const deviceDelete = '$base/admin-api/mid/device-base/delete';//设备删除
   static const deviceList = '$base/admin-api/mid/device-base/page';//设备查询
   static const userEdit = '$base/admin-api/system/user/profile/update';//修改个人信息
   static const mainSearch = '$base/admin-api/mid/space/getListByKeyWord';//主页查询空间设备及消息

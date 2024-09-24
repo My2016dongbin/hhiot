@@ -86,7 +86,12 @@ class WebViewPageState extends State<WebViewPage> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: WebViewWidget(controller: controller),
+      body: Container(
+        width: 1.sw,
+        height: 1.sh,
+          padding: EdgeInsets.all(20.w),
+          child: WebViewWidget(controller: controller,)
+      ),
     );
   }
 }

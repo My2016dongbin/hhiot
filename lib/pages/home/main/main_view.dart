@@ -1,5 +1,6 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/common/share/share_binding.dart';
+import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
@@ -307,7 +310,7 @@ class MainPage extends StatelessWidget {
                       SizedBox(
                         height: 2.w,
                       ),
-                      Container(
+                      /*Container(
                         height: 5.w,
                         width: 20.w,
                         decoration: BoxDecoration(
@@ -315,7 +318,7 @@ class MainPage extends StatelessWidget {
                           border: Border.all(color: HhColors.blackTextColor),
                           borderRadius: BorderRadius.all(Radius.circular(2.w)),
                         ),
-                      )
+                      )*/
                     ],
                   ),
                 ),
@@ -413,7 +416,7 @@ class MainPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -751,42 +754,23 @@ class MainPage extends StatelessWidget {
                 ],
               ),
             ),
-            ///我的空间
+            ///空间列表滚动
             SizedBox(
               height: 100.w,
               child: Stack(
                 children: [
                   Align(
                     alignment: Alignment.bottomLeft,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(40.w, 0, 0, 10.w),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "默认空间",
-                            style: TextStyle(
-                                color: HhColors.blackTextColor,
-                                fontSize: 36.sp,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 2.w,
-                          ),
-                          Container(
-                            height: 5.w,
-                            width: 20.w,
-                            decoration: BoxDecoration(
-                              color: HhColors.blackTextColor,
-                              border:
-                                  Border.all(color: HhColors.blackTextColor),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(2.w)),
-                            ),
-                          )
-                        ],
+                    child: logic.spaceListStatus.value?Container(
+                      margin: EdgeInsets.fromLTRB(40.w, 0, 260.w, 10.w),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: buildSpaces(),
+                        ),
                       ),
-                    ),
+                    ):const SizedBox(),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
@@ -897,21 +881,68 @@ class MainPage extends StatelessWidget {
               child: EasyRefresh(
                 onRefresh: (){
                   logic.pageNum = 1;
-                  logic.getSpaceList(logic.pageNum);
+                  logic.getDeviceList(logic.pageNum);
                 },
                 onLoad: (){
                   logic.pageNum++;
-                  logic.getSpaceList(logic.pageNum);
+                  logic.getDeviceList(logic.pageNum);
                 },
                 child: PagedGridView<int, dynamic>(
                     pagingController: logic.pagingController,
+                    padding: EdgeInsets.zero,
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
                       itemBuilder: (context, item, index) =>
                           gridItemView(context, item, index),
                       noItemsFoundIndicatorBuilder:  (context) =>
-                          CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无空间数据',mid: 50.w,top: 0.3.sw,
-                            height: 0.32.sw,
-                            width: 0.6.sw,),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: (){
+                                  Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 0),
+                                  padding: EdgeInsets.fromLTRB(25.w, 25.w, 25.w, 25.w),
+                                  width: 1.sw,
+                                  decoration: BoxDecoration(
+                                    color: HhColors.whiteColor,
+                                    borderRadius: BorderRadius.circular(20.w),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/common/ic_camera.png",
+                                        width: 100.w,
+                                        height: 100.w,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      SizedBox(width: 20.w,),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('添加新设备',style: TextStyle(color: HhColors.textBlackColor,fontSize: 30.sp,fontWeight: FontWeight.bold),),
+                                            SizedBox(height: 10.w,),
+                                            Text('按步骤将设备添加到APP',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 26.sp),),
+                                          ],
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        "assets/images/common/icon_go.png",
+                                        width: 30.w,
+                                        height: 30.w,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                     ),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2, //横轴n个子widget
@@ -927,11 +958,11 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  ///我的空间视图-网格列表itemView
+  ///设备列表视图-网格列表itemView
   gridItemView(BuildContext context, dynamic item, int index) {
     return InkWell(
       onTap: (){
-        Get.to(()=>DeviceListPage(id: "${item['id']}",),binding: DeviceListBinding());
+        Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
       },
       child: Container(
         clipBehavior: Clip.hardEdge, //裁剪
@@ -969,7 +1000,7 @@ class MainPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8.w,),
-                  Column(
+                  item["shareMark"]==1 || item["shareMark"]==2 ?Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -980,18 +1011,19 @@ class MainPage extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(8.w))
                         ),
                         child: Text(
-                          "${item['deviceCount']}个设备",
-                          style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
+                          item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
+                          style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 23.sp),
                         ),
                       ),
                     ],
+                  ):const SizedBox(),
+                  item['deviceCount']==0?const SizedBox():InkWell(
+                    onTap: (){
+                      showEditDeviceDialog(item);
+                    },
+                    child: Container(padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
+                        child: Text(':',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 30.sp,fontWeight: FontWeight.bold),)),
                   ),
-                  item['deviceCount']==0?const SizedBox():Image.asset(
-                    "assets/images/common/icon_red.png",
-                    width: 30.w,
-                    height: 30.w,
-                    fit: BoxFit.fill,
-                  )
                 ],
               ),
             )
@@ -1247,5 +1279,167 @@ class MainPage extends StatelessWidget {
 
       ],
     );
+  }
+
+  buildSpaces() {
+    List<Widget> list = [];
+    for(int i = 0;i < logic.spaceList.length;i++){
+      dynamic model = logic.spaceList[i];
+      list.add(
+          InkWell(
+            onTap: (){
+              logic.spaceListIndex.value = i;
+              logic.pageNum = 1;
+              logic.getDeviceList(1);
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 20.w),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "${model['name']}",
+                    style: TextStyle(
+                        color: logic.spaceListIndex.value == i?HhColors.blackTextColor:HhColors.gray9TextColor,
+                        fontSize: logic.spaceListIndex.value == i?36.sp:30.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 2.w,
+                  ),
+                  logic.spaceListIndex.value == i?Container(
+                    height: 5.w,
+                    width: 20.w,
+                    decoration: BoxDecoration(
+                      color: HhColors.blackTextColor,
+                      border:
+                      Border.all(color: HhColors.blackTextColor),
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(2.w)),
+                    ),
+                  ):const SizedBox(),
+                ],
+              ),
+            ),
+          )
+      );
+    }
+    
+    return list;
+  }
+
+  void showEditDeviceDialog(item) {
+    showCupertinoDialog(context: logic.context, builder: (context) => Center(
+      child: Container(
+        width: 1.sw,
+        height: 160.w,
+        margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+        padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
+        decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(20.w))),
+        child: Row(
+          children: [
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+                  if(item["shareMark"]==1){
+                    return;
+                  }
+                  Get.back();
+                  DateTime date = DateTime.now();
+                  String time = date.toIso8601String().substring(0,19).replaceAll("T", " ");
+                  Get.to(()=>SharePage(),binding: ShareBinding(),arguments: {
+                    "shareType": "2",
+                    "expirationTime": time,
+                    "appShareDetailSaveReqVOList": [
+                      {
+                        "spaceId": "${item["spaceId"]}",
+                        "spaceName": "${item["spaceName"]}",
+                        "deviceId": "${item["id"]}",
+                        "deviceName": "${item["name"]}"
+                      }
+                    ]
+                  });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      item["shareMark"]==1?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('分享',style: TextStyle(color: item["shareMark"]==1?HhColors.grayCCTextColor:HhColors.gray6TextColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 50.w,),
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.back();
+                  Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding(),arguments: item);
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/icon_edit_edit.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('编辑',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 50.w,),
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.back();
+                  CommonUtils().showDeleteDialog(context, '确定要删除该设备吗?', (){
+                    Get.back();
+                  }, (){
+                    Get.back();
+                    logic.deleteDevice(item);
+                  }, (){
+                    Get.back();
+                  });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/icon_edit_delete.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }

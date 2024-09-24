@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_baidu_mapapi_search/flutter_baidu_mapapi_search.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/model/model_class.dart';
+import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/home/device/status/device_status_binding.dart';
 import 'package:iot/pages/home/device/status/device_status_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
@@ -20,13 +22,19 @@ class DeviceAddController extends GetxController {
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 100;
+  final Rx<bool> isEdit = false.obs;//是否为修改页面
+  final Rx<String> location = '点击选择设备定位'.obs;
+  late dynamic model = {};
   late String snCode = '';
   late String spaceId = '';
+  final Rx<String> locText = ''.obs;
   TextEditingController ?snController = TextEditingController();
   TextEditingController ?nameController = TextEditingController();
   List<dynamic> newItems = [];
   StreamSubscription ?spaceListSubscription;
   StreamSubscription ?toastSubscription;
+  final Rx<double?> latitude = CommonData.latitude.obs;
+  final Rx<double?> longitude = CommonData.longitude.obs;
 
   @override
   void onInit() {
@@ -48,34 +56,17 @@ class DeviceAddController extends GetxController {
         snController!.text = snCode;
       }
     });
+
+    HhLog.d("isEdit $model");
+    model = Get.arguments;
+    isEdit.value = model!=null&&model!={};
+    if(isEdit.value){
+      snController!.text = model['deviceNo'];
+      nameController!.text = model['name'];
+    }
     super.onInit();
   }
 
-  void fetchPageDevice(int pageKey) {
-    List<Device> newItems = [
-      Device("大涧林场", "", "", "",true,true),
-      Device("AA林场", "", "", "",false,true),
-      Device("MM林场", "", "", "",false,false),
-      Device("SS林场", "", "", "",false,false),
-      Device("SG林场", "", "", "",false,false),
-      Device("SA林场", "", "", "",false,false),
-      Device("大涧林场", "", "", "",true,true),
-      Device("AA林场", "", "", "",false,true),
-      Device("MM林场", "", "", "",false,false),
-      Device("SS林场", "", "", "",false,false),
-      Device("SG林场", "", "", "",false,false),
-      Device("SA林场", "", "", "",false,false),
-    ];
-    final isLastPage = newItems.length < pageSize;
-    if (isLastPage) {
-      deviceController.appendLastPage(newItems);
-    } else {
-      final nextPageKey = pageKey + newItems.length;
-      deviceController.appendPage(newItems, nextPageKey);
-    }
-
-    ///var result = await HhHttp().request("",method: DioMethod.get,data: {},);
-  }
 
   Future<void> getSpaceList() async {
     Map<String, dynamic> map = {};
@@ -86,6 +77,18 @@ class DeviceAddController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       try{
         newItems = result["data"]["list"];
+        if(newItems.isNotEmpty){
+          spaceId = "${newItems[0]["id"]}";
+        }
+
+        if(isEdit.value){
+          for(int i = 0;i < newItems.length;i++){
+            dynamic m = newItems[i];
+            if(m['id'] == model['spaceId']){
+              index.value = i;
+            }
+          }
+        }
       }catch(e){
         HhLog.e(e.toString());
       }
@@ -108,6 +111,8 @@ class DeviceAddController extends GetxController {
       "deviceNo":snController!.text,
       "name":nameController!.text==''?null:nameController!.text,
       "spaceId":spaceId,
+      "longitude":"${longitude.value}",
+      "latitude":"${latitude.value}",
     });
     HhLog.d("createDevice -- $result");
     if(result["code"]==0 && result["data"]!=null){
@@ -116,6 +121,21 @@ class DeviceAddController extends GetxController {
       EventBusUtil.getInstance().fire(SpaceList());
       EventBusUtil.getInstance().fire(HhToast(title: '添加成功',type: 1));
       // Get.back();
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      addingStatus.value = 2;
+    }
+  }
+
+  Future<void> updateDevice() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    var result = await HhHttp().request(RequestUtils.deviceUpdate,method: DioMethod.put,data: model);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("updateDevice -- $result");
+    if(result["code"]==0 && result["data"]!=null){
+      EventBusUtil.getInstance().fire(HhToast(title: '保存成功',type: 1));
+      EventBusUtil.getInstance().fire(DeviceList());
+      Get.back();
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
       addingStatus.value = 2;
