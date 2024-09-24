@@ -973,15 +973,45 @@ class MainPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
+            SizedBox(
               height: 0.23.sw,
               width: 0.5.sw,
-              decoration: BoxDecoration(
-                  color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
-              child: Image.asset(
-                "assets/images/common/test_video.jpg",
-                fit: BoxFit.fill,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 0.23.sw,
+                    width: 0.5.sw,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                    child: Image.asset(
+                      "assets/images/common/test_video.jpg",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  item['status']==1?const SizedBox():Container(
+                    height: 0.23.sw,
+                    width: 0.5.sw,
+                    decoration: BoxDecoration(
+                        color: HhColors.grayEDBackColor.withAlpha(160),
+                        borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                  ),
+                  item['status']==1?const SizedBox():Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/icon_wifi.png",
+                          width: 60.w,
+                          height: 60.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Text('设备离线',style: TextStyle(color: HhColors.whiteColor,fontSize: 26.sp),)
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
