@@ -22,8 +22,8 @@ class MessageController extends GetxController {
   final Rx<bool> tabStatus = false.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<String> dateStr = "日期".obs;
-  final Rx<String> warnCount = "99+".obs;
-  final Rx<String> noticeCount = "99+".obs;
+  final Rx<String> warnCount = "0".obs;
+  final Rx<String> noticeCount = "0".obs;
   final Rx<String> test = 'test'.obs;
   final PagingController<int, dynamic> deviceController =
       PagingController(firstPageKey: 1);
@@ -37,7 +37,10 @@ class MessageController extends GetxController {
   List<String> dateListRight = [];
   final Rx<int> chooseListLeftNumber = 0.obs;
   final Rx<int> chooseListRightNumber = 0.obs;
-  final RxList<dynamic> spaceList = [].obs;
+  final RxList<dynamic> spaceList = [{
+    "name":"全部",
+    "id":null,
+  }].obs;
   List<num> chooseListLeft = [];
   List<num> chooseListRight = [];
   final Rx<bool> editLeft = false.obs;
@@ -94,7 +97,7 @@ class MessageController extends GetxController {
     // HhLog.d("fetchPageRight --  ${CommonData.token}");
     HhLog.d("fetchPageRight --  $pageKey , $result");
     if (result["code"] == 0 && result["data"] != null) {
-      List<dynamic> newItems = result["data"]["list"];
+      List<dynamic> newItems = result["data"]["list"]??[];
       int number = result["data"]["total"];
       noticeCount.value = number>99?"99+":"$number";
 
@@ -115,10 +118,8 @@ class MessageController extends GetxController {
     map['pageNo'] = pageKey;
     map['pageSize'] = pageSize;
     map['deviceName'] = deviceNameController.text;
-    try{
+    if(spaceList.value!=null && spaceList.value.isNotEmpty && spaceList.value[spaceSelectIndex.value]!=null){
       map['spaceId'] = spaceList.value[spaceSelectIndex.value]["id"];
-    }catch(e){
-      HhLog.e("$e");
     }
     map['alarmType'] = typeList[typeSelectIndex.value]["type"];//openSensor 传感器开箱报警；openCap 箱盖开箱报警；human 人员入侵报警；tilt 设备倾斜报警；car 车辆入侵报警
     if(dateStr.value!="日期"){
@@ -153,7 +154,8 @@ class MessageController extends GetxController {
     HhLog.d("getSpaceList $result");
     if(result["code"]==0 && result["data"]!=null){
       try{
-        List<dynamic> listS =  result["data"]["list"];
+        List<dynamic> listS =  result["data"]["list"]??[];
+        spaceList.value = [];
         spaceList.value.add({
           "name":"全部",
           "id":null,
