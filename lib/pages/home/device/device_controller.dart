@@ -19,12 +19,20 @@ class DeviceController extends GetxController {
   final Rx<bool> tabsTag = true.obs;
   final Rx<bool> testStatus = true.obs;
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
+  StreamSubscription ?spaceListSubscription;
   late int pageNum = 1;
   late int pageSize = 20;
   late List<dynamic> spaceList = [];
 
   @override
   void onInit() {
+
+    spaceListSubscription = EventBusUtil.getInstance()
+        .on<SpaceList>()
+        .listen((event) {
+      pageNum = 1;
+      getSpaceList();
+    });
     getSpaceList();
     super.onInit();
   }

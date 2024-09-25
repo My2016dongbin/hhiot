@@ -3,18 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/share/confirm/confirm_binding.dart';
 import 'package:iot/pages/common/share/confirm/confirm_view.dart';
 import 'package:iot/pages/common/share/share_controller.dart';
 import 'package:iot/pages/home/my/setting/setting_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
+import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+
 class SharePage extends StatelessWidget {
   final logic = Get.find<ShareController>();
-  SharePage({super.key});
 
+  SharePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     // 在这里设置状态栏字体为深色
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏背景色
@@ -24,7 +29,7 @@ class SharePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
-            () => Container(
+        () => Container(
           height: 1.sh,
           width: 1.sw,
           padding: EdgeInsets.zero,
@@ -46,6 +51,7 @@ class SharePage extends StatelessWidget {
                 colors: [HhColors.backColorF5, HhColors.backColorF5]),
           ),
         ),
+
         ///title
         InkWell(
           onTap: () {
@@ -96,35 +102,79 @@ class SharePage extends StatelessWidget {
             ),
           ),
         ),*/
+
         ///菜单
         Container(
           margin: EdgeInsets.fromLTRB(20.w, 180.w, 20.w, 0),
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(20.w))
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(20.w))),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 40.w,),
+                SizedBox(
+                  height: 40.w,
+                ),
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20.w))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
                   child: Image.asset(
-                    "assets/images/common/test_video.jpg",
-                    width: 260.w,
-                    height: 260.w,
+                    "assets/images/common/icon_share_camera.png",
+                    width: 230.w,
+                    height: 230.w,
                     fit: BoxFit.fill,
                   ),
                 ),
                 Container(
+                  margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${logic.arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}',
+                        style: TextStyle(
+                            color: HhColors.blackTextColor, fontSize: 26.sp),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          EventBusUtil.getInstance().fire(HhToast(
+                              title: '分享该设备，您可以输入被分享人的用户名或手机号，在对方同意后该设备则分享成功',
+                              type: 0));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10.w),
+                          child: Image.asset(
+                            "assets/images/common/wenhao.png",
+                            width: 23.w,
+                            height: 23.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30.w, 30.w, 20.w, 20.w),
+                      child: Text(
+                        '请输入被分享人的用户名/手机号',
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 26.sp,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
                   height: 90.w,
-                  margin: EdgeInsets.fromLTRB(20.w, 50.w, 20.w, 0),
+                  margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
                   padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                   decoration: BoxDecoration(
                       color: HhColors.grayEFBackColor,
@@ -136,20 +186,24 @@ class SharePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextField(
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.start,
                           maxLines: 1,
                           cursorColor: HhColors.titleColor_99,
                           controller: logic.nameController,
                           keyboardType: TextInputType.text,
-                          enabled: false,
+                          enabled: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: '${logic.arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}',
+                            hintText: '请输入被分享人的用户名/手机号',
                             hintStyle: TextStyle(
-                                color: HhColors.blackTextColor, fontSize: 26.sp),
+                                color: HhColors.gray9TextColor,
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w500),
                           ),
-                          style:
-                          TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: HhColors.blackTextColor,
+                              fontSize: 26.sp,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       SizedBox(
@@ -158,14 +212,18 @@ class SharePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 30.w,),
+                SizedBox(
+                  height: 30.w,
+                ),
               ],
             ),
           ),
         ),
-        Container(
+
+        ///分享二维码-暂未开放
+        /*Container(
           width: 1.sw,
-          margin: EdgeInsets.fromLTRB(20.w, 680.w, 20.w, 0),
+          margin: EdgeInsets.fromLTRB(20.w, 750.w, 20.w, 0),
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: HhColors.whiteColor,
@@ -191,8 +249,7 @@ class SharePage extends StatelessWidget {
               ],
             ),
           ),
-        ),
-
+        ),*/
 
         Align(
           alignment: Alignment.bottomCenter,
@@ -203,15 +260,28 @@ class SharePage extends StatelessWidget {
             color: HhColors.grayDDTextColor,
           ),
         ),
+
         ///分享完成按钮
         Align(
           alignment: Alignment.bottomCenter,
-          child:
-          BouncingWidget(
+          child: BouncingWidget(
             duration: const Duration(milliseconds: 100),
             scaleFactor: 1.2,
-            onPressed: (){
-              Get.back();
+            onPressed: () {
+              if (logic.nameController!.text.isEmpty) {
+                EventBusUtil.getInstance()
+                    .fire(HhToast(title: '请输入被分享人的用户名/手机号'));
+                return;
+              }
+              CommonUtils().showConfirmDialog(
+                  logic.context, '确定要共享“${logic.arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}”?', () {
+                Get.back();
+              }, () {
+                Get.back();
+                logic.shareSend();
+              }, () {
+                Get.back();
+              },rightStr: "共享");
             },
             child: Container(
               height: 80.w,
@@ -222,10 +292,11 @@ class SharePage extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20.w))),
               child: Center(
                 child: Text(
-                  "分享完成",
+                  "确定",
                   style: TextStyle(
                     color: HhColors.whiteColor,
-                    fontSize: 30.sp,),
+                    fontSize: 30.sp,
+                  ),
                 ),
               ),
             ),

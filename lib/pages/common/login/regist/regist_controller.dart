@@ -70,14 +70,7 @@ class RegisterController extends GetxController {
     var result = await HhHttp().request(
       RequestUtils.codeRegister,
       method: DioMethod.post,
-      data: {
-        'username':accountController!.text,
-        'password':passwordController!.text,
-        'mobile':phoneController!.text,
-        'code':codeController!.text,
-        'captchaVerification':'',
-        'accountType':'person',
-      },
+      data: data,
     );
     HhLog.d("codeRegisterSend -- $data");
     HhLog.d("codeRegisterSend -- $result");

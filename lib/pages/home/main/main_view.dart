@@ -1332,7 +1332,7 @@ class MainPage extends StatelessWidget {
                     style: TextStyle(
                         color: logic.spaceListIndex.value == i?HhColors.blackTextColor:HhColors.gray9TextColor,
                         fontSize: logic.spaceListIndex.value == i?36.sp:30.sp,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: logic.spaceListIndex.value == i?FontWeight.bold:FontWeight.w500),
                   ),
                   SizedBox(
                     height: 2.w,

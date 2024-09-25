@@ -28,6 +28,7 @@ class MyController extends GetxController {
   final Rx<int> ?deviceNum = 0.obs;
   final Rx<int> ?spaceNum = 0.obs;
   late StreamSubscription infoSubscription;
+  StreamSubscription ?spaceListSubscription;
   late dynamic detail;
 
   @override
@@ -37,6 +38,11 @@ class MyController extends GetxController {
     mobile!.value = prefs.getString(SPKeys().mobile)!;
     avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
 
+    spaceListSubscription = EventBusUtil.getInstance()
+        .on<SpaceList>()
+        .listen((event) {
+      getSpaceList();
+    });
     infoSubscription =
         EventBusUtil.getInstance().on<UserInfo>().listen((event) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -23,6 +23,7 @@ class SpaceManageController extends GetxController {
     spaceListSubscription = EventBusUtil.getInstance()
         .on<SpaceList>()
         .listen((event) {
+      pageNum = 1;
       getSpaceList(1);
     });
     super.onInit();
@@ -53,7 +54,7 @@ class SpaceManageController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       List<dynamic> newItems = result["data"]["list"];
 
-      if(pageNum == 1){
+      if(pageKey == 1){
         pagingController.itemList = [];
       }
       pagingController.appendLastPage(newItems);

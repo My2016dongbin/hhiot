@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/share/manage/share_manage_binding.dart';
+import 'package:iot/pages/common/share/manage/share_manage_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/manage/device_manage_binding.dart';
@@ -334,7 +336,7 @@ class MyPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ///空间网络
-                        InkWell(
+                        /*InkWell(
                           onTap: () {
                             // Get.to(() => NetWorkPage(), binding: NetWorkBinding());
                             EventBusUtil.getInstance().fire(HhToast(title: '暂未开放'));
@@ -404,10 +406,9 @@ class MyPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
+                        ),*/
 
                         ///设置
-
                         InkWell(
                           onTap: () {
                             Get.to(() => SettingPage(), binding: SettingBinding());
@@ -435,6 +436,66 @@ class MyPage extends StatelessWidget {
                                     margin: EdgeInsets.only(left: 70.w),
                                     child: Text(
                                       "设置",
+                                      style: TextStyle(
+                                          color: HhColors.textBlackColor,
+                                          fontSize: 28.sp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                    child: Image.asset(
+                                      "assets/images/common/back_role.png",
+                                      width: 25.w,
+                                      height: 25.w,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      height: 0.5.w,
+                                      width: 1.sw,
+                                      margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                                      color: HhColors.grayDDTextColor,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        ///分享管理
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => ShareManagePage(), binding: ShareManageBinding());
+                          },
+                          child: Container(
+                            height: 110.w,
+                            color: HhColors.trans,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 20.w),
+                                    child: Image.asset(
+                                      "assets/images/common/icon_edit_share.png",
+                                      width: 32.w,
+                                      height: 32.w,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 70.w),
+                                    child: Text(
+                                      "分享管理",
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
                                           fontSize: 28.sp,

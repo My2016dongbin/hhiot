@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  // static const base = 'http://172.16.50.87:10008';//debug
-  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  static const base = 'http://172.16.50.87:10008';//debug
+  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
@@ -18,6 +18,7 @@ class RequestUtils{
   static const unReadCount = '$base/admin-api/system/message-log/getUnReadMessageCount';//主页未读消息数量查询
   static const mainSpaceList = '$base/admin-api/mid/space/page';//主页空间列表
   static const spaceCreate = '$base/admin-api/mid/space/create';//添加空间
+  static const spaceUpdate = '$base/admin-api/mid/space/update';//更新空间
   static const message = '$base/admin-api/system/message-log/page';//主页-消息-通知信息查询
   static const messageAlarm = '$base/admin-api/mid/device-alarm-info/page';//主页-消息-报警信息查询
   static const spaceInfo = '$base/admin-api/mid/space/get';//主页-空间-空间信息
@@ -51,8 +52,12 @@ class RequestUtils{
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET
   static const chatCreate = '$base/admin-api/mid/device-info/chatState';//调用语音服务创建会话POST
 
-  static const shareCreate = '$base/app-api/mid/share-log/create';//分享创建
-  static const shareReceive = '$base/app-api/mid/receive-log/create';//分享接收
+  static const shareCreate = '$base/app-api/mid/share-log/create';//分享创建 old
+  static const shareReceive = '$base/app-api/mid/receive-log/create';//分享接收 old
+
+  static const shareSend = '$base/app-api/mid/receive-log/create';//发起分享
+  static const shareList = '$base/app-api/mid/receive-log/page';//分享管理记录
+  static const shareHandle = '$base/app-api/mid/receive-log/handleReceiveLog';//分享处理 POST{id,status}
 
 
   /*

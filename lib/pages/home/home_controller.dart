@@ -69,6 +69,7 @@ class HomeController extends GetxController {
 
         showToastWidget(
           Container(
+            margin: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
             padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
             decoration: BoxDecoration(
                 color: HhColors.blackColor,
