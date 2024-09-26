@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -22,6 +23,7 @@ class SettingController extends GetxController {
   final Rx<String> ?avatar = ''.obs;
   final Rx<bool> picture = false.obs;
   late XFile file;
+  late BuildContext context;
   late StreamSubscription infoSubscription;
 
   @override

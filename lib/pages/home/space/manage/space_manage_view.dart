@@ -32,7 +32,7 @@ class SpaceManagePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
-            () => Container(
+        () => Container(
           height: 1.sh,
           width: 1.sw,
           color: HhColors.backColorF5,
@@ -53,9 +53,9 @@ class SpaceManagePage extends StatelessWidget {
                   ),
                 ),
               ),
-              ///列表
-              logic.testStatus.value?deviceList():const SizedBox(),
 
+              ///列表
+              logic.testStatus.value ? deviceList() : const SizedBox(),
 
               ///title
               InkWell(
@@ -92,15 +92,15 @@ class SpaceManagePage extends StatelessWidget {
                   color: HhColors.grayDDTextColor,
                 ),
               ),
+
               ///新增空间按钮
               Align(
                 alignment: Alignment.bottomCenter,
-                child:
-                BouncingWidget(
+                child: BouncingWidget(
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
-                  onPressed: (){
-                    Get.to(()=>SpacePage(),binding: SpaceBinding());
+                  onPressed: () {
+                    Get.to(() => SpacePage(), binding: SpaceBinding());
                   },
                   child: Container(
                     height: 80.w,
@@ -126,7 +126,8 @@ class SpaceManagePage extends StatelessWidget {
                             "添加新空间",
                             style: TextStyle(
                               color: HhColors.whiteColor,
-                              fontSize: 30.sp,),
+                              fontSize: 30.sp,
+                            ),
                           ),
                         ],
                       ),
@@ -145,11 +146,11 @@ class SpaceManagePage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 150.w),
       child: EasyRefresh(
-        onRefresh: (){
+        onRefresh: () {
           logic.pageNum = 1;
           logic.getSpaceList(logic.pageNum);
         },
-        onLoad: (){
+        onLoad: () {
           logic.pageNum++;
           logic.getSpaceList(logic.pageNum);
         },
@@ -157,10 +158,15 @@ class SpaceManagePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           pagingController: logic.pagingController,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
-            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+            noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(
+              image: 'assets/images/common/no_message.png',
+              info: '暂无消息',
+              mid: 50.w,
               height: 0.32.sw,
-              width: 0.6.sw,),
-            itemBuilder: (context, item, index) => gridItemView(context, item, index),
+              width: 0.6.sw,
+            ),
+            itemBuilder: (context, item, index) =>
+                gridItemView(context, item, index),
           ),
         ),
       ),
@@ -168,18 +174,18 @@ class SpaceManagePage extends StatelessWidget {
   }
 
   gridItemView(BuildContext context, dynamic item, int index) {
-    return
-      InkWell(
-        onTap: (){
-          // Get.to(()=>DeviceListPage(id: "${item['id']}",),binding: DeviceListBinding());
-        },
+    return InkWell(
+      onTap: () {
+        // Get.to(()=>DeviceListPage(id: "${item['id']}",),binding: DeviceListBinding());
+      },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             margin: EdgeInsets.fromLTRB(30.w, 20.w, 30.w, 0),
             padding: EdgeInsets.fromLTRB(30.w, 20.w, 30.w, 20.w),
-            clipBehavior: Clip.hardEdge, //裁剪
+            clipBehavior: Clip.hardEdge,
+            //裁剪
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
                 borderRadius: BorderRadius.all(Radius.circular(20.w))),
@@ -194,28 +200,33 @@ class SpaceManagePage extends StatelessWidget {
                       Text(
                         "${item['name']}",
                         style: TextStyle(
-                          color: HhColors.blackColor,
-                          fontSize: 30.sp,
-                        fontWeight: FontWeight.bold),
+                            color: HhColors.blackColor,
+                            fontSize: 30.sp,
+                            fontWeight: FontWeight.bold),
                       ),
                       const Expanded(child: SizedBox()),
-                      item['name']=='默认空间'?const SizedBox():InkWell(
-                        onTap: (){
-                          Get.to(()=>EditPage(),binding: EditBinding(),arguments: item);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5.w),
-                          child: Text(
-                            "修改",
-                            style: TextStyle(
-                              color: HhColors.mainBlueColor,
-                              fontSize: 26.sp,),
-                          ),
-                        ),
-                      ),
+                      item['name'] == '默认空间'
+                          ? const SizedBox()
+                          : InkWell(
+                              onTap: () {
+                                Get.to(() => EditPage(),
+                                    binding: EditBinding(), arguments: item);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5.w),
+                                child: Text(
+                                  "修改",
+                                  style: TextStyle(
+                                    color: HhColors.mainBlueColor,
+                                    fontSize: 26.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ),
+
                 ///设备列表
 
                 Container(
@@ -239,7 +250,8 @@ class SpaceManagePage extends StatelessWidget {
                         "修改",
                         style: TextStyle(
                           color: HhColors.mainBlueColor,
-                          fontSize: 26.sp,),
+                          fontSize: 26.sp,
+                        ),
                       ),
                     ],
                   ),
@@ -249,18 +261,34 @@ class SpaceManagePage extends StatelessWidget {
           ),
 
           ///删除空间
-          Container(
+          item['name'] == '默认空间'
+              ? const SizedBox()
+              : Container(
             height: 1.w,
             clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(1.w)
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(1.w)),
             margin: EdgeInsets.fromLTRB(40.w, 0, 40.w, 0),
-                  child: DottedDashedLine(height: 0, width: 1.sw, axis: Axis.horizontal,dashColor: HhColors.grayDDTextColor,),
-                ),
-          InkWell(
-            onTap: (){
-              CommonUtils().showDeleteDialog(context, "确定要删除“${item['name']}”?\n请选择如何删除空间", (){Get.back();}, (){Get.back();}, (){Get.back();},leftStr: '设备转移后删除',rightStr:'全部删除');
+            child: DottedDashedLine(
+              height: 0,
+              width: 1.sw,
+              axis: Axis.horizontal,
+              dashColor: HhColors.grayDDTextColor,
+            ),
+          ),
+          item['name'] == '默认空间'
+              ? const SizedBox()
+              : InkWell(
+            onTap: () {
+              CommonUtils().showDeleteDialog(
+                  context, "确定要删除“${item['name']}”?\n请选择如何删除空间", () {
+                Get.back();
+                logic.deleteChangeSpace(item['id'],item['id'],1);
+              }, () {
+                Get.back();
+                logic.deleteChangeSpace(item['id'],null,2);
+              }, () {
+                Get.back();
+              }, leftStr: '设备转移后删除', rightStr: '全部删除');
             },
             child: Container(
               width: 1.sw,
@@ -269,7 +297,11 @@ class SpaceManagePage extends StatelessWidget {
               decoration: BoxDecoration(
                   color: HhColors.whiteColor,
                   borderRadius: BorderRadius.all(Radius.circular(20.w))),
-              child: Center(child: Text('删除空间',style: TextStyle(color: HhColors.mainRedColor,fontSize: 26.sp),)),
+              child: Center(
+                  child: Text(
+                '删除空间',
+                style: TextStyle(color: HhColors.mainRedColor, fontSize: 26.sp),
+              )),
             ),
           ),
         ],

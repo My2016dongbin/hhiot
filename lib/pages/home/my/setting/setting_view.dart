@@ -27,6 +27,7 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
@@ -757,12 +758,19 @@ class SettingPage extends StatelessWidget {
 
                 InkWell(
                   onTap: () async {
-                    final SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.remove(SPKeys().token);
-                    CommonData.tenant = CommonData.tenantDef;
-                    CommonData.tenantName = CommonData.tenantNameDef;
-                    CommonData.token = null;
-                    CommonUtils().toLogin();
+                    CommonUtils().showConfirmDialog(logic.context, '退出后不能接收信息，确定要退出?', (){
+                      Get.back();
+                    }, () async {
+                      Get.back();
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.remove(SPKeys().token);
+                      CommonData.tenant = CommonData.tenantDef;
+                      CommonData.tenantName = CommonData.tenantNameDef;
+                      CommonData.token = null;
+                      CommonUtils().toLogin();
+                    },(){
+                      Get.back();
+                    });
                   },
                   child: Container(
                     width: 1.sw,

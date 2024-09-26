@@ -593,22 +593,52 @@ class MessagePage extends StatelessWidget {
                                   ),
                                   child: Row(
                                     children: [
-                                      Container(
-                                        clipBehavior: Clip.hardEdge,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12.w),
+                                      SizedBox(
+                                        width: 200.w,
+                                        height: 130.w,
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              clipBehavior: Clip.hardEdge,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(12.w),
+                                              ),
+                                              child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
+                                                "assets/images/common/icon_message_back.png",
+                                                width: 200.w,
+                                                height: 130.w,
+                                                fit: BoxFit.fill,
+                                              ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                                                return Image.asset(
+                                                  "assets/images/common/test_video.jpg",
+                                                  width: 200.w,
+                                                  height: 130.w,
+                                                  fit: BoxFit.fill,
+                                                );
+                                              },
+                                                width: 200.w,
+                                                height: 130.w,
+                                                fit: BoxFit.fill,),
+                                            ),
+                                            item['alarmType']=='tilt'?Align(
+                                              alignment:Alignment.center,
+                                              child: Image.asset(
+                                                "assets/images/common/icon_message_y.png",
+                                                width: 50.w,
+                                                height: 50.w,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
+                                              alignment:Alignment.center,
+                                              child: Image.asset(
+                                                "assets/images/common/icon_message_open.png",
+                                                width: 50.w,
+                                                height: 50.w,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ):const SizedBox(),
+                                          ],
                                         ),
-                                        child: Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
-                                          return Image.asset(
-                                            "assets/images/common/test_video.jpg",
-                                            width: 200.w,
-                                            height: 130.w,
-                                            fit: BoxFit.fill,
-                                          );
-                                        },
-                                          width: 200.w,
-                                          height: 130.w,
-                                          fit: BoxFit.fill,),
                                       ),
                                       Expanded(
                                         child: SizedBox(

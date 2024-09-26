@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  static const base = 'http://172.16.50.87:10008';//debug
-  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  // static const base = 'http://172.16.50.87:10008';//debug
+  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
@@ -58,6 +58,7 @@ class RequestUtils{
   static const shareSend = '$base/app-api/mid/receive-log/create';//发起分享
   static const shareList = '$base/app-api/mid/receive-log/page';//分享管理记录
   static const shareHandle = '$base/app-api/mid/receive-log/handleReceiveLog';//分享处理 POST{id,status}
+  static const deleteChangeSpace = '$base/admin-api/mid/space/deleteSpaceAndDevice';//删除空间
 
 
   /*

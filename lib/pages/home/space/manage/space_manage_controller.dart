@@ -62,4 +62,21 @@ class SpaceManageController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
+
+  Future<void> deleteChangeSpace(dynamic id,dynamic changeId,dynamic type) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['id'] = id;
+    map['changeId'] = changeId;
+    map['deleteType'] = type;//删除类型:1设备转移后删除 2全部删除
+    var result = await HhHttp().request(RequestUtils.deleteChangeSpace,method: DioMethod.delete,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("deleteChangeSpace -- $map");
+    HhLog.d("deleteChangeSpace -- $result");
+    if(result["code"]==0 && result["data"]!=null){
+      EventBusUtil.getInstance().fire(HhToast(title: '操作成功'));
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
 }
