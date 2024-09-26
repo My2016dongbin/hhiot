@@ -1,6 +1,7 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:fijkplayer/fijkplayer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/share/share_binding.dart';
+import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
+import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
@@ -98,6 +103,24 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                       )
                     ],
+                  ),
+                ),
+              ),
+              ///setting
+              Align(
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: () {
+                    showEditDeviceDialog(logic.item);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 100.w, 36.w, 0),
+                    child: Image.asset(
+                      "assets/images/common/icon_video_set.png",
+                      width: 40.w,
+                      height: 40.w,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
@@ -536,7 +559,7 @@ class DeviceDetailPage extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          logic.recordTag.value?Container(
+                          /*logic.recordTag.value?Container(
                               width: 230.w,
                               height: 80.w,
                               clipBehavior: Clip.hardEdge,
@@ -548,7 +571,7 @@ class DeviceDetailPage extends StatelessWidget {
                                 samples: [1,2,3,444,9999,66,89,6,4,999999,13120],
                                 height: 230.w,
                                 width: 80.w,
-                              )):const SizedBox(),
+                              )):const SizedBox(),*/
                           Image.asset(
                             logic.recordTag.value?"assets/images/common/ic_yy_ing.png":"assets/images/common/ic_yy.png",
                             width: 130.w,
@@ -737,5 +760,146 @@ class DeviceDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+  void showEditDeviceDialog(dynamic item) {
+    showCupertinoDialog(context: logic.context, builder: (context) => Center(
+      child: Container(
+        width: 1.sw,
+        height: 160.w,
+        margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+        padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
+        decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(20.w))),
+        child: Row(
+          children: [
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: (){
+                  if(item["shareMark"]==1){
+                    return;
+                  }
+                  Get.back();
+                  DateTime date = DateTime.now();
+                  String time = date.toIso8601String().substring(0,19).replaceAll("T", " ");
+                  Get.to(()=>SharePage(),binding: ShareBinding(),arguments: {
+                    "shareType": "2",
+                    "expirationTime": time,
+                    "appShareDetailSaveReqVOList": [
+                      {
+                        "spaceId": "${item["spaceId"]}",
+                        "spaceName": "${item["spaceName"]}",
+                        "deviceId": "${item["id"]}",
+                        "deviceName": "${item["name"]}"
+                      }
+                    ]
+                  });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      item["shareMark"]==1?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('分享',style: TextStyle(color: item["shareMark"]==1?HhColors.grayCCTextColor:HhColors.gray6TextColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 50.w,),
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.back();
+                  Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding(),arguments: item);
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/icon_edit_edit.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('修改',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 50.w,),
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.back();
+                  EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/icon_video_reset.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('重启',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(width: 50.w,),
+            Expanded(
+              child: BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                onPressed: () {
+                  Get.back();
+                  CommonUtils().showDeleteDialog(context, '确定要删除该设备吗?', (){
+                    Get.back();
+                  }, (){
+                    Get.back();
+                    logic.deleteDevice(item);
+                  }, (){
+                    Get.back();
+                  });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      "assets/images/common/icon_edit_delete.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(height: 10.w,),
+                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 26.sp,
+                      decoration: TextDecoration.none,),),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }

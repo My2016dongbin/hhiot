@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
+import 'package:iot/pages/home/device/add/device_add_view.dart';
+import 'package:iot/pages/home/device/device_view.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/space/manage/edit/edit_binding.dart';
@@ -194,69 +197,74 @@ class SpaceManagePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ///空间名
-                Container(
-                  margin: EdgeInsets.only(bottom: 30.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        "${item['name']}",
-                        style: TextStyle(
-                            color: HhColors.blackColor,
-                            fontSize: 30.sp,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      item['name'] == '默认空间'
-                          ? const SizedBox()
-                          : InkWell(
-                              onTap: () {
-                                Get.to(() => EditPage(),
-                                    binding: EditBinding(), arguments: item);
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(5.w),
-                                child: Text(
-                                  "修改",
-                                  style: TextStyle(
-                                    color: HhColors.mainBlueColor,
-                                    fontSize: 26.sp,
+                InkWell(
+                  onTap: (){
+                    item['open'] = item['open']==true?false:true;
+                    logic.testStatus.value = false;
+                    logic.testStatus.value = true;
+                    if(item['open'] == true){
+                      logic.getDeviceList(item);
+    }
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 30.w),
+                    child: Row(
+                      children: [
+                        Text(
+                          "${item['name']}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: HhColors.blackColor,
+                              fontSize: 30.sp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                                child: Image.asset(
+                                  item['open']==true?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
+                                  width: 30.w,
+                                  height: 26.w,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        item['name'] == '默认空间'
+                            ? const SizedBox()
+                            : InkWell(
+                                onTap: () {
+                                  Get.to(() => EditPage(),
+                                      binding: EditBinding(), arguments: item);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(5.w),
+                                  child: Text(
+                                    "修改",
+                                    style: TextStyle(
+                                      color: HhColors.mainBlueColor,
+                                      fontSize: 26.sp,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
                 ///设备列表
 
-                Container(
-                  color: HhColors.grayAATextColor,
-                  height: 0.5.w,
-                  width: 1.sw,
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 25.w, 0, 20.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        "高塔一体机",
-                        style: TextStyle(
-                            color: HhColors.blackColor,
-                            fontSize: 26.sp,
-                            fontWeight: FontWeight.w200),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Text(
-                        "修改",
-                        style: TextStyle(
-                          color: HhColors.mainBlueColor,
-                          fontSize: 26.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                item['open']==true?Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: buildItemDeviceList(item),
+                ):const SizedBox()
               ],
             ),
           ),
@@ -417,6 +425,57 @@ class SpaceManagePage extends StatelessWidget {
             )
         );
       }
+    }
+    return list;
+  }
+
+  buildItemDeviceList(dynamic item) {
+    List<Widget> list = [];
+    List<dynamic> deviceList = item['deviceList']??[];
+    for(int i = 0;i < deviceList.length;i++){
+      dynamic model = deviceList[i];
+      list.add(
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              color: HhColors.grayAATextColor,
+              height: 0.5.w,
+              width: 1.sw,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 25.w, 0, 20.w),
+              child: Row(
+                children: [
+                  Text(
+                    "${model['name']}",
+                    style: TextStyle(
+                        color: HhColors.blackColor,
+                        fontSize: 26.sp,
+                        fontWeight: FontWeight.w200),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  InkWell(
+                    onTap: (){
+                      Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding(),arguments: model);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10.w),
+                      child: Text(
+                        "修改",
+                        style: TextStyle(
+                          color: HhColors.mainBlueColor,
+                          fontSize: 26.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
     }
     return list;
   }

@@ -77,8 +77,33 @@ class SpaceManageController extends GetxController {
     HhLog.d("deleteChangeSpace -- $map");
     HhLog.d("deleteChangeSpace -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      EventBusUtil.getInstance().fire(HhToast(title: '操作成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
       EventBusUtil.getInstance().fire(SpaceList());
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  Future<void> getDeviceList(dynamic item) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['spaceId'] = item['id'];
+    map['pageNo'] = '1';
+    map['pageSize'] = '100';
+    map['activeStatus'] = '-1';
+    var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("deviceList ---   $result");
+    if(result["code"]==0 && result["data"]!=null){
+      List<dynamic> newItems = [];
+      try{
+        newItems = result["data"]["list"]??[];
+        item['deviceList'] = newItems;
+        testStatus.value = false;
+        testStatus.value = true;
+      }catch(e){
+        HhLog.e(e.toString());
+      }
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

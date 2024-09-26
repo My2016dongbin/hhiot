@@ -119,6 +119,7 @@ class DeviceAddController extends GetxController {
       addingStatus.value = 1;
       addingStep.value = 3;
       EventBusUtil.getInstance().fire(SpaceList());
+      EventBusUtil.getInstance().fire(DeviceList());
       EventBusUtil.getInstance().fire(HhToast(title: '添加成功',type: 1));
       // Get.back();
     }else{
@@ -135,6 +136,7 @@ class DeviceAddController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: '保存成功',type: 1));
       EventBusUtil.getInstance().fire(DeviceList());
+      EventBusUtil.getInstance().fire(SpaceList());
       Get.back();
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));

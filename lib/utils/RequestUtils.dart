@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  static const base = 'http://172.16.50.87:10008';//debug
-  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  // static const base = 'http://172.16.50.87:10008';//debug
+  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录

@@ -138,7 +138,7 @@ class ShareManagePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              parseTitle('${item['shareUrerName']}',item['receiveDetailDOList']),
+                              parseTitle('${item['shareUrerName']}',item['receiveDetailDOList']??[]),
                               maxLines: 2,
                               style: TextStyle(
                                   color: HhColors.textBlackColor,

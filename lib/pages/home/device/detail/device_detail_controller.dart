@@ -53,6 +53,7 @@ class DeviceDetailController extends GetxController {
   late Alignment animateAlign = Alignment.center;
   final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
   late String? endpoint;
+  late dynamic item = {};
 
   @override
   void onInit() {
@@ -141,6 +142,7 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceInfo -- $id");
     HhLog.d("getDeviceInfo -- $result");
     if(result["code"]==0 && result["data"]!=null){
+      item = result["data"];
       name.value = CommonUtils().parseNull(result["data"]["name"], "");
       productName.value = result["data"]["productName"];
     }else{
@@ -269,6 +271,23 @@ class DeviceDetailController extends GetxController {
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["data"][0]["msg"])));
     }*/
 
+  }
+
+  Future<void> deleteDevice(item) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['id'] = '${item['id']}';
+    map['shareMark'] = '${item['shareMark']}';
+    var result = await HhHttp().request(RequestUtils.deviceDelete,method: DioMethod.delete,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("deleteDevice -- $map");
+    HhLog.d("deleteDevice -- $result");
+    if(result["code"]==0 && result["data"]!=null){
+      EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
+      Get.back();
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 
   Future<void> initData() async {

@@ -1429,7 +1429,7 @@ class MainPage extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                     SizedBox(height: 10.w,),
-                    Text('编辑',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
+                    Text('修改',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
                       decoration: TextDecoration.none,),),
                   ],
                 ),
