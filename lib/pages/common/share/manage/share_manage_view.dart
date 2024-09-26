@@ -138,9 +138,7 @@ class ShareManagePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              CommonUtils().parseNull(
-                                  '${item['shareUrerName']}邀请您共享“${item['receiveDetailDOList']}”',
-                                  ""),
+                              parseTitle('${item['shareUrerName']}',item['receiveDetailDOList']),
                               maxLines: 2,
                               style: TextStyle(
                                   color: HhColors.textBlackColor,
@@ -293,5 +291,15 @@ class ShareManagePage extends StatelessWidget {
     }
 
     return list;
+  }
+
+  parseTitle(String name, List<dynamic> list) {
+    String rt = "";
+    if(list.isNotEmpty){
+      rt = "$name邀请您共享${list[0]['deviceName']}";
+    }else{
+      rt = "$name邀请您共享";
+    }
+    return rt;
   }
 }

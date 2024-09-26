@@ -257,7 +257,7 @@ class DeviceManagePage extends StatelessWidget {
                   child: Text(
                     '${model['name']}',
                     style: TextStyle(
-                        color: logic.tabIndex.value==i?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==i?32.sp:28.sp,fontWeight: logic.tabIndex.value==i?FontWeight.bold:FontWeight.w200),
+                        color: logic.tabIndex.value==i?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==i?32.sp:28.sp,fontWeight: logic.tabIndex.value==i?FontWeight.bold:FontWeight.w500),
                   ),
                 ),
                 SizedBox(height: 5.w,),

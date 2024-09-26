@@ -54,16 +54,19 @@ class ShareManageController extends GetxController {
       'id': -999,
       'name': '全部',
       'status': null,//状态：0待处理 1同意 2拒绝
+      'filter': null,
     });
     spaceList.add({
       'id': 1,
       'name': '未操作',
       'status': 0,
+      'filter': [0],
     });
     spaceList.add({
       'id': 2,
       'name': '已操作',
       'status': 1,
+      'filter': [1,2],
     });
     shareList(1);
   }
@@ -72,7 +75,8 @@ class ShareManageController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
     map['shareType'] = '2';
-    map['status'] = spaceList[tabIndex.value]["status"];
+    // map['status'] = spaceList[tabIndex.value]["status"];
+    map['statusList'] = spaceList[tabIndex.value]["filter"];
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
     var result = await HhHttp().request(RequestUtils.shareList,method: DioMethod.get,params: map);

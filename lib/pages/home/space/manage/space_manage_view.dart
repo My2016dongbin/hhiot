@@ -23,6 +23,7 @@ class SpaceManagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.context = context;
     // 在这里设置状态栏字体为深色
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏背景色
@@ -282,7 +283,8 @@ class SpaceManagePage extends StatelessWidget {
               CommonUtils().showDeleteDialog(
                   context, "确定要删除“${item['name']}”?\n请选择如何删除空间", () {
                 Get.back();
-                logic.deleteChangeSpace(item['id'],item['id'],1);
+                // logic.deleteChangeSpace(item['id'],item['id'],1);
+                showChooseSpaceDialog(item);
               }, () {
                 Get.back();
                 logic.deleteChangeSpace(item['id'],null,2);
@@ -307,5 +309,115 @@ class SpaceManagePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void showChooseSpaceDialog(dynamic item) {
+    showModalBottomSheet(context: logic.context, builder: (a){
+      bool choose = false;
+      return Container(
+        width: 1.sw,
+        decoration: BoxDecoration(
+            color: HhColors.trans,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 20.w,),
+            Expanded(
+              child: Container(
+                width: 1.sw,
+                height: 90.w,
+                margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 25.w),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 30.w,),
+                    Text('空间删除后，将设备转移至',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.sp),),
+                    SizedBox(height: 40.w,),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: buildDialogSpace(item),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 1.2,
+              child: Container(
+                width: 1.sw,
+                height: 90.w,
+                margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 50.w),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                child: Center(
+                  child: Text(
+                    "取消",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 28.sp),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ),
+      );
+    },isDismissible: false,enableDrag: false,backgroundColor: HhColors.trans);
+  }
+
+  buildDialogSpace(dynamic item) {
+    List<Widget> list = [];
+    for(int i = 0;i < logic.spaceList.length;i++){
+      dynamic model = logic.spaceList[i];
+      if(model['id'] != item['id']){
+        list.add(
+            Container(
+              margin: EdgeInsets.fromLTRB(20.w, 20.w, 25.w, 20.w),
+              child: Row(
+                children: [
+                  Text(
+                    "${model['name']}",
+                    style: TextStyle(
+                        color: HhColors.blackColor,
+                        fontSize: 28.sp,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                      logic.deleteChangeSpace(item['id'],model['id'],1);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(5.w),
+                      child: Text(
+                        "转移",
+                        style: TextStyle(
+                          color: HhColors.mainBlueColor,
+                          fontSize: 26.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+        );
+      }
+    }
+    return list;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -13,6 +14,8 @@ class SpaceManageController extends GetxController {
   final PagingController<int, dynamic> pagingController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 20;
+  late BuildContext context;
+  late List<dynamic> spaceList = [];
   StreamSubscription ?spaceListSubscription;
 
   @override
@@ -52,12 +55,12 @@ class SpaceManageController extends GetxController {
     var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
     HhLog.d("getSpaceList -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      List<dynamic> newItems = result["data"]["list"];
+      spaceList = result["data"]["list"];
 
       if(pageKey == 1){
         pagingController.itemList = [];
       }
-      pagingController.appendLastPage(newItems);
+      pagingController.appendLastPage(spaceList);
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
@@ -75,6 +78,7 @@ class SpaceManageController extends GetxController {
     HhLog.d("deleteChangeSpace -- $result");
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: '操作成功'));
+      EventBusUtil.getInstance().fire(SpaceList());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
