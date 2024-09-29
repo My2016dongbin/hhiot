@@ -6,10 +6,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
-import 'package:iot/pages/common/login/company/company_login_binding.dart';
-import 'package:iot/pages/common/login/company/company_login_view.dart';
-import 'package:iot/pages/common/login/login_binding.dart';
-import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
@@ -75,6 +71,7 @@ class LaunchController extends GetxController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(SPKeys().token);
     String? tenant = prefs.getString(SPKeys().tenant);
+    String? tenantUserType = prefs.getString(SPKeys().tenantUserType);
     String? tenantName = prefs.getString(SPKeys().tenantName);
     bool? second = prefs.getBool(SPKeys().second);
     secondStatus.value = second == true;
@@ -82,6 +79,7 @@ class LaunchController extends GetxController {
       //获取个人信息
       CommonData.token = token;
       CommonData.tenant = tenant;
+      CommonData.tenantUserType = tenantUserType;
       CommonData.tenantName = tenantName;
       info();
     } else {

@@ -1,18 +1,14 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/location/location_binding.dart';
-import 'package:iot/pages/common/location/location_controller.dart';
-import 'package:iot/pages/common/location/location_view.dart';
-import 'package:iot/pages/common/model/model_class.dart';
+import 'package:iot/pages/common/location/search/saerch_controller.dart';
+import 'package:iot/pages/common/location/search/search_binding.dart';
+import 'package:iot/pages/common/location/search/search_view.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
-import 'package:iot/pages/home/device/status/device_status_binding.dart';
-import 'package:iot/pages/home/device/status/device_status_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
@@ -21,7 +17,7 @@ import 'package:qrscan/qrscan.dart' as scanner;
 
 class DeviceAddPage extends StatelessWidget {
   final logic = Get.find<DeviceAddController>();
-  final logicLocation = Get.find<LocationController>();
+  final logicLocation = Get.find<SearchLocationController>();
 
   DeviceAddPage({super.key,required String snCode}){
     logic.snCode = snCode;
@@ -336,7 +332,7 @@ class DeviceAddPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            constraints: BoxConstraints(maxHeight: 260.w),
+            constraints: BoxConstraints(maxHeight: 110.w),
             child: Column(
               children: [
                 Expanded(
@@ -345,7 +341,7 @@ class DeviceAddPage extends StatelessWidget {
                     pagingController: logic.deviceController,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3, //横轴三个子widget
-                        childAspectRatio: 2 //宽高比为1时，子widget
+                        childAspectRatio: 2.5 //宽高比为1时，子widget
                         ),
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
                       itemBuilder: (context, item, index) =>
@@ -358,7 +354,7 @@ class DeviceAddPage extends StatelessWidget {
                             child: Container(
                               height: 90.w,
                               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                              padding: EdgeInsets.all(20.w),
+                              // padding: EdgeInsets.all(20.w),
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
                                   color: logic.index.value==index?HhColors.backBlueInColor:HhColors.whiteColor,
@@ -396,8 +392,8 @@ class DeviceAddPage extends StatelessWidget {
                     Get.to(()=>SpacePage(),binding: SpaceBinding());
                   },
                   child: Container(
-                    height: 90.w,
-                    width: 220.w,
+                    height: 80.w,
+                    width: 210.w,
                     margin: EdgeInsets.fromLTRB(20.w, 20.w, 0, 0),
                     padding: EdgeInsets.all(20.w),
                     clipBehavior: Clip.hardEdge,
@@ -444,7 +440,7 @@ class DeviceAddPage extends StatelessWidget {
                       return;
                     }
 
-                    Get.to(()=>LocationPage(),binding: LocationBinding());
+                    Get.to(()=>SearchLocationPage(),binding: SearchLocationBinding());
                   },
                   child: Container(
                     width: 1.sw,
@@ -457,7 +453,7 @@ class DeviceAddPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          logicLocation.locText.value!=""?logicLocation.locText.value:logic.location.value,
+                          logic.isEdit.value?(logic.locText.value):(logicLocation.locText.value!=""?logicLocation.locText.value:logic.location.value),
                           style: TextStyle(
                             color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
                             fontSize: 26.sp,fontWeight: FontWeight.bold),

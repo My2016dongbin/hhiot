@@ -532,7 +532,7 @@ class MyPage extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             // Get.to(() => HelpPage(), binding: HelpBinding());
-                            EventBusUtil.getInstance().fire(HhToast(title: '暂未开放'));
+                            EventBusUtil.getInstance().fire(HhToast(title: '暂未开放',type: 3));
                           },
                           child: Container(
                             height: 110.w,

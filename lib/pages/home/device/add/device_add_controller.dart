@@ -57,14 +57,44 @@ class DeviceAddController extends GetxController {
       }
     });
 
-    HhLog.d("isEdit $model");
     model = Get.arguments;
+    HhLog.d("isEdit $model");
     isEdit.value = model!=null&&model!={};
     if(isEdit.value){
       snController!.text = model['deviceNo'];
       nameController!.text = model['name'];
+
+      if(model['longitude']!=null && model['longitude']!=0 && model['longitude']!=""){
+        longitude.value = double.parse(model['longitude']);
+        latitude.value = double.parse(model['latitude']);
+        locSearch();
+      }
     }
     super.onInit();
+  }
+
+
+  Future<void> locSearch() async {
+    // 构造检索参数
+    BMFReverseGeoCodeSearchOption reverseGeoCodeSearchOption =
+    BMFReverseGeoCodeSearchOption(
+        location: BMFCoordinate(latitude.value!, longitude.value!));
+    // 检索实例
+    BMFReverseGeoCodeSearch reverseGeoCodeSearch = BMFReverseGeoCodeSearch();
+    // 逆地理编码回调
+    reverseGeoCodeSearch.onGetReverseGeoCodeSearchResult(callback:
+        (BMFReverseGeoCodeSearchResult result,
+        BMFSearchErrorCode errorCode) {
+      HhLog.d("逆地理编码  errorCode = $errorCode, result = ${result.toMap()}");
+      List<BMFPoiInfo> ?poiList = result.poiList;
+      if(poiList!=null && poiList.isNotEmpty){
+        locText.value = CommonUtils().parseNull("${poiList[0].name}", "定位中..");
+      }else{
+        locText.value = CommonUtils().parseNull("${result.address}", "定位中..");
+      }
+    });
+    /// 发起检索
+    bool flag = await reverseGeoCodeSearch.reverseGeoCodeSearch(reverseGeoCodeSearchOption);
   }
 
 

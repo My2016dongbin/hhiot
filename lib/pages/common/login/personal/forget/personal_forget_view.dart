@@ -9,16 +9,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
-import 'package:iot/pages/common/login/code/code_binding.dart';
-import 'package:iot/pages/common/login/code/code_view.dart';
-import 'package:iot/pages/common/login/login_controller.dart';
 import 'package:iot/pages/common/login/personal/forget/personal_forget_controller.dart';
-import 'package:iot/pages/common/login/personal/personal_login_controller.dart';
-import 'package:iot/pages/common/login/regist/regist_binding.dart';
-import 'package:iot/pages/common/login/regist/regist_view.dart';
-import 'package:iot/pages/common/web/WebViewPage.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 

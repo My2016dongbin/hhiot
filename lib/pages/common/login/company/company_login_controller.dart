@@ -56,7 +56,7 @@ class CompanyLoginController extends GetxController {
             children: [
               event.type==0?const SizedBox():SizedBox(height: 40.w,),
               event.type==0?const SizedBox():Image.asset(
-                event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
+                event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':event.type==3?'assets/images/common/icon_lock.png':'assets/images/common/icon_warn.png',
                 height: 40.w,
                 width: 40.w,
                 fit: BoxFit.fill,
@@ -121,9 +121,11 @@ class CompanyLoginController extends GetxController {
     HhLog.d("tenant -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');
+      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]['id']}');
       await prefs.setString(SPKeys().tenantName, tenantController!.text);
-      CommonData.tenant = '${tenantResult["data"]}';
+      CommonData.tenant = '${tenantResult["data"]["id"]}';
+      CommonData.tenantUserType = '${tenantResult["data"]["userType"]}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
       CommonData.tenantName = tenantController!.text;
       login();
     } else {
@@ -148,9 +150,11 @@ class CompanyLoginController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${result["data"]}');
+      await prefs.setString(SPKeys().tenant, '${result["data"]['id']}');
       await prefs.setString(SPKeys().tenantName, tenantController!.text);
-      CommonData.tenant = '${result["data"]}';
+      CommonData.tenant = '${result["data"]['id']}';
+      CommonData.tenantUserType = '${result["data"]['userType']}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
       login();
     } else {
       EventBusUtil.getInstance()
@@ -168,9 +172,11 @@ class CompanyLoginController extends GetxController {
     HhLog.d("tenant id -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');
+      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]['id']}');
       await prefs.setString(SPKeys().tenantName, tenantController!.text);
-      CommonData.tenant = '${tenantResult["data"]}';
+      CommonData.tenant = '${tenantResult["data"]["id"]}';
+      CommonData.tenantUserType = '${tenantResult["data"]["userType"]}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
       CommonData.tenantName = tenantController!.text;
       sendCode();
     } else {
@@ -201,6 +207,9 @@ class CompanyLoginController extends GetxController {
       "username": accountController?.text,
       "password": passwordController?.text
     };
+    HhLog.d("logins data -- $data");
+    HhLog.d("logins tenant -- ${CommonData.tenant}");
+    HhLog.d("logins tenantUserType -- ${CommonData.tenantUserType}");
     var result = await HhHttp().request(
       RequestUtils.login,
       method: DioMethod.post,

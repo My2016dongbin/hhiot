@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/login/company/forget/password/company_password_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -226,7 +227,7 @@ class CompanyPasswordPage extends StatelessWidget {
                   onPressed: (){
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
-                    if(logic.passwordController!.text.length<8 || logic.password2Controller!.text.length<8){
+                    if(!CommonUtils().validatePassword(logic.passwordController!.text)){
                       EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
                       return;
                     }

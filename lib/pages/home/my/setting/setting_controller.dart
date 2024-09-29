@@ -6,6 +6,7 @@ import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
@@ -91,6 +92,9 @@ class SettingController extends GetxController {
           },
         ),
       );
+      if(response.data.toString().contains("401")){
+        CommonUtils().tokenDown();
+      }
       HhLog.d("上传成功: ${response.data}");
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString(SPKeys().avatar, response.data["data"]);

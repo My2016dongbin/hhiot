@@ -21,6 +21,7 @@ import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
+import 'package:iot/pages/home/message/message_controller.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
@@ -39,6 +40,7 @@ import 'main_controller.dart';
 class MainPage extends StatelessWidget {
   final logic = Get.find<MainController>();
   final homeLogic = Get.find<HomeController>();
+  final messageLogic = Get.find<MessageController>();
 
   MainPage({super.key});
 
@@ -602,7 +604,7 @@ class MainPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        '搜索设备、事件、和视频',
+                        '搜索设备、空间、消息...',
                         style: TextStyle(
                             color: HhColors.textColor, fontSize: 28.sp),
                       ),
@@ -631,11 +633,11 @@ class MainPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(55.w, 0, 0, 10.w),
+                      margin: EdgeInsets.fromLTRB(logic.text.value.contains('未获取')?30.w:55.w, 0, 0, 10.w),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
+                          logic.text.value.contains('未获取')?const SizedBox():SizedBox(
                             width: 44.w,
                             height: 44.w,
                             child: Stack(
@@ -657,11 +659,12 @@ class MainPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          logic.text.value.contains('未获取')?const SizedBox():SizedBox(
                             width: 10.w,
                           ),
                           Text(
-                            "${logic.temp.value}°${logic.text.value}",
+                            // logic.text.value.contains('未获取')?logic.text.value:"${logic.temp.value}°${logic.text.value}",
+                            logic.text.value.contains('未获取')?logic.text.value:"${logic.dateStr.value} ${logic.cityStr.value}",
                             style: TextStyle(
                                 color: HhColors.blackTextColor,
                                 fontSize: 24.sp),
@@ -716,16 +719,16 @@ class MainPage extends StatelessWidget {
                                     fit: BoxFit.fill,
                                   ),
                                 ),*/
-                                logic.count.value=='0'?const SizedBox():Align(
+                                messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?const SizedBox():Align(
                                   alignment: Alignment.topRight,
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: HhColors.mainRedColor,
                                       borderRadius: BorderRadius.all(Radius.circular(10.w))
                                     ),
-                                    width: 25.w + ((logic.count.value.length-1) * 6.w),
+                                    width: 25.w + ((3-1) * 6.w),
                                     height: 25.w,
-                                    child: Center(child: Text(logic.count.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp),)),
+                                    child: Center(child: Text(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}",style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp),)),
                                   ),
                                 ),
                               ],

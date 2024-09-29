@@ -452,7 +452,7 @@ class SpaceManagePage extends StatelessWidget {
                     style: TextStyle(
                         color: HhColors.blackColor,
                         fontSize: 26.sp,
-                        fontWeight: FontWeight.w200),
+                        fontWeight: FontWeight.w400),
                   ),
                   const Expanded(child: SizedBox()),
                   InkWell(

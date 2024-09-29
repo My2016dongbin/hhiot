@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:get/route_manager.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
-import 'package:iot/pages/common/login/login_binding.dart';
-import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhLog.dart';
@@ -57,6 +54,7 @@ class HhHttp {
     // 头部添加token
     // options.headers["token"] = "xxx";
     options.headers["Tenant-Id"] = "${CommonData.tenant}";
+    options.headers["tenant-user-type"] = "${CommonData.tenantUserType}";
     options.headers["Authorization"] = "Bearer ${CommonData.token}";
     // 更多业务需求
     handler.next(options);

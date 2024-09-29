@@ -14,6 +14,7 @@ class SPKeys{
   final String second = 'second';
   final String token = 'token';
   final String tenant = 'tenant';
+  final String tenantUserType = 'tenantUserType';
   final String tenantName = 'tenantName';
   final String account = 'account';
   final String password = 'password';

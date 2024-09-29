@@ -1,8 +1,12 @@
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/common/share/share_binding.dart';
+import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
@@ -116,7 +120,7 @@ class SearchPage extends StatelessWidget {
                   decoration: InputDecoration(
                     //contentPadding: EdgeInsets.zero,
                     border: InputBorder.none,
-                    hintText: '搜索设备、事件、和视频',
+                    hintText: '搜索设备、空间、消息...',
                     hintStyle: TextStyle(
                         color: HhColors.gray9TextColor, fontSize: 24.sp),
                   ),
@@ -189,13 +193,13 @@ class SearchPage extends StatelessWidget {
             }*/
           },
           child: Container(
-            height: 160.w,
+            height: 180.w,
             margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
             padding: EdgeInsets.all(20.w),
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(20.w))
+                borderRadius: BorderRadius.all(Radius.circular(10.w))
             ),
             child: Stack(
               children: [
@@ -217,68 +221,100 @@ class SearchPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(100.w, 0, 0, item['productName']==""?0:50.w),
+                    margin: EdgeInsets.fromLTRB(100.w, 0, 0, 50.w),
                     child: Text(
-                      '${item['name']}',
+                      CommonUtils().parseNull('${item['name']}',""),
                       style: TextStyle(
                           color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-                item['productName']==""?const SizedBox():Container(
+                Container(
                   margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
-                  child: Text(
-                    '${item['productName']}-${item['categoryName']}',
-                    style: TextStyle(
-                        color: HhColors.textColor, fontSize: 22.sp),
-                  ),
-                ),
-                ///分享
-                item['shared']==true?Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    margin: EdgeInsets.only(right:70.w),
-                    padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
-                    decoration: BoxDecoration(
-                        color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(5.w))
-                    ),
-                    child: Text(
-                      '已共享*1',
-                      style: TextStyle(
-                          color: HhColors.whiteColor, fontSize: 23.sp),
-                    ),
-                  ),
-                ):const SizedBox(),
-                /*Align(
-                      alignment: Alignment.centerRight,
-                      child:
-                      BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: (){
-                          Get.to(()=>SharePage(),binding: ShareBinding());
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(right: item['shared']==true?0:80.w),
-                          child: Image.asset(
-                            item['shared']==true?"assets/images/common/shared.png":"assets/images/common/share.png",
-                            width: 50.w,
-                            height: 50.w,
-                            fit: BoxFit.fill,
-                          ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      item['spaceName']==""?const SizedBox():Container(
+                        constraints: BoxConstraints(maxWidth: 0.25.sw),
+                        child: Text(
+                          CommonUtils().parseNull('${item['spaceName']}', ""),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: HhColors.textColor, fontSize: 22.sp),
                         ),
                       ),
-                    ),*/
-                /*item['shared']==true?const SizedBox():Align(
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    "assets/images/common/close.png",
-                    width: 50.w,
-                    height: 50.w,
-                    fit: BoxFit.fill,
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10.w, 0, 60.w, 0),
+                        padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                        decoration: BoxDecoration(
+                          color: item['activeStatus']==1?HhColors.transBlueColors:HhColors.transRedColors,
+                          border: Border.all(color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor,width: 1.w),
+                          borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                        ),
+                        child: Text(
+                          item['activeStatus']==1?'在线':"离线",
+                          style: TextStyle(
+                              color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
+                        ),
+                      ),
+                      item['shared']==true?Container(
+                        margin: EdgeInsets.only(left:10.w),
+                        padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                        decoration: BoxDecoration(
+                            color: HhColors.mainBlueColor,
+                            borderRadius: BorderRadius.all(Radius.circular(5.w))
+                        ),
+                        child: Text(
+                          '分享中*1',
+                          style: TextStyle(
+                              color: HhColors.whiteColor, fontSize: 23.sp),
+                        ),
+                      ):const SizedBox(),
+                    ],
                   ),
-                ),*/
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child:
+                  BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: (){
+                      DateTime date = DateTime.now();
+                      String time = date.toIso8601String().substring(0,19).replaceAll("T", " ");
+                      Get.to(()=>SharePage(),binding: ShareBinding(),arguments: {
+                        "shareType": "2",
+                        "expirationTime": time,
+                        "appShareDetailSaveReqVOList": [
+                          {
+                            "spaceId": "${item["spaceId"]}",
+                            "spaceName": "${item["spaceName"]}",
+                            "deviceId": "${item["id"]}",
+                            "deviceName": "${item["name"]}"
+                          }
+                        ]
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 0.w),
+                      child: Image.asset(
+                        item['shared']==true?"assets/images/common/shared.png":"assets/images/common/share.png",
+                        width: 50.w,
+                        height: 50.w,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+                /*item['shared']==true?const SizedBox():Align(
+                      alignment: Alignment.centerRight,
+                      child: Image.asset(
+                        "assets/images/common/close.png",
+                        width: 50.w,
+                        height: 50.w,
+                        fit: BoxFit.fill,
+                      ),
+                    ),*/
               ],
             ),
           ),
@@ -290,13 +326,13 @@ class SearchPage extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 30.w),
         child: Text('我的空间',style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
       ));
-      for(int i = 0;i < ((logic.spaceList.length%2==0)?(logic.spaceList.length/2):(logic.spaceList.length/2+1)); i++){
+      for(int i = 0;i < ((logic.spaceList.length%2==0)?(logic.spaceList.length/2)-1:(logic.spaceList.length/2+1-1)); i++){
         dynamic itemLeft = logic.spaceList[i*2];//0 2 4
         dynamic itemRight = {};
-        try{
+        HhLog.d("space -- ${i*2}");
+        if(logic.spaceList.length>(i*2+1)){
           itemRight = logic.spaceList[i*2+1];//1 3 5
-        }catch(e){
-          itemRight = {};
+          HhLog.d("space -- ${i*2+1}");
         }
         list.add(
           Row(
@@ -342,29 +378,7 @@ class SearchPage extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 8.w,),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                                  decoration: BoxDecoration(
-                                      color: HhColors.grayEFBackColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(8.w))
-                                  ),
-                                  child: Text(
-                                    "${itemLeft['deviceCount']??0}个设备",
-                                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            (itemLeft['deviceCount']==null || itemLeft['deviceCount']==0)?const SizedBox():Image.asset(
-                              "assets/images/common/icon_red.png",
-                              width: 30.w,
-                              height: 30.w,
-                              fit: BoxFit.fill,
-                            )
+
                           ],
                         ),
                       ),
@@ -414,29 +428,7 @@ class SearchPage extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 8.w,),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                                  decoration: BoxDecoration(
-                                      color: HhColors.grayEFBackColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(8.w))
-                                  ),
-                                  child: Text(
-                                    "${itemRight['deviceCount']??0}个设备",
-                                    style: TextStyle(color: HhColors.textColor, fontSize: 23.sp),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            (itemLeft['deviceCount']==null || itemLeft['deviceCount']==0)?const SizedBox():Image.asset(
-                              "assets/images/common/icon_red.png",
-                              width: 30.w,
-                              height: 30.w,
-                              fit: BoxFit.fill,
-                            )
+
                           ],
                         ),
                       ),
@@ -450,65 +442,545 @@ class SearchPage extends StatelessWidget {
         );
       }
       HhLog.d("space--");
+      HhLog.d("logic.messageList-- ${logic.messageList}");
       ///我的消息
       list.add(logic.messageList.isEmpty?const SizedBox():Container(
         margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 30.w),
         child: Text('我的消息',style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
       ));
-      for(int i = 0;i < logic.messageList.length; i++){
+      /*for(int i = 0;i < logic.messageList.length; i++){
         dynamic item = logic.messageList[i];
-        list.add(Container(
-          margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-          padding: EdgeInsets.all(20.w),
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-              color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(10.w))
-          ),
-          child: Stack(
-            children: [
-              Container(
-                height: 10.w,
-                width: 10.w,
-                margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
-                decoration: BoxDecoration(
-                    color: HhColors.backRedInColor,
-                    borderRadius: BorderRadius.all(Radius.circular(5.w))
-                ),
+        list.add(
+            Container(
+              margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+              padding: EdgeInsets.all(20.w),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  color: HhColors.whiteColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10.w))
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
-                child: Text(
-                  CommonUtils().parseMessageType("${item['messageType']}"),
-                  style: TextStyle(
-                      color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
-                ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 200.w,
+                    height: 130.w,
+                    child: Stack(
+                      children: [
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.w),
+                          ),
+                          child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
+                            "assets/images/common/icon_message_back.png",
+                            width: 200.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,
+                          ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                            return Image.asset(
+                              "assets/images/common/test_video.jpg",
+                              width: 200.w,
+                              height: 130.w,
+                              fit: BoxFit.fill,
+                            );
+                          },
+                            width: 200.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,),
+                        ),
+                        item['alarmType']=='tilt'?Align(
+                          alignment:Alignment.center,
+                          child: Image.asset(
+                            "assets/images/common/icon_message_y.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
+                          alignment:Alignment.center,
+                          child: Image.asset(
+                            "assets/images/common/icon_message_open.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ):const SizedBox(),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 130.w,
+                      child: Stack(
+                        children: [
+                          item['status'] == true?const SizedBox():Container(
+                            height: 10.w,
+                            width: 10.w,
+                            margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                            decoration: BoxDecoration(
+                                color: HhColors.backRedInColor,
+                                borderRadius: BorderRadius.all(Radius.circular(5.w))
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
+                            child: Text(
+                              parseLeftType("${item['alarmType']}"),
+                              style: TextStyle(
+                                  color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  CommonUtils().parseNull('${item['deviceName']}',""),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: HhColors.textColor, fontSize: 22.sp),
+                                ),
+                                SizedBox(height: 5.w,),
+                                Text(
+                                  CommonUtils().parseNull('${item['spaceName']}', ""),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: HhColors.textColor, fontSize: 22.sp),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 5.w),
+                              child: Text(
+                                CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
+                                style: TextStyle(
+                                    color: HhColors.textColor, fontSize: 22.sp),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
-                child: Text(
-                  '${item['content']}',
-                  style: TextStyle(
-                      color: HhColors.textColor, fontSize: 22.sp),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  CommonUtils().parseLongTime('${item['createTime']}'),
-                  style: TextStyle(
-                      color: HhColors.textColor, fontSize: 22.sp),
-                ),
-              ),
-            ],
-          ),
-        ));
-      }
+            )
+        );
+      }*/
+      list.add(logic.messageList.isEmpty?const SizedBox():Container(
+        constraints: BoxConstraints(
+          minHeight: 1.sh,
+          maxHeight: 1000.sh
+        ),
+        child: ListView.builder(padding: EdgeInsets.zero,physics: const NeverScrollableScrollPhysics(),itemCount: logic.messageList.length,itemBuilder: (BuildContext context, int index){
+          dynamic item = logic.messageList[index];
+          return messageItem(context,index,item);
+        }),
+      ));
       HhLog.d("message--");
     }catch(e){
       HhLog.e(e.toString());
     }
     return list;
+  }
+
+
+  String parseLeftType(String s) {
+    if(s == "openCap"){
+      return "箱盖开箱报警";
+    }
+    if(s == "human"){
+      return "人员入侵报警";
+    }
+    if(s == "car"){
+      return "车辆入侵报警";
+    }
+    if(s == "openSensor"){
+      return "传感器开箱报警";
+    }
+    if(s == "tilt"){
+      return "设备倾斜报警";
+    }
+    return "报警";
+  }
+
+  messageItem(BuildContext context, int index, dynamic item) {
+  /*
+    if(item["messageType"] == "deviceShare"){
+      return Container(
+        margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+        padding: EdgeInsets.all(20.w),
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(10.w))
+        ),
+        child: Stack(
+          children: [
+            item['status']==true?const SizedBox():Container(
+              height: 10.w,
+              width: 10.w,
+              margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+              decoration: BoxDecoration(
+                  color: HhColors.backRedInColor,
+                  borderRadius: BorderRadius.all(Radius.circular(5.w))
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
+              child: Text(
+                parseRightType("${item['messageType']}"),
+                style: TextStyle(
+                    color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "时间:${CommonUtils().parseLongTime('${item['createTime']}')}",
+                    style: TextStyle(
+                        color: HhColors.textColor, fontSize: 22.sp),
+                  ),
+                  SizedBox(height: 8.w,),
+                  Text(
+                    '${item['content']}',
+                    style: TextStyle(
+                        color: HhColors.textColor, fontSize: 22.sp),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if(item["messageType"] == "deviceAlarm"){
+      return Container(
+        margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+        padding: EdgeInsets.all(20.w),
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+            color: HhColors.whiteColor,
+            borderRadius: BorderRadius.all(Radius.circular(10.w))
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 200.w,
+              height: 130.w,
+              child: Stack(
+                children: [
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.w),
+                    ),
+                    child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
+                      "assets/images/common/icon_message_back.png",
+                      width: 200.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,
+                    ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                      return Image.asset(
+                        "assets/images/common/test_video.jpg",
+                        width: 200.w,
+                        height: 130.w,
+                        fit: BoxFit.fill,
+                      );
+                    },
+                      width: 200.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,),
+                  ),
+                  item['alarmType']=='tilt'?Align(
+                    alignment:Alignment.center,
+                    child: Image.asset(
+                      "assets/images/common/icon_message_y.png",
+                      width: 50.w,
+                      height: 50.w,
+                      fit: BoxFit.fill,
+                    ),
+                  ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
+                    alignment:Alignment.center,
+                    child: Image.asset(
+                      "assets/images/common/icon_message_open.png",
+                      width: 50.w,
+                      height: 50.w,
+                      fit: BoxFit.fill,
+                    ),
+                  ):const SizedBox(),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 130.w,
+                child: Stack(
+                  children: [
+                    item['status'] == true?const SizedBox():Container(
+                      height: 10.w,
+                      width: 10.w,
+                      margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.backRedInColor,
+                          borderRadius: BorderRadius.all(Radius.circular(5.w))
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
+                      child: Text(
+                        parseLeftType("${item['alarmType']}"),
+                        style: TextStyle(
+                            color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            CommonUtils().parseNull('${item['deviceName']}',""),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: HhColors.textColor, fontSize: 22.sp),
+                          ),
+                          SizedBox(height: 5.w,),
+                          Text(
+                            CommonUtils().parseNull('${item['spaceName']}', ""),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: HhColors.textColor, fontSize: 22.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 5.w),
+                        child: Text(
+                          CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
+                          style: TextStyle(
+                              color: HhColors.textColor, fontSize: 22.sp),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+*/
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+      padding: EdgeInsets.all(20.w),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: HhColors.whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(10.w))
+      ),
+      child: Stack(
+        children: [
+          item['status']==true?const SizedBox():Container(
+            height: 10.w,
+            width: 10.w,
+            margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+            decoration: BoxDecoration(
+                color: HhColors.backRedInColor,
+                borderRadius: BorderRadius.all(Radius.circular(5.w))
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
+            child: Text(
+              parseRightType("${item['messageType']}"),
+              style: TextStyle(
+                  color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "时间:${CommonUtils().parseLongTime('${item['createTime']}')}",
+                  style: TextStyle(
+                      color: HhColors.textColor, fontSize: 22.sp),
+                ),
+                SizedBox(height: 8.w,),
+                Text(
+                  '${item['content']}',
+                  style: TextStyle(
+                      color: HhColors.textColor, fontSize: 22.sp),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  buildMessage() {
+    List<Widget> list = [];
+    for(int i = 0;i < logic.messageList.length; i++){
+        dynamic item = logic.messageList[i];
+        list.add(
+            Container(
+              margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+              padding: EdgeInsets.all(20.w),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  color: HhColors.whiteColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10.w))
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 200.w,
+                    height: 130.w,
+                    child: Stack(
+                      children: [
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.w),
+                          ),
+                          child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
+                            "assets/images/common/icon_message_back.png",
+                            width: 200.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,
+                          ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                            return Image.asset(
+                              "assets/images/common/test_video.jpg",
+                              width: 200.w,
+                              height: 130.w,
+                              fit: BoxFit.fill,
+                            );
+                          },
+                            width: 200.w,
+                            height: 130.w,
+                            fit: BoxFit.fill,),
+                        ),
+                        item['alarmType']=='tilt'?Align(
+                          alignment:Alignment.center,
+                          child: Image.asset(
+                            "assets/images/common/icon_message_y.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
+                          alignment:Alignment.center,
+                          child: Image.asset(
+                            "assets/images/common/icon_message_open.png",
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.fill,
+                          ),
+                        ):const SizedBox(),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 130.w,
+                      child: Stack(
+                        children: [
+                          item['status'] == true?const SizedBox():Container(
+                            height: 10.w,
+                            width: 10.w,
+                            margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                            decoration: BoxDecoration(
+                                color: HhColors.backRedInColor,
+                                borderRadius: BorderRadius.all(Radius.circular(5.w))
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
+                            child: Text(
+                              parseLeftType("${item['alarmType']}"),
+                              style: TextStyle(
+                                  color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  CommonUtils().parseNull('${item['deviceName']}',""),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: HhColors.textColor, fontSize: 22.sp),
+                                ),
+                                SizedBox(height: 5.w,),
+                                Text(
+                                  CommonUtils().parseNull('${item['spaceName']}', ""),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: HhColors.textColor, fontSize: 22.sp),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 5.w),
+                              child: Text(
+                                CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
+                                style: TextStyle(
+                                    color: HhColors.textColor, fontSize: 22.sp),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+        );
+      }
+    return list;
+  }
+
+
+  String parseRightType(String s) {
+    if(s == "deviceAlarm"){
+      return "设备报警通知";
+    }
+    return "通知";
   }
 
 }

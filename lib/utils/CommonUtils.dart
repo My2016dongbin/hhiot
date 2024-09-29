@@ -9,8 +9,6 @@ import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/login/company/company_login_binding.dart';
 import 'package:iot/pages/common/login/company/company_login_view.dart';
-import 'package:iot/pages/common/login/login_binding.dart';
-import 'package:iot/pages/common/login/login_view.dart';
 import 'package:iot/pages/common/login/personal/personal_login_binding.dart';
 import 'package:iot/pages/common/login/personal/personal_login_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
@@ -30,12 +28,30 @@ class CommonUtils{
     }
     return type;
   }
+  bool validatePassword(String password) {
+    // 正则表达式规则：
+    // 最小长度 9 个字符，
+    // 必须包含至少一个小写字母，
+    // 必须包含至少一个大写字母，
+    // 必须包含至少一个数字。
+    final RegExp pattern =
+    RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$');
+    HhLog.d("$password , ${pattern.hasMatch(password)}");
+    return pattern.hasMatch(password);
+  }
   String parseNull(dynamic s,String def){
     String r = "$s";
     if(s == null || s == "null"){
       r = def;
     }
     return r;
+  }
+  String parseLongTimeWithLength(String s,int length){
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+    String time = date.toIso8601String();
+    time = time.substring(0,length);
+    time = time.replaceAll("T", " ");
+    return time;
   }
   String parseLongTime(String s){
     DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));

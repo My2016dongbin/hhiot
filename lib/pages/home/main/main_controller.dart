@@ -38,11 +38,13 @@ class MainController extends GetxController {
   final Rx<bool> searchStatus = false.obs;
   final Rx<bool> videoStatus = false.obs;
   final Rx<bool> pageMapStatus = false.obs;
-  final Rx<String> temp = '23'.obs;
+  final Rx<String> dateStr = ''.obs;
+  final Rx<String> cityStr = ''.obs;
+  final Rx<String> temp = ''.obs;
   final Rx<String> icon = '305'.obs;
   final Rx<bool> iconStatus = false.obs;
   final Rx<String> locText = '定位中...'.obs;
-  final Rx<String> text = '多云'.obs;
+  final Rx<String> text = '未获取到天气信息，请重试'.obs;
   final Rx<String> count = '0'.obs;
   final Rx<bool> searchDown = true.obs;
   final Rx<bool> spaceListStatus = true.obs;
@@ -66,6 +68,8 @@ class MainController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    DateTime dateTime = DateTime.now();
+    dateStr.value = CommonUtils().parseLongTimeWithLength("${dateTime.millisecondsSinceEpoch}",16);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     secondStatus.value = prefs.getBool(SPKeys().second) == true;
     //接受定位回调
@@ -317,7 +321,9 @@ class MainController extends GetxController {
   Future<void> getDeviceList(int pageKey) async {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
-    map['spaceId'] = spaceList[spaceListIndex.value]['id'];
+    if(spaceList.isNotEmpty){
+      map['spaceId'] = spaceList[spaceListIndex.value]['id'];
+    }
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
     map['activeStatus'] = '-1';
@@ -436,6 +442,11 @@ class MainController extends GetxController {
         locText.value = CommonUtils().parseNull("${poiList[0].name}", "定位中..");
       }else{
         locText.value = CommonUtils().parseNull("${result.address}", "定位中..");
+      }
+      try{
+        cityStr.value = result.addressDetail!.city!;
+      }catch(e){
+        //error
       }
     });
     /// 发起检索

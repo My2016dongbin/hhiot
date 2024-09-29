@@ -11,6 +11,7 @@ import 'package:iot/pages/common/login/company/company_login_controller.dart';
 import 'package:iot/pages/common/login/company/forget/company_forget_binding.dart';
 import 'package:iot/pages/common/login/company/forget/company_forget_view.dart';
 import 'package:iot/pages/common/web/WebViewPage.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -493,8 +494,8 @@ class CompanyLoginPage extends StatelessWidget {
       EventBusUtil.getInstance().fire(HhToast(title: '账号不能为空'));
       return;
     }
-    if (logic.passwordController!.text.isEmpty) {
-      EventBusUtil.getInstance().fire(HhToast(title: '密码不能为空'));
+    if(!CommonUtils().validatePassword(logic.passwordController!.text)){
+      EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
       return;
     }
     if (!logic.confirmStatus.value) {

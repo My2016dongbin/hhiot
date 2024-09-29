@@ -72,8 +72,8 @@ class RegisterController extends GetxController {
       method: DioMethod.post,
       data: data,
     );
-    HhLog.d("codeRegisterSend -- $data");
-    HhLog.d("codeRegisterSend -- $result");
+    HhLog.d("register -- $data");
+    HhLog.d("register -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
       EventBusUtil.getInstance().fire(HhToast(title: '注册成功',type: 1));

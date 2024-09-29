@@ -82,7 +82,7 @@ class HomeController extends GetxController {
               children: [
                 event.type==0?const SizedBox():SizedBox(height: 40.w,),
                 event.type==0?const SizedBox():Image.asset(
-                  event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
+                  event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':event.type==3?'assets/images/common/icon_lock.png':'assets/images/common/icon_warn.png',
                   height: 40.w,
                   width: 40.w,
                   fit: BoxFit.fill,

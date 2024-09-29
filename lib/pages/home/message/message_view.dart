@@ -304,6 +304,7 @@ class MessagePage extends StatelessWidget {
                                 cursorColor: HhColors.titleColor_99,
                                 controller: logic.deviceNameController,
                                 keyboardType: TextInputType.text,
+                                textAlign: TextAlign.start,
                                 textInputAction: TextInputAction.search,
                                 onSubmitted: (s){
                                   logic.dateListLeft = [];
@@ -312,7 +313,7 @@ class MessagePage extends StatelessWidget {
                                 },
                                 decoration: InputDecoration(
                                   //contentPadding: EdgeInsets.zero,
-                                  contentPadding: EdgeInsets.fromLTRB(0, 35.w, 0, 10.w),
+                                  contentPadding: EdgeInsets.fromLTRB(0, 0.w, 0, 20.w),
                                   border: InputBorder.none,
                                   counterText: '',
                                   hintText: '请输入设备名称',
@@ -515,9 +516,9 @@ class MessagePage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 pagingController: logic.deviceController,
                 builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message_search.png',info: '没有找到匹配的结果',mid: 50.w,
                     height: 0.32.sw,
-                    width: 0.6.sw,),
+                    width: 0.4.sw,),
                   itemBuilder: (context, item, index) {
                     if(item["showDate"]==null){
                       if(logic.dateListLeft.contains(CommonUtils().parseLongTimeYearDay('${item['createTime']}'))){
@@ -826,9 +827,9 @@ class MessagePage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 pagingController: logic.warnController,
                 builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message.png',info: '暂无消息',mid: 50.w,
                     height: 0.32.sw,
-                    width: 0.6.sw,),
+                    width: 0.4.sw,),
                   itemBuilder: (context, item, index) {
                     return InkWell(
                       onTap: (){
@@ -1103,6 +1104,15 @@ class MessagePage extends StatelessWidget {
     }
     if(s == "human"){
       return "人员入侵报警";
+    }
+    if(s == "car"){
+      return "车辆入侵报警";
+    }
+    if(s == "openSensor"){
+      return "传感器开箱报警";
+    }
+    if(s == "tilt"){
+      return "设备倾斜报警";
     }
     return "报警";
   }

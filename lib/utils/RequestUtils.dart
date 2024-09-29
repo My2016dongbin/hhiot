@@ -5,8 +5,8 @@ class RequestUtils{
   // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
-  static const tenantId = '$base/admin-api/system/tenant/get-id-by-name';//获取租户id
-  static const tenantSearch = '$base/admin-api/system/tenant/get-id-by-user';//根据手机号/用户名获取租户id
+  static const tenantId = '$base/admin-api/system/tenant/get-tenant-by-name';//'$base/admin-api/system/tenant/get-id-by-name';//获取租户id
+  static const tenantSearch = '$base/admin-api/system/tenant/get-tenant-by-user';//'$base/admin-api/system/tenant/get-id-by-user';//根据手机号/用户名获取租户id
   static const codeCheckCommon = '$base/admin-api/system/auth/sms-use';//校验验证码-通用
   static const codeSend = '$base/admin-api/system/auth/send-sms-code';//发送验证码（含通用scene=24）
   static const codeLogin = '$base/admin-api/system/auth/sms-login';//验证码登录
@@ -16,6 +16,8 @@ class RequestUtils{
   static const codeRegister = '$base/admin-api/system/auth/register';//注册
   static const weatherLocation = '$base/admin-api/mid/weather-now/getWeatherByLocation';//查询定位天气
   static const unReadCount = '$base/admin-api/system/message-log/getUnReadMessageCount';//主页未读消息数量查询
+  static const unReadCountWarn = '$base/admin-api/system/message-log/getUnReadMessageCount';//未读消息数量查询
+  static const unReadCountNotice = '$base/admin-api/system/message-log/getUnReadMessageCount';//未读消息数量查询
   static const mainSpaceList = '$base/admin-api/mid/space/page';//主页空间列表
   static const spaceCreate = '$base/admin-api/mid/space/create';//添加空间
   static const spaceUpdate = '$base/admin-api/mid/space/update';//更新空间

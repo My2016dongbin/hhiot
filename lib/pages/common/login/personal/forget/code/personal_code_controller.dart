@@ -62,8 +62,7 @@ class PersonalCodeController extends GetxController {
 
       Get.off(()=>PersonalPasswordPage(),binding: PersonalPasswordBinding(),arguments:{"mobile":mobile});
     } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance().fire(HhToast(title: '验证码错误'));
     }
   }
 

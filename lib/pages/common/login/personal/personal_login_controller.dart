@@ -55,7 +55,7 @@ class PersonalLoginController extends GetxController {
                 children: [
                   event.type==0?const SizedBox():SizedBox(height: 40.w,),
                   event.type==0?const SizedBox():Image.asset(
-                    event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':'assets/images/common/icon_warn.png',
+                    event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':event.type==3?'assets/images/common/icon_lock.png':'assets/images/common/icon_warn.png',
                     height: 40.w,
                     width: 40.w,
                     fit: BoxFit.fill,
@@ -114,10 +114,12 @@ class PersonalLoginController extends GetxController {
     HhLog.d("tenant -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');
+      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]['id']}');
       await prefs.setString(SPKeys().tenantName, CommonData.tenantName!);
-      CommonData.tenant = '${tenantResult["data"]}';
+      CommonData.tenant = '${tenantResult["data"]['id']}';
       CommonData.tenantName = CommonData.tenantName;
+      CommonData.tenantUserType = '${tenantResult["data"]['userType']}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/),type: 2));
@@ -150,12 +152,16 @@ class PersonalLoginController extends GetxController {
       method: DioMethod.get,
       params: map,
     );
+    HhLog.d("tenant -- ${RequestUtils.tenantId}");
+    HhLog.d("tenant -- $map");
     HhLog.d("tenant -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');
+      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]['id']}');
       await prefs.setString(SPKeys().tenantName, CommonData.tenantName!);
-      CommonData.tenant = '${tenantResult["data"]}';
+      CommonData.tenant = '${tenantResult["data"]["id"]}';
+      CommonData.tenantUserType = '${tenantResult["data"]["userType"]}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
       login();
     } else {
       EventBusUtil.getInstance()

@@ -9,9 +9,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
-import 'package:iot/pages/common/login/code/code_binding.dart';
-import 'package:iot/pages/common/login/code/code_view.dart';
-import 'package:iot/pages/common/login/login_controller.dart';
 import 'package:iot/pages/common/login/personal/forget/personal_forget_binding.dart';
 import 'package:iot/pages/common/login/personal/forget/personal_forget_view.dart';
 import 'package:iot/pages/common/login/personal/personal_login_controller.dart';
@@ -20,6 +17,7 @@ import 'package:iot/pages/common/login/regist/regist_view.dart';
 import 'package:iot/pages/common/web/WebViewPage.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -256,16 +254,11 @@ class PersonalLoginPage extends StatelessWidget {
                         EventBusUtil.getInstance().fire(HhToast(title: '账号不能为空'));
                         return;
                       }
-                      if(logic.passwordController!.text.isEmpty){
-                        EventBusUtil.getInstance().fire(HhToast(title: '密码不能为空'));
-                        return;
-                      }
-                      /*if(!logic.confirmStatus.value){
-                        EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
-                        return;
-                      }*/
+                      // if(!CommonUtils().validatePassword(logic.passwordController!.text)){
+                      //   EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
+                      //   return;
+                      // }
                       if (!logic.confirmStatus.value) {
-                        // EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
                         showAgreeDialog();
                         return;
                       }

@@ -37,10 +37,12 @@ class CompanyForgetController extends GetxController {
     HhLog.d("tenant -- $tenantResult");
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]}');
+      await prefs.setString(SPKeys().tenant, '${tenantResult["data"]['id']}');
       await prefs.setString(SPKeys().tenantName, CommonData.tenantName!);
-      CommonData.tenant = '${tenantResult["data"]}';
+      CommonData.tenant = '${tenantResult["data"]['id']}';
       CommonData.tenantName = CommonData.tenantName;
+      CommonData.tenantUserType = '${tenantResult["data"]['userType']}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString("租户信息不存在"/*tenantResult["msg"]*/),type: 2));
@@ -62,8 +64,10 @@ class CompanyForgetController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(SPKeys().tenant, '${result["data"]}');
-      CommonData.tenant = '${result["data"]}';
+      await prefs.setString(SPKeys().tenant, '${result["data"]['id']}');
+      CommonData.tenant = '${result["data"]['id']}';
+      CommonData.tenantUserType = '${result["data"]['userType']}';
+      await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
       sendCode();
     } else {
       EventBusUtil.getInstance()

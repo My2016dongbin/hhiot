@@ -64,8 +64,7 @@ class CompanyCodeController extends GetxController {
 
       Get.off(()=>CompanyPasswordPage(),binding: CompanyPasswordBinding(),arguments:{"mobile":mobile});
     } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance().fire(HhToast(title: '验证码错误'));
     }
   }
 

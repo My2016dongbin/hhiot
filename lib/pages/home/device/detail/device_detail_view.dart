@@ -847,7 +847,7 @@ class DeviceDetailPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: () {
                   Get.back();
-                  EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
+                  EventBusUtil.getInstance().fire(HhToast(title: '设备重启成功',type: 0));
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

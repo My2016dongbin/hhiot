@@ -24,6 +24,8 @@ class MessageController extends GetxController {
   final Rx<String> dateStr = "日期".obs;
   final Rx<String> warnCount = "0".obs;
   final Rx<String> noticeCount = "0".obs;
+  final Rx<int> warnCountInt = 0.obs;
+  final Rx<int> noticeCountInt = 0.obs;
   final Rx<String> test = 'test'.obs;
   final PagingController<int, dynamic> deviceController =
       PagingController(firstPageKey: 1);
@@ -38,7 +40,7 @@ class MessageController extends GetxController {
   final Rx<int> chooseListLeftNumber = 0.obs;
   final Rx<int> chooseListRightNumber = 0.obs;
   final RxList<dynamic> spaceList = [{
-    "name":"全部",
+    "name":"空间",
     "id":null,
   }].obs;
   List<num> chooseListLeft = [];
@@ -53,7 +55,7 @@ class MessageController extends GetxController {
   final Rx<int> spaceSelectIndex = 0.obs;
   final List<dynamic> typeList = [
     {
-      "name":"全部",
+      "name":"类型",
       "type":null,
     },
     {
@@ -98,8 +100,10 @@ class MessageController extends GetxController {
     HhLog.d("fetchPageRight --  $pageKey , $result");
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = result["data"]["list"]??[];
-      int number = result["data"]["total"];
+      /*int number = result["data"]["total"];
       noticeCount.value = number>99?"99+":"$number";
+      noticeCountInt.value = number;*/
+      getNoticeCount();
 
       if (pageKey == 1) {
         warnController.itemList = [];
@@ -131,8 +135,10 @@ class MessageController extends GetxController {
     HhLog.d("fetchPageLeft --  $pageKey , $result");
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = result["data"]["list"]??[];
-      int number = result["data"]["total"]??0;
+      /*int number = result["data"]["total"]??0;
       warnCount.value = number>99?"99+":"$number";
+      warnCountInt.value = number;*/
+      getWarnCount();
 
       if (pageKey == 1) {
         deviceController.itemList = [];
@@ -157,7 +163,7 @@ class MessageController extends GetxController {
         List<dynamic> listS =  result["data"]["list"]??[];
         spaceList.value = [];
         spaceList.value.add({
-          "name":"全部",
+          "name":"空间",
           "id":null,
         });
         spaceList.value.addAll(listS);
@@ -285,6 +291,33 @@ class MessageController extends GetxController {
       dateListLeft = [];
       pageNumLeft = 1;
       fetchPageLeft(1);
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  Future<void> getNoticeCount() async {
+    var result = await HhHttp()
+        .request(RequestUtils.unReadCountNotice, method: DioMethod.get);
+    HhLog.d("getNoticeCount --  $result");
+    if (result["code"] == 0) {
+      int number = result["data"]??0;
+      noticeCount.value = number>99?"99+":"$number";
+      noticeCountInt.value = number;
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+  Future<void> getWarnCount() async {
+    var result = await HhHttp()
+        .request(RequestUtils.unReadCountWarn, method: DioMethod.get);
+    HhLog.d("getWarnCount --  $result");
+    if (result["code"] == 0) {
+      int number = result["data"]??0;
+      warnCount.value = number>99?"99+":"$number";
+      warnCountInt.value = number;
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
