@@ -1033,7 +1033,7 @@ class MainPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8.w,),
-                  item["shareMark"]==1 || item["shareMark"]==2 ?Column(
+                  CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -1049,8 +1049,9 @@ class MainPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ):const SizedBox(),
-                  item['deviceCount']==0?const SizedBox():InkWell(
+                  ):const SizedBox()):const SizedBox(),
+                  /*item['deviceCount']==0?const SizedBox():*/
+                  InkWell(
                     onTap: (){
                       showEditDeviceDialog(item);
                     },
@@ -1373,7 +1374,7 @@ class MainPage extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20.w))),
         child: Row(
           children: [
-            Expanded(
+            CommonData.personal?Expanded(
               child: BouncingWidget(
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
@@ -1412,8 +1413,8 @@ class MainPage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            SizedBox(width: 50.w,),
+            ):const SizedBox(),
+            CommonData.personal?SizedBox(width: 50.w,):const SizedBox(),
             Expanded(
               child: BouncingWidget(
                 duration: const Duration(milliseconds: 100),

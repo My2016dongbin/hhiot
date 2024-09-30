@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/share/manage/share_manage_binding.dart';
 import 'package:iot/pages/common/share/manage/share_manage_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
@@ -469,7 +470,7 @@ class MyPage extends StatelessWidget {
                         ),
 
                         ///分享管理
-                        InkWell(
+                        CommonData.personal?InkWell(
                           onTap: () {
                             Get.to(() => ShareManagePage(), binding: ShareManageBinding());
                           },
@@ -526,7 +527,7 @@ class MyPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
+                        ):const SizedBox(),
 
                         ///帮助与反馈
                         InkWell(

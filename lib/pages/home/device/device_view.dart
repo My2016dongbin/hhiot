@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
@@ -211,7 +212,7 @@ class DevicePage extends StatelessWidget {
                                   color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
                             ),
                           ),
-                          item['shared']==true?Container(
+                          CommonData.personal?(item['shared']==true?Container(
                             margin: EdgeInsets.only(left:10.w),
                             padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
                             decoration: BoxDecoration(
@@ -223,11 +224,11 @@ class DevicePage extends StatelessWidget {
                               style: TextStyle(
                                   color: HhColors.whiteColor, fontSize: 23.sp),
                             ),
-                          ):const SizedBox(),
+                          ):const SizedBox()):const SizedBox(),
                         ],
                       ),
                     ),
-                    Align(
+                    CommonData.personal?Align(
                       alignment: Alignment.centerRight,
                       child:
                       BouncingWidget(
@@ -259,16 +260,7 @@ class DevicePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    /*item['shared']==true?const SizedBox():Align(
-                      alignment: Alignment.centerRight,
-                      child: Image.asset(
-                        "assets/images/common/close.png",
-                        width: 50.w,
-                        height: 50.w,
-                        fit: BoxFit.fill,
-                      ),
-                    ),*/
+                    ):const SizedBox(),
                   ],
                 ),
               ),

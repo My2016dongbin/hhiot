@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
@@ -775,7 +776,7 @@ class DeviceDetailPage extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20.w))),
         child: Row(
           children: [
-            Expanded(
+            CommonData.personal?Expanded(
               child: BouncingWidget(
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
@@ -814,8 +815,8 @@ class DeviceDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            SizedBox(width: 50.w,),
+            ):const SizedBox(),
+            CommonData.personal?SizedBox(width: 50.w,):const SizedBox(),
             Expanded(
               child: BouncingWidget(
                 duration: const Duration(milliseconds: 100),
