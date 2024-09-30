@@ -30,7 +30,7 @@ class ShareManageController extends GetxController {
     super.onInit();
   }
 
-  Future<void> handleShare(String id,int status) async {
+  Future<void> handleShare(String id,int status,String name) async {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     dynamic data = {
       "id":id,
@@ -40,7 +40,7 @@ class ShareManageController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("handleShare -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      EventBusUtil.getInstance().fire(HhToast(title: '操作成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: status==2?'操作成功':'“$name”\n已共享至“默认空间”',type: 0));
       pageNum = 1;
       shareList(1);
     }else{

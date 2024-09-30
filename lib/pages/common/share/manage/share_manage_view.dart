@@ -170,7 +170,7 @@ class ShareManagePage extends StatelessWidget {
                                             Get.back();
                                           }, () {
                                             Get.back();
-                                            logic.handleShare("${item['id']}", 2);
+                                            logic.handleShare("${item['id']}", 2,"");
                                           }, () {
                                             Get.back();
                                           }, rightStr: "拒绝");
@@ -199,7 +199,7 @@ class ShareManagePage extends StatelessWidget {
                                             Get.back();
                                           }, () {
                                             Get.back();
-                                            logic.handleShare("${item['id']}", 1);
+                                            logic.handleShare("${item['id']}", 1, parseName('${item['shareUrerName']}',item['receiveDetailDOList']??[]),);
                                           }, () {
                                             Get.back();
                                           }, rightStr: "同意");
@@ -299,6 +299,15 @@ class ShareManagePage extends StatelessWidget {
       rt = "$name邀请您共享${list[0]['deviceName']}";
     }else{
       rt = "$name邀请您共享";
+    }
+    return rt;
+  }
+  parseName(String name, List<dynamic> list) {
+    String rt = "";
+    if(list.isNotEmpty){
+      rt = "${list[0]['deviceName']}";
+    }else{
+      rt = "";
     }
     return rt;
   }
