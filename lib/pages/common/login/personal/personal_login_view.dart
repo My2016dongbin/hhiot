@@ -254,6 +254,10 @@ class PersonalLoginPage extends StatelessWidget {
                         EventBusUtil.getInstance().fire(HhToast(title: '账号不能为空'));
                         return;
                       }
+                      if(logic.passwordController!.text.isEmpty){
+                        EventBusUtil.getInstance().fire(HhToast(title: '密码不能为空'));
+                        return;
+                      }
                       // if(!CommonUtils().validatePassword(logic.passwordController!.text)){
                       //   EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
                       //   return;

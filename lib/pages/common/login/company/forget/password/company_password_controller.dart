@@ -46,7 +46,7 @@ class CompanyPasswordController extends GetxController {
     HhLog.d("submit -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] != null) {
-      EventBusUtil.getInstance().fire(HhToast(title: "密码设置成功"));
+      EventBusUtil.getInstance().fire(HhToast(title: "密码设置成功",type: 1));
       //密码设置成功后清除账号密码
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove(SPKeys().account);
