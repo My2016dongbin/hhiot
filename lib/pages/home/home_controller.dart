@@ -91,6 +91,7 @@ class HomeController extends GetxController {
                 event.type==0?SizedBox(height: 15.w,):const SizedBox(),
                 Text(
                   event.title,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: event.color==0?HhColors.whiteColor:HhColors.textColor,
                       fontSize: 26.sp),

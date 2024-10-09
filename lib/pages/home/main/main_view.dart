@@ -287,11 +287,11 @@ class MainPage extends StatelessWidget {
         ),
         Container(
           height: 160.w,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
+                colors: CommonUtils().gradientColors()),
           ),
           child: Stack(
             children: [
@@ -565,11 +565,11 @@ class MainPage extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
+                colors: CommonUtils().gradientColors()),
           ),
         ),
         Column(
@@ -992,14 +992,14 @@ class MainPage extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  item['status']==1?const SizedBox():Container(
+                  item['activeStatus']==1?const SizedBox():Container(
                     height: 0.23.sw,
                     width: 0.5.sw,
                     decoration: BoxDecoration(
                         color: HhColors.grayEDBackColor.withAlpha(160),
                         borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
                   ),
-                  item['status']==1?const SizedBox():Align(
+                  item['activeStatus']==1?const SizedBox():Align(
                     alignment: Alignment.center,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -1099,11 +1099,11 @@ class MainPage extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [HhColors.backTransColor1, HhColors.backTransColor3]),
+                colors: CommonUtils().gradientColors()),
           ),
         ),
         Column(

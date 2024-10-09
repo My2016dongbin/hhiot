@@ -785,7 +785,7 @@ class DeviceDetailPage extends StatelessWidget {
                 duration: const Duration(milliseconds: 100),
                 scaleFactor: 1.2,
                 onPressed: (){
-                  if(item["shareMark"]==1){
+                  if(item["shareMark"]==2){
                     return;
                   }
                   Get.back();
@@ -808,13 +808,13 @@ class DeviceDetailPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset(
-                      item["shareMark"]==1?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
+                      item["shareMark"]==2?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
                       width: 45.w,
                       height: 45.w,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(height: 10.w,),
-                    Text('分享',style: TextStyle(color: item["shareMark"]==1?HhColors.grayCCTextColor:HhColors.gray6TextColor,fontSize: 26.sp,
+                    Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.gray6TextColor,fontSize: 26.sp,
                       decoration: TextDecoration.none,),),
                   ],
                 ),

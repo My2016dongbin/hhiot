@@ -1,3 +1,6 @@
+import 'package:flutter/animation.dart';
+import 'package:iot/utils/HhColors.dart';
+
 class CommonData{
   static int time = 0;
   static double ?latitude;
@@ -12,6 +15,5 @@ class CommonData{
   static String ?deviceNo;
   static String ?sessionId;
   static String ?endpoint;
-
   static String info = "";
 }

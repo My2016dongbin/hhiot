@@ -157,7 +157,7 @@ class DeviceManagePage extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.fromLTRB(10.w, 0, 60.w, 0),
+                                margin: EdgeInsets.fromLTRB(10.w, 0, 20.w, 0),
                                 padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
                                 decoration: BoxDecoration(
                                   color: item['activeStatus']==1?HhColors.transBlueColors:HhColors.transRedColors,
@@ -170,17 +170,17 @@ class DeviceManagePage extends StatelessWidget {
                                       color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
                                 ),
                               ),
-                              CommonData.personal?(item['shared']==true?Container(
+                              CommonData.personal?(item['shareMark']!=0?Container(//设备分享标识 0未分享 1分享中 2好友分享
                                 margin: EdgeInsets.only(left:10.w),
                                 padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
                                 decoration: BoxDecoration(
-                                    color: HhColors.mainBlueColor,
+                                    color: item['shareMark']==1?HhColors.mainBlueColor:HhColors.grayEEBackColor,
                                     borderRadius: BorderRadius.all(Radius.circular(5.w))
                                 ),
                                 child: Text(
-                                  '分享中*1',
+                                  item['shareMark']==1?'分享中*${item['shareCount']}': item['shareMark']==2?"好友分享":"",
                                   style: TextStyle(
-                                      color: HhColors.whiteColor, fontSize: 23.sp),
+                                      color: item['shareMark']==1?HhColors.whiteColor:HhColors.gray9TextColor, fontSize: 23.sp),
                                 ),
                               ):const SizedBox()):const SizedBox(),
                             ],
@@ -193,6 +193,9 @@ class DeviceManagePage extends StatelessWidget {
                             duration: const Duration(milliseconds: 100),
                             scaleFactor: 1.2,
                             onPressed: (){
+                              if(item['shareMark']==2){
+                                return;
+                              }
                               DateTime date = DateTime.now();
                               String time = date.toIso8601String().substring(0,19).replaceAll("T", " ");
                               Get.to(()=>SharePage(),binding: ShareBinding(),arguments: {
@@ -211,7 +214,7 @@ class DeviceManagePage extends StatelessWidget {
                             child: Container(
                               margin: EdgeInsets.only(right: 0.w),
                               child: Image.asset(
-                                item['shared']==true?"assets/images/common/shared.png":"assets/images/common/share.png",
+                                item['shareMark']==2?"assets/images/common/shared.png":"assets/images/common/share.png",
                                 width: 50.w,
                                 height: 50.w,
                                 fit: BoxFit.fill,

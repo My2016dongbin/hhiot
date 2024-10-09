@@ -74,7 +74,7 @@ class DeviceAddPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
+                logic.isEdit.value?const SizedBox():Align(
                   alignment: Alignment.topRight,
                   child:
                   BouncingWidget(

@@ -516,9 +516,9 @@ class MessagePage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 pagingController: logic.deviceController,
                 builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message_search.png',info: '没有找到匹配的结果',mid: 50.w,
-                    height: 0.32.sw,
-                    width: 0.4.sw,),
+                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message.png',info: '暂无消息',mid: 30.w,
+                    height: 0.36.sw,
+                    width: 0.44.sw,),
                   itemBuilder: (context, item, index) {
                     if(item["showDate"]==null){
                       if(logic.dateListLeft.contains(CommonUtils().parseLongTimeYearDay('${item['createTime']}'))){

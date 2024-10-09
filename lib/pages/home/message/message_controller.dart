@@ -200,6 +200,7 @@ class MessageController extends GetxController {
       pageStatus.value = true;
       pageNumRight = 1;
       fetchPageRight(1);
+      getNoticeCount();
     } else {
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(resultR["msg"])));
     }
@@ -219,6 +220,7 @@ class MessageController extends GetxController {
       dateListLeft = [];
       pageNumLeft = 1;
       fetchPageLeft(1);
+      getWarnCount();
     } else {
       // EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

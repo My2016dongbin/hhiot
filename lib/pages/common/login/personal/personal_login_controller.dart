@@ -17,6 +17,7 @@ import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tpns_flutter_plugin/tpns_flutter_plugin.dart';
 
 class PersonalLoginController extends GetxController {
   late BuildContext context;
@@ -64,6 +65,7 @@ class PersonalLoginController extends GetxController {
                   event.type==0?SizedBox(height: 15.w,):const SizedBox(),
                   Text(
                     event.title,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: event.color==0?HhColors.whiteColor:HhColors.textColor,
                         fontSize: 26.sp),
@@ -220,6 +222,9 @@ class PersonalLoginController extends GetxController {
           SPKeys().socialUsers, '${result["data"]["socialUsers"]}');
       await prefs.setString(SPKeys().posts, '${result["data"]["posts"]}');
 
+
+      XgFlutterPlugin().setTags(["${result["data"]["id"]}"]);
+      XgFlutterPlugin().setAccount("${result["data"]["id"]}",AccountType.UNKNOWN);
       EventBusUtil.getInstance().fire(HhToast(title: '登录成功',type: 1));
 
       Future.delayed(const Duration(seconds: 1), () {

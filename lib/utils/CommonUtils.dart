@@ -18,6 +18,11 @@ import 'package:iot/utils/SPKeys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonUtils{
+  List<Color> gradientColors(){
+    List<Color> gradientColors = [HhColors.backTransColor1,HhColors.backTransColor1, HhColors.backTransColor21,HhColors.backTransColor22, HhColors.backTransColor3, HhColors.backTransColor3, HhColors.backTransColor3, HhColors.backTransColor3, HhColors.backTransColor3];
+
+    return gradientColors;
+  }
   String parseMessageType(String s){
     String type = "设备报警";
     if(s == 'deviceAlarm'){
