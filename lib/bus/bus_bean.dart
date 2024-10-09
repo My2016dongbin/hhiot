@@ -1,14 +1,20 @@
 class HhToast{
   String title;
   int ?type;//1 success 2 error 3 warn
+  int ?color;//0 white
 
-  HhToast({required this.title,this.type});
+  HhToast({required this.title,this.type,this.color});
 }
 class HhLoading{
   bool show;
   String ?title;
 
   HhLoading({required this.show,this.title});
+}
+class LocText{
+  String ?text;
+
+  LocText({required this.text});
 }
 class SpaceList{
   SpaceList();

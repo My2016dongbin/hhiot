@@ -65,7 +65,7 @@ class PersonalLoginController extends GetxController {
                   Text(
                     event.title,
                     style: TextStyle(
-                        color: HhColors.textColor,
+                        color: event.color==0?HhColors.whiteColor:HhColors.textColor,
                         fontSize: 26.sp),
                   ),
                   event.type==0?SizedBox(height: 10.w,):const SizedBox(),

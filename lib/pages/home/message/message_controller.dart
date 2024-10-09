@@ -39,10 +39,11 @@ class MessageController extends GetxController {
   List<String> dateListRight = [];
   final Rx<int> chooseListLeftNumber = 0.obs;
   final Rx<int> chooseListRightNumber = 0.obs;
-  final RxList<dynamic> spaceList = [{
+  final Rx<bool> spaceListStatus = true.obs;
+  List<dynamic> spaceList = [{
     "name":"空间",
     "id":null,
-  }].obs;
+  }];
   List<num> chooseListLeft = [];
   List<num> chooseListRight = [];
   final Rx<bool> editLeft = false.obs;
@@ -122,8 +123,8 @@ class MessageController extends GetxController {
     map['pageNo'] = pageKey;
     map['pageSize'] = pageSize;
     map['deviceName'] = deviceNameController.text;
-    if(spaceList.value!=null && spaceList.value.isNotEmpty && spaceList.value[spaceSelectIndex.value]!=null){
-      map['spaceId'] = spaceList.value[spaceSelectIndex.value]["id"];
+    if(spaceList!=null && spaceList.isNotEmpty && spaceList[spaceSelectIndex.value]!=null){
+      map['spaceId'] = spaceList[spaceSelectIndex.value]["id"];
     }
     map['alarmType'] = typeList[typeSelectIndex.value]["type"];//openSensor 传感器开箱报警；openCap 箱盖开箱报警；human 人员入侵报警；tilt 设备倾斜报警；car 车辆入侵报警
     if(dateStr.value!="日期"){
@@ -157,16 +158,20 @@ class MessageController extends GetxController {
     map['pageNo'] = '1';
     map['pageSize'] = '100';
     var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
-    HhLog.d("getSpaceList $result");
+    HhLog.d("getSpaceList- $result");
     if(result["code"]==0 && result["data"]!=null){
       try{
         List<dynamic> listS =  result["data"]["list"]??[];
-        spaceList.value = [];
-        spaceList.value.add({
+        spaceList.clear();
+        spaceList.add({
           "name":"空间",
           "id":null,
         });
-        spaceList.value.addAll(listS);
+        for(int i = 0; i < listS.length; i++){
+          spaceList.add(listS[i]);
+        }
+        spaceListStatus.value = false;
+        spaceListStatus.value = true;
 
       }catch(e){
         HhLog.e(e.toString());

@@ -345,7 +345,7 @@ class MessagePage extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('${logic.spaceList.value[logic.spaceSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseSpace.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 23.sp),),
+                            Text('${logic.spaceList[logic.spaceSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseSpace.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 23.sp),),
                             Image.asset(
                               "assets/images/common/icon_down_status.png",
                               width: 20.w,
@@ -419,7 +419,7 @@ class MessagePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Wrap(
-                children: buildSpaceListView(),
+                children: logic.spaceListStatus.value?buildSpaceListView():const SizedBox(),
               ),
               Stack(
                 children: [
@@ -1119,8 +1119,8 @@ class MessagePage extends StatelessWidget {
 
   buildSpaceListView() {
     List<Widget> list = [];
-    for(int i = 0; i < logic.spaceList.value.length; i++){
-      dynamic type = logic.spaceList.value[i];
+    for(int i = 0; i < logic.spaceList.length; i++){
+      dynamic type = logic.spaceList[i];
       list.add(
         InkWell(
           onTap: (){

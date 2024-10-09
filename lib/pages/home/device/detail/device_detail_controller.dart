@@ -143,8 +143,8 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceInfo -- $result");
     if(result["code"]==0 && result["data"]!=null){
       item = result["data"];
-      name.value = CommonUtils().parseNull(result["data"]["name"], "");
-      productName.value = result["data"]["productName"];
+      name.value = CommonUtils().parseNull(result["data"]["name"]??'', "");
+      productName.value = result["data"]["productName"]??'';
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

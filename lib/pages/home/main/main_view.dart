@@ -1017,48 +1017,48 @@ class MainPage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "${item['name']}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: HhColors.blackColor,
-                          fontSize: 30.sp,),
-                    ),
-                  ),
-                  SizedBox(width: 8.w,),
-                  CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                        decoration: BoxDecoration(
-                          color: HhColors.grayEFBackColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8.w))
-                        ),
-                        child: Text(
-                          item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
-                          style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 23.sp),
-                        ),
+            InkWell(
+              onTap: (){
+                showEditDeviceDialog(item);
+              },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "${item['name']}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 30.sp,),
                       ),
-                    ],
-                  ):const SizedBox()):const SizedBox(),
-                  /*item['deviceCount']==0?const SizedBox():*/
-                  InkWell(
-                    onTap: (){
-                      showEditDeviceDialog(item);
-                    },
-                    child: Container(padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
+                    ),
+                    SizedBox(width: 8.w,),
+                    CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                          decoration: BoxDecoration(
+                            color: HhColors.grayEFBackColor,
+                            borderRadius: BorderRadius.all(Radius.circular(8.w))
+                          ),
+                          child: Text(
+                            item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
+                            style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 23.sp),
+                          ),
+                        ),
+                      ],
+                    ):const SizedBox()):const SizedBox(),
+                    /*item['deviceCount']==0?const SizedBox():*/
+                    Container(padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
                         child: Text(':',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 30.sp,fontWeight: FontWeight.bold),)),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],

@@ -16,7 +16,7 @@ class RequestUtils{
   static const codeRegister = '$base/admin-api/system/auth/register';//注册
   static const weatherLocation = '$base/admin-api/mid/weather-now/getWeatherByLocation';//查询定位天气
   static const unReadCount = '$base/admin-api/system/message-log/getUnReadMessageCount';//主页未读消息数量查询
-  static const unReadCountWarn = '$base/admin-api/system/message-log/getUnReadMessageCount';//未读消息数量查询
+  static const unReadCountWarn = '$base/admin-api/mid/device-alarm-info/getUnReadDeviceAlarmCount';//未读消息数量查询
   static const unReadCountNotice = '$base/admin-api/system/message-log/getUnReadMessageCount';//未读消息数量查询
   static const mainSpaceList = '$base/admin-api/mid/space/page';//主页空间列表
   static const spaceCreate = '$base/admin-api/mid/space/create';//添加空间

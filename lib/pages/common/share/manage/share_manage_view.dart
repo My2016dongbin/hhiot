@@ -207,7 +207,7 @@ class ShareManagePage extends StatelessWidget {
                                         child: Container(
                                           padding: EdgeInsets.all(10.w),
                                           child: Text(
-                                            "同意",
+                                            "同意共享",
                                             maxLines: 2,
                                             style: TextStyle(
                                                 color: HhColors.mainBlueColor,

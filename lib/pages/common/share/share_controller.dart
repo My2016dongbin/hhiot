@@ -61,7 +61,7 @@ class ShareController extends GetxController {
     HhLog.d("shareSend shareCreateResult -- $shareCreateResult");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (shareCreateResult["code"] == 0 && shareCreateResult["data"] != null) {
-      EventBusUtil.getInstance().fire(HhToast(title: '${arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}\n已共享',type: 0));
+      EventBusUtil.getInstance().fire(HhToast(title: '“${arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}”\n已共享',type: 0,color: 0));
     } else {
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(shareCreateResult["msg"]),type: 2));
     }
