@@ -290,7 +290,7 @@ class DeviceAddPage extends StatelessWidget {
                         logic.model["spaceId"] = logic.spaceId;
                         logic.updateDevice();
                       }else{
-                        if(logicLocation.locText.value == ''){
+                        if(logicLocation.locText.value == '' || logicLocation.locText.value == '已搜索'){
                           EventBusUtil.getInstance().fire(HhToast(title: '请选择设备定位'));
                           return;
                         }
@@ -453,7 +453,7 @@ class DeviceAddPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          logic.isEdit.value?(logic.locText.value):(logicLocation.locText.value!=""?logicLocation.locText.value:logic.location.value),
+                          logic.isEdit.value?(logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
                           style: TextStyle(
                             color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
                             fontSize: 26.sp,fontWeight: FontWeight.bold),

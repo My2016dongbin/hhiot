@@ -19,7 +19,9 @@ class SearchLocationController extends GetxController {
   final Rx<double> latitude = 0.0.obs;
   final Rx<String> locText = ''.obs;
   final Rx<String> locCity = ''.obs;
+  late int searchIndex = 0;
   BMFMapController ?controller;
+  late List<BMFPoiInfo> searchList = [];
   TextEditingController ?searchController = TextEditingController();
 
   @override
@@ -136,16 +138,19 @@ class SearchLocationController extends GetxController {
       locCity.value = result.addressDetail!.city!;
       if(status!=0){
         List<BMFPoiInfo> ?poiList = result.poiList;
-        if(poiList!=null && poiList.isNotEmpty){
+        searchList = poiList??[];
+        locText.value = '';
+        locText.value = '已搜索';
+        /*if(poiList!=null && poiList.isNotEmpty){
           locText.value = CommonUtils().parseNull("${poiList[0].name}", "定位中..");
         }else{
           locText.value = CommonUtils().parseNull("${result.address}", "定位中..");
-        }
+        }*/
 
-        controller?.setCenterCoordinate(
+        /*controller?.setCenterCoordinate(
           BMFCoordinate(latitude.value,longitude.value), false,
         );
-        controller?.setZoomTo(17);
+        controller?.setZoomTo(17);*/
       }
     });
     /// 发起检索

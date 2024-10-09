@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
+import 'package:flutter_baidu_mapapi_search/flutter_baidu_mapapi_search.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/location/search/saerch_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -78,7 +80,7 @@ class SearchLocationPage extends StatelessWidget {
           alignment: Alignment.topRight,
           child: InkWell(
             onTap: (){
-              if(logic.locText.value == ""){
+              if(logic.locText.value == "" || logic.locText.value == "已搜索"){
                 EventBusUtil.getInstance().fire(HhToast(title: '请选择定位'));
                 return;
               }
@@ -189,43 +191,87 @@ class SearchLocationPage extends StatelessWidget {
 
         logic.locText.value==""?const SizedBox():Align(
           alignment: Alignment.bottomCenter,
-          child: InkWell(
-            onTap: (){
-              logic.controller?.setCenterCoordinate(
-                BMFCoordinate(logic.latitude.value,logic.longitude.value), false,
-              );
-              logic.controller?.setZoomTo(17);
-            },
-            child: Container(
-              width: 1.sw,
-              padding: EdgeInsets.fromLTRB(40.w, 30.w, 40.w, 30.w),
-              margin: EdgeInsets.fromLTRB(20.w,0,20.w,0),
-              decoration: BoxDecoration(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(60.w,0,60.w,0),
+            decoration: BoxDecoration(
                 color: HhColors.whiteColor,
                 borderRadius: BorderRadius.all(Radius.circular(10.w))
-              ),
+            ),
+            height: 0.4.sh,
+            width: 1.sw,
+            child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    logic.locText.value
-                  ),
-                  SizedBox(height: 20.w,),
-                  Text(
-                    '经度：${logic.longitude.value}'
-                  ),
-                  SizedBox(height: 20.w,),
-                  Text(
-                    '纬度：${logic.latitude.value}'
-                  ),
-                ],
+                children: buildList(),
               ),
             ),
           ),
         )
       ],
     );
+  }
+
+  buildList() {
+    List<Widget> list = [];
+    for(int i = 0; i < logic.searchList.length;i++){
+      BMFPoiInfo info = logic.searchList[i];
+      list.add(
+          InkWell(
+            onTap: (){
+              logic.locText.value = CommonUtils().parseNull("${info.name}", "定位中..");
+              logic.controller?.setCenterCoordinate(
+                BMFCoordinate(info.pt!.latitude,info.pt!.longitude), false,
+              );
+              logic.controller?.setZoomTo(17);
+
+              logic.controller?.cleanAllMarkers();
+
+              logic.latitude.value = info.pt!.latitude;
+              logic.longitude.value = info.pt!.longitude;
+
+              logic.userMarker();
+
+              /// 创建BMFMarker
+              BMFMarker marker = BMFMarker(
+                  position: BMFCoordinate(info.pt!.latitude,info.pt!.longitude),
+                  enabled: false,
+                  visible: true,
+                  identifier: "location",
+                  icon: 'assets/images/common/ic_device_online.png');
+
+              /// 添加Marker
+              logic.controller?.addMarker(marker);
+            },
+            child: Container(
+              width: 1.sw,
+              padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
+              margin: EdgeInsets.fromLTRB(20.w,0,20.w,0),
+              decoration: const BoxDecoration(
+                  color: HhColors.whiteColor,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                      info.name??""
+                  ),
+                  SizedBox(height: 20.w,),
+                  Text(
+                      '（${CommonUtils().parseLatLngPoint('${info.pt!.longitude}',2)}，${CommonUtils().parseLatLngPoint('${info.pt!.latitude}',2)}）',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.sp),
+                  ),
+                  SizedBox(height: 30.w,),
+                  Container(
+                    width: 1.sw,
+                    height: 1.w,
+                    color: HhColors.backColorF0,
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
+    }
+    return list;
   }
 
 }

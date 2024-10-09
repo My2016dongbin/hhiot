@@ -53,6 +53,15 @@ class CommonUtils{
     time = time.replaceAll("T", " ");
     return time;
   }
+  String parseLatLngPoint(String s,int number){
+    String rt = "";
+    try{
+      rt = s.substring(0,s.indexOf('.')+number+1);
+    }catch(e){
+      rt = s;
+    }
+    return rt;
+  }
   String parseLongTime(String s){
     DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
     String time = date.toIso8601String();
