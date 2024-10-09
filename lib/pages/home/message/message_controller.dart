@@ -54,6 +54,7 @@ class MessageController extends GetxController {
   final TooltipController tipController = TooltipController();
   final Rx<int> typeSelectIndex = 0.obs;
   final Rx<int> spaceSelectIndex = 0.obs;
+  StreamSubscription ?spaceListSubscription;
   final List<dynamic> typeList = [
     {
       "name":"类型",
@@ -86,6 +87,11 @@ class MessageController extends GetxController {
     fetchPageLeft(1);
     fetchPageRight(1);
     getSpaceList();
+    spaceListSubscription = EventBusUtil.getInstance()
+        .on<SpaceList>()
+        .listen((event) {
+      getSpaceList();
+    });
     super.onInit();
   }
 

@@ -83,17 +83,21 @@ class MyPage extends StatelessWidget {
               String? barcodeScanRes = await scanner.scan();
               HhLog.d("barCode $barcodeScanRes");
               if(barcodeScanRes!.isNotEmpty){
-                dynamic model = jsonDecode(barcodeScanRes);
-                if(model["type"] == "share"){
-                  String requestUrl = RequestUtils.base + model["shareUrl"];
-                  logic.getShareDetail(requestUrl);
-                }else{
+                try{
+                  dynamic model = jsonDecode(barcodeScanRes);
+                  if(model["type"] == "share"){
+                    String requestUrl = RequestUtils.base + model["shareUrl"];
+                    logic.getShareDetail(requestUrl);
+                  }else{
+                    Get.to(()=>DeviceAddPage(snCode: barcodeScanRes,),binding: DeviceAddBinding());
+                  }
+                }catch(e){
                   Get.to(()=>DeviceAddPage(snCode: barcodeScanRes,),binding: DeviceAddBinding());
                 }
               }
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 90.w, 115.w, 0),
+              margin: EdgeInsets.fromLTRB(0, 90.w, 40.w, 0),
               child: Image.asset(
                 "assets/images/common/icon_scanner.png",
                 width: 45.w,
@@ -103,7 +107,7 @@ class MyPage extends StatelessWidget {
             ),
           ),
         ),
-        Align(
+        /*Align(
           alignment: Alignment.topRight,
           child: BouncingWidget(
             duration: const Duration(milliseconds: 100),
@@ -121,7 +125,7 @@ class MyPage extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        ),*/
 
         Container(
           margin: EdgeInsets.only(top: 120.w),
