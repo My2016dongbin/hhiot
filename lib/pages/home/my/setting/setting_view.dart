@@ -494,7 +494,7 @@ class SettingPage extends StatelessWidget {
                 ),
 
                 ///地区和语言
-                Container(
+                /*Container(
                   margin: EdgeInsets.fromLTRB(15.w, 20.w, 0, 20.w),
                   child: Text(
                     "地区和语言",
@@ -620,7 +620,7 @@ class SettingPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                ),*/
 
 
                 ///其他设置

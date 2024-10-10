@@ -168,6 +168,13 @@ class DeviceAddController extends GetxController {
   }
 
   Future<void> updateDevice() async {
+    try{
+      HhLog.d("newItems[index.value] ${newItems[index.value]}");
+      model['spaceName'] = newItems[index.value]['name'];
+      model['spaceId'] = newItems[index.value]['id'];
+    }catch(e){
+      //
+    }
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     var result = await HhHttp().request(RequestUtils.deviceUpdate,method: DioMethod.put,data: model);
     EventBusUtil.getInstance().fire(HhLoading(show: false));

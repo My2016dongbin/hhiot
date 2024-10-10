@@ -26,9 +26,10 @@ import 'package:iot/utils/HhLog.dart';
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
 
-  DeviceDetailPage(String deviceNo, String id, {super.key}) {
+  DeviceDetailPage(String deviceNo, String id, int shareMark, {super.key}) {
     logic.deviceNo = deviceNo;
     logic.id = id;
+    logic.shareMark = shareMark;
   }
 
   @override
@@ -289,33 +290,15 @@ class DeviceDetailPage extends StatelessWidget {
           height: 1.sw,
           child: Stack(
             children: [
-              Align(
+              logic.liveStatus.value?Align(
                 alignment: Alignment.topLeft,
-                child: InkWell(
-                  onTap: () {
-                    if (logic.liveList.length > 1) {
-                      logic.liveIndex.value++;
-                      if (logic.liveIndex.value >= logic.liveList.length) {
-                        logic.liveIndex.value = 0;
-                      }
-                      logic.getDeviceStream();
-                      // logic.getPlayUrl('${logic.liveList[logic.liveIndex.value]["deviceId"]}','${logic.liveList[logic.liveIndex.value]["number"]}');
-                    }
-                  },
-                  child: Container(
-                      padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
-                      margin: EdgeInsets.fromLTRB(20.w, 10.w, 0, 0),
-                      decoration: BoxDecoration(
-                          color: HhColors.whiteColor,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(12.w))),
-                      child: Text(
-                        '摄像头${logic.liveIndex.value + 1}',
-                        style: TextStyle(
-                            color: HhColors.gray9TextColor, fontSize: 23.w),
-                      )),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: buildCameraTabs(),
+                  ),
                 ),
-              ),
+              ):const SizedBox(),
 
               ///控制背景阴影
               Align(
@@ -537,7 +520,7 @@ class DeviceDetailPage extends StatelessWidget {
                             fit: BoxFit.fill,
                           ),
                           Text(
-                            '截图',
+                            '拍照',
                             style: TextStyle(
                                 color: HhColors.gray9TextColor, fontSize: 23.sp),
                           )
@@ -905,6 +888,36 @@ class DeviceDetailPage extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    ),barrierDismissible: true);
+  }
+
+  buildCameraTabs() {
+    List<Widget> list = [];
+    for(int i = 0; i < logic.liveList.length;i++){
+      dynamic live = logic.liveList[i];
+      list.add(
+          InkWell(
+            onTap: () {
+              logic.liveIndex.value = i;
+              logic.deviceId = logic.liveList[logic.liveIndex.value]["deviceId"];
+              logic.channelNumber = logic.liveList[logic.liveIndex.value]["number"];
+              logic.getPlayUrl(logic.deviceId,logic.channelNumber);
+            },
+            child: Container(
+                padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(12.w))),
+                child: Text(
+                  '${live['positionName']}',
+                  style: TextStyle(
+                      color: logic.liveIndex.value == i?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: 23.w),
+                )),
+          )
+      );
+    }
+    return list;
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bouncing_widget/bouncing_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
@@ -8,8 +10,11 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/RequestUtils.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -29,6 +34,7 @@ class HomeController extends GetxController {
   Function()? onScrollToUnreadMessage;
   late StreamSubscription showToastSubscription;
   late StreamSubscription showLoadingSubscription;
+  late StreamSubscription showShareReceiveSubscription;
 
   switchTab(index) {
     this.index.value = index;
@@ -120,8 +126,162 @@ class HomeController extends GetxController {
         context.loaderOverlay.hide();
       }
     });
+    showShareReceiveSubscription = EventBusUtil.getInstance()
+        .on<Share>()
+        .listen((event) {
+          dynamic model = event.model;
+
+      showCupertinoDialog(context: context, builder: (context) => Center(
+        child: Container(
+          width: 1.sw,
+          height: 640.w,
+          margin: EdgeInsets.fromLTRB(50.w, 0, 50.w, 0),
+          padding: EdgeInsets.fromLTRB(45.w, 35.w, 45.w, 15.w),
+          decoration: BoxDecoration(
+              color: HhColors.whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(20.w))),
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Image.asset(
+                    "assets/images/common/ic_x.png",
+                    width: 35.w,
+                    height: 35.w,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 25.w),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        CommonUtils().parseNull("${model['shareUrerName']??''}", ""),
+                        style: TextStyle(
+                            color: HhColors.blackTextColor,
+                            fontSize: 32.sp,
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10.w,),
+                      Text(
+                        "共享给您",
+                        style: TextStyle(
+                            color: HhColors.blackTextColor,
+                            fontSize: 32.sp,
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.w200),
+                      ),
+                      SizedBox(height: 20.w,),
+                      Image.asset(
+                        "assets/images/common/icon_camera_space.png",
+                        width: 240.w,
+                        height: 240.w,
+                        fit: BoxFit.fill,
+                      ),
+                      SizedBox(height: 20.w,),
+                      Text(
+                        CommonUtils().parseNull("${model['deviceName']??''}", ""),
+                        style: TextStyle(
+                            color: HhColors.gray6TextColor,
+                            fontSize: 30.sp,
+                            decoration: TextDecoration.none,
+                            fontWeight: FontWeight.w200),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: (){
+                                handleShare("${model['id']??''}", 2,"${model['deviceName']??''}");
+                              },
+                              child: Container(
+                                height: 90.w,
+                                margin: EdgeInsets.fromLTRB(0, 30.w, 20.w, 0),
+                                decoration: BoxDecoration(
+                                    color: HhColors.whiteColor,
+                                    borderRadius: BorderRadius.all(Radius.circular(20.w)),
+                                  border: Border.all(color: HhColors.grayEEBackColor,width: 1.w)
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "拒绝",
+                                    style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      decoration: TextDecoration.none,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 30.sp,),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),Expanded(
+                            child: BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: (){
+                                handleShare("${model['id']??''}", 1,"${model['deviceName']??''}");
+                              },
+                              child: Container(
+                                height: 90.w,
+                                margin: EdgeInsets.fromLTRB(20.w, 30.w, 0, 0),
+                                decoration: BoxDecoration(
+                                    color: HhColors.mainBlueColor,
+                                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                                child: Center(
+                                  child: Text(
+                                    "同意共享",
+                                    style: TextStyle(
+                                      color: HhColors.whiteColor,
+                                      decoration: TextDecoration.none,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 30.sp,),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ));
+    });
     getLocation();
     super.onInit();
+  }
+
+  Future<void> handleShare(String id,int status,String name) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    dynamic data = {
+      "id":id,
+      "status":status,
+    };
+    var result = await HhHttp().request(RequestUtils.shareHandle,method: DioMethod.post,data: data);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("handleShare -- $result");
+    if(result["code"]==0 && result["data"]!=null){
+      EventBusUtil.getInstance().fire(HhToast(title: status==2?'操作成功':'“$name”\n已共享至“默认空间”',type: 0,color: 0));
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 
   @override

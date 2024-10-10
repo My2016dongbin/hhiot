@@ -25,3 +25,7 @@ class DeviceList{
 class UserInfo{
   UserInfo();
 }
+class Share{
+  dynamic model;
+  Share({required this.model});
+}

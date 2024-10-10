@@ -58,6 +58,18 @@ class CommonUtils{
     time = time.replaceAll("T", " ");
     return time;
   }
+  String parseNameCount(String s,int number){
+    String rt = "";
+    try{
+      rt = "${s.substring(0,s.indexOf('.')+number+1)}...";
+      if(s.length == number){
+        rt = s.substring(0,s.indexOf('.')+number+1);
+      }
+    }catch(e){
+      rt = s;
+    }
+    return rt;
+  }
   String parseLatLngPoint(String s,int number){
     String rt = "";
     try{

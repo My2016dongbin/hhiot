@@ -495,7 +495,7 @@ class MainPage extends StatelessWidget {
                   scaleFactor: 1.2,
                   onPressed: () {
                     logic.videoStatus.value = !logic.videoStatus.value;
-                    Get.to(()=>DeviceDetailPage('${logic.model['deviceNo']}','${logic.model['id']}'),binding: DeviceDetailBinding());
+                    Get.to(()=>DeviceDetailPage('${logic.model['deviceNo']}','${logic.model['id']}',logic.model['shareMark']),binding: DeviceDetailBinding());
                   },
                   child: Container(
                     width: 0.9.sw,
@@ -965,7 +965,7 @@ class MainPage extends StatelessWidget {
   gridItemView(BuildContext context, dynamic item, int index) {
     return InkWell(
       onTap: (){
-        Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+        Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
       },
       child: Container(
         clipBehavior: Clip.hardEdge, //裁剪
@@ -992,14 +992,14 @@ class MainPage extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  item['activeStatus']==1?const SizedBox():Container(
+                  item['status']==1?const SizedBox():Container(
                     height: 0.23.sw,
                     width: 0.5.sw,
                     decoration: BoxDecoration(
                         color: HhColors.grayEDBackColor.withAlpha(160),
                         borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
                   ),
-                  item['activeStatus']==1?const SizedBox():Align(
+                  item['status']==1?const SizedBox():Align(
                     alignment: Alignment.center,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -1028,7 +1028,7 @@ class MainPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "${item['name']}",
+                        CommonUtils().parseNameCount("${item['name']}", 5),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -1474,6 +1474,6 @@ class MainPage extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    ),barrierDismissible: true);
   }
 }

@@ -435,7 +435,7 @@ class DeviceAddPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: (){
-                    if(logic.isEdit.value){
+                    if(logic.isEdit.value && logic.model['shareMark']==2){
                       EventBusUtil.getInstance().fire(HhToast(title: '无法修改设备定位',type: 0));
                       return;
                     }

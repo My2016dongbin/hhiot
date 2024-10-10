@@ -16,6 +16,7 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/switch/lite_rolling_switch.dart';
 import 'package:web_socket_channel/io.dart';
 
 class LiGanDetailPage extends StatelessWidget {
@@ -261,42 +262,56 @@ class LiGanDetailPage extends StatelessWidget {
                                       fontSize: 28.sp,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                logic.playing.value == 1 ?Expanded(
-                                    child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: InkWell(
-                                        onTap: (){
-                                          logic.playing.value = 0;
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.fromLTRB(10.w, 3.w, 10.w, 3.w),
-                                          decoration: BoxDecoration(
-                                              color: HhColors.whiteColor,
-                                              border: Border.all(color: HhColors.grayBBTextColor,width: 1.w),
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(5.w))),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                      "assets/images/common/icon_pause.png",
-                                                  height: 22.w,
-                                                  width: 22.w),
-                                              SizedBox(width: 5.w,),
-                                              Text('停止播放',
-                                                  style: TextStyle(
-                                                      color: HhColors.mainBlueColor,
-                                                      fontSize: 23.sp,)),
-                                            ],
+                                logic.playing.value == 1
+                                    ? Expanded(
+                                        child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: InkWell(
+                                              onTap: () {
+                                                logic.playing.value = 0;
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10.w, 3.w, 10.w, 3.w),
+                                                decoration: BoxDecoration(
+                                                    color: HhColors.whiteColor,
+                                                    border: Border.all(
+                                                        color: HhColors
+                                                            .grayBBTextColor,
+                                                        width: 1.w),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5.w))),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                        "assets/images/common/icon_pause.png",
+                                                        height: 22.w,
+                                                        width: 22.w),
+                                                    SizedBox(
+                                                      width: 5.w,
+                                                    ),
+                                                    Text('停止播放',
+                                                        style: TextStyle(
+                                                          color: HhColors
+                                                              .mainBlueColor,
+                                                          fontSize: 23.sp,
+                                                        )),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )):const SizedBox(),
+                                        ],
+                                      ))
+                                    : const SizedBox(),
                               ],
                             ),
                           ),
@@ -306,10 +321,12 @@ class LiGanDetailPage extends StatelessWidget {
                                 color: HhColors.whiteColor,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(16.w))),
-                            child: logic.voiceTopStatus.value?Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: buildVoiceList(),
-                            ):const SizedBox(),
+                            child: logic.voiceTopStatus.value
+                                ? Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: buildVoiceList(),
+                                  )
+                                : const SizedBox(),
                           ),
                           //设备提示音
                           Container(
@@ -335,72 +352,96 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Expanded(
                                     child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: InkWell(
-                                            onTap: (){
-
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(10.w, 3.w, 10.w, 3.w),
-                                              margin: EdgeInsets.only(right: logic.playing.value == 1 ?160.w:0),
-                                              decoration: BoxDecoration(
-                                                  color: HhColors.whiteColor,
-                                                  border: Border.all(color: HhColors.grayBBTextColor,width: 1.w),
-                                                  borderRadius:
-                                                  BorderRadius.all(Radius.circular(5.w))),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/images/common/icon_refresh.png",
-                                                      height: 22.w,
-                                                      width: 22.w),
-                                                  SizedBox(width: 5.w,),
-                                                  Text('刷新',
-                                                      style: TextStyle(
-                                                        color: HhColors.mainBlueColor,
-                                                        fontSize: 23.sp,)),
-                                                ],
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(
+                                              10.w, 3.w, 10.w, 3.w),
+                                          margin: EdgeInsets.only(
+                                              right: logic.playing.value == 1
+                                                  ? 160.w
+                                                  : 0),
+                                          decoration: BoxDecoration(
+                                              color: HhColors.whiteColor,
+                                              border: Border.all(
+                                                  color:
+                                                      HhColors.grayBBTextColor,
+                                                  width: 1.w),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5.w))),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                  "assets/images/common/icon_refresh.png",
+                                                  height: 22.w,
+                                                  width: 22.w),
+                                              SizedBox(
+                                                width: 5.w,
                                               ),
-                                            ),
+                                              Text('刷新',
+                                                  style: TextStyle(
+                                                    color:
+                                                        HhColors.mainBlueColor,
+                                                    fontSize: 23.sp,
+                                                  )),
+                                            ],
                                           ),
                                         ),
-                                        logic.playing.value == 1 ?Align(
-                                          alignment: Alignment.centerRight,
-                                          child: InkWell(
-                                            onTap: (){
-                                              logic.stopVoice();
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(10.w, 3.w, 10.w, 3.w),
-                                              decoration: BoxDecoration(
-                                                  color: HhColors.whiteColor,
-                                                  border: Border.all(color: HhColors.grayBBTextColor,width: 1.w),
-                                                  borderRadius:
-                                                  BorderRadius.all(Radius.circular(5.w))),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/images/common/icon_pause.png",
-                                                      height: 22.w,
-                                                      width: 22.w),
-                                                  SizedBox(width: 5.w,),
-                                                  Text('停止播放',
-                                                      style: TextStyle(
-                                                        color: HhColors.mainBlueColor,
-                                                        fontSize: 23.sp,)),
-                                                ],
+                                      ),
+                                    ),
+                                    logic.playing.value == 1
+                                        ? Align(
+                                            alignment: Alignment.centerRight,
+                                            child: InkWell(
+                                              onTap: () {
+                                                logic.stopVoice();
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10.w, 3.w, 10.w, 3.w),
+                                                decoration: BoxDecoration(
+                                                    color: HhColors.whiteColor,
+                                                    border: Border.all(
+                                                        color: HhColors
+                                                            .grayBBTextColor,
+                                                        width: 1.w),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                5.w))),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                        "assets/images/common/icon_pause.png",
+                                                        height: 22.w,
+                                                        width: 22.w),
+                                                    SizedBox(
+                                                      width: 5.w,
+                                                    ),
+                                                    Text('停止播放',
+                                                        style: TextStyle(
+                                                          color: HhColors
+                                                              .mainBlueColor,
+                                                          fontSize: 23.sp,
+                                                        )),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ):const SizedBox(),
-                                      ],
-                                    )),
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                )),
                               ],
                             ),
                           ),
@@ -409,7 +450,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: buildVoiceListBottom(),
@@ -445,7 +486,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -473,7 +514,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -505,7 +548,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -530,13 +575,19 @@ class LiGanDetailPage extends StatelessWidget {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.voiceHuman.value*1.0, max: 5,min: 0,
+                                          Slider(
+                                            value: logic.voiceHuman.value * 1.0,
+                                            max: 5,
+                                            min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
                                               String s = "$value";
-                                              logic.voiceHuman.value = int.parse(s.substring(0,s.indexOf(".")));
-                                            },),
+                                              logic.voiceHuman.value =
+                                                  int.parse(s.substring(
+                                                      0, s.indexOf(".")));
+                                            },
+                                          ),
                                           Text(
                                             '${logic.voiceHuman.value}',
                                             textAlign: TextAlign.end,
@@ -547,7 +598,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -579,7 +632,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -591,7 +646,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -619,7 +674,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -651,7 +708,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -674,15 +733,21 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                       ),
                                       Row(
-                                      mainAxisSize: MainAxisSize.min,
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.voiceCar.value*1.0, max: 5,min: 0,
+                                          Slider(
+                                            value: logic.voiceCar.value * 1.0,
+                                            max: 5,
+                                            min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
-                                            String s = "$value";
-                                            logic.voiceCar.value = int.parse(s.substring(0,s.indexOf(".")));
-                                          },),
+                                              String s = "$value";
+                                              logic.voiceCar.value = int.parse(
+                                                  s.substring(
+                                                      0, s.indexOf(".")));
+                                            },
+                                          ),
                                           Text(
                                             '${logic.voiceCar.value}',
                                             textAlign: TextAlign.end,
@@ -693,7 +758,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -725,7 +792,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -737,7 +806,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -765,7 +834,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -797,7 +868,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -820,15 +893,21 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                       ),
                                       Row(
-                                      mainAxisSize: MainAxisSize.min,
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.voiceCap.value*1.0, max: 5,min: 0,
+                                          Slider(
+                                            value: logic.voiceCap.value * 1.0,
+                                            max: 5,
+                                            min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
-                                            String s = "$value";
-                                            logic.voiceCap.value = int.parse(s.substring(0,s.indexOf(".")));
-                                          },),
+                                              String s = "$value";
+                                              logic.voiceCap.value = int.parse(
+                                                  s.substring(
+                                                      0, s.indexOf(".")));
+                                            },
+                                          ),
                                           Text(
                                             '${logic.voiceCap.value}',
                                             textAlign: TextAlign.end,
@@ -839,7 +918,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -871,7 +952,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -894,7 +977,7 @@ class LiGanDetailPage extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: HhColors.mainBlueColor,
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(16.w))),
+                                      BorderRadius.all(Radius.circular(16.w))),
                               child: Center(
                                 child: Text(
                                   "确定",
@@ -947,7 +1030,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -968,13 +1051,19 @@ class LiGanDetailPage extends StatelessWidget {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Slider(value: logic.speed.value*1.0, max: 10,min: 0,
+                                          Slider(
+                                            value: logic.speed.value * 1.0,
+                                            max: 10,
+                                            min: 0,
                                             thumbColor: HhColors.mainBlueColor,
                                             activeColor: HhColors.mainBlueColor,
                                             onChanged: (double value) {
                                               String s = "$value";
-                                              logic.speed.value = int.parse(s.substring(0,s.indexOf(".")));
-                                            },),
+                                              logic.speed.value = int.parse(
+                                                  s.substring(
+                                                      0, s.indexOf(".")));
+                                            },
+                                          ),
                                           /*Text(
                                             '${logic.speed.value}',
                                             textAlign: TextAlign.end,
@@ -985,7 +1074,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           )*/
                                         ],
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -1011,15 +1102,16 @@ class LiGanDetailPage extends StatelessWidget {
                                         margin: EdgeInsets.fromLTRB(
                                             30.w, 30.w, 30.w, 30.w),
                                         child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             InkWell(
-                                              onTap: (){
+                                              onTap: () {
                                                 logic.direction.value = 0;
                                               },
                                               child: Image.asset(
                                                   logic.direction.value == 0
-                                                      ? "assets/images/common/yes.png"
+                                                      ? "assets/images/common/yes2.png"
                                                       : "assets/images/common/no.png",
                                                   height: 32.w,
                                                   width: 32.w),
@@ -1038,12 +1130,12 @@ class LiGanDetailPage extends StatelessWidget {
                                               width: 30.w,
                                             ),
                                             InkWell(
-                                              onTap: (){
+                                              onTap: () {
                                                 logic.direction.value = 1;
                                               },
                                               child: Image.asset(
                                                   logic.direction.value == 1
-                                                      ? "assets/images/common/yes.png"
+                                                      ? "assets/images/common/yes2.png"
                                                       : "assets/images/common/no.png",
                                                   height: 32.w,
                                                   width: 32.w),
@@ -1061,7 +1153,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -1083,16 +1177,19 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                                  margin: EdgeInsets.fromLTRB(
+                                      20.w, 10.w, 20.w, 10.w),
                                   decoration: BoxDecoration(
                                       color: HhColors.backColor,
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(16.w))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(16.w))),
                                   child: TextField(
                                     textAlign: TextAlign.left,
                                     maxLines: 3,
@@ -1106,13 +1203,16 @@ class LiGanDetailPage extends StatelessWidget {
                                       counterText: '',
                                       hintText: '此处设置显示内容',
                                       hintStyle: TextStyle(
-                                          color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
+                                          color: HhColors.gray9TextColor,
+                                          fontSize: 26.sp,
+                                          fontWeight: FontWeight.w200),
                                     ),
-                                    onChanged: (s){
+                                    onChanged: (s) {
                                       logic.ledContent.value = s;
                                     },
-                                    style:
-                                    TextStyle(color: HhColors.textBlackColor, fontSize: 26.sp),
+                                    style: TextStyle(
+                                        color: HhColors.textBlackColor,
+                                        fontSize: 26.sp),
                                   ),
                                 )
                               ],
@@ -1148,7 +1248,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(16.w))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1169,7 +1269,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                 value: logic.close.value,
                                                 onChanged: (s) {
                                                   logic.close.value = s;
@@ -1189,6 +1289,26 @@ class LiGanDetailPage extends StatelessWidget {
                                                     states) {
                                                       return HhColors.mainBlueColor;
                                                     }),
+                                              )*/
+                                                  SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.close.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.close.value = state;
+                                                  },
+                                                ),
                                               ),
                                             )
                                           ],
@@ -1225,7 +1345,9 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 10.w,),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -1247,7 +1369,7 @@ class LiGanDetailPage extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: HhColors.mainBlueColor,
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(16.w))),
+                                      BorderRadius.all(Radius.circular(16.w))),
                               child: Center(
                                 child: Text(
                                   "确定",
@@ -1322,11 +1444,12 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                 value: logic.warnGANG1.value,
                                                 onChanged: (s) {
                                                   logic.warnGANG1.value = s;
-                                                  logic.warnSet("gCam1",s?"ON":"OFF");
+                                                  logic.warnSet("gCam1",
+                                                      s ? "ON" : "OFF");
                                                 },
                                                 activeColor:
                                                     HhColors.mainBlueColor,
@@ -1341,12 +1464,33 @@ class LiGanDetailPage extends StatelessWidget {
                                                         .resolveWith<Color?>(
                                                             (Set<MaterialState>
                                                                 states) {
-                                                  /*if (states.contains(
+                                                  *//*if (states.contains(
                                             MaterialState.disabled)) {
                                           return HhColors.mainBlueColor;
-                                        }*/
+                                        }*//*
                                                   return HhColors.mainBlueColor;
                                                 }),
+                                              )*/SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.warnGANG1.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.warnGANG1.value = state;
+                                                    logic.warnSet("gCam1",
+                                                        state ? "ON" : "OFF");
+                                                  },
+                                                ),
                                               ),
                                             )
                                           ],
@@ -1377,11 +1521,12 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                   value: logic.warnGANG2.value,
                                                   onChanged: (s) {
                                                     logic.warnGANG2.value = s;
-                                                    logic.warnSet("gCam2",s?"ON":"OFF");
+                                                    logic.warnSet("gCam2",
+                                                        s ? "ON" : "OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1397,13 +1542,34 @@ class LiGanDetailPage extends StatelessWidget {
                                                               Color?>((Set<
                                                                   MaterialState>
                                                               states) {
-                                                    /*if (states.contains(
+                                                    *//*if (states.contains(
                                             MaterialState.disabled)) {
                                           return HhColors.mainBlueColor;
-                                        }*/
+                                        }*//*
                                                     return HhColors
                                                         .mainBlueColor;
-                                                  })),
+                                                  }))*/SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.warnGANG2.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.warnGANG2.value = state;
+                                                    logic.warnSet("gCam2",
+                                                        state ? "ON" : "OFF");
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -1433,11 +1599,12 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                   value: logic.warnGANG3.value,
                                                   onChanged: (s) {
                                                     logic.warnGANG3.value = s;
-                                                    logic.warnSet("gCam3",s?"ON":"OFF");
+                                                    logic.warnSet("gCam3",
+                                                        s ? "ON" : "OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1453,13 +1620,34 @@ class LiGanDetailPage extends StatelessWidget {
                                                               Color?>((Set<
                                                                   MaterialState>
                                                               states) {
-                                                    /*if (states.contains(
+                                                    *//*if (states.contains(
                                             MaterialState.disabled)) {
                                           return HhColors.mainBlueColor;
-                                        }*/
+                                        }*//*
                                                     return HhColors
                                                         .mainBlueColor;
-                                                  })),
+                                                  }))*/SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.warnGANG3.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.warnGANG3.value = state;
+                                                    logic.warnSet("gCam3",
+                                                        state ? "ON" : "OFF");
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -1489,11 +1677,12 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                   value: logic.warnBALL.value,
                                                   onChanged: (s) {
                                                     logic.warnBALL.value = s;
-                                                    logic.warnSet("sCam1",s?"ON":"OFF");
+                                                    logic.warnSet("sCam1",
+                                                        s ? "ON" : "OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1509,13 +1698,34 @@ class LiGanDetailPage extends StatelessWidget {
                                                               Color?>((Set<
                                                                   MaterialState>
                                                               states) {
-                                                    /*if (states.contains(
+                                                    *//*if (states.contains(
                                             MaterialState.disabled)) {
                                           return HhColors.mainBlueColor;
-                                        }*/
+                                        }*//*
                                                     return HhColors
                                                         .mainBlueColor;
-                                                  })),
+                                                  }))*/SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.warnBALL.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.warnBALL.value = state;
+                                                    logic.warnSet("sCam1",
+                                                        state ? "ON" : "OFF");
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -1545,11 +1755,12 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                   value: logic.warnSENSOR.value,
                                                   onChanged: (s) {
                                                     logic.warnSENSOR.value = s;
-                                                    logic.warnSet("sensor",s?"ON":"OFF");
+                                                    logic.warnSet("sensor",
+                                                        s ? "ON" : "OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1565,13 +1776,34 @@ class LiGanDetailPage extends StatelessWidget {
                                                               Color?>((Set<
                                                                   MaterialState>
                                                               states) {
-                                                    /*if (states.contains(
+                                                    *//*if (states.contains(
                                             MaterialState.disabled)) {
                                           return HhColors.mainBlueColor;
-                                        }*/
+                                        }*//*
                                                     return HhColors
                                                         .mainBlueColor;
-                                                  })),
+                                                  }))*/SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.warnSENSOR.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.warnSENSOR.value = state;
+                                                    logic.warnSet("sensor",
+                                                        state ? "ON" : "OFF");
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -1601,11 +1833,12 @@ class LiGanDetailPage extends StatelessWidget {
                                           children: [
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: Switch(
+                                              child: /*Switch(
                                                   value: logic.warnOPEN.value,
                                                   onChanged: (s) {
                                                     logic.warnOPEN.value = s;
-                                                    logic.warnSet("cap",s?"ON":"OFF");
+                                                    logic.warnSet("cap",
+                                                        s ? "ON" : "OFF");
                                                   },
                                                   activeColor:
                                                       HhColors.mainBlueColor,
@@ -1621,13 +1854,34 @@ class LiGanDetailPage extends StatelessWidget {
                                                               Color?>((Set<
                                                                   MaterialState>
                                                               states) {
-                                                    /*if (states.contains(
+                                                    *//*if (states.contains(
                                             MaterialState.disabled)) {
                                           return HhColors.mainBlueColor;
-                                        }*/
+                                        }*//*
                                                     return HhColors
                                                         .mainBlueColor;
-                                                  })),
+                                                  }))*/SizedBox(
+                                                height: 50.w,
+                                                width: 90.w,
+                                                child: LiteRollingSwitch(
+                                                  value: logic.warnOPEN.value,
+                                                  textOn: '',
+                                                  textOff: '',
+                                                  colorOff: HhColors
+                                                      .titleColor_99
+                                                      .withAlpha(200),
+                                                  colorOn: HhColors
+                                                      .mainBlueColor
+                                                      .withAlpha(200),
+                                                  animationDuration: const Duration(
+                                                      milliseconds: 600),
+                                                  onChanged: (bool state) {
+                                                    logic.warnOPEN.value = state;
+                                                    logic.warnSet("cap",
+                                                        state ? "ON" : "OFF");
+                                                  },
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -1685,27 +1939,43 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 28.sp,
                                         ),
                                       ),
-                                      SizedBox(width: 20.w,),
-                                      Switch(
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      /*Switch(
                                         value: logic.energyAction.value,
                                         onChanged: (s) {
                                           logic.energyAction.value = s;
                                         },
-                                        activeColor:
-                                        HhColors.mainBlueColor,
+                                        activeColor: HhColors.mainBlueColor,
                                         inactiveThumbColor:
-                                        HhColors.mainBlueColor,
-                                        inactiveTrackColor:
-                                        HhColors.whiteColor,
-                                        focusColor:
-                                        HhColors.mainBlueColor,
-                                        trackOutlineColor:
-                                        MaterialStateProperty
+                                            HhColors.mainBlueColor,
+                                        inactiveTrackColor: HhColors.whiteColor,
+                                        focusColor: HhColors.mainBlueColor,
+                                        trackOutlineColor: MaterialStateProperty
                                             .resolveWith<Color?>(
-                                                (Set<MaterialState>
-                                            states) {
-                                              return HhColors.mainBlueColor;
-                                            }),
+                                                (Set<MaterialState> states) {
+                                          return HhColors.mainBlueColor;
+                                        }),
+                                      )*/SizedBox(
+                                        height: 50.w,
+                                        width: 90.w,
+                                        child: LiteRollingSwitch(
+                                          value: logic.energyAction.value,
+                                          textOn: '',
+                                          textOff: '',
+                                          colorOff: HhColors
+                                              .titleColor_99
+                                              .withAlpha(200),
+                                          colorOn: HhColors
+                                              .mainBlueColor
+                                              .withAlpha(200),
+                                          animationDuration: const Duration(
+                                              milliseconds: 600),
+                                          onChanged: (bool state) {
+                                            logic.energyAction.value = state;
+                                          },
+                                        ),
                                       ),
                                       Expanded(
                                         child: TextField(
@@ -1725,13 +1995,13 @@ class LiGanDetailPage extends StatelessWidget {
                                                 fontSize: 28.sp,
                                                 fontWeight: FontWeight.w200),
                                           ),
-                                          onChanged: (s){
+                                          onChanged: (s) {
                                             logic.energyDelay.value = s;
                                           },
                                           style: TextStyle(
-                                              color: HhColors.gray6TextColor,
+                                              color: HhColors.blueTextColor,
                                               fontSize: 28.sp,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
                                       Text(
@@ -1756,27 +2026,43 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 28.sp,
                                         ),
                                       ),
-                                      SizedBox(width: 20.w,),
-                                      Switch(
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      /*Switch(
                                         value: logic.weatherAction.value,
                                         onChanged: (s) {
                                           logic.weatherAction.value = s;
                                         },
-                                        activeColor:
-                                        HhColors.mainBlueColor,
+                                        activeColor: HhColors.mainBlueColor,
                                         inactiveThumbColor:
-                                        HhColors.mainBlueColor,
-                                        inactiveTrackColor:
-                                        HhColors.whiteColor,
-                                        focusColor:
-                                        HhColors.mainBlueColor,
-                                        trackOutlineColor:
-                                        MaterialStateProperty
+                                            HhColors.mainBlueColor,
+                                        inactiveTrackColor: HhColors.whiteColor,
+                                        focusColor: HhColors.mainBlueColor,
+                                        trackOutlineColor: MaterialStateProperty
                                             .resolveWith<Color?>(
-                                                (Set<MaterialState>
-                                            states) {
-                                              return HhColors.mainBlueColor;
-                                            }),
+                                                (Set<MaterialState> states) {
+                                          return HhColors.mainBlueColor;
+                                        }),
+                                      )*/SizedBox(
+                                        height: 50.w,
+                                        width: 90.w,
+                                        child: LiteRollingSwitch(
+                                          value: logic.weatherAction.value,
+                                          textOn: '',
+                                          textOff: '',
+                                          colorOff: HhColors
+                                              .titleColor_99
+                                              .withAlpha(200),
+                                          colorOn: HhColors
+                                              .mainBlueColor
+                                              .withAlpha(200),
+                                          animationDuration: const Duration(
+                                              milliseconds: 600),
+                                          onChanged: (bool state) {
+                                            logic.weatherAction.value = state;
+                                          },
+                                        ),
                                       ),
                                       Expanded(
                                         child: TextField(
@@ -1796,13 +2082,13 @@ class LiGanDetailPage extends StatelessWidget {
                                                 fontSize: 28.sp,
                                                 fontWeight: FontWeight.w200),
                                           ),
-                                          onChanged: (s){
+                                          onChanged: (s) {
                                             logic.weatherDelay.value = s;
                                           },
                                           style: TextStyle(
-                                              color: HhColors.gray6TextColor,
+                                              color: HhColors.blueTextColor,
                                               fontSize: 28.sp,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
                                       Text(
@@ -1827,27 +2113,43 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 28.sp,
                                         ),
                                       ),
-                                      SizedBox(width: 20.w,),
-                                      Switch(
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      /*Switch(
                                         value: logic.soilAction.value,
                                         onChanged: (s) {
                                           logic.soilAction.value = s;
                                         },
-                                        activeColor:
-                                        HhColors.mainBlueColor,
+                                        activeColor: HhColors.mainBlueColor,
                                         inactiveThumbColor:
-                                        HhColors.mainBlueColor,
-                                        inactiveTrackColor:
-                                        HhColors.whiteColor,
-                                        focusColor:
-                                        HhColors.mainBlueColor,
-                                        trackOutlineColor:
-                                        MaterialStateProperty
+                                            HhColors.mainBlueColor,
+                                        inactiveTrackColor: HhColors.whiteColor,
+                                        focusColor: HhColors.mainBlueColor,
+                                        trackOutlineColor: MaterialStateProperty
                                             .resolveWith<Color?>(
-                                                (Set<MaterialState>
-                                            states) {
-                                              return HhColors.mainBlueColor;
-                                            }),
+                                                (Set<MaterialState> states) {
+                                          return HhColors.mainBlueColor;
+                                        }),
+                                      )*/SizedBox(
+                                        height: 50.w,
+                                        width: 90.w,
+                                        child: LiteRollingSwitch(
+                                          value: logic.soilAction.value,
+                                          textOn: '',
+                                          textOff: '',
+                                          colorOff: HhColors
+                                              .titleColor_99
+                                              .withAlpha(200),
+                                          colorOn: HhColors
+                                              .mainBlueColor
+                                              .withAlpha(200),
+                                          animationDuration: const Duration(
+                                              milliseconds: 600),
+                                          onChanged: (bool state) {
+                                            logic.soilAction.value = state;
+                                          },
+                                        ),
                                       ),
                                       Expanded(
                                         child: TextField(
@@ -1867,13 +2169,13 @@ class LiGanDetailPage extends StatelessWidget {
                                                 fontSize: 28.sp,
                                                 fontWeight: FontWeight.w200),
                                           ),
-                                          onChanged: (s){
+                                          onChanged: (s) {
                                             logic.soilDelay.value = s;
                                           },
                                           style: TextStyle(
-                                              color: HhColors.blackTextColor,
+                                              color: HhColors.blueTextColor,
                                               fontSize: 28.sp,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
                                       Text(
@@ -1886,35 +2188,58 @@ class LiGanDetailPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-
-                                 BouncingWidget(
+                                BouncingWidget(
                                   duration: const Duration(milliseconds: 100),
                                   scaleFactor: 1.2,
                                   onPressed: () {
                                     int energy = 0;
                                     int weather = 0;
                                     int soil = 0;
-                                    try{
-                                      energy = int.parse(logic.time1Controller!.text) * 60;
-                                      weather = int.parse(logic.time2Controller!.text) * 60;
-                                      soil = int.parse(logic.time3Controller!.text) * 60;
-                                    }catch(e){
-                                      EventBusUtil.getInstance().fire(HhToast(title: "间隔时间格式错误"));
+                                    try {
+                                      energy = int.parse(
+                                              logic.time1Controller!.text) *
+                                          60;
+                                      weather = int.parse(
+                                              logic.time2Controller!.text) *
+                                          60;
+                                      soil = int.parse(
+                                              logic.time3Controller!.text) *
+                                          60;
+                                    } catch (e) {
+                                      EventBusUtil.getInstance()
+                                          .fire(HhToast(title: "间隔时间格式错误"));
                                       return;
                                     }
-                                    logic.warnUploadSet("energy", logic.energyAction.value?"ON":"OFF", energy, logic.config["energyOpenTime"]);
-                                    logic.warnUploadSet("weather", logic.weatherAction.value?"ON":"OFF", weather, logic.config["weatherOpenTime"]);
-                                    logic.warnUploadSet("soil", logic.soilAction.value?"ON":"OFF", soil, logic.config["soilOpenTime"]);
+                                    logic.warnUploadSet(
+                                        "energy",
+                                        logic.energyAction.value ? "ON" : "OFF",
+                                        energy,
+                                        logic.config["energyOpenTime"]);
+                                    logic.warnUploadSet(
+                                        "weather",
+                                        logic.weatherAction.value
+                                            ? "ON"
+                                            : "OFF",
+                                        weather,
+                                        logic.config["weatherOpenTime"]);
+                                    logic.warnUploadSet(
+                                        "soil",
+                                        logic.soilAction.value ? "ON" : "OFF",
+                                        soil,
+                                        logic.config["soilOpenTime"]);
                                   },
                                   child: Container(
                                     width: 1.sw,
                                     height: 90.w,
-                                    margin: EdgeInsets.fromLTRB(30.w, 10.w, 30.w, 30.w),
+                                    margin: EdgeInsets.fromLTRB(
+                                        30.w, 10.w, 30.w, 30.w),
                                     decoration: BoxDecoration(
                                         color: HhColors.whiteColor,
-                                        border: Border.all(color: HhColors.gray9TextColor,width: 0.5.w),
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(16.w))),
+                                        border: Border.all(
+                                            color: HhColors.gray9TextColor,
+                                            width: 0.5.w),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(16.w))),
                                     child: Center(
                                       child: Text(
                                         "确定",
@@ -1978,7 +2303,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.fireLevel.value == 5
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2008,7 +2333,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.fireLevel.value == 4
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2038,7 +2363,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.fireLevel.value == 3
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2068,7 +2393,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.fireLevel.value == 2
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2098,7 +2423,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.fireLevel.value == 1
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2164,7 +2489,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.circle.value == 0
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2193,7 +2518,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                             logic.circle.value == 1
-                                                ? "assets/images/common/yes.png"
+                                                ? "assets/images/common/yes2.png"
                                                 : "assets/images/common/no.png",
                                             height: 20,
                                             width: 20),
@@ -2273,11 +2598,13 @@ class LiGanDetailPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                logic.versionStatus.value?Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: buildVersionChild(),
-                                ):const SizedBox(),
-                                 BouncingWidget(
+                                logic.versionStatus.value
+                                    ? Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: buildVersionChild(),
+                                      )
+                                    : const SizedBox(),
+                                BouncingWidget(
                                   duration: const Duration(milliseconds: 100),
                                   scaleFactor: 1.2,
                                   onPressed: () {
@@ -2286,12 +2613,15 @@ class LiGanDetailPage extends StatelessWidget {
                                   child: Container(
                                     width: 1.sw,
                                     height: 90.w,
-                                    margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 20.w),
+                                    margin: EdgeInsets.fromLTRB(
+                                        30.w, 0, 30.w, 20.w),
                                     decoration: BoxDecoration(
                                         color: HhColors.whiteColor,
-                                        border: Border.all(color: HhColors.gray9TextColor,width: 0.5.w),
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(16.w))),
+                                        border: Border.all(
+                                            color: HhColors.gray9TextColor,
+                                            width: 0.5.w),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(16.w))),
                                     child: Center(
                                       child: Text(
                                         "升级",
@@ -2378,8 +2708,7 @@ class LiGanDetailPage extends StatelessWidget {
     List<Widget> list = [];
     list.add(
       Container(
-        padding: EdgeInsets.fromLTRB(
-            20.w, 25.w, 20.w, 25.w),
+        padding: EdgeInsets.fromLTRB(20.w, 25.w, 20.w, 25.w),
         child: Row(
           children: [
             Expanded(
@@ -2388,7 +2717,7 @@ class LiGanDetailPage extends StatelessWidget {
                 style: TextStyle(
                     color: HhColors.blackColor,
                     fontSize: 28.sp,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w600),
               ),
             ),
             Expanded(
@@ -2413,7 +2742,7 @@ class LiGanDetailPage extends StatelessWidget {
         ),
       ),
     );
-    for(int i = 0; i < logic.voiceTopList.length;i++){
+    for (int i = 0; i < logic.voiceTopList.length; i++) {
       dynamic model = logic.voiceTopList[i];
       list.add(
         Container(
@@ -2423,8 +2752,7 @@ class LiGanDetailPage extends StatelessWidget {
       );
       list.add(
         Container(
-          padding: EdgeInsets.fromLTRB(
-              20.w, 20.w, 20.w, 20.w),
+          padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
           child: Row(
             children: [
               Expanded(
@@ -2440,8 +2768,8 @@ class LiGanDetailPage extends StatelessWidget {
                 width: 30.w,
               ),
               InkWell(
-                onTap: (){
-                  logic.uploadVoice(model["name"],model["pcmUrl"]);
+                onTap: () {
+                  logic.uploadVoice(model["name"], model["pcmUrl"]);
                 },
                 child: Text(
                   '上传',
@@ -2461,12 +2789,12 @@ class LiGanDetailPage extends StatelessWidget {
     }
     return list;
   }
+
   buildVoiceListBottom() {
     List<Widget> list = [];
     list.add(
       Container(
-        padding: EdgeInsets.fromLTRB(
-            20.w, 25.w, 20.w, 25.w),
+        padding: EdgeInsets.fromLTRB(20.w, 25.w, 20.w, 25.w),
         child: Row(
           children: [
             Expanded(
@@ -2500,7 +2828,7 @@ class LiGanDetailPage extends StatelessWidget {
         ),
       ),
     );
-    for(int i = 0; i < logic.voiceBottomList.length;i++){
+    for (int i = 0; i < logic.voiceBottomList.length; i++) {
       dynamic model = logic.voiceBottomList[i];
       list.add(
         Container(
@@ -2509,59 +2837,58 @@ class LiGanDetailPage extends StatelessWidget {
         ),
       );
       list.add(
-          Container(
-            padding: EdgeInsets.fromLTRB(
-                20.w, 20.w, 20.w, 20.w),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '${model["name"]}',
-                    style: TextStyle(
-                      color: HhColors.blackColor,
-                      fontSize: 26.sp,
-                    ),
+        Container(
+          padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${model["name"]}',
+                  style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 26.sp,
                   ),
                 ),
-                SizedBox(
-                  width: 30.w,
-                ),
-                InkWell(
-                  onTap: () {
-                    logic.playVoice(model["name"]);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(6.w),
-                    child: Text(
-                      '播放',
-                      style: TextStyle(
-                        color: HhColors.mainBlueColor,
-                        fontSize: 26.sp,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 30.w,
-                ),
-                InkWell(
-                  onTap: (){
-                    logic.deleteVoice(model["name"]);
-                  },
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              InkWell(
+                onTap: () {
+                  logic.playVoice(model["name"]);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(6.w),
                   child: Text(
-                    '删除',
+                    '播放',
                     style: TextStyle(
                       color: HhColors.mainBlueColor,
                       fontSize: 26.sp,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 10.w,
+              ),
+              SizedBox(
+                width: 30.w,
+              ),
+              InkWell(
+                onTap: () {
+                  logic.deleteVoice(model["name"]);
+                },
+                child: Text(
+                  '删除',
+                  style: TextStyle(
+                    color: HhColors.mainBlueColor,
+                    fontSize: 26.sp,
+                  ),
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+            ],
           ),
+        ),
       );
     }
     return list;
@@ -2570,7 +2897,7 @@ class LiGanDetailPage extends StatelessWidget {
   buildVersionChild() {
     List<Widget> list = [];
 
-    for(int i = 0; i < logic.versionList.length;i++){
+    for (int i = 0; i < logic.versionList.length; i++) {
       dynamic model = logic.versionList[i];
       list.add(
         Container(
@@ -2578,37 +2905,34 @@ class LiGanDetailPage extends StatelessWidget {
           color: HhColors.backColor,
         ),
       );
-      list.add(
-          InkWell(
-            onTap: () {
-              logic.version.value = i;
-            },
-            child: Container(
-              margin: EdgeInsets.fromLTRB(
-                  30.w, 30.w, 30.w, 30.w),
-              child: Row(
-                children: [
-                  Image.asset(
-                      logic.version.value == i
-                          ? "assets/images/common/yes.png"
-                          : "assets/images/common/no.png",
-                      height: 20,
-                      width: 20),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  Text(
-                    '${model["version"]}',
-                    style: TextStyle(
-                      color: HhColors.blackColor,
-                      fontSize: 28.sp,
-                    ),
-                  ),
-                ],
+      list.add(InkWell(
+        onTap: () {
+          logic.version.value = i;
+        },
+        child: Container(
+          margin: EdgeInsets.fromLTRB(30.w, 30.w, 30.w, 30.w),
+          child: Row(
+            children: [
+              Image.asset(
+                  logic.version.value == i
+                      ? "assets/images/common/yes2.png"
+                      : "assets/images/common/no.png",
+                  height: 20,
+                  width: 20),
+              SizedBox(
+                width: 15.w,
               ),
-            ),
-          )
-      );
+              Text(
+                '${model["version"]}',
+                style: TextStyle(
+                  color: HhColors.blackColor,
+                  fontSize: 28.sp,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ));
     }
 
     return list;

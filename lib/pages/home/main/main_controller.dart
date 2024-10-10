@@ -412,7 +412,7 @@ class MainController extends GetxController {
             title: "${model['name']}",
             customMap: map,
             identifier: "location",
-            icon: '${model['activeStatus']}' == '1'
+            icon: '${model['status']}' == '1'
                 ? 'assets/images/common/ic_device_online.png'
                 : 'assets/images/common/ic_device_offline.png');
 

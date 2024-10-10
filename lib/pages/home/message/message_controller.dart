@@ -276,7 +276,7 @@ class MessageController extends GetxController {
     HhLog.d("deleteRight --  ${chooseListRight.toString()} , $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] == true) {
-      EventBusUtil.getInstance().fire(HhToast(title: "操作成功",type: 0));
+      EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 0));
       editRight.value = false;
       pageStatus.value = false;
       pageStatus.value = true;
@@ -296,7 +296,7 @@ class MessageController extends GetxController {
     HhLog.d("deleteLeft --  ${chooseListLeft.toString()} , $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0 && result["data"] == true) {
-      EventBusUtil.getInstance().fire(HhToast(title: "操作成功",type: 0));
+      EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 0));
       editLeft.value = false;
       pageStatus.value = false;
       pageStatus.value = true;

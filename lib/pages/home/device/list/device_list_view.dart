@@ -274,7 +274,7 @@ class DeviceListPage extends StatelessWidget {
             itemBuilder: (context, item, index) =>
                 InkWell(
                   onTap: (){
-                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
+                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
                   },
                   child: Container(
                     height: 180.w,
@@ -331,14 +331,14 @@ class DeviceListPage extends StatelessWidget {
                                 margin: EdgeInsets.fromLTRB(10.w, 0, 60.w, 0),
                                 padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
                                 decoration: BoxDecoration(
-                                  color: item['activeStatus']==1?HhColors.transBlueColors:HhColors.transRedColors,
-                                  border: Border.all(color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor,width: 1.w),
+                                  color: item['status']==1?HhColors.transBlueColors:HhColors.transRedColors,
+                                  border: Border.all(color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor,width: 1.w),
                                   borderRadius: BorderRadius.all(Radius.circular(8.w)),
                                 ),
                                 child: Text(
-                                  item['activeStatus']==1?'在线':"离线",
+                                  item['status']==1?'在线':"离线",
                                   style: TextStyle(
-                                      color: item['activeStatus']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
+                                      color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
                                 ),
                               ),
                               item['shared']==true?Container(

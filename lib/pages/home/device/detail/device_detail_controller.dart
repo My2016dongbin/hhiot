@@ -30,6 +30,7 @@ class DeviceDetailController extends GetxController {
   final Rx<bool> videoTag = false.obs;
   final Rx<bool> voiceTag = true.obs;
   final Rx<int> liveIndex = 0.obs;
+  final Rx<bool> liveStatus = true.obs;
   final PagingController<int, dynamic> deviceController = PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 20;
@@ -37,6 +38,7 @@ class DeviceDetailController extends GetxController {
   late BuildContext context;
   late String deviceNo;
   late String id;
+  late int shareMark;
   late String deviceId;
   late String channelNumber;
   late String commandLast;
@@ -90,6 +92,9 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceStream -- $result");
     if(result["code"]==0 && result["data"]!=null){
       liveList = result["data"];
+      HhLog.d("getDeviceStream liveList -- $liveList");
+      liveStatus.value = false;
+      liveStatus.value = true;
       try{
         deviceId = result["data"][liveIndex.value]["deviceId"];
         channelNumber = result["data"][liveIndex.value]["number"];
@@ -124,6 +129,35 @@ class DeviceDetailController extends GetxController {
         player.setDataSource(
             url,
             autoPlay: true);
+        player.setOption(FijkOption.playerCategory, "mediacodec-hevc", 1);
+        player.setOption(FijkOption.playerCategory, "framedrop", 1);
+        player.setOption(FijkOption.playerCategory, "start-on-prepared", 0);
+        player.setOption(FijkOption.playerCategory, "opensles", 0);
+        player.setOption(FijkOption.playerCategory, "mediacodec", 0);
+        player.setOption(FijkOption.playerCategory, "start-on-prepared", 1);
+        player.setOption(FijkOption.playerCategory, "packet-buffering", 0);
+        player.setOption(FijkOption.playerCategory, "mediacodec-auto-rotate", 0);
+        player.setOption(FijkOption.playerCategory, "mediacodec-handle-resolution-change", 0);
+        player.setOption(FijkOption.playerCategory, "min-frames", 2);
+        player.setOption(FijkOption.playerCategory, "max_cached_duration", 3);
+        player.setOption(FijkOption.playerCategory, "infbuf", 1);
+        player.setOption(FijkOption.playerCategory, "reconnect", 5);
+        player.setOption(FijkOption.playerCategory, "framedrop", 5);
+        player.setOption(FijkOption.formatCategory, "rtsp_transport", 'tcp');
+        player.setOption(FijkOption.formatCategory, "http-detect-range-support", 0);
+        player.setOption(FijkOption.formatCategory, "analyzeduration", 1);
+        player.setOption(FijkOption.formatCategory, "rtsp_flags", "prefer_tcp");
+        player.setOption(FijkOption.formatCategory, "buffer_size", 1024);
+        player.setOption(FijkOption.formatCategory, "max-fps", 0);
+        player.setOption(FijkOption.formatCategory, "analyzemaxduration", 50);
+        player.setOption(FijkOption.formatCategory, "dns_cache_clear", 1);
+        player.setOption(FijkOption.formatCategory, "flush_packets", 1);
+        player.setOption(FijkOption.formatCategory, "max-buffer-size", 0);
+        player.setOption(FijkOption.formatCategory, "fflags", "nobuffer");
+        player.setOption(FijkOption.formatCategory, "probesize", 200);
+        player.setOption(FijkOption.formatCategory, "http-detect-range-support", 0);
+        player.setOption(FijkOption.codecCategory, "skip_loop_filter", 48);
+        player.setOption(FijkOption.codecCategory, "skip_frame", 0);
         Future.delayed(const Duration(seconds: 1),(){
           playTag.value = true;
         });
@@ -138,6 +172,7 @@ class DeviceDetailController extends GetxController {
   Future<void> getDeviceInfo() async {
     Map<String, dynamic> map = {};
     map['id'] = id;
+    map['shareMark'] = shareMark;
     var result = await HhHttp().request(RequestUtils.deviceInfo,method: DioMethod.get,params: map);
     HhLog.d("getDeviceInfo -- $id");
     HhLog.d("getDeviceInfo -- $result");
@@ -258,7 +293,7 @@ class DeviceDetailController extends GetxController {
       "channelNumber": channelNumber,
       "command": command,
       "deviceId": deviceId,
-      "speed": 10,
+      "speed": 15,
     };
     var tenantResult = await HhHttp()
         .request(RequestUtils.videoControl, method: DioMethod.post, data: data);
