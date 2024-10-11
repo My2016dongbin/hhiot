@@ -46,6 +46,7 @@ class DeviceDetailController extends GetxController {
   late int controlTime = 0;
   late String nickname='';
   late Rx<String> productName = ''.obs;
+  late Rx<String> functionItem = ''.obs;
   FijkPlayer player = FijkPlayer();
   late WebSocketManager manager;
 
@@ -180,6 +181,7 @@ class DeviceDetailController extends GetxController {
       item = result["data"];
       name.value = CommonUtils().parseNull(result["data"]["name"]??'', "");
       productName.value = result["data"]["productName"]??'';
+      functionItem.value = item['functionItem'];
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
@@ -243,6 +245,7 @@ class DeviceDetailController extends GetxController {
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
+      recordTag.value =false;
     }
   }
 
@@ -320,6 +323,8 @@ class DeviceDetailController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
       Get.back();
+      EventBusUtil.getInstance().fire(SpaceList());
+      EventBusUtil.getInstance().fire(DeviceList());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

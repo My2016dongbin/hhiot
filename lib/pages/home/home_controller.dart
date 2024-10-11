@@ -78,7 +78,7 @@ class HomeController extends GetxController {
             margin: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
             padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
             decoration: BoxDecoration(
-                color: HhColors.blackColor,
+                color: HhColors.blackColor.withAlpha(200),
                 borderRadius: BorderRadius.all(Radius.circular(16.w))),
             constraints: BoxConstraints(
                 minWidth: 0.36.sw
@@ -99,7 +99,7 @@ class HomeController extends GetxController {
                   event.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: event.color==0?HhColors.whiteColor:HhColors.textColor,
+                      color: HhColors.whiteColor,
                       fontSize: 26.sp),
                 ),
                 event.type==0?SizedBox(height: 10.w,):const SizedBox(),
@@ -279,6 +279,9 @@ class HomeController extends GetxController {
     HhLog.d("handleShare -- $result");
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: status==2?'操作成功':'“$name”\n已共享至“默认空间”',type: 0,color: 0));
+      Get.back();
+      EventBusUtil.getInstance().fire(SpaceList());
+      EventBusUtil.getInstance().fire(DeviceList());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

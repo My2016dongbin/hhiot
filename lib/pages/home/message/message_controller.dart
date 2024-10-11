@@ -55,6 +55,7 @@ class MessageController extends GetxController {
   final Rx<int> typeSelectIndex = 0.obs;
   final Rx<int> spaceSelectIndex = 0.obs;
   StreamSubscription ?spaceListSubscription;
+  StreamSubscription ?messageSubscription;
   final List<dynamic> typeList = [
     {
       "name":"类型",
@@ -91,6 +92,16 @@ class MessageController extends GetxController {
         .on<SpaceList>()
         .listen((event) {
       getSpaceList();
+    });
+    messageSubscription = EventBusUtil.getInstance()
+        .on<Message>()
+        .listen((event) {
+      pageNumLeft = 1;
+      pageNumRight = 1;
+      fetchPageLeft(1);
+      fetchPageRight(1);
+      getWarnCount();
+      getNoticeCount();
     });
     super.onInit();
   }

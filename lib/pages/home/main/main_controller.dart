@@ -35,6 +35,7 @@ class MainController extends GetxController {
   StreamSubscription? pushTouchSubscription;
   StreamSubscription? spaceListSubscription;
   StreamSubscription? deviceListSubscription;
+  StreamSubscription? messageSubscription;
   final Rx<bool> searchStatus = false.obs;
   final Rx<bool> videoStatus = false.obs;
   final Rx<bool> pageMapStatus = false.obs;
@@ -105,6 +106,10 @@ class MainController extends GetxController {
         EventBusUtil.getInstance().on<DeviceList>().listen((event) {
           pageNum = 1;
           getDeviceList(1);
+        });
+    messageSubscription =
+        EventBusUtil.getInstance().on<Message>().listen((event) {
+          getUnRead();
         });
     // pagingController.addPageRequestListener((pageKey) {
     //   // fetchPage(pageKey);
@@ -466,6 +471,8 @@ class MainController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
       pageNum = 1;
       getDeviceList(1);
+      EventBusUtil.getInstance().fire(SpaceList());
+      EventBusUtil.getInstance().fire(DeviceList());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }

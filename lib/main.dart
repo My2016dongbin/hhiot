@@ -115,11 +115,13 @@ class MyAppState extends State<HhApp> {
       },
       onReceiveNotificationResponse: (Map<String, dynamic> msg) async {
         HhLog.d("HomePage -> onReceiveNotificationResponse -> $msg");
+        EventBusUtil.getInstance().fire(Message());
         dynamic custom = jsonDecode(msg['customMessage']);
         HhLog.d("HomePage -> $custom ");
         if(custom!=null && custom['otherInfomation']['messageType']== "deviceShare" && CommonData.personal){
           EventBusUtil.getInstance().fire(Share(model:custom['otherInfomation']));
         }
+        EventBusUtil.getInstance().fire(Message());
       },
       onReceiveMessage: (Map<String, dynamic> msg) async {
         HhLog.d("HomePage -> onReceiveMessage -> $msg");

@@ -34,7 +34,7 @@ class EditController extends GetxController {
     HhLog.d("spaceUpdate -- $tenantResult");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
-      EventBusUtil.getInstance().fire(HhToast(title: '修改成功'));
+      EventBusUtil.getInstance().fire(HhToast(title: '修改成功',type: 0));
       EventBusUtil.getInstance().fire(SpaceList());
       Get.back();
     } else {

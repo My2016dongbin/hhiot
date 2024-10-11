@@ -963,25 +963,25 @@ class MainPage extends StatelessWidget {
 
   ///设备列表视图-网格列表itemView
   gridItemView(BuildContext context, dynamic item, int index) {
-    return InkWell(
-      onTap: (){
-        Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
-      },
-      child: Container(
-        clipBehavior: Clip.hardEdge, //裁剪
-        margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
-        decoration: BoxDecoration(
-            color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(32.w))),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 0.23.sw,
-              width: 0.5.sw,
-              child: Stack(
-                children: [
-                  Container(
+    return Container(
+      clipBehavior: Clip.hardEdge, //裁剪
+      margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
+      decoration: BoxDecoration(
+          color: HhColors.whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 0.23.sw,
+            width: 0.5.sw,
+            child: Stack(
+              children: [
+                InkWell(
+                  onTap: (){
+                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                  },
+                  child: Container(
                     height: 0.23.sw,
                     width: 0.5.sw,
                     decoration: BoxDecoration(
@@ -992,15 +992,20 @@ class MainPage extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  item['status']==1?const SizedBox():Container(
-                    height: 0.23.sw,
-                    width: 0.5.sw,
-                    decoration: BoxDecoration(
-                        color: HhColors.grayEDBackColor.withAlpha(160),
-                        borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
-                  ),
-                  item['status']==1?const SizedBox():Align(
-                    alignment: Alignment.center,
+                ),
+                item['status']==1?const SizedBox():Container(
+                  height: 0.23.sw,
+                  width: 0.5.sw,
+                  decoration: BoxDecoration(
+                      color: HhColors.grayEDBackColor.withAlpha(160),
+                      borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                ),
+                item['status']==1?const SizedBox():Align(
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    onTap: (){
+                      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                    },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -1014,55 +1019,55 @@ class MainPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: (){
+              showEditDeviceDialog(item);
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Text(
+                      CommonUtils().parseNameCount("${item['name']}", 5),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: HhColors.blackColor,
+                          fontSize: 30.sp,),
+                    ),
+                  ),
+                  SizedBox(width: 8.w,),
+                  CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
+                        decoration: BoxDecoration(
+                          color: HhColors.grayEFBackColor,
+                          borderRadius: BorderRadius.all(Radius.circular(8.w))
+                        ),
+                        child: Text(
+                          item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
+                          style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 23.sp),
+                        ),
+                      ),
+                    ],
+                  ):const SizedBox()):const SizedBox(),
+                  /*item['deviceCount']==0?const SizedBox():*/
+                  Container(padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
+                      child: Text(':',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 30.sp,fontWeight: FontWeight.bold),)),
                 ],
               ),
             ),
-            InkWell(
-              onTap: (){
-                showEditDeviceDialog(item);
-              },
-              child: Container(
-                margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        CommonUtils().parseNameCount("${item['name']}", 5),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: HhColors.blackColor,
-                            fontSize: 30.sp,),
-                      ),
-                    ),
-                    SizedBox(width: 8.w,),
-                    CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                          decoration: BoxDecoration(
-                            color: HhColors.grayEFBackColor,
-                            borderRadius: BorderRadius.all(Radius.circular(8.w))
-                          ),
-                          child: Text(
-                            item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
-                            style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 23.sp),
-                          ),
-                        ),
-                      ],
-                    ):const SizedBox()):const SizedBox(),
-                    /*item['deviceCount']==0?const SizedBox():*/
-                    Container(padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
-                        child: Text(':',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 30.sp,fontWeight: FontWeight.bold),)),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -1332,7 +1337,7 @@ class MainPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "${model['name']}",
+                    CommonUtils().parseNameCount("${model['name']}", 5),
                     style: TextStyle(
                         color: logic.spaceListIndex.value == i?HhColors.blackTextColor:HhColors.gray9TextColor,
                         fontSize: logic.spaceListIndex.value == i?36.sp:30.sp,

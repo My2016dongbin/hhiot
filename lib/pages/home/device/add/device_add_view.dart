@@ -89,7 +89,7 @@ class DeviceAddPage extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 95.w, 36.w, 0),
+                      margin: EdgeInsets.fromLTRB(0, 90.w, 36.w, 0),
                       color: HhColors.trans,
                       child: Image.asset(
                         "assets/images/common/icon_scanner.png",
@@ -143,8 +143,10 @@ class DeviceAddPage extends StatelessWidget {
                           controller: logic.snController,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20.w),
-                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(left:20.w),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             hintText: '请输入SN码',
                             hintStyle: TextStyle(
                                 color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
@@ -214,7 +216,9 @@ class DeviceAddPage extends StatelessWidget {
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 20.w),
-                            border: InputBorder.none,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             hintText: '请输入设备名称',
                             hintStyle: TextStyle(
                                 color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),

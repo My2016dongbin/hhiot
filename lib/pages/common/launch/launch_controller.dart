@@ -112,7 +112,7 @@ class LaunchController extends GetxController {
         Container(
           padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
           decoration: BoxDecoration(
-              color: HhColors.blackColor,
+              color: HhColors.blackColor.withAlpha(200),
               borderRadius: BorderRadius.all(Radius.circular(16.w))),
           constraints: BoxConstraints(
               minWidth: 0.36.sw

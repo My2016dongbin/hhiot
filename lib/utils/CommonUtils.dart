@@ -123,7 +123,7 @@ class CommonUtils{
     return Column(
       children: [
         SizedBox(height: top??0.5.sw,),
-        Image.asset(image??'assets/images/common/ic_none.png',fit: BoxFit.fill,
+        Image.asset(image??'assets/images/common/icon_no_message.png',fit: BoxFit.fill,
           height: height??0.4.sw,
           width: width??0.5.sw,),
         SizedBox(height: mid??0,),
@@ -138,7 +138,7 @@ class CommonUtils{
     return Column(
       children: [
         SizedBox(height: top??0.2.sw,),
-        Image.asset('assets/images/common/ic_none.png',fit: BoxFit.fill,
+        Image.asset('assets/images/common/icon_no_message.png',fit: BoxFit.fill,
           height: 0.2.sw,
           width: 0.2.sw,),
         Text('暂无数据',style: TextStyle(
@@ -671,6 +671,17 @@ class CommonUtils{
   String mobileString(String s){
     if(s.length == 11){
       s =  "${s.substring(0,3)}****${s.substring(7,s.length)}";
+    }
+    return s;
+  }
+  String emailString(String s){
+    if(s.contains('@')){
+      int index = s.indexOf('@');
+      try{
+        s =  "${s.substring(0,3)}****${s.substring(index,s.length)}";
+      }catch(e){
+        //
+      }
     }
     return s;
   }

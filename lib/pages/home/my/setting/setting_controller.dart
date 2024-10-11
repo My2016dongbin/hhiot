@@ -19,6 +19,7 @@ class SettingController extends GetxController {
   final Rx<bool> testStatus = true.obs;
   final Rx<String> ?nickname = ''.obs;
   final Rx<String> ?account = ''.obs;
+  final Rx<String> ?tenantTitle = ''.obs;
   final Rx<String> ?mobile = ''.obs;
   final Rx<String> ?email = ''.obs;
   final Rx<String> ?avatar = ''.obs;
@@ -32,6 +33,7 @@ class SettingController extends GetxController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     nickname!.value = prefs.getString(SPKeys().nickname)!;
     account!.value = prefs.getString(SPKeys().username)!;
+    tenantTitle!.value = prefs.getString(SPKeys().tenantTitle)!;
     mobile!.value = prefs.getString(SPKeys().mobile)!;
     email!.value = prefs.getString(SPKeys().email)!;
     avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;

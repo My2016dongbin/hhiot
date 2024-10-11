@@ -46,7 +46,7 @@ class PersonalLoginController extends GetxController {
               margin: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
               padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
               decoration: BoxDecoration(
-                  color: HhColors.blackColor,
+                  color: HhColors.blackColor.withAlpha(200),
                   borderRadius: BorderRadius.all(Radius.circular(16.w))),
               constraints: BoxConstraints(
                   minWidth: 0.36.sw
@@ -67,7 +67,7 @@ class PersonalLoginController extends GetxController {
                     event.title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: event.color==0?HhColors.whiteColor:HhColors.textColor,
+                        color: HhColors.whiteColor,
                         fontSize: 26.sp),
                   ),
                   event.type==0?SizedBox(height: 10.w,):const SizedBox(),

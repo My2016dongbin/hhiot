@@ -51,11 +51,11 @@ class SearchPage extends StatelessWidget {
       children: [
         ///背景色
         Container(
-          height: 270.w,
+          height: 180.w,
           color: HhColors.whiteColor,
         ),
         ///title
-        InkWell(
+        /*InkWell(
           onTap: () {
             Get.back();
           },
@@ -70,8 +70,8 @@ class SearchPage extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-        ),
-        Align(
+        ),*/
+        /*Align(
           alignment: Alignment.topCenter,
           child: Container(
             margin: EdgeInsets.only(top: 90.w),
@@ -84,74 +84,104 @@ class SearchPage extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
-        ),
+        ),*/
         Container(
-          // height: 90.w,
-          margin: EdgeInsets.fromLTRB(20.w, 160.w, 100.w, 0),
-          padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
-          decoration: BoxDecoration(
-              color: HhColors.grayEEBackColor,
-              borderRadius: BorderRadius.all(Radius.circular(50.w))),
+          height: 80.w,
+          margin: EdgeInsets.only(top: 80.w),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "assets/images/common/icon_search.png",
-                width: 35.w,
-                height: 35.w,
-                fit: BoxFit.fill,
-              ),
-              SizedBox(
-                width: 5.w,
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(26.w, 0, 0, 0),
+                  padding: EdgeInsets.all(20.w),
+                  color: HhColors.trans,
+                  child: Image.asset(
+                    "assets/images/common/back.png",
+                    width: 18.w,
+                    height: 30.w,
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               Expanded(
-                child: TextField(
-                  textAlign: TextAlign.left,
-                  maxLines: 1,
-                  cursorColor: HhColors.titleColor_99,
-                  controller: logic.searchController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.search,
-                  onSubmitted: (s){
-                    logic.mainSearch();
-                  },
-                  decoration: InputDecoration(
-                    //contentPadding: EdgeInsets.zero,
-                    border: InputBorder.none,
-                    hintText: '搜索设备、空间、消息...',
-                    hintStyle: TextStyle(
-                        color: HhColors.gray9TextColor, fontSize: 24.sp),
+                child: Container(
+                  height: 80.w,
+                  margin: EdgeInsets.fromLTRB(20.w, 0, 10.w, 0),
+                  padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  decoration: BoxDecoration(
+                      color: HhColors.grayEEBackColor,
+                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin:EdgeInsets.only(bottom: 2.w),
+                        child: Image.asset(
+                          "assets/images/common/icon_search.png",
+                          width: 35.w,
+                          height: 35.w,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.searchController,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.search,
+                          onSubmitted: (s){
+                            logic.mainSearch();
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
+                            hintText: '搜索设备、空间、消息...',
+                            hintStyle: TextStyle(
+                                color: HhColors.gray9TextColor, fontSize: 24.sp),
+                          ),
+                          style:
+                          TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                        ),
+                      )
+                    ],
                   ),
-                  style:
-                  TextStyle(color: HhColors.textColor, fontSize: 24.sp),
                 ),
-              )
+              ),
+              InkWell(
+                onTap: (){
+                  // logic.mainSearch();
+                  logic.listStatus.value = false;
+                  logic.searchController!.text = '';
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                  padding: EdgeInsets.fromLTRB(15.w, 5.w, 15.w, 5.w),
+                  child: Text(
+                    "取消",
+                    style: TextStyle(
+                        color: HhColors.gray6TextColor,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: (){
-              logic.mainSearch();
-            },
-            child: Container(
-              margin: EdgeInsets.fromLTRB(20.w, 180.w, 20.w, 0),
-              padding: EdgeInsets.fromLTRB(15.w, 5.w, 15.w, 5.w),
-              child: Text(
-                "搜索",
-                style: TextStyle(
-                    color: HhColors.gray6TextColor,
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ),
         logic.listStatus.value?Container(
-          margin: EdgeInsets.only(top: 270.w),
+          margin: EdgeInsets.only(top: 180.w),
           child: EasyRefresh(
             onRefresh: (){
               logic.mainSearch();
@@ -159,7 +189,7 @@ class SearchPage extends StatelessWidget {
             child: SingleChildScrollView(
               key: const Key("out"),
               child: (logic.deviceList.isEmpty&&logic.spaceList.isEmpty&&logic.messageList.isEmpty)?SizedBox(
-                child: Center(child: CommonUtils().noneWidget(image: 'assets/images/common/no_search.png',info: '没有找到匹配的结果',height: 0.5.sw,top: 0.4.sw),),
+                child: Center(child: CommonUtils().noneWidget(image: 'assets/images/common/icon_no_message_search.png',info: '没有找到匹配的结果',height: 0.4.sw,width:0.5.sw,top: 0.4.sw),),
               ):Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -315,125 +345,130 @@ class SearchPage extends StatelessWidget {
         ));
       }
       HhLog.d("device--");
-      ///我的空间
-      list.add(logic.spaceList.isEmpty?const SizedBox():Container(
-        margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 30.w),
-        child: Text('我的空间',style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
-      ));
-      for(int i = 0;i < ((logic.spaceList.length%2==0)?(logic.spaceList.length/2)-1:(logic.spaceList.length/2+1-1)); i++){
-        dynamic itemLeft = logic.spaceList[i*2];//0 2 4
-        dynamic itemRight = {};
-        HhLog.d("space -- ${i*2}");
-        if(logic.spaceList.length>(i*2+1)){
-          itemRight = logic.spaceList[i*2+1];//1 3 5
-          HhLog.d("space -- ${i*2+1}");
+      ///空间
+      for(int i = 0; i < logic.spaceList.length; i++){
+        dynamic space = logic.spaceList[i];
+        List<dynamic> deviceList = space['deviceBaseDOList']??[];
+
+        list.add(deviceList.isEmpty?const SizedBox():Container(
+          margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 25.w),
+          child: Text(CommonUtils().parseNameCount('${space['name']}', 10),style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
+        ));
+        for(int i = 0;i < ((deviceList.length%2==0)?(deviceList.length/2)-1:(deviceList.length/2+1-1)); i++){
+          dynamic itemLeft = deviceList[i*2];//0 2 4
+          dynamic itemRight = {};
+          HhLog.d("space -- ${i*2}");
+          if(deviceList.length>(i*2+1)){
+            itemRight = deviceList[i*2+1];//1 3 5
+            HhLog.d("space -- ${i*2+1}");
+          }
+          list.add(
+              Row(
+                children: [
+                  InkWell(
+                    onTap: (){
+                      // Get.to(()=>DeviceListPage(id: "${itemLeft['id']}",),binding: DeviceListBinding());
+                    },
+                    child: Container(
+                      clipBehavior: Clip.hardEdge, //裁剪
+                      width: 0.44.sw,
+                      margin: EdgeInsets.fromLTRB(0.04.sw, 30.w, 0.02.sw, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.whiteColor,
+                          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            height: 0.25.sw,
+                            decoration: BoxDecoration(
+                                color: HhColors.whiteColor,
+                                borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                            child: Image.asset(
+                              "assets/images/common/test_video.jpg",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    CommonUtils().parseNameCount("${itemLeft['name']}", 20),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: HhColors.blackColor,
+                                      fontSize: 30.sp,),
+                                  ),
+                                ),
+                                SizedBox(width: 8.w,),
+
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20.w,),
+                        ],
+                      ),
+                    ),
+                  ),
+                  itemRight['name'] == null?const SizedBox():InkWell(
+                    onTap: (){
+                      // Get.to(()=>DeviceListPage(id: "${itemRight['id']}",),binding: DeviceListBinding());
+                    },
+                    child: Container(
+                      clipBehavior: Clip.hardEdge, //裁剪
+                      width: 0.44.sw,
+                      margin: EdgeInsets.fromLTRB(0.02.sw, 30.w, 0.04.sw, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.whiteColor,
+                          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            height: 0.25.sw,
+                            decoration: BoxDecoration(
+                                color: HhColors.whiteColor,
+                                borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                            child: Image.asset(
+                              "assets/images/common/test_video.jpg",
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    CommonUtils().parseNameCount("${itemRight['name']}", 20),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: HhColors.blackColor,
+                                      fontSize: 30.sp,),
+                                  ),
+                                ),
+                                SizedBox(width: 8.w,),
+
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20.w,),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              )
+          );
         }
-        list.add(
-          Row(
-            children: [
-              InkWell(
-                onTap: (){
-                  // Get.to(()=>DeviceListPage(id: "${itemLeft['id']}",),binding: DeviceListBinding());
-                },
-                child: Container(
-                  clipBehavior: Clip.hardEdge, //裁剪
-                  width: 0.44.sw,
-                  margin: EdgeInsets.fromLTRB(0.04.sw, 30.w, 0.02.sw, 0),
-                  decoration: BoxDecoration(
-                      color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(32.w))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 0.25.sw,
-                        decoration: BoxDecoration(
-                            color: HhColors.whiteColor,
-                            borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
-                        child: Image.asset(
-                          "assets/images/common/test_video.jpg",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "${itemLeft['name']}",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: HhColors.blackColor,
-                                  fontSize: 30.sp,),
-                              ),
-                            ),
-                            SizedBox(width: 8.w,),
-
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20.w,),
-                    ],
-                  ),
-                ),
-              ),
-              itemRight['name'] == null?const SizedBox():InkWell(
-                onTap: (){
-                  // Get.to(()=>DeviceListPage(id: "${itemRight['id']}",),binding: DeviceListBinding());
-                },
-                child: Container(
-                  clipBehavior: Clip.hardEdge, //裁剪
-                  width: 0.44.sw,
-                  margin: EdgeInsets.fromLTRB(0.02.sw, 30.w, 0.04.sw, 0),
-                  decoration: BoxDecoration(
-                      color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(32.w))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 0.25.sw,
-                        decoration: BoxDecoration(
-                            color: HhColors.whiteColor,
-                            borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
-                        child: Image.asset(
-                          "assets/images/common/test_video.jpg",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "${itemRight['name']}",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: HhColors.blackColor,
-                                  fontSize: 30.sp,),
-                              ),
-                            ),
-                            SizedBox(width: 8.w,),
-
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20.w,),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )
-        );
       }
       HhLog.d("space--");
       HhLog.d("logic.messageList-- ${logic.messageList}");
@@ -606,186 +641,8 @@ class SearchPage extends StatelessWidget {
   }
 
   messageItem(BuildContext context, int index, dynamic item) {
-  /*
-    if(item["messageType"] == "deviceShare"){
-      return Container(
-        margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-        padding: EdgeInsets.all(20.w),
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-            color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(10.w))
-        ),
-        child: Stack(
-          children: [
-            item['status']==true?const SizedBox():Container(
-              height: 10.w,
-              width: 10.w,
-              margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
-              decoration: BoxDecoration(
-                  color: HhColors.backRedInColor,
-                  borderRadius: BorderRadius.all(Radius.circular(5.w))
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
-              child: Text(
-                parseRightType("${item['messageType']}"),
-                style: TextStyle(
-                    color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "时间:${CommonUtils().parseLongTime('${item['createTime']}')}",
-                    style: TextStyle(
-                        color: HhColors.textColor, fontSize: 22.sp),
-                  ),
-                  SizedBox(height: 8.w,),
-                  Text(
-                    '${item['content']}',
-                    style: TextStyle(
-                        color: HhColors.textColor, fontSize: 22.sp),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
 
-    if(item["messageType"] == "deviceAlarm"){
-      return Container(
-        margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-        padding: EdgeInsets.all(20.w),
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-            color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(10.w))
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 200.w,
-              height: 130.w,
-              child: Stack(
-                children: [
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.w),
-                    ),
-                    child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
-                      "assets/images/common/icon_message_back.png",
-                      width: 200.w,
-                      height: 130.w,
-                      fit: BoxFit.fill,
-                    ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
-                      return Image.asset(
-                        "assets/images/common/test_video.jpg",
-                        width: 200.w,
-                        height: 130.w,
-                        fit: BoxFit.fill,
-                      );
-                    },
-                      width: 200.w,
-                      height: 130.w,
-                      fit: BoxFit.fill,),
-                  ),
-                  item['alarmType']=='tilt'?Align(
-                    alignment:Alignment.center,
-                    child: Image.asset(
-                      "assets/images/common/icon_message_y.png",
-                      width: 50.w,
-                      height: 50.w,
-                      fit: BoxFit.fill,
-                    ),
-                  ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
-                    alignment:Alignment.center,
-                    child: Image.asset(
-                      "assets/images/common/icon_message_open.png",
-                      width: 50.w,
-                      height: 50.w,
-                      fit: BoxFit.fill,
-                    ),
-                  ):const SizedBox(),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 130.w,
-                child: Stack(
-                  children: [
-                    item['status'] == true?const SizedBox():Container(
-                      height: 10.w,
-                      width: 10.w,
-                      margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
-                      decoration: BoxDecoration(
-                          color: HhColors.backRedInColor,
-                          borderRadius: BorderRadius.all(Radius.circular(5.w))
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
-                      child: Text(
-                        parseLeftType("${item['alarmType']}"),
-                        style: TextStyle(
-                            color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            CommonUtils().parseNull('${item['deviceName']}',""),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: HhColors.textColor, fontSize: 22.sp),
-                          ),
-                          SizedBox(height: 5.w,),
-                          Text(
-                            CommonUtils().parseNull('${item['spaceName']}', ""),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: HhColors.textColor, fontSize: 22.sp),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 5.w),
-                        child: Text(
-                          CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
-                          style: TextStyle(
-                              color: HhColors.textColor, fontSize: 22.sp),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-*/
-
+    /*
     return Container(
       margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
       padding: EdgeInsets.all(20.w),
@@ -831,6 +688,127 @@ class SearchPage extends StatelessWidget {
                       color: HhColors.textColor, fontSize: 22.sp),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );*/
+    return Container(
+      margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+      padding: EdgeInsets.all(20.w),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: HhColors.whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(10.w))
+      ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 200.w,
+            height: 130.w,
+            child: Stack(
+              children: [
+                Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.w),
+                  ),
+                  child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
+                    "assets/images/common/icon_message_back.png",
+                    width: 200.w,
+                    height: 130.w,
+                    fit: BoxFit.fill,
+                  ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                    return Image.asset(
+                      "assets/images/common/test_video.jpg",
+                      width: 200.w,
+                      height: 130.w,
+                      fit: BoxFit.fill,
+                    );
+                  },
+                    width: 200.w,
+                    height: 130.w,
+                    fit: BoxFit.fill,),
+                ),
+                item['alarmType']=='tilt'?Align(
+                  alignment:Alignment.center,
+                  child: Image.asset(
+                    "assets/images/common/icon_message_y.png",
+                    width: 50.w,
+                    height: 50.w,
+                    fit: BoxFit.fill,
+                  ),
+                ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
+                  alignment:Alignment.center,
+                  child: Image.asset(
+                    "assets/images/common/icon_message_open.png",
+                    width: 50.w,
+                    height: 50.w,
+                    fit: BoxFit.fill,
+                  ),
+                ):const SizedBox(),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 130.w,
+              child: Stack(
+                children: [
+                  item['status'] == true?const SizedBox():Container(
+                    height: 10.w,
+                    width: 10.w,
+                    margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.backRedInColor,
+                        borderRadius: BorderRadius.all(Radius.circular(5.w))
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
+                    child: Text(
+                      parseLeftType("${item['alarmType']}"),
+                      style: TextStyle(
+                          color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          CommonUtils().parseNull('${item['deviceName']}',""),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: HhColors.textColor, fontSize: 22.sp),
+                        ),
+                        SizedBox(height: 5.w,),
+                        Text(
+                          CommonUtils().parseNull('${item['spaceName']}', ""),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: HhColors.textColor, fontSize: 22.sp),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 5.w),
+                      child: Text(
+                        CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
+                        style: TextStyle(
+                            color: HhColors.textColor, fontSize: 22.sp),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

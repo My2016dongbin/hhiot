@@ -292,6 +292,47 @@ class SettingPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                      ///公司信息
+                      CommonData.personal?const SizedBox():SizedBox(
+                        height:110.w,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                margin:EdgeInsets.only(left: 30.w),
+                                child: Text(
+                                  "公司信息",
+                                  style: TextStyle(
+                                      color: HhColors.textBlackColor,
+                                      fontSize: 28.sp,fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                margin:EdgeInsets.only(right: 65.w),
+                                child: Text(
+                                  logic.tenantTitle!.value,
+                                  style: TextStyle(
+                                      color: HhColors.grayCCTextColor,
+                                      fontSize: 26.sp),
+                                ),
+                              ),
+                            ),
+                            Align(
+                                alignment: Alignment.bottomCenter,
+                                child:Container(
+                                  height: 0.5.w,
+                                  width: 1.sw,
+                                  margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+                                  color: HhColors.grayDDTextColor,
+                                )
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -373,7 +414,7 @@ class SettingPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      ///安全邮箱
+                      /*///安全邮箱
                       InkWell(
                         onTap: (){
                           Get.to(() => EditPage(keys: 'email',titles: '修改邮箱',), binding: EditBinding());
@@ -399,7 +440,7 @@ class SettingPage extends StatelessWidget {
                                 child: Container(
                                   margin:EdgeInsets.only(right: 65.w),
                                   child: Text(
-                                    CommonUtils().mobileString(logic.email!.value),
+                                    CommonUtils().emailString(logic.email!.value),
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
                                         fontSize: 26.sp),
@@ -430,8 +471,8 @@ class SettingPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ),
-                      ///安全邮箱
+                      ),*/
+                      ///设置新密码
                       SizedBox(
                         height:110.w,
                         child: InkWell(

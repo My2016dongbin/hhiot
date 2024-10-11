@@ -47,7 +47,7 @@ class CompanyLoginController extends GetxController {
           margin: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
           padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
           decoration: BoxDecoration(
-              color: HhColors.blackColor,
+              color: HhColors.blackColor.withAlpha(200),
               borderRadius: BorderRadius.all(Radius.circular(16.w))),
           constraints: BoxConstraints(
             minWidth: 0.36.sw
@@ -68,7 +68,7 @@ class CompanyLoginController extends GetxController {
                 event.title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: event.color==0?HhColors.whiteColor:HhColors.textColor,
+                    color: HhColors.whiteColor,
                     fontSize: 26.sp),
               ),
               event.type==0?SizedBox(height: 10.w,):const SizedBox(),
@@ -156,7 +156,9 @@ class CompanyLoginController extends GetxController {
       await prefs.setString(SPKeys().tenantName, tenantController!.text);
       CommonData.tenant = '${result["data"]['id']}';
       CommonData.tenantUserType = '${result["data"]['userType']}';
+      CommonData.tenantTitle = '${result["data"]['name']}';//暂用租户名称
       await prefs.setString(SPKeys().tenantUserType, CommonData.tenantUserType!);
+      await prefs.setString(SPKeys().tenantTitle, CommonData.tenantTitle!);
       login();
     } else {
       EventBusUtil.getInstance()

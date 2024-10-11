@@ -123,8 +123,8 @@ class DeviceDetailPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 100.w, 36.w, 0),
                     child: Image.asset(
                       "assets/images/common/icon_video_set.png",
-                      width: 40.w,
-                      height: 40.w,
+                      width: 45.w,
+                      height: 45.w,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -471,7 +471,7 @@ class DeviceDetailPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  BouncingWidget(
+                  logic.functionItem.value.contains('录像')?BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
                     onPressed: () {
@@ -503,8 +503,8 @@ class DeviceDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  BouncingWidget(
+                  ):const SizedBox(),
+                  logic.functionItem.value.contains('截图')?BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
                     onPressed: () {},
@@ -527,8 +527,8 @@ class DeviceDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  BouncingWidget(
+                  ):const SizedBox(),
+                  logic.functionItem.value.contains('对讲')?BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
                     onPressed: () {
@@ -574,7 +574,7 @@ class DeviceDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
+                  ):const SizedBox(),
                   /*BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
@@ -608,9 +608,7 @@ class DeviceDetailPage extends StatelessWidget {
                   SizedBox(
                     width: 20.w,
                   ),*/
-                  logic.productName.value != '浩海智慧立杆'
-                      ? const SizedBox()
-                      : BouncingWidget(
+                logic.functionItem.value.contains('设置')?BouncingWidget(
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.2,
                           onPressed: () {
@@ -636,7 +634,7 @@ class DeviceDetailPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
+                        ):const SizedBox(),
                 ],
               ),
             ),
@@ -909,7 +907,9 @@ class DeviceDetailPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
                     borderRadius: BorderRadius.all(
-                        Radius.circular(12.w))),
+                        Radius.circular(12.w)),
+                  border: Border.all(color: HhColors.grayDDTextColor,width: 1.w)
+                ),
                 child: Text(
                   '${live['positionName']}',
                   style: TextStyle(

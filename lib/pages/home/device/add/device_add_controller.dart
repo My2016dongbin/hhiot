@@ -172,6 +172,7 @@ class DeviceAddController extends GetxController {
       HhLog.d("newItems[index.value] ${newItems[index.value]}");
       model['spaceName'] = newItems[index.value]['name'];
       model['spaceId'] = newItems[index.value]['id'];
+      HhLog.d("model $model");
     }catch(e){
       //
     }

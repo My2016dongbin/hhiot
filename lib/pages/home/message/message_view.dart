@@ -312,9 +312,10 @@ class MessagePage extends StatelessWidget {
                                   logic.fetchPageLeft(1);
                                 },
                                 decoration: InputDecoration(
-                                  //contentPadding: EdgeInsets.zero,
-                                  contentPadding: EdgeInsets.fromLTRB(0, 0.w, 0, 20.w),
-                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.zero,
+                                  border: const OutlineInputBorder(
+                                      borderSide: BorderSide.none
+                                  ),
                                   counterText: '',
                                   hintText: '请输入设备名称',
                                   hintStyle: TextStyle(
