@@ -15,6 +15,9 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
+import 'package:iot/pages/home/device/detail/call/call_binding.dart';
+import 'package:iot/pages/home/device/detail/call/call_view.dart';
+import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
@@ -130,6 +133,27 @@ class DeviceDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
+              /*Align(//test
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: () {
+                    if(logic.item['deviceNo']==null){
+                      EventBusUtil.getInstance().fire(HhToast(title: '设备信息加载中..请稍候',type: 0));
+                      return;
+                    }
+                    Get.to(()=>CallPage('${logic.item['deviceNo']}','${logic.item['id']}',logic.shareMark),binding: CallBinding());
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 100.w, 136.w, 0),
+                    child: Image.asset(
+                      "assets/images/common/icon_video_set.png",
+                      width: 45.w,
+                      height: 45.w,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),*/
 
               ///tab
               Container(
@@ -507,7 +531,9 @@ class DeviceDetailPage extends StatelessWidget {
                   logic.functionItem.value.contains('截图')?BouncingWidget(
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
-                    onPressed: () {},
+                    onPressed: () {
+                      logic.saveImageToGallery();
+                    },
                     child: Container(
                       margin: EdgeInsets.only(left: 30.w),
                       child: Column(
@@ -833,7 +859,7 @@ class DeviceDetailPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: () {
                   Get.back();
-                  EventBusUtil.getInstance().fire(HhToast(title: '设备重启成功',type: 0));
+                  logic.resetDevice();
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -858,7 +884,7 @@ class DeviceDetailPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: () {
                   Get.back();
-                  CommonUtils().showDeleteDialog(context, '确定要删除该设备吗?', (){
+                  CommonUtils().showDeleteDialog(context, '确定要删除?', (){
                     Get.back();
                   }, (){
                     Get.back();

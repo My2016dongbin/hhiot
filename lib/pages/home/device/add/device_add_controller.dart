@@ -184,6 +184,7 @@ class DeviceAddController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: '保存成功',type: 1));
       EventBusUtil.getInstance().fire(DeviceList());
       EventBusUtil.getInstance().fire(SpaceList());
+      EventBusUtil.getInstance().fire(DeviceInfo());
       Get.back();
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));

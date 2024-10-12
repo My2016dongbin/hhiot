@@ -88,7 +88,9 @@ class LiGanDetailController extends GetxController {
     }
   }
   Future<void> getVoiceUse() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
     var result = await HhHttp().request(RequestUtils.deviceVoiceTop,method: DioMethod.get);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("getVoiceUse -- $result");
     if(result["code"]==0 && result["data"]!=null){
       voiceTopList = result["data"]["list"];

@@ -134,14 +134,14 @@ class CommonUtils{
       ],
     );
   }
-  Widget noneWidgetSmall({double? top}){
+  Widget noneWidgetSmall({double? top,String? text}){
     return Column(
       children: [
         SizedBox(height: top??0.2.sw,),
         Image.asset('assets/images/common/icon_no_message.png',fit: BoxFit.fill,
           height: 0.2.sw,
           width: 0.2.sw,),
-        Text('暂无数据',style: TextStyle(
+        Text(text??'暂无数据',style: TextStyle(
             color: HhColors.grayBBTextColor,
             fontSize: 20.sp
         ),),

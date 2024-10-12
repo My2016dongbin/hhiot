@@ -356,7 +356,10 @@ class LiGanDetailPage extends StatelessWidget {
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          logic.getVoiceUse();
+                                          logic.getDeviceConfig();
+                                        },
                                         child: Container(
                                           padding: EdgeInsets.fromLTRB(
                                               10.w, 3.w, 10.w, 3.w),

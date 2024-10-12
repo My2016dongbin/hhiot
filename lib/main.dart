@@ -14,6 +14,8 @@ import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/launch/launch_controller.dart';
 import 'package:iot/pages/common/share/manage/share_manage_binding.dart';
 import 'package:iot/pages/common/share/manage/share_manage_view.dart';
+import 'package:iot/pages/home/device/detail/call/call_binding.dart';
+import 'package:iot/pages/home/device/detail/call/call_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/res/strings.dart';
@@ -117,6 +119,12 @@ class MyAppState extends State<HhApp> {
         HhLog.d("HomePage -> onReceiveNotificationResponse -> $msg");
         EventBusUtil.getInstance().fire(Message());
         dynamic custom = jsonDecode(msg['customMessage']);
+        /*if(custom['devCode']!=null){
+          //设备呼叫
+          HhLog.d("HomePage  deviceNo ${custom['deviceNo']}");
+
+          Get.to(()=>CallPage('${custom['deviceNo']}','id',logic.shareMark),binding: CallBinding());
+        }*/
         HhLog.d("HomePage -> $custom ");
         if(custom!=null && custom['otherInfomation']['messageType']== "deviceShare" && CommonData.personal){
           EventBusUtil.getInstance().fire(Share(model:custom['otherInfomation']));

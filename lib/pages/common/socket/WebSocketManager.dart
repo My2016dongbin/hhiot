@@ -138,11 +138,11 @@ class WebSocketManager {
 
   // 处理接收到的消息
   void _onMessageReceived(dynamic message) {
-    HhLog.d('socket 处理接收到的消息 : $message');
+    // HhLog.d('socket 处理接收到的消息 : $message');
     try {
       dynamic messageDecode = jsonDecode(message);
-      HhLog.d('socket 处理接收到的消息 : $messageDecode');
-      HhLog.d('socket 处理接收到的消息 : ${messageDecode["SessionId"]}');
+      // HhLog.d('socket 处理接收到的消息 : $messageDecode');
+      // HhLog.d('socket 处理接收到的消息 : ${messageDecode["SessionId"]}');
       if (messageDecode['SessionId'] != null) {
         _startHeartbeat();
         CommonData.sessionId = messageDecode['SessionId'];
@@ -213,7 +213,7 @@ class WebSocketManager {
   Future<void> parseStream(data) async {
     try {
       Uint8List soundBytes = data;
-      HhLog.d("Uint8List $soundBytes");
+      // HhLog.d("Uint8List $soundBytes");
 
       streamList.add(soundBytes);
 /*
@@ -312,7 +312,7 @@ class WebSocketManager {
     var recordingDataController = StreamController<FoodData>();
     mRecordingDataSubscription =
         recordingDataController.stream.listen((buffer) {
-          HhLog.d("_recordAudio 8- ${buffer.data}");
+          HhLog.d("_recordAudio 8- ");//${buffer.data}");
           sendStream(buffer.data);
         });
     await mRecorder!.startRecorder(
@@ -374,7 +374,7 @@ class WebSocketManager {
   Future<void> playStream(data) async {
     try {
       Uint8List soundBytes = data;
-      HhLog.d("Uint8List $soundBytes");
+      // HhLog.d("Uint8List $soundBytes");
 
       await flutterSound.thePlayer.startPlayer(
           fromDataBuffer: soundBytes,

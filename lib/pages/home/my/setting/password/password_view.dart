@@ -8,6 +8,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/home/my/setting/password/password_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -311,6 +312,10 @@ class PasswordPage extends StatelessWidget {
                     }
                     if(logic.passwordNew2Controller!.text.isEmpty){
                       EventBusUtil.getInstance().fire(HhToast(title: '请再次输入新密码'));
+                      return;
+                    }
+                    if(!CommonUtils().validatePassword(logic.passwordNew1Controller!.text)){
+                      EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
                       return;
                     }
                     if(logic.passwordNew1Controller!.text != logic.passwordNew2Controller!.text){

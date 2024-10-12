@@ -107,6 +107,7 @@ class MainPage extends StatelessWidget {
               children: [
                 ///搜索框
                 Container(
+                  height:80.w,
                   padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
@@ -142,8 +143,10 @@ class MainPage extends StatelessWidget {
                             logic.deviceSearch();
                           },
                           decoration: InputDecoration(
-                            //contentPadding: EdgeInsets.zero,
-                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             hintText: '请输入名称',
                             hintStyle: TextStyle(
                                 color: HhColors.gray9TextColor, fontSize: 24.sp),
@@ -158,6 +161,7 @@ class MainPage extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.all(5.w),
+                          margin: EdgeInsets.only(bottom: 2.w),
                           child: Image.asset(
                             logic.searchDown.value?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
                             width: 35.w,
@@ -176,7 +180,7 @@ class MainPage extends StatelessWidget {
                     pagingController: logic.deviceController,
                     padding: EdgeInsets.zero,
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                      noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(),
+                      noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(text: '没有找到匹配的结果'),
                       itemBuilder: (context, item, index) =>
                           InkWell(
                             onTap: (){
