@@ -400,7 +400,7 @@ class MessagePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                           children: [
                             Image.asset(
-                              "assets/images/common/icon_date_message.png",
+                              logic.isChooseDate.value?"assets/images/common/icon_message_date_yes.png":"assets/images/common/icon_date_message.png",
                               width: 32.w,
                               height: 32.w,
                               fit: BoxFit.fill,

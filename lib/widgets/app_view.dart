@@ -15,7 +15,7 @@ class AppView extends StatelessWidget {
     return GetBuilder<AppController>(
       init: AppController(),
       builder: (ctrl) => ScreenUtilInit(
-        designSize: const Size(750, 1334),
+        designSize: const Size(1125, 2436),//const Size(750, 1334),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) => builder(ctrl.getLocale(), _builder()),

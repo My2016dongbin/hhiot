@@ -117,7 +117,9 @@ class PasswordPage extends StatelessWidget {
                               obscureText: !logic.passwordShowStatus.value,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                border: InputBorder.none,
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none
+                                ),
                                 counterText: '',
                                 hintText: '请输入旧密码',
                                 hintStyle: TextStyle(
@@ -181,7 +183,9 @@ class PasswordPage extends StatelessWidget {
                               obscureText: !logic.passwordShowNew1Status.value,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                border: InputBorder.none,
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none
+                                ),
                                 counterText: '',
                                 hintText: '请输入新密码',
                                 hintStyle: TextStyle(
@@ -245,7 +249,9 @@ class PasswordPage extends StatelessWidget {
                               obscureText: !logic.passwordShowNew2Status.value,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                                border: InputBorder.none,
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none
+                                ),
                                 counterText: '',
                                 hintText: '请再次输入新密码',
                                 hintStyle: TextStyle(
@@ -315,7 +321,7 @@ class PasswordPage extends StatelessWidget {
                       return;
                     }
                     if(!CommonUtils().validatePassword(logic.passwordNew1Controller!.text)){
-                      EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
+                      EventBusUtil.getInstance().fire(HhToast(title: '密码必须为8-16位由字母、数字、特殊字符两种以上组成'));
                       return;
                     }
                     if(logic.passwordNew1Controller!.text != logic.passwordNew2Controller!.text){

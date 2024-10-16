@@ -218,11 +218,11 @@ class Styles {
   );
   static TextStyle ts_333333_10sp = TextStyle(
     color: c_333333,
-    fontSize: 18.sp,
+    fontSize: 10.sp*3,
   );
   static TextStyle ts_39CD80_10sp_bold = TextStyle(
     color: c_tab,
-    fontSize: 18.sp,
+    fontSize: 10.sp*3,
     fontWeight: FontWeight.w600
   );
   static TextStyle ts_FF5858_13sp = TextStyle(

@@ -94,8 +94,10 @@ class PhonePage extends StatelessWidget {
                         controller: logic.phoneController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide.none
+                          ),
                           counterText: '',
                           hintText: '请输入手机号',
                           hintStyle: TextStyle(
@@ -173,8 +175,10 @@ class PhonePage extends StatelessWidget {
                         controller: logic.codeController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide.none
+                          ),
                           counterText: '',
                           hintText: '请输入验证码',
                           hintStyle: TextStyle(

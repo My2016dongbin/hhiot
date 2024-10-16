@@ -243,7 +243,10 @@ class SharePage extends StatelessWidget {
                                    keyboardType: TextInputType.text,
                                    enabled: true,
                                    decoration: InputDecoration(
-                                     border: InputBorder.none,
+                                     contentPadding: EdgeInsets.zero,
+                                     border: const OutlineInputBorder(
+                                         borderSide: BorderSide.none
+                                     ),
                                      hintText: '请输入被分享人的用户名/手机号',
                                      hintStyle: TextStyle(
                                          color: HhColors.gray9TextColor,

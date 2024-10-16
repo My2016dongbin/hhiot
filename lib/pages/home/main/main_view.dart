@@ -81,10 +81,10 @@ class MainPage extends StatelessWidget {
   ///地图视图-搜索
   buildSearchView() {
     return Container(
-      width: 0.6.sw,
-      height: logic.searchDown.value?0.8.sw:150.w,
-      margin: EdgeInsets.fromLTRB(30.w, logic.marginTop + 70.w, 0, 0),
-      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
+      width: 178.w*3,
+      height: logic.searchDown.value?293.w*3:55.w*3,
+      margin: EdgeInsets.fromLTRB(14.w*3, 100.w*3, 0, 0),
+      padding: EdgeInsets.fromLTRB(8.w*3, 10.w*3, 6.w*3, 10.w*3),
       decoration: BoxDecoration(
           boxShadow: const [
             BoxShadow(
@@ -98,7 +98,7 @@ class MainPage extends StatelessWidget {
             ),
           ],
           color: HhColors.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(20.w))),
+          borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
       child: Row(
         children: [
           Expanded(
@@ -107,12 +107,12 @@ class MainPage extends StatelessWidget {
               children: [
                 ///搜索框
                 Container(
-                  height:80.w,
-                  padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  height:28.w*3,
+                  padding: EdgeInsets.fromLTRB(8.w*3, 0, 8.w*3, 0),
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
                       border: Border.all(color: HhColors.mainBlueColor),
-                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -120,8 +120,8 @@ class MainPage extends StatelessWidget {
                     children: [
                       Image.asset(
                         "assets/images/common/icon_search.png",
-                        width: 35.w,
-                        height: 35.w,
+                        width: 14.w*3,
+                        height: 14.w*3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
@@ -149,10 +149,10 @@ class MainPage extends StatelessWidget {
                             ),
                             hintText: '请输入名称',
                             hintStyle: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 24.sp),
+                                color: HhColors.gray9TextColor, fontSize: 12.sp*3),
                           ),
                           style:
-                              TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                              TextStyle(color: HhColors.textColor, fontSize: 12.sp*3),
                         ),
                       ),
                       InkWell(
@@ -164,16 +164,17 @@ class MainPage extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: 2.w),
                           child: Image.asset(
                             logic.searchDown.value?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
-                            width: 35.w,
-                            height: 35.w,
+                            width: 15.w*3,
+                            height: 15.w*3,
                             fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                      SizedBox(width: 20.w,),
+                      // SizedBox(width: 20.w,),
                     ],
                   ),
                 ),
+                logic.searchDown.value?SizedBox(height: 5.w*3,):const SizedBox(),
                 ///列表数据
                 logic.searchDown.value?Expanded(
                   child: PagedListView<int, dynamic>(
@@ -190,16 +191,16 @@ class MainPage extends StatelessWidget {
                               );
                               logic.controller?.setZoomTo(17);
                               logic.searchDown.value = false;
+                              logic.searchListIndex.value = index;
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(15.w),
+                                  padding: EdgeInsets.fromLTRB(4.w*3, 5.w*3, 16.w*3, 4.w*3),
                                   decoration: BoxDecoration(
-                                      color: HhColors.blueBackColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                                  margin: EdgeInsets.fromLTRB(10.w, 20.w, 10.w, 10.w),
+                                      color: logic.searchListIndex.value == index?HhColors.blueBackColor:HhColors.whiteColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -209,10 +210,10 @@ class MainPage extends StatelessWidget {
                                           "${item['name']}",
                                           style: TextStyle(
                                               color: HhColors.textBlackColor,
-                                              fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                              fontSize: 14.sp*3,fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      Align(
+                                      "${item['spaceName']}"=='null'?const SizedBox():Align(
                                         alignment: Alignment.topLeft,
                                         child: Container(
                                           margin: EdgeInsets.only(top: 10.w),
@@ -220,7 +221,7 @@ class MainPage extends StatelessWidget {
                                             "${item['spaceName']}",
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
-                                                fontSize: 23.sp),
+                                                fontSize: 12.sp*3),
                                           ),
                                         ),
                                       ),
@@ -232,7 +233,7 @@ class MainPage extends StatelessWidget {
                                             "(${CommonUtils().subString("${item['longitude']}", 8)},${CommonUtils().subString("${item['latitude']}", 8)})",
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
-                                                fontSize: 23.sp),
+                                                fontSize: 12.sp*3),
                                           ),
                                         ),
                                       ),
@@ -240,10 +241,10 @@ class MainPage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  height: 0.5.w,
+                                  height: 1.w*3,
                                   width: 1.sw,
-                                  margin: EdgeInsets.fromLTRB(20.w, 5.w, 20.w, 0),
-                                  color: HhColors.grayDDTextColor,
+                                  margin: EdgeInsets.fromLTRB(0, 5.w*3, 0, 10.w*3),
+                                  color: HhColors.grayF3TextColor,
                                 )
                               ],
                             ),
@@ -262,8 +263,8 @@ class MainPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
               child: Image.asset(
                 'assets/images/common/icon_map_left.png',
-                width: 30.w,
-                height: 30.w,
+                width: 16.w*3,
+                height: 16.w*3,
                 fit: BoxFit.fill,
               ),
             ),
@@ -290,7 +291,7 @@ class MainPage extends StatelessWidget {
                   BMFEdgeInsets(left: 30.w, top: 0, right: 30.w, bottom: 0)),
         ),
         Container(
-          height: 160.w,
+          height: 88.w*3,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -301,31 +302,52 @@ class MainPage extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.bottomLeft,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(40.w, 0, 0, 10.w),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "默认空间",
-                        style: TextStyle(
-                            color: HhColors.blackTextColor,
-                            fontSize: 36.sp,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 2.w,
-                      ),
-                      /*Container(
-                        height: 5.w,
-                        width: 20.w,
-                        decoration: BoxDecoration(
-                          color: HhColors.blackTextColor,
-                          border: Border.all(color: HhColors.blackTextColor),
-                          borderRadius: BorderRadius.all(Radius.circular(2.w)),
+                child: BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
+                    logic.pageMapStatus.value = false;
+                    Future.delayed(const Duration(seconds: 5),(){
+                      logic.refreshMarkers();
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(16.w*3, 0, 0, 10.w*3),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/back.png",
+                          width: 12.w*3,
+                          height: 18.w*3,
+                          fit: BoxFit.fill,
                         ),
-                      )*/
-                    ],
+                        SizedBox(width: 14.w*3,),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              CommonUtils().parseNameCount("${logic.spaceList[logic.spaceListIndex.value]['name']}", 10),
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor,
+                                  fontSize: 18.sp*3,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 3.w*3,
+                            ),
+                            Container(                                
+                              height:2.w*3,
+                              width: 10.w*3,
+                              decoration: BoxDecoration(
+                                color: HhColors.blackTextColor,
+                                borderRadius: BorderRadius.circular(2.w)
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -344,19 +366,20 @@ class MainPage extends StatelessWidget {
                         });
                       },
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 10.w),
-                        padding: EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                        margin: EdgeInsets.only(bottom: 10.w*3),
+                        padding:EdgeInsets.fromLTRB(11.w*3, 4.w*3, 11.w*3, 4.w*3),
                         decoration: BoxDecoration(
                           color: HhColors.whiteColor,
-                          borderRadius: BorderRadius.all(Radius.circular(40.w)),
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12.w*3)),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Image.asset(
                               "assets/images/common/ic_jk.png",
-                              width: 36.w,
-                              height: 36.w,
+                              width: 16.w*3,
+                              height: 16.w*3,
                               fit: BoxFit.fill,
                             ),
                             SizedBox(
@@ -366,13 +389,14 @@ class MainPage extends StatelessWidget {
                               "空间",
                               style: TextStyle(
                                   color: HhColors.blackTextColor,
-                                  fontSize: 24.sp),
+                                  fontSize: 14.sp*3),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    BouncingWidget(
+                    SizedBox(width: 59.w*3,),
+                    /*BouncingWidget(
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.2,
                       onPressed: (){
@@ -390,21 +414,21 @@ class MainPage extends StatelessWidget {
                                   binding: SpaceManageBinding());
                             },
                             child: Container(
-                              margin: EdgeInsets.only(right: 30.w),
-                              padding: EdgeInsets.fromLTRB(36.w, 38.w, 23.w, 38.w),
+                              margin: EdgeInsets.fromLTRB(0,8.w*3,14.w*3,0),
+                              padding: EdgeInsets.fromLTRB(22.w*3, 25.w*3, 15.w*3, 24.w*3),
                               decoration: BoxDecoration(
                                   color: HhColors.whiteColor,
-                                  borderRadius: BorderRadius.circular(26.w)
+                                  borderRadius: BorderRadius.circular(16.w*3)
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 26.w,fontWeight: FontWeight.w200),),
-                                  SizedBox(width: 30.w,),
+                                  Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                  SizedBox(width: 20.w*3,),
                                   Image.asset(
                                     "assets/images/common/ic_setting.png",
-                                    width: 30.w,
-                                    height: 30.w,
+                                    width: 18.w*3,
+                                    height: 18.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ],
@@ -413,16 +437,21 @@ class MainPage extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                          margin: EdgeInsets.fromLTRB(18.w*3, 0, 18.w*3, 10.w),
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: HhColors.trans,
+                              borderRadius: BorderRadius.all(Radius.circular(20.w))
+                          ),
                           child: Image.asset(
                             "assets/images/common/icon_menu.png",
-                            width: 50.w,
-                            height: 50.w,
+                            width: 24.w*3,
+                            height: 24.w*3,
                             fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),
@@ -445,7 +474,7 @@ class MainPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: HhColors.whiteColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20.w)),
+                                  BorderRadius.all(Radius.circular(8.w*3)),
                               boxShadow: const [
                                 BoxShadow(
                                   color: HhColors.trans_77,
@@ -459,16 +488,16 @@ class MainPage extends StatelessWidget {
                               ],
                             ),
                             margin: EdgeInsets.fromLTRB(
-                                30.w, logic.marginTop + 70.w, 0, 0),
+                                14.w*3, 100.w*3, 0, 0),
                             padding:
-                                EdgeInsets.fromLTRB(16.w, 10.w, 16.w, 10.w),
+                                EdgeInsets.fromLTRB(10.w*3, 5.w*3, 10.w*3, 3.w*3),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
                                   "assets/images/common/icon_search.png",
-                                  width: 50.w,
-                                  height: 50.w,
+                                  width: 24.w*3,
+                                  height: 24.w*3,
                                   fit: BoxFit.fill,
                                 ),
                                 SizedBox(
@@ -477,9 +506,9 @@ class MainPage extends StatelessWidget {
                                 Text(
                                   "搜索",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
                                       color: HhColors.blackTextColor,
-                                      fontSize: 20.sp),
+                                      fontSize: 10.sp*3),
                                 ),
                               ],
                             ),
@@ -502,26 +531,26 @@ class MainPage extends StatelessWidget {
                     Get.to(()=>DeviceDetailPage('${logic.model['deviceNo']}','${logic.model['id']}',logic.model['shareMark']),binding: DeviceDetailBinding());
                   },
                   child: Container(
-                    width: 0.9.sw,
-                    height: 0.4.sw,
-                    margin: EdgeInsets.fromLTRB(50.w, 0, 50.w, 30.w),
+                    width: 1.sw,
+                    height: 195.w*3,
+                    margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 93.w*3),
                     clipBehavior: Clip.hardEdge,
                     //裁剪
                     decoration: BoxDecoration(
                         color: HhColors.trans,
-                        borderRadius: BorderRadius.all(Radius.circular(30.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
                     child: Stack(
                       children: [
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            width: 0.9.sw,
-                            height: 0.4.sw,
+                            width: 1.sw,
+                            height: 195.w*3,
                             color: HhColors.blackColor,
                             child: Image.asset(
                               "assets/images/common/test_video.jpg",
-                              width: 50.w,
-                              height: 50.w,
+                              width: 1.sw,
+                              height: 195.w*3,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -529,28 +558,28 @@ class MainPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(30.w, 20.w, 0, 0),
+                            margin: EdgeInsets.fromLTRB(12.w*3, 15.w*3, 0, 0),
                             child: Text(
                               "${logic.model["name"]}",
                               style: TextStyle(
-                                  color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                  color: HhColors.blackTextColor, fontSize: 14.sp*3,fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
                         Align(
                           alignment: Alignment.topRight,
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 20.w, 20.w, 0),
+                            margin: EdgeInsets.fromLTRB(0, 13.w*3, 18.w*3, 0),
                             padding:
-                                EdgeInsets.fromLTRB(30.w, 10.w, 30.w, 10.w),
+                                EdgeInsets.fromLTRB(18.w*3, 3.w*3, 17.w*3, 3.w*3),
                             decoration: BoxDecoration(
                                 color: HhColors.blackColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(30.w))),
+                                    BorderRadius.all(Radius.circular(12.w*3))),
                             child: Text(
                               "进入",
                               style: TextStyle(
-                                  color: HhColors.whiteColor, fontSize: 24.sp),
+                                  color: HhColors.whiteColor, fontSize: 13.sp*3),
                             ),
                           ),
                         ),
@@ -586,31 +615,31 @@ class MainPage extends StatelessWidget {
                 Get.to(()=>SearchPage(),binding: SearchBinding());
               },
               child: Container(
-                height: 85.w,
-                margin: EdgeInsets.fromLTRB(20.w, logic.marginTop, 20.w, 0),
+                height: 38.w*3,
+                margin: EdgeInsets.fromLTRB(14.w*3, logic.marginTop, 14.w*3, 0),
                 decoration: BoxDecoration(
                   color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.all(Radius.circular(40.w)),
+                  borderRadius: BorderRadius.all(Radius.circular(19.w*3)),
                 ),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 25.w,
+                      width: 12.w*3,
                     ),
                     Image.asset(
                       "assets/images/common/icon_search.png",
-                      width: 50.w,
-                      height: 50.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(
-                      width: 10.w,
+                      width: 4.w*3,
                     ),
                     Expanded(
                       child: Text(
                         '搜索设备、空间、消息...',
                         style: TextStyle(
-                            color: HhColors.textColor, fontSize: 28.sp),
+                            color: HhColors.gray9TextColor, fontSize: 14.sp*3),
                       ),
                     ),
                     SizedBox(
@@ -630,64 +659,67 @@ class MainPage extends StatelessWidget {
               ),
             ),
             ///天气
-            SizedBox(
-              height: 100.w,
+            Container(
+              margin: EdgeInsets.only(top: 17.w*3),
+              height: 36.w*3,
               child: Stack(
                 children: [
                   Align(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(logic.text.value.contains('未获取')?30.w:55.w, 0, 0, 10.w),
+                      margin: EdgeInsets.fromLTRB(logic.text.value.contains('未获取')?10.w*3:16.w*3, 0, 0, 10.w),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           logic.text.value.contains('未获取')?const SizedBox():SizedBox(
-                            width: 44.w,
-                            height: 44.w,
+                            width: 22.w*3,
+                            height: 22.w*3,
                             child: Stack(
                               children: [
                                 SizedBox(
-                                    width: 44.w,
-                                    height: 44.w,
+                                    width: 22.w*3,
+                                    height: 22.w*3,
                                     child: WebViewWidget(controller: logic.webController,)),
                                 logic.iconStatus.value?const SizedBox():Image.asset(
                                   "assets/images/common/icon_weather.png",
-                                  width: 44.w,
-                                  height: 44.w,
+                                  width: 22.w*3,
+                                  height: 22.w*3,
                                   fit: BoxFit.fill,
                                 ),
                                 Container(
                                   color: HhColors.trans,
-                                    width: 44.w,
-                                    height: 44.w),
+                                    width: 22.w*3,
+                                    height: 22.w*3),
                               ],
                             ),
                           ),
-                          logic.text.value.contains('未获取')?const SizedBox():SizedBox(
-                            width: 10.w,
+                          SizedBox(
+                            width: logic.text.value.contains('未获取')?2.w*3:6.w*3,
                           ),
                           Text(
-                            // logic.text.value.contains('未获取')?logic.text.value:"${logic.temp.value}°${logic.text.value}",
                             logic.text.value.contains('未获取')?logic.text.value:"${logic.dateStr.value} ${logic.cityStr.value}",
                             style: TextStyle(
                                 color: HhColors.blackTextColor,
-                                fontSize: 24.sp),
+                                fontSize: 14.sp*3),
                           ),
                           SizedBox(
-                            width: 10.w,
+                            width: 6.w*3,
                           ),
-                          Image.asset(
-                            "assets/images/common/back_role.png",
-                            width: 25.w,
-                            height: 25.w,
-                            fit: BoxFit.fill,
+                          Container(
+                            margin: EdgeInsets.only(top: 6.w),
+                            child: Image.asset(
+                              "assets/images/common/back_role.png",
+                              width: 14.w*3,
+                              height: 14.w*3,
+                              fit: BoxFit.fill,
+                            ),
                           )
                         ],
                       ),
                     ),
                   ),
                   Align(
-                    alignment: Alignment.bottomRight,
+                    alignment: Alignment.centerRight,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -700,39 +732,30 @@ class MainPage extends StatelessWidget {
                           // Get.to(()=>SocketPage(),binding: SocketBinding());
                         },
                           child: Container(
-                            width: 55.w,
-                            height: 50.w,
+                            width: 40.w*3,
+                            height: 36.w*3,
                             margin: EdgeInsets.only(bottom: 10.w),
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: Alignment.bottomLeft,
+                                  alignment: Alignment.center,
                                   child: Image.asset(
                                     "assets/images/common/icon_message_main.png",
-                                    width: 45.w,
-                                    height: 45.w,
+                                    width: 24.w*3,
+                                    height: 24.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
-                                /*Align(
-                                  alignment: Alignment.topRight,
-                                  child: Image.asset(
-                                    "assets/images/common/icon_red1.png",
-                                    width: 25.w,
-                                    height: 25.w,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),*/
                                 messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?const SizedBox():Align(
                                   alignment: Alignment.topRight,
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: HhColors.mainRedColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(10.w))
+                                      borderRadius: BorderRadius.all(Radius.circular(10.w*3))
                                     ),
-                                    width: 25.w + ((3-1) * 6.w),
-                                    height: 25.w,
-                                    child: Center(child: Text(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}",style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp),)),
+                                    width: 15.w*3 + ((parseCount(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}")) * (3.w*3)),
+                                    height: 15.w*3,
+                                    child: Center(child: Text(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}",style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
                                   ),
                                 ),
                               ],
@@ -746,11 +769,11 @@ class MainPage extends StatelessWidget {
                             Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
                           },
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                            margin: EdgeInsets.fromLTRB(10.w*3, 0, 14.w*3, 10.w),
                             child: Image.asset(
                               "assets/images/common/ic_add.png",
-                              width: 45.w,
-                              height: 45.w,
+                              width: 24.w*3,
+                              height: 24.w*3,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -763,13 +786,13 @@ class MainPage extends StatelessWidget {
             ),
             ///空间列表滚动
             SizedBox(
-              height: 100.w,
+              height: 36.w*3,
               child: Stack(
                 children: [
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: logic.spaceListStatus.value?Container(
-                      margin: EdgeInsets.fromLTRB(40.w, 0, 260.w, 10.w),
+                      margin: EdgeInsets.fromLTRB(10.w*3, 0, 140.w*3, 10.w),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -793,29 +816,29 @@ class MainPage extends StatelessWidget {
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10.w),
                             padding:
-                                EdgeInsets.fromLTRB(16.w, 6.w, 16.w, 6.w),
+                                EdgeInsets.fromLTRB(11.w*3, 4.w*3, 11.w*3, 4.w*3),
                             decoration: BoxDecoration(
                               color: HhColors.whiteColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(40.w)),
+                                  BorderRadius.all(Radius.circular(12.w*3)),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
                                   "assets/images/common/icon_map.png",
-                                  width: 30.w,
-                                  height: 30.w,
+                                  width: 16.w*3,
+                                  height: 16.w*3,
                                   fit: BoxFit.fill,
                                 ),
                                 SizedBox(
-                                  width: 3.h,
+                                  width: 2.w*3,
                                 ),
                                 Text(
                                   "地图",
                                   style: TextStyle(
                                       color: HhColors.mainBlueColor,
-                                      fontSize: 24.sp),
+                                      fontSize: 14.sp*3),
                                 ),
                               ],
                             ),
@@ -839,21 +862,21 @@ class MainPage extends StatelessWidget {
                                       binding: SpaceManageBinding());
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 30.w),
-                                  padding: EdgeInsets.fromLTRB(36.w, 38.w, 23.w, 38.w),
+                                  margin: EdgeInsets.fromLTRB(0,8.w*3,14.w*3,0),
+                                  padding: EdgeInsets.fromLTRB(22.w*3, 25.w*3, 15.w*3, 24.w*3),
                                   decoration: BoxDecoration(
                                     color: HhColors.whiteColor,
-                                    borderRadius: BorderRadius.circular(26.w)
+                                    borderRadius: BorderRadius.circular(16.w*3)
                                   ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 26.w,fontWeight: FontWeight.w200),),
-                                      SizedBox(width: 30.w,),
+                                      Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                      SizedBox(width: 20.w*3,),
                                       Image.asset(
                                         "assets/images/common/ic_setting.png",
-                                        width: 30.w,
-                                        height: 30.w,
+                                        width: 18.w*3,
+                                        height: 18.w*3,
                                         fit: BoxFit.fill,
                                       ),
                                     ],
@@ -862,7 +885,7 @@ class MainPage extends StatelessWidget {
                               );
                             },
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                              margin: EdgeInsets.fromLTRB(16.w*3, 0, 18.w*3, 10.w),
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
                                 color: HhColors.trans,
@@ -870,8 +893,8 @@ class MainPage extends StatelessWidget {
                               ),
                               child: Image.asset(
                                 "assets/images/common/icon_menu.png",
-                                width: 55.w,
-                                height: 50.w,
+                                width: 24.w*3,
+                                height: 24.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -911,37 +934,37 @@ class MainPage extends StatelessWidget {
                                   Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 0),
-                                  padding: EdgeInsets.fromLTRB(25.w, 25.w, 25.w, 25.w),
+                                  margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
+                                  padding: EdgeInsets.fromLTRB(14.w*3, 13.w*3, 9.w*3, 14.w*3),
                                   width: 1.sw,
                                   decoration: BoxDecoration(
                                     color: HhColors.whiteColor,
-                                    borderRadius: BorderRadius.circular(20.w),
+                                    borderRadius: BorderRadius.circular(8.w*3),
                                   ),
                                   child: Row(
                                     children: [
                                       Image.asset(
                                         "assets/images/common/ic_camera.png",
-                                        width: 100.w,
-                                        height: 100.w,
+                                        width: 48.w*3,
+                                        height: 48.w*3,
                                         fit: BoxFit.fill,
                                       ),
-                                      SizedBox(width: 20.w,),
+                                      SizedBox(width: 11.w*3,),
                                       Expanded(
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text('添加新设备',style: TextStyle(color: HhColors.textBlackColor,fontSize: 30.sp,fontWeight: FontWeight.bold),),
-                                            SizedBox(height: 10.w,),
-                                            Text('按步骤将设备添加到APP',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 26.sp),),
+                                            Text('添加新设备',style: TextStyle(color: HhColors.textBlackColor,fontSize: 16.sp*3,fontWeight: FontWeight.bold),),
+                                            SizedBox(height: 6.w*3,),
+                                            Text('按步骤将设备添加到APP',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),),
                                           ],
                                         ),
                                       ),
                                       Image.asset(
                                         "assets/images/common/icon_go.png",
-                                        width: 30.w,
-                                        height: 30.w,
+                                        width: 15.w*3,
+                                        height: 14.w*3,
                                         fit: BoxFit.fill,
                                       ),
                                     ],
@@ -969,15 +992,15 @@ class MainPage extends StatelessWidget {
   gridItemView(BuildContext context, dynamic item, int index) {
     return Container(
       clipBehavior: Clip.hardEdge, //裁剪
-      margin: EdgeInsets.fromLTRB(index%2==0?30.w:15.w, 30.w, index%2==0?15.w:30.w, 0),
+      margin: EdgeInsets.fromLTRB(index%2==0?14.w*3:11.w*3, 15.w*3, index%2==0?0:14.w*3, 0),
       decoration: BoxDecoration(
           color: HhColors.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+          borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: 0.23.sw,
+            height: 90.w*3,
             width: 0.5.sw,
             child: Stack(
               children: [
@@ -986,11 +1009,10 @@ class MainPage extends StatelessWidget {
                     Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
                   },
                   child: Container(
-                    height: 0.23.sw,
+                    height: 90.w*3,
                     width: 0.5.sw,
                     decoration: BoxDecoration(
-                        color: HhColors.whiteColor,
-                        borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                        borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                     child: Image.asset(
                       "assets/images/common/test_video.jpg",
                       fit: BoxFit.fill,
@@ -998,11 +1020,11 @@ class MainPage extends StatelessWidget {
                   ),
                 ),
                 item['status']==1?const SizedBox():Container(
-                  height: 0.23.sw,
+                  height: 90.w*3,
                   width: 0.5.sw,
                   decoration: BoxDecoration(
                       color: HhColors.grayEDBackColor.withAlpha(160),
-                      borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                      borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                 ),
                 item['status']==1?const SizedBox():Align(
                   alignment: Alignment.center,
@@ -1015,11 +1037,12 @@ class MainPage extends StatelessWidget {
                       children: [
                         Image.asset(
                           "assets/images/common/icon_wifi.png",
-                          width: 60.w,
-                          height: 60.w,
+                          width: 30.w*3,
+                          height: 30.w*3,
                           fit: BoxFit.fill,
                         ),
-                        Text('设备离线',style: TextStyle(color: HhColors.whiteColor,fontSize: 26.sp),)
+                        SizedBox(height: 6.w*3,),
+                        Text('设备离线',style: TextStyle(color: HhColors.whiteColor,fontSize: 14.sp*3),)
                       ],
                     ),
                   ),
@@ -1032,9 +1055,10 @@ class MainPage extends StatelessWidget {
               showEditDeviceDialog(item);
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
+              // height: 33.w*3,
+              padding: EdgeInsets.fromLTRB(12.w*3, 5.w*3, 15.w*3, 7.w*3),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Text(
@@ -1043,30 +1067,23 @@ class MainPage extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: HhColors.blackColor,
-                          fontSize: 30.sp,),
+                          fontSize: 15.sp*3,),
                     ),
                   ),
-                  SizedBox(width: 8.w,),
-                  CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 2.w, 12.w, 2.w),
-                        decoration: BoxDecoration(
-                          color: HhColors.grayEFBackColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8.w))
-                        ),
-                        child: Text(
-                          item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
-                          style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 23.sp),
-                        ),
-                      ),
-                    ],
+                  SizedBox(width: 9.w*3,),
+                  CommonData.personal?(item["shareMark"]==1 || item["shareMark"]==2 ?Container(
+                    padding: EdgeInsets.fromLTRB(8.w*3, 3.w*3, 8.w*3, 2.w*3),
+                    decoration: BoxDecoration(
+                      color: HhColors.grayEFBackColor,
+                      borderRadius: BorderRadius.all(Radius.circular(4.w*3))
+                    ),
+                    child: Text(
+                      item["shareMark"]==1?"分享中":item["shareMark"]==2?"好友分享":'',
+                      style: TextStyle(color: item["shareMark"]==1?HhColors.mainBlueColor:HhColors.textColor, fontSize: 12.sp*3),
+                    ),
                   ):const SizedBox()):const SizedBox(),
-                  /*item['deviceCount']==0?const SizedBox():*/
-                  Container(padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
-                      child: Text(':',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 30.sp,fontWeight: FontWeight.bold),)),
+                  Container(padding: EdgeInsets.only(left:8.w*3),
+                      child: Text(':',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 15.sp*3,fontWeight: FontWeight.bold),)),
                 ],
               ),
             ),
@@ -1084,16 +1101,16 @@ class MainPage extends StatelessWidget {
         scaleFactor: 1.2,
       child: Container(
         width: 1.sw,
-        height: 90.w,
-        margin: EdgeInsets.fromLTRB(50.w, 20.w, 50.w, 50.w),
+        height: 48.w*3,
+        margin: EdgeInsets.fromLTRB(36.w*3, 24.w*3, 36.w*3, 25.w*3),
         decoration: BoxDecoration(
             color: HhColors.mainBlueColor,
-            borderRadius: BorderRadius.all(Radius.circular(50.w))),
+            borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
         child: Center(
           child: Text(
             "添加新空间",
             textAlign: TextAlign.center,
-            style: TextStyle(color: HhColors.grayEEBackColor, fontSize: 28.sp),
+            style: TextStyle(color: HhColors.whiteColor, fontSize: 16.sp*3),
           ),
         ),
       ),
@@ -1117,57 +1134,52 @@ class MainPage extends StatelessWidget {
         ),
         Column(
           children: [
-            Container(
-              height: 50.w,
-            ),
             ///位置
-            SizedBox(
-              height: 100.w,
+            Container(
+              margin: EdgeInsets.fromLTRB(9.w*3, 54.w*3, 0, 10.w),
+              height: 24.w*3,
               child: Stack(
                 children: [
                   Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(25.w, 0, 0, 10.w),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            width: 44.w,
-                            height: 44.w,
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  "assets/images/common/icon_loc.png",
-                                  width: 44.w,
-                                  height: 44.w,
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                    color: HhColors.trans,
-                                    width: 44.w,
-                                    height: 44.w),
-                              ],
-                            ),
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: 24.w*3,
+                          height: 24.w*3,
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                "assets/images/common/icon_loc.png",
+                                width: 24.w*3,
+                                height: 24.w*3,
+                                fit: BoxFit.fill,
+                              ),
+                              Container(
+                                  color: HhColors.trans,
+                                  width: 24.w*3,
+                                  height: 24.w*3),
+                            ],
                           ),
-                          SizedBox(
-                            width: 8.w,
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Expanded(
+                          child: Text(
+                            logic.locText.value,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: HhColors.blackTextColor,
+                                fontSize: 14.sp*3,fontWeight: FontWeight.bold),
                           ),
-                          Expanded(
-                            child: Text(
-                              logic.locText.value,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: HhColors.blackTextColor,
-                                  fontSize: 24.sp,fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 180.w,
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          width: 210.w*3,
+                        ),
+                      ],
                     ),
                   ),
                   Align(
@@ -1182,8 +1194,8 @@ class MainPage extends StatelessWidget {
                             homeLogic.index.value = 2;
                           },
                           child: Container(
-                            width: 55.w,
-                            height: 50.w,
+                            width: 23.w*3,
+                            height: 24.w*3,
                             margin: EdgeInsets.only(bottom: 10.w),
                             child: Stack(
                               children: [
@@ -1191,8 +1203,8 @@ class MainPage extends StatelessWidget {
                                   alignment: Alignment.bottomLeft,
                                   child: Image.asset(
                                     "assets/images/common/icon_message_main.png",
-                                    width: 45.w,
-                                    height: 45.w,
+                                    width: 24.w*3,
+                                    height: 24.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -1219,11 +1231,11 @@ class MainPage extends StatelessWidget {
                             Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
                           },
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 10.w),
+                            margin: EdgeInsets.fromLTRB(15.w*3, 0, 14.w*3, 10.w),
                             child: Image.asset(
                               "assets/images/common/ic_add.png",
-                              width: 45.w,
-                              height: 45.w,
+                              width: 23.w*3,
+                              height: 24.w*3,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -1235,18 +1247,18 @@ class MainPage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 0),
+              margin: EdgeInsets.fromLTRB(14.w*3, 21.w*3, 14.w*3, 0),
               width: 1.sw,
-              height: 0.5.sw,
+              height: 0.53.sw,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.w)
+                borderRadius: BorderRadius.circular(8.w*3)
               ),
               child: Stack(
                 children: [
                   Image.asset(
                     "assets/images/common/icon_default.png",
                     width: 1.sw,
-                    height: 0.5.sw,
+                    height: 0.53.sw,
                     fit: BoxFit.fill,
                   ),
                   Align(
@@ -1261,12 +1273,12 @@ class MainPage extends StatelessWidget {
                         await prefs.setBool(SPKeys().second, true);
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(30.w, 5.w, 30.w, 8.w),
+                        padding: EdgeInsets.fromLTRB(18.w*3, 3.w*3, 18.w*3, 4.w*3),
                         decoration: BoxDecoration(
                           color: HhColors.transBlack,
-                          borderRadius: BorderRadius.circular(30.w)
+                          borderRadius: BorderRadius.circular(12.w*3)
                         ),
-                        child: Text('进入默认空间',style: TextStyle(color: HhColors.whiteColor,fontSize: 26.sp),),
+                        child: Text('进入默认空间',style: TextStyle(color: HhColors.whiteColor,fontSize: 13.sp*3),),
                       ),
                     ),
                   ),
@@ -1280,37 +1292,37 @@ class MainPage extends StatelessWidget {
                 Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
               },
               child: Container(
-                margin: EdgeInsets.fromLTRB(30.w, 25.w, 30.w, 0),
-                padding: EdgeInsets.fromLTRB(25.w, 25.w, 25.w, 25.w),
+                margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
+                padding: EdgeInsets.fromLTRB(14.w*3, 13.w*3, 9.w*3, 14.w*3),
                 width: 1.sw,
                 decoration: BoxDecoration(
                   color: HhColors.whiteColor,
-                  borderRadius: BorderRadius.circular(20.w),
+                  borderRadius: BorderRadius.circular(8.w*3),
                 ),
                 child: Row(
                   children: [
                     Image.asset(
                       "assets/images/common/ic_camera.png",
-                      width: 100.w,
-                      height: 100.w,
+                      width: 48.w*3,
+                      height: 48.w*3,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(width: 20.w,),
+                    SizedBox(width: 11.w*3,),
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('添加新设备',style: TextStyle(color: HhColors.textBlackColor,fontSize: 30.sp,fontWeight: FontWeight.bold),),
-                          SizedBox(height: 10.w,),
-                          Text('按步骤将设备添加到APP',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 26.sp),),
+                          Text('添加新设备',style: TextStyle(color: HhColors.textBlackColor,fontSize: 16.sp*3,fontWeight: FontWeight.bold),),
+                          SizedBox(height: 6.w*3,),
+                          Text('按步骤将设备添加到APP',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),),
                         ],
                       ),
                     ),
                     Image.asset(
                       "assets/images/common/icon_go.png",
-                      width: 30.w,
-                      height: 30.w,
+                      width: 15.w*3,
+                      height: 14.w*3,
                       fit: BoxFit.fill,
                     ),
                   ],
@@ -1336,7 +1348,7 @@ class MainPage extends StatelessWidget {
               logic.getDeviceList(1);
             },
             child: Container(
-              margin: EdgeInsets.only(left: 20.w),
+              margin: EdgeInsets.only(left: 10.w*3),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -1344,7 +1356,7 @@ class MainPage extends StatelessWidget {
                     CommonUtils().parseNameCount("${model['name']}", 5),
                     style: TextStyle(
                         color: logic.spaceListIndex.value == i?HhColors.blackTextColor:HhColors.gray9TextColor,
-                        fontSize: logic.spaceListIndex.value == i?36.sp:30.sp,
+                        fontSize: logic.spaceListIndex.value == i?18.sp*3:16.sp*3,
                         fontWeight: logic.spaceListIndex.value == i?FontWeight.bold:FontWeight.w500),
                   ),
                   SizedBox(
@@ -1375,12 +1387,12 @@ class MainPage extends StatelessWidget {
     showCupertinoDialog(context: logic.context, builder: (context) => Center(
       child: Container(
         width: 1.sw,
-        height: 160.w,
-        margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-        padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
+        height: 70.w*3,
+        margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 0),
+        // padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
         decoration: BoxDecoration(
             color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(20.w))),
+            borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
         child: Row(
           children: [
             CommonData.personal?Expanded(
@@ -1412,12 +1424,12 @@ class MainPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       item["shareMark"]==2?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24*3.w,
+                      height: 24*3.w,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(height: 10.w,),
-                    Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.gray6TextColor,fontSize: 26.sp,
+                    SizedBox(height: 4.w*3),
+                    Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.textBlackColor,fontSize: 14.sp*3,
                       decoration: TextDecoration.none,),),
                   ],
                 ),
@@ -1437,12 +1449,12 @@ class MainPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/common/icon_edit_edit.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(height: 10.w,),
-                    Text('修改',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
+                    Text('修改',style: TextStyle(color: HhColors.textBlackColor,fontSize: 14.sp*3,
                       decoration: TextDecoration.none,),),
                   ],
                 ),
@@ -1469,12 +1481,12 @@ class MainPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/common/icon_edit_delete.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(height: 10.w,),
-                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 26.sp,
+                    SizedBox(height: 4.w*3,),
+                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 14.sp*3,
                       decoration: TextDecoration.none,),),
                   ],
                 ),
@@ -1484,5 +1496,15 @@ class MainPage extends StatelessWidget {
         ),
       ),
     ),barrierDismissible: true);
+  }
+
+  parseCount(String s) {
+    if(s.length>=3){
+      return 3;
+    }else if(s.length == 2){
+      return 2;
+    }else{
+      return 1;
+    }
   }
 }

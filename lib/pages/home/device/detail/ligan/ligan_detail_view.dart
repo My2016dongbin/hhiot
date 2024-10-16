@@ -1202,7 +1202,9 @@ class LiGanDetailPage extends StatelessWidget {
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.all(15.w),
-                                      border: InputBorder.none,
+                                      border: const OutlineInputBorder(
+                                          borderSide: BorderSide.none
+                                      ),
                                       counterText: '',
                                       hintText: '此处设置显示内容',
                                       hintStyle: TextStyle(
@@ -1989,8 +1991,10 @@ class LiGanDetailPage extends StatelessWidget {
                                           controller: logic.time1Controller,
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                            //contentPadding: EdgeInsets.zero,
-                                            border: InputBorder.none,
+                                            contentPadding: EdgeInsets.zero,
+                                            border: const OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
                                             counterText: '',
                                             hintText: '',
                                             hintStyle: TextStyle(
@@ -2076,8 +2080,10 @@ class LiGanDetailPage extends StatelessWidget {
                                           controller: logic.time2Controller,
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                            //contentPadding: EdgeInsets.zero,
-                                            border: InputBorder.none,
+                                            contentPadding: EdgeInsets.zero,
+                                            border: const OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
                                             counterText: '',
                                             hintText: '',
                                             hintStyle: TextStyle(
@@ -2163,8 +2169,10 @@ class LiGanDetailPage extends StatelessWidget {
                                           controller: logic.time3Controller,
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
-                                            //contentPadding: EdgeInsets.zero,
-                                            border: InputBorder.none,
+                                            contentPadding: EdgeInsets.zero,
+                                            border: const OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
                                             counterText: '',
                                             hintText: '',
                                             hintStyle: TextStyle(

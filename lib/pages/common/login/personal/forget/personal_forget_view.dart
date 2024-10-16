@@ -48,15 +48,15 @@ class PersonalForgetPage extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.1.sw, 0.12.sh, 0, 0),
-              child: Text('浩海万联',style: TextStyle(color: HhColors.blackColor,fontSize: 70.sp,fontWeight: FontWeight.bold),),
+              margin: EdgeInsets.fromLTRB(29.w*3, 100.h*3, 0, 0),
+              child: Text('浩海万联',style: TextStyle(color: HhColors.textBlackColor,fontSize: 42.sp*3,fontWeight: FontWeight.bold),),
             ),
           ),
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.1.sw, 0.15.sh+66.w, 0, 0),
-              child: Text('智  能  安  全  生  活',style: TextStyle(color: HhColors.textBlackColor,fontSize: 40.sp,),)
+              margin: EdgeInsets.fromLTRB(29.w*3, 167.h*3, 0, 0),
+              child: Text('智能安全生活',style: TextStyle(color: HhColors.textBlackColor,fontSize: 18.sp*3,letterSpacing:12.w*3 ),)
             ),
           ),
           InkWell(
@@ -64,28 +64,28 @@ class PersonalForgetPage extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.06.sw, 90.w, 0, 0),
-              padding: EdgeInsets.all(10.w),
+              margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back_white.png",
-                width: 18.w,
-                height: 30.w,
+                  height: 14.h*3,
+                  width: 10.w*3,
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(0.08.sw, 0.16.sh+66.w+150.w, 0.08.sw, 0),
+            margin: EdgeInsets.fromLTRB(29.w*3, 251.h*3, 29.w*3, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ///账号
                 Container(
-                  height: 100.w,
+                  height: 48.w*3,
                   decoration: BoxDecoration(
                       color: HhColors.mainGrayColorTrans,
-                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                   child: Row(
                     children: [
                       Expanded(
@@ -97,15 +97,17 @@ class PersonalForgetPage extends StatelessWidget {
                           controller: logic.accountController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
-                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.fromLTRB(22.w*3, 0, 0, 0),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             counterText: '',
                             hintText:'手机号',
                             hintStyle: TextStyle(
-                                color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                                color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           style:
-                          TextStyle(color: HhColors.textBlackColor, fontSize: 32.sp,fontWeight: FontWeight.bold),
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                           onChanged: (s){
                             logic.accountStatus.value = s.isNotEmpty;
                           },
@@ -120,10 +122,10 @@ class PersonalForgetPage extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.all(5.w),
-                            child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
+                            child: Image.asset('assets/images/common/ic_close_white.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
                         ),
                       ):const SizedBox(),
-                      SizedBox(width: 20.w,),
+                      SizedBox(width: 19.w*3,),
                     ],
                   ),
                 ),
@@ -131,7 +133,6 @@ class PersonalForgetPage extends StatelessWidget {
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
                 ),*/
-                SizedBox(height: 36.w,),
                 ///获取验证码
                 BouncingWidget(
                   duration: const Duration(milliseconds: 100),
@@ -155,16 +156,16 @@ class PersonalForgetPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
-                    margin: EdgeInsets.fromLTRB(0, 26.w, 0, 20.w),
+                    height: 48.h*3,
+                    margin: EdgeInsets.fromLTRB(0, 30.h*3, 0, 20.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColorTrans,
-                        borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                     child: Center(
                       child: Text(
                         "获取验证码",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        style: TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                       ),
                     ),
                   ),

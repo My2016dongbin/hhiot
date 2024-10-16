@@ -87,7 +87,9 @@ class CompanyPasswordPage extends StatelessWidget {
                         obscureText: !logic.passwordShowStatus.value,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                          border: InputBorder.none,
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide.none
+                          ),
                           counterText: '',
                           hintText: '请输入新密码',
                           hintStyle: TextStyle(
@@ -152,7 +154,9 @@ class CompanyPasswordPage extends StatelessWidget {
                         obscureText: !logic.password2ShowStatus.value,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                          border: InputBorder.none,
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide.none
+                          ),
                           counterText: '',
                           hintText: '请再次输入新密码',
                           hintStyle: TextStyle(
@@ -212,7 +216,7 @@ class CompanyPasswordPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16.w)
                   ),
                   child: Text(
-                    "密码需要大于8位，包含数字，大小写字母",
+                    "8-16位由字母、数字、特殊字符两种以上组成（例如：haohai123)",
                     style: TextStyle(
                       color: HhColors.blackColor,
                       fontSize: 24.sp
@@ -228,7 +232,7 @@ class CompanyPasswordPage extends StatelessWidget {
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
                     if(!CommonUtils().validatePassword(logic.passwordController!.text)){
-                      EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
+                      EventBusUtil.getInstance().fire(HhToast(title: '密码必须为8-16位由字母、数字、特殊字符两种以上组成'));
                       return;
                     }
                     if(logic.passwordController!.text != logic.password2Controller!.text){

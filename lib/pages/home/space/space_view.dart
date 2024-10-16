@@ -97,8 +97,10 @@ class SpacePage extends StatelessWidget {
                       controller: logic.accountController,
                       keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
                       decoration: InputDecoration(
-                        //contentPadding: EdgeInsets.zero,
-                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide.none
+                        ),
                         counterText: '',
                         hintText: '请输入空间名称',
                         hintStyle: TextStyle(

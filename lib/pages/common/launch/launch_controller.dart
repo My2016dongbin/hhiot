@@ -110,30 +110,34 @@ class LaunchController extends GetxController {
 
       showToastWidget(
         Container(
-          padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
+          margin: EdgeInsets.fromLTRB(20.w*3, 15.w*3, 20.w*3, 25.w*3),
+          padding: EdgeInsets.fromLTRB(30.w*3, 25.h*3, 30.w*3, 18.h*3),
           decoration: BoxDecoration(
               color: HhColors.blackColor.withAlpha(200),
-              borderRadius: BorderRadius.all(Radius.circular(16.w))),
+              borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
           constraints: BoxConstraints(
-              minWidth: 0.36.sw
+              minWidth: 117.w*3
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 40.w,),
               Image.asset(
                 'assets/images/common/icon_warn.png',
-                height: 40.w,
-                width: 40.w,
+                height: 20.w*3,
+                width: 20.w*3,
                 fit: BoxFit.fill,
               ),
-              SizedBox(height: 40.w,),
+              SizedBox(height: 16.h*3,),
+              // SizedBox(height: 16.h*3,),
               Text(
                 '请授权',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: HhColors.textColor,
-                    fontSize: 26.sp),
+                    color: HhColors.whiteColor,
+                    fontSize: 16.sp*3),
               ),
+              // SizedBox(height: 10.h*3,)
+              // event.type==0?SizedBox(height: 10.h*3,):SizedBox(height: 10.h*3,),
             ],
           ),
         ),

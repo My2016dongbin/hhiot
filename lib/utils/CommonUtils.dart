@@ -39,8 +39,12 @@ class CommonUtils{
     // 必须包含至少一个小写字母，
     // 必须包含至少一个大写字母，
     // 必须包含至少一个数字。
+    // RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$');
+
+    //密码必须为8-16位由字母、数字、特殊字符两种以上组成
     final RegExp pattern =
-    RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$');
+    RegExp(r'^((?=.*[A-Za-z])(?=.*\d|[!@#$%^&*(),.?":{}|<>])|(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])|(?=.*[A-Za-z])(?=.*\d)).{8,16}$');
+    // RegExp(r'^(?=.*[A-Za-z])(?=.*\d|[^A-Za-z\d]).{8,16}$');
     HhLog.d("$password , ${pattern.hasMatch(password)}");
     return pattern.hasMatch(password);
   }
@@ -698,6 +702,22 @@ class CommonUtils{
       toLogin();
       Future.delayed(const Duration(seconds: 1),(){
         EventBusUtil.getInstance().fire(HhToast(title: '登录信息失效,请重新登录'));
+      });
+    }
+  }
+
+  tokenOut() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(SPKeys().token);
+    CommonData.tenant = CommonData.tenantDef;
+    CommonData.tenantName = CommonData.tenantNameDef;
+    CommonData.token = null;
+    int now = DateTime.now().millisecondsSinceEpoch;
+    if(now - CommonData.time > 2000){
+      CommonData.time = now;
+      toLogin();
+      Future.delayed(const Duration(seconds: 1),(){
+        EventBusUtil.getInstance().fire(HhToast(title: '该账号于其他设备登录,请重新登录'));
       });
     }
   }

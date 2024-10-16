@@ -38,17 +38,17 @@ class LaunchPage extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Container(
-            margin: EdgeInsets.only(top: 0.23.sh),
+            margin: EdgeInsets.only(top: 181.h*3),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                      width: 150.w,
-                      height: 150.w,
+                      width: 74.w*3,
+                      height: 74.w*3,
                       child: Image.asset('assets/images/common/logo.png',fit: BoxFit.fill,)
                   ),
-                  SizedBox(height: 10.w,),
-                  Text('浩海万联',style: TextStyle(color: HhColors.whiteColor,fontSize: 30.sp),)
+                  SizedBox(height: 12.w*3,),
+                  Text('浩海万联',style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp*3),)
                 ],
               )
           ),
@@ -56,12 +56,12 @@ class LaunchPage extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            margin: EdgeInsets.only(bottom: 0.08.sh),
+            margin: EdgeInsets.only(bottom: 86.h*3),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 //Text('智能物联设备·一端管理',style: TextStyle(color: CommonData.personal?HhColors.whiteColor:HhColors.blackColor,fontSize: 30.sp,/*fontWeight: FontWeight.bold*/),),
-                SizedBox(height: 0.08.sw,),
+                // SizedBox(height: 0.08.sw,),
                 logic.secondStatus.value?const SizedBox():BouncingWidget(
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
@@ -70,18 +70,18 @@ class LaunchPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
-                    margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 50.w),
+                    height: 48.w*3,
+                    margin: EdgeInsets.fromLTRB(29.w*3, 0, 29.w*3, 0),
                     decoration: CommonData.personal?BoxDecoration(
                         color: HhColors.mainBlueColorTrans,
-                        borderRadius: BorderRadius.all(Radius.circular(50.w))):BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(24.w*3))):BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                     child: Center(
                       child: Text(
                         "开始体验",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        style: TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                       ),
                     ),
                   ),

@@ -84,8 +84,10 @@ class CompanyForgetPage extends StatelessWidget {
                         controller: logic.accountController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide.none
+                          ),
                           counterText: '',
                           hintText:
                           '请输入手机号码',

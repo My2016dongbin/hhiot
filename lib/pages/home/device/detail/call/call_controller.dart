@@ -43,7 +43,7 @@ class CallController extends GetxController {
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 1), () {
-      getDeviceInfo();
+      // getDeviceInfo();
     });
     super.onInit();
   }
@@ -88,10 +88,12 @@ class CallController extends GetxController {
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       nickname = tenantResult["data"];
       connect();
+      recordTag.value = true;
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
       recordTag.value = false;
+      Get.back();
     }
   }
 

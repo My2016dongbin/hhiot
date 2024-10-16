@@ -89,8 +89,10 @@ class CompanyLoginPage extends StatelessWidget {
                             ? TextInputType.number
                             : TextInputType.text,
                         decoration: InputDecoration(
-                          //contentPadding: EdgeInsets.zero,
-                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide.none
+                          ),
                           counterText: '',
                           hintText:
                               '手机号',
@@ -151,8 +153,10 @@ class CompanyLoginPage extends StatelessWidget {
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: !logic.passwordShowStatus.value,
                               decoration: InputDecoration(
-                                //contentPadding: EdgeInsets.zero,
-                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.zero,
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none
+                                ),
                                 counterText: '',
                                 hintText: '请输入密码',
                                 hintStyle: TextStyle(
@@ -499,7 +503,7 @@ class CompanyLoginPage extends StatelessWidget {
       return;
     }
     // if(!CommonUtils().validatePassword(logic.passwordController!.text)){
-    //   EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
+    //   EventBusUtil.getInstance().fire(HhToast(title: '密码必须为8-16位由字母、数字、特殊字符两种以上组成'));
     //   return;
     // }
     if (!logic.confirmStatus.value) {

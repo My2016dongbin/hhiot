@@ -62,8 +62,10 @@ class WebViewPageState extends State<WebViewPage> {
             Get.back();
           },
           child: Container(
+            width: 16.w,
+            height: 26.w,
             margin: EdgeInsets.only(left: 20.w),
-            padding: EdgeInsets.fromLTRB(32.w, 38.w, 32.w, 38.w),
+            padding: EdgeInsets.fromLTRB(19.w*3, 20.w*3, 19.w*3, 20.w*3),
             color: HhColors.trans,
             child: SizedBox(
               child: Image.asset(
@@ -79,7 +81,7 @@ class WebViewPageState extends State<WebViewPage> {
           widget.title,
           style: TextStyle(
               color: HhColors.blackTextColor,
-              fontSize: 30.sp,
+              fontSize: 15.sp*3,
               fontWeight: FontWeight.bold),
         ),
         backgroundColor: HhColors.whiteColor,

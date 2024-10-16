@@ -48,8 +48,8 @@ class PersonalPasswordPage extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.1.sw, 0.15.sh, 0, 0),
-              child: Text('设置新密码',style: TextStyle(color: HhColors.textBlackColor,fontSize: 36.sp,fontWeight: FontWeight.bold),)
+              margin: EdgeInsets.fromLTRB(36.w*3, 135.h*3, 0, 0),
+              child: Text('设置新密码',style: TextStyle(color: HhColors.textBlackColor,fontSize: 20.sp*3,fontWeight: FontWeight.bold),)
             ),
           ),
           InkWell(
@@ -57,28 +57,28 @@ class PersonalPasswordPage extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.06.sw, 90.w, 0, 0),
-              padding: EdgeInsets.all(10.w),
+              margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back_white.png",
-                width: 18.w,
-                height: 30.w,
+                height: 14.h*3,
+                width: 10.w*3,
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(0.08.sw, 0.16.sh+66.w+30.w, 0.08.sw, 0),
+            margin: EdgeInsets.fromLTRB(36.w*3, 191.h*3, 36.w*3, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ///新密码
                 Container(
-                  height: 100.w,
+                  height: 48.h*3,
                   decoration: BoxDecoration(
                       color: HhColors.mainGrayColorTrans,
-                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                   child: Row(
                     children: [
                       Expanded(
@@ -91,15 +91,17 @@ class PersonalPasswordPage extends StatelessWidget {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: !logic.passwordShowStatus.value,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
-                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.fromLTRB(20.w*3, 0, 0, 0),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             counterText: '',
                             hintText: '请输入新密码',
                             hintStyle: TextStyle(
-                                color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                                color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           style:
-                          TextStyle(color: HhColors.textBlackColor, fontSize: 30.sp,fontWeight: FontWeight.w300),
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
                           onChanged: (s){
                             logic.passwordStatus.value = s.isNotEmpty;
                           },
@@ -115,10 +117,10 @@ class PersonalPasswordPage extends StatelessWidget {
                         },
                         child: Container(
                             padding: EdgeInsets.all(5.w),
-                            child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
+                            child: Image.asset('assets/images/common/ic_close_white.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
                         ),
                       ):const SizedBox(),
-                      SizedBox(width: 10.w,),
+                      SizedBox(width: 5.w*3,),
                       BouncingWidget(
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.2,
@@ -127,20 +129,20 @@ class PersonalPasswordPage extends StatelessWidget {
                         },
                         child: Container(
                             padding: EdgeInsets.all(5.w),
-                            child: Image.asset(logic.passwordShowStatus.value?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',height:40.w,width: 40.w,fit: BoxFit.fill,)
+                            child: Image.asset(logic.passwordShowStatus.value?'assets/images/common/icon_bi_white.png':'assets/images/common/icon_zheng_white.png',height:17.w*3,width: 17.w*3,fit: BoxFit.fill,)
                         ),
                       ),
-                      SizedBox(width: 20.w,),
+                      SizedBox(width: 18.w*3,),
                     ],
                   ),
                 ),
                 SizedBox(height: 36.w,),
                 ///再次输入新密码
                 Container(
-                  height: 100.w,
+                  height: 48.h*3,
                   decoration: BoxDecoration(
                       color: HhColors.mainGrayColorTrans,
-                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                   child: Row(
                     children: [
                       Expanded(
@@ -153,15 +155,17 @@ class PersonalPasswordPage extends StatelessWidget {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: !logic.password2ShowStatus.value,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
-                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.fromLTRB(20.w*3, 0, 0, 0),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             counterText: '',
                             hintText: '请再次输入新密码',
                             hintStyle: TextStyle(
-                                color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                                color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           style:
-                          TextStyle(color: HhColors.textBlackColor, fontSize: 30.sp,fontWeight: FontWeight.w300),
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
                           onChanged: (s){
                             logic.password2Status.value = s.isNotEmpty;
                           },
@@ -177,10 +181,10 @@ class PersonalPasswordPage extends StatelessWidget {
                         },
                         child: Container(
                             padding: EdgeInsets.all(5.w),
-                            child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
+                            child: Image.asset('assets/images/common/ic_close_white.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
                         ),
                       ):const SizedBox(),
-                      SizedBox(width: 10.w,),
+                      SizedBox(width: 5.w*3,),
                       BouncingWidget(
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.2,
@@ -189,27 +193,27 @@ class PersonalPasswordPage extends StatelessWidget {
                         },
                         child: Container(
                             padding: EdgeInsets.all(5.w),
-                            child: Image.asset(logic.password2ShowStatus.value?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',height:40.w,width: 40.w,fit: BoxFit.fill,)
+                            child: Image.asset(logic.password2ShowStatus.value?'assets/images/common/icon_bi_white.png':'assets/images/common/icon_zheng_white.png',height:17.w*3,width: 17.w*3,fit: BoxFit.fill,)
                         ),
                       ),
-                      SizedBox(width: 20.w,),
+                      SizedBox(width: 18.w*3,),
                     ],
                   ),
                 ),
                 SizedBox(height: 10.w,),
                 Container(
                   width: 1.sw,
-                  margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                  padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 50.w),
+                  margin: EdgeInsets.fromLTRB(0, 16.h*3, 0, 0),
+                  padding: EdgeInsets.fromLTRB(16.w*3, 14.w*3, 16.w*3, 14.w*3),
                   decoration: BoxDecoration(
                       color: HhColors.whiteColorTrans,
                     borderRadius: BorderRadius.circular(16.w)
                   ),
                   child: Text(
-                    "密码需要大于8位，包含数字，大小写字母",
+                    "8-16位由字母、数字、特殊字符两种以上组成（例如：haohai123)",
                     style: TextStyle(
-                      color: HhColors.blackColor,
-                      fontSize: 24.sp
+                      color: HhColors.textBlackColor,
+                      fontSize: 14.sp*3
                     ),
                   ),
                 ),
@@ -222,7 +226,7 @@ class PersonalPasswordPage extends StatelessWidget {
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
                     if(!CommonUtils().validatePassword(logic.passwordController!.text)){
-                      EventBusUtil.getInstance().fire(HhToast(title: '密码需要大于8位，包含数字，大小写字母'));
+                      EventBusUtil.getInstance().fire(HhToast(title: '密码必须为8-16位由字母、数字、特殊字符两种以上组成'));
                       return;
                     }
                     if(logic.passwordController!.text != logic.password2Controller!.text){
@@ -235,16 +239,16 @@ class PersonalPasswordPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
-                    margin: EdgeInsets.fromLTRB(0, 26.w, 0, 20.w),
+                    height: 48.w*3,
+                    margin: EdgeInsets.fromLTRB(0, 25.w*3, 0, 20.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColorTrans,
-                        borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                     child: Center(
                       child: Text(
                         "提交",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        style: TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                       ),
                     ),
                   ),

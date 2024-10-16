@@ -20,6 +20,7 @@ import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/res/strings.dart';
 import 'package:iot/routes/app_pages.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/CustomNavigatorObserver.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -118,17 +119,28 @@ class MyAppState extends State<HhApp> {
       onReceiveNotificationResponse: (Map<String, dynamic> msg) async {
         HhLog.d("HomePage -> onReceiveNotificationResponse -> $msg");
         EventBusUtil.getInstance().fire(Message());
-        dynamic custom = jsonDecode(msg['customMessage']);
-        /*if(custom['devCode']!=null){
-          //设备呼叫
-          HhLog.d("HomePage  deviceNo ${custom['deviceNo']}");
+        try{
+          dynamic custom = jsonDecode(msg['customMessage']);
+          HhLog.d("HomePage -> $custom ");
 
-          Get.to(()=>CallPage('${custom['deviceNo']}','id',logic.shareMark),binding: CallBinding());
-        }*/
-        HhLog.d("HomePage -> $custom ");
-        if(custom!=null && custom['otherInfomation']['messageType']== "deviceShare" && CommonData.personal){
-          EventBusUtil.getInstance().fire(Share(model:custom['otherInfomation']));
+          //设备呼叫
+          if(custom!=null && custom['devCode']!=null ){
+            HhLog.d("HomePage  deviceNo ${custom['deviceNo']}");
+
+            Get.to(()=>CallPage('${custom['deviceNo']}','id',0),binding: CallBinding());
+          }
+          //分享
+          if(custom!=null && custom['otherInfomation']['messageType']== "deviceShare" && CommonData.personal){
+            EventBusUtil.getInstance().fire(Share(model:custom['otherInfomation']));
+          }
+          //其他设备登录
+          if(custom!=null && custom['otherInfomation']['messageType']== "logoutdelete"){
+            // CommonUtils().tokenOut();
+          }
+        }catch(e){
+          //
         }
+        ///消息刷新
         EventBusUtil.getInstance().fire(Message());
       },
       onReceiveMessage: (Map<String, dynamic> msg) async {

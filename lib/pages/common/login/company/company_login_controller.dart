@@ -42,48 +42,49 @@ class CompanyLoginController extends GetxController {
 
     showToastSubscription =
         EventBusUtil.getInstance().on<HhToast>().listen((event) {
-      showToastWidget(
-        Container(
-          margin: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
-          padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 25.w),
-          decoration: BoxDecoration(
-              color: HhColors.blackColor.withAlpha(200),
-              borderRadius: BorderRadius.all(Radius.circular(16.w))),
-          constraints: BoxConstraints(
-            minWidth: 0.36.sw
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              event.type==0?const SizedBox():SizedBox(height: 40.w,),
-              event.type==0?const SizedBox():Image.asset(
-                event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':event.type==3?'assets/images/common/icon_lock.png':'assets/images/common/icon_warn.png',
-                height: 40.w,
-                width: 40.w,
-                fit: BoxFit.fill,
+          showToastWidget(
+            Container(
+              margin: EdgeInsets.fromLTRB(20.w*3, 15.w*3, 20.w*3, 25.w*3),
+              padding: EdgeInsets.fromLTRB(30.w*3, event.type==0?18.h*3:25.h*3, 30.w*3, 18.h*3),
+              decoration: BoxDecoration(
+                  color: HhColors.blackColor.withAlpha(200),
+                  borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
+              constraints: BoxConstraints(
+                  minWidth: 117.w*3
               ),
-              event.type==0?const SizedBox():SizedBox(height: 40.w,),
-              event.type==0?SizedBox(height: 15.w,):const SizedBox(),
-              Text(
-                event.title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: HhColors.whiteColor,
-                    fontSize: 26.sp),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // event.type==0?const SizedBox():SizedBox(height: 16.w*3,),
+                  event.type==0?const SizedBox():Image.asset(
+                    event.type==1?'assets/images/common/icon_success.png':event.type==2?'assets/images/common/icon_error.png':event.type==3?'assets/images/common/icon_lock.png':'assets/images/common/icon_warn.png',
+                    height: 20.w*3,
+                    width: 20.w*3,
+                    fit: BoxFit.fill,
+                  ),
+                  event.type==0?const SizedBox():SizedBox(height: 16.h*3,),
+                  // SizedBox(height: 16.h*3,),
+                  Text(
+                    event.title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: HhColors.whiteColor,
+                        fontSize: 16.sp*3),
+                  ),
+                  // SizedBox(height: 10.h*3,)
+                  // event.type==0?SizedBox(height: 10.h*3,):SizedBox(height: 10.h*3,),
+                ],
               ),
-              event.type==0?SizedBox(height: 10.w,):const SizedBox(),
-            ],
-          ),
-        ),
-        context: context,
-        animation: StyledToastAnimation.slideFromBottomFade,
-        reverseAnimation: StyledToastAnimation.fade,
-        position: StyledToastPosition.center,
-        animDuration: const Duration(seconds: 1),
-        duration: const Duration(seconds: 2),
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linear,
-      );
+            ),
+            context: context,
+            animation: StyledToastAnimation.slideFromBottomFade,
+            reverseAnimation: StyledToastAnimation.fade,
+            position: StyledToastPosition.center,
+            animDuration: const Duration(seconds: 1),
+            duration: const Duration(seconds: 2),
+            curve: Curves.elasticOut,
+            reverseCurve: Curves.linear,
+          );
     });
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {

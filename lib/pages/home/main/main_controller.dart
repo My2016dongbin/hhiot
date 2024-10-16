@@ -51,6 +51,7 @@ class MainController extends GetxController {
   final Rx<bool> spaceListStatus = true.obs;
   late List<dynamic> spaceList = [];
   final Rx<int> spaceListIndex = 0.obs;
+  final Rx<int> searchListIndex = 0.obs;
   TextEditingController? searchController = TextEditingController();
   final PagingController<int, dynamic> pagingController =
   PagingController(firstPageKey: 1);
@@ -449,7 +450,7 @@ class MainController extends GetxController {
         locText.value = CommonUtils().parseNull("${result.address}", "定位中..");
       }
       try{
-        cityStr.value = result.addressDetail!.city!;
+        cityStr.value = result.addressDetail!.city!.replaceAll("市", '');
       }catch(e){
         //error
       }
