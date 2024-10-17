@@ -360,9 +360,19 @@ class MainController extends GetxController {
     map['pageNo'] = '1';
     map['pageSize'] = '100';
     map['activeStatus'] = '-1';
+    try{
+      int spaceId = spaceList[spaceListIndex.value]['id'];
+      map['spaceId'] = spaceId;
+    }catch(e){
+      //
+    }
     var result = await HhHttp()
         .request(RequestUtils.deviceList, method: DioMethod.get, params: map);
-    HhLog.d("deviceSearch -- $result");
+    HhLog.d("deviceSearch map -- $spaceList");
+    HhLog.d("deviceSearch map -- ${spaceListIndex.value}");
+    HhLog.d("deviceSearch map -- ${spaceList[spaceListIndex.value]['id']}");
+    HhLog.d("deviceSearch map -- $map");
+    HhLog.d("deviceSearch result -- $result");
     Future.delayed(const Duration(seconds: 1), () {
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     });

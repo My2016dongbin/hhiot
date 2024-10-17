@@ -8,9 +8,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
-import 'package:iot/pages/home/device/device_view.dart';
-import 'package:iot/pages/home/device/list/device_list_binding.dart';
-import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/space/manage/edit/edit_binding.dart';
 import 'package:iot/pages/home/space/manage/edit/edit_view.dart';
 import 'package:iot/pages/home/space/manage/space_manage_controller.dart';
@@ -43,17 +40,37 @@ class SpaceManagePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Stack(
             children: [
+              Container(
+                color: HhColors.whiteColor,
+                height: 88.w*3,
+              ),
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top: 90.w),
+                  margin: EdgeInsets.only(top: 54.w*3),
                   color: HhColors.trans,
                   child: Text(
-                    "管理空间",
+                    '管理空间',
                     style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 30.sp,
+                        fontSize: 18.sp*3,
                         fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
+                  color: HhColors.trans,
+                  child: Image.asset(
+                    "assets/images/common/back.png",
+                    height: 14.w*3,
+                    width: 9.w*3,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -61,29 +78,11 @@ class SpaceManagePage extends StatelessWidget {
               ///列表
               logic.testStatus.value ? deviceList() : const SizedBox(),
 
-              ///title
-              InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-                  padding: EdgeInsets.all(10.w),
-                  color: HhColors.trans,
-                  child: Image.asset(
-                    "assets/images/common/back.png",
-                    width: 18.w,
-                    height: 30.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   width: 1.sw,
-                  height: 140.w,
+                  height: 97.w*3,
                   color: HhColors.whiteColor,
                 ),
               ),
@@ -91,8 +90,8 @@ class SpaceManagePage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   width: 1.sw,
-                  height: 1.w,
-                  margin: EdgeInsets.only(bottom: 140.w),
+                  height: 0.5.w*3,
+                  margin: EdgeInsets.only(bottom: 97.w*3),
                   color: HhColors.grayDDTextColor,
                 ),
               ),
@@ -107,30 +106,21 @@ class SpaceManagePage extends StatelessWidget {
                     Get.to(() => SpacePage(), binding: SpaceBinding());
                   },
                   child: Container(
-                    height: 80.w,
+                    height: 44.w*3,
                     width: 1.sw,
-                    margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 30.w),
+                    margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 35.w*3),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(22.w*3))),
                     child: Center(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          /*Container(
-                            margin: EdgeInsets.fromLTRB(0, 3.w, 6.w, 0),
-                            child: Image.asset(
-                              "assets/images/common/icon_add_space.png",
-                              width: 30.w,
-                              height: 30.w,
-                              fit: BoxFit.fill,
-                            ),
-                          ),*/
                           Text(
                             "添加新空间",
                             style: TextStyle(
                               color: HhColors.whiteColor,
-                              fontSize: 30.sp,
+                              fontSize: 16.sp*3,
                             ),
                           ),
                         ],
@@ -148,7 +138,7 @@ class SpaceManagePage extends StatelessWidget {
 
   deviceList() {
     return Container(
-      margin: EdgeInsets.only(top: 150.w),
+      margin: EdgeInsets.fromLTRB(0, 88.w*3, 0, 97.w*3),
       child: EasyRefresh(
         onRefresh: () {
           logic.pageNum = 1;
@@ -186,13 +176,13 @@ class SpaceManagePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            margin: EdgeInsets.fromLTRB(30.w, 20.w, 30.w, 0),
-            padding: EdgeInsets.fromLTRB(30.w, 20.w, 30.w, 20.w),
+            margin: EdgeInsets.fromLTRB(14.w*3, 9.w*3, 14.w*3, 0),
+            padding: EdgeInsets.fromLTRB(14.w*3, 15.w*3, 14.w*3, 15.w*3),
             clipBehavior: Clip.hardEdge,
             //裁剪
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -206,56 +196,56 @@ class SpaceManagePage extends StatelessWidget {
                       logic.getDeviceList(item);
     }
                   },
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 30.w),
-                    child: Row(
-                      children: [
-                        Text(
+                  child: Row(
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 200.w*3),
+                        child: Text(
                           "${item['name']}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: HhColors.blackColor,
-                              fontSize: 30.sp,
+                              fontSize: 15.sp*3,
                               fontWeight: FontWeight.bold),
                         ),
-                        Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
-                                child: Image.asset(
-                                  item['open']==true?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
-                                  width: 30.w,
-                                  height: 26.w,
-                                  fit: BoxFit.fill,
-                                ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                              child: Image.asset(
+                                item['open']==true?"assets/images/common/icon_top_status.png":"assets/images/common/icon_down_status.png",
+                                width: 14.w*3,
+                                height: 14.w*3,
+                                fit: BoxFit.fill,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        item['name'] == '默认空间'
-                            ? const SizedBox()
-                            : InkWell(
-                                onTap: () {
-                                  Get.to(() => EditPage(),
-                                      binding: EditBinding(), arguments: item);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(5.w),
-                                  child: Text(
-                                    "修改",
-                                    style: TextStyle(
-                                      color: HhColors.mainBlueColor,
-                                      fontSize: 26.sp,
-                                    ),
+                      ),
+                      item['name'] == '默认空间'
+                          ? const SizedBox()
+                          : InkWell(
+                              onTap: () {
+                                Get.to(() => EditPage(),
+                                    binding: EditBinding(), arguments: item);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5.w),
+                                child: Text(
+                                  "修改",
+                                  style: TextStyle(
+                                    color: HhColors.mainBlueColor,
+                                    fontSize: 15.sp*3,
                                   ),
                                 ),
                               ),
-                      ],
-                    ),
+                            ),
+                    ],
                   ),
                 ),
 
@@ -276,7 +266,7 @@ class SpaceManagePage extends StatelessWidget {
             height: 1.w,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(1.w)),
-            margin: EdgeInsets.fromLTRB(40.w, 0, 40.w, 0),
+            margin: EdgeInsets.fromLTRB(18.w*3, 0, 18.w*3, 0),
             child: DottedDashedLine(
               height: 0,
               width: 1.sw,
@@ -302,15 +292,15 @@ class SpaceManagePage extends StatelessWidget {
             },
             child: Container(
               width: 1.sw,
-              height: 100.w,
-              margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+              height: 50.w*3,
+              margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 0),
               decoration: BoxDecoration(
                   color: HhColors.whiteColor,
                   borderRadius: BorderRadius.all(Radius.circular(20.w))),
               child: Center(
                   child: Text(
                 '删除空间',
-                style: TextStyle(color: HhColors.mainRedColor, fontSize: 26.sp),
+                style: TextStyle(color: HhColors.mainRedColor, fontSize: 15.sp*3),
               )),
             ),
           ),
@@ -326,26 +316,25 @@ class SpaceManagePage extends StatelessWidget {
         width: 1.sw,
         decoration: BoxDecoration(
             color: HhColors.trans,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16.w))
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 20.w,),
             Expanded(
               child: Container(
                 width: 1.sw,
                 height: 90.w,
-                margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 25.w),
+                margin: EdgeInsets.fromLTRB(14.w*3, 15.w*3, 14.w*3, 25.w),
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
                     borderRadius: BorderRadius.all(Radius.circular(16.w))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 30.w,),
-                    Text('空间删除后，将设备转移至',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.sp),),
-                    SizedBox(height: 40.w,),
+                    SizedBox(height: 15.w*3,),
+                    Text('空间删除后，将设备转移至',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),),
+                    SizedBox(height: 20.w*3,),
                     Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
@@ -363,16 +352,16 @@ class SpaceManagePage extends StatelessWidget {
               scaleFactor: 1.2,
               child: Container(
                 width: 1.sw,
-                height: 90.w,
-                margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 50.w),
+                height: 50.w*3,
+                margin: EdgeInsets.fromLTRB(14.w*3, 20.w*3, 14.w*3, 40.w*3),
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                 child: Center(
                   child: Text(
                     "取消",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: HhColors.blackColor, fontSize: 28.sp),
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
                   ),
                 ),
               ),
@@ -383,7 +372,7 @@ class SpaceManagePage extends StatelessWidget {
           ],
         ),
       );
-    },isDismissible: false,enableDrag: false,backgroundColor: HhColors.trans);
+    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
   }
 
   buildDialogSpace(dynamic item) {
@@ -393,15 +382,19 @@ class SpaceManagePage extends StatelessWidget {
       if(model['id'] != item['id']){
         list.add(
             Container(
-              margin: EdgeInsets.fromLTRB(20.w, 20.w, 25.w, 20.w),
+              margin: EdgeInsets.fromLTRB(13.w*3, 13.w*3, 13.w*3, 13.w*3),
               child: Row(
                 children: [
-                  Text(
-                    "${model['name']}",
-                    style: TextStyle(
-                        color: HhColors.blackColor,
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.w500),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 200.w*3),
+                    child: Text(
+                      "${model['name']}",
+                      style: TextStyle(
+                          color: HhColors.blackColor,
+                          fontSize: 15.sp*3,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   const Expanded(child: SizedBox()),
                   InkWell(
@@ -415,7 +408,7 @@ class SpaceManagePage extends StatelessWidget {
                         "转移",
                         style: TextStyle(
                           color: HhColors.mainBlueColor,
-                          fontSize: 26.sp,
+                          fontSize: 15.sp*3,
                         ),
                       ),
                     ),
@@ -434,25 +427,26 @@ class SpaceManagePage extends StatelessWidget {
     List<dynamic> deviceList = item['deviceList']??[];
     for(int i = 0;i < deviceList.length;i++){
       dynamic model = deviceList[i];
+      list.add(SizedBox(height: 15.w*3,));
       list.add(
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              color: HhColors.grayAATextColor,
-              height: 0.5.w,
+              color: HhColors.grayLineColor,
+              height: 1.w*3,
               width: 1.sw,
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 25.w, 0, 20.w),
+              margin: EdgeInsets.fromLTRB(0, 14.w*3, 0, 0.w*3),
               child: Row(
                 children: [
                   Text(
                     "${model['name']}",
                     style: TextStyle(
                         color: HhColors.blackColor,
-                        fontSize: 26.sp,
-                        fontWeight: FontWeight.w400),
+                        fontSize: 15.sp*3,
+                        fontWeight: FontWeight.w500),
                   ),
                   const Expanded(child: SizedBox()),
                   InkWell(
@@ -465,7 +459,7 @@ class SpaceManagePage extends StatelessWidget {
                         "修改",
                         style: TextStyle(
                           color: HhColors.mainBlueColor,
-                          fontSize: 26.sp,
+                          fontSize: 15.sp*3,
                         ),
                       ),
                     ),

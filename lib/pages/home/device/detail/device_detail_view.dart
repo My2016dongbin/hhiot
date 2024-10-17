@@ -884,7 +884,7 @@ class DeviceDetailPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: () {
                   Get.back();
-                  CommonUtils().showDeleteDialog(context, '确定要删除?', (){
+                  CommonUtils().showDeleteDialog(context, logic.shareMark==2?'确定要删除“${item['name']}”?\n此设备是好友分享给你的设备':'确定要删除“${item['name']}”?\n删除设备后无法恢复', (){
                     Get.back();
                   }, (){
                     Get.back();

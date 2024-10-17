@@ -181,7 +181,7 @@ class MainPage extends StatelessWidget {
                     pagingController: logic.deviceController,
                     padding: EdgeInsets.zero,
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                      noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(text: '没有找到匹配的结果'),
+                      noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidgetSmall(image:'assets/images/common/icon_no_message_search.png',text: '没有找到匹配的结果'),
                       itemBuilder: (context, item, index) =>
                           InkWell(
                             onTap: (){
@@ -423,7 +423,7 @@ class MainPage extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                  Text('管理空间', style: TextStyle(color: HhColors.textBlackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
                                   SizedBox(width: 20.w*3,),
                                   Image.asset(
                                     "assets/images/common/ic_setting.png",
@@ -546,7 +546,7 @@ class MainPage extends StatelessWidget {
                           child: Container(
                             width: 1.sw,
                             height: 195.w*3,
-                            color: HhColors.blackColor,
+                            color: HhColors.textBlackColor,
                             child: Image.asset(
                               "assets/images/common/test_video.jpg",
                               width: 1.sw,
@@ -573,7 +573,7 @@ class MainPage extends StatelessWidget {
                             padding:
                                 EdgeInsets.fromLTRB(18.w*3, 3.w*3, 17.w*3, 3.w*3),
                             decoration: BoxDecoration(
-                                color: HhColors.blackColor,
+                                color: HhColors.textBlackColor,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(12.w*3))),
                             child: Text(
@@ -616,7 +616,7 @@ class MainPage extends StatelessWidget {
               },
               child: Container(
                 height: 38.w*3,
-                margin: EdgeInsets.fromLTRB(14.w*3, logic.marginTop, 14.w*3, 0),
+                margin: EdgeInsets.fromLTRB(14.w*3, 72.h*3, 14.w*3, 0),
                 decoration: BoxDecoration(
                   color: HhColors.whiteColor,
                   borderRadius: BorderRadius.all(Radius.circular(19.w*3)),
@@ -871,7 +871,7 @@ class MainPage extends StatelessWidget {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text('管理空间', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                      Text('管理空间', style: TextStyle(color: HhColors.textBlackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
                                       SizedBox(width: 20.w*3,),
                                       Image.asset(
                                         "assets/images/common/ic_setting.png",
@@ -912,6 +912,10 @@ class MainPage extends StatelessWidget {
                 onRefresh: (){
                   logic.pageNum = 1;
                   logic.getDeviceList(logic.pageNum);
+
+                  DateTime dateTime = DateTime.now();
+                  logic.dateStr.value = CommonUtils().parseLongTimeWithLength("${dateTime.millisecondsSinceEpoch}",16);
+                  logic.getWeather();
                 },
                 onLoad: (){
                   logic.pageNum++;
@@ -976,7 +980,7 @@ class MainPage extends StatelessWidget {
                     ),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2, //横轴n个子widget
-                        childAspectRatio: 1.3 //宽高比
+                        childAspectRatio: 1.35 //宽高比
                     )),
               ),
             ),
@@ -991,6 +995,7 @@ class MainPage extends StatelessWidget {
   ///设备列表视图-网格列表itemView
   gridItemView(BuildContext context, dynamic item, int index) {
     return Container(
+      height: 123.w*3,
       clipBehavior: Clip.hardEdge, //裁剪
       margin: EdgeInsets.fromLTRB(index%2==0?14.w*3:11.w*3, 15.w*3, index%2==0?0:14.w*3, 0),
       decoration: BoxDecoration(
@@ -1055,18 +1060,19 @@ class MainPage extends StatelessWidget {
               showEditDeviceDialog(item);
             },
             child: Container(
-              // height: 33.w*3,
+              height: 33.w*3,
               padding: EdgeInsets.fromLTRB(12.w*3, 5.w*3, 15.w*3, 7.w*3),
+              color: HhColors.whiteColor,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Text(
-                      CommonUtils().parseNameCount("${item['name']}", 5),
+                      CommonUtils().parseNameCount("${item['name']}", 4),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: HhColors.blackColor,
+                          color: HhColors.textBlackColor,
                           fontSize: 15.sp*3,),
                     ),
                   ),
@@ -1137,7 +1143,7 @@ class MainPage extends StatelessWidget {
             ///位置
             Container(
               margin: EdgeInsets.fromLTRB(9.w*3, 54.w*3, 0, 10.w),
-              height: 24.w*3,
+              height: 36.w*3,
               child: Stack(
                 children: [
                   Align(
@@ -1191,16 +1197,18 @@ class MainPage extends StatelessWidget {
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.2,
                           onPressed: (){
+                            //TODO Socket测试
                             homeLogic.index.value = 2;
+                            // Get.to(()=>SocketPage(),binding: SocketBinding());
                           },
                           child: Container(
-                            width: 23.w*3,
-                            height: 24.w*3,
+                            width: 40.w*3,
+                            height: 36.w*3,
                             margin: EdgeInsets.only(bottom: 10.w),
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: Alignment.bottomLeft,
+                                  alignment: Alignment.center,
                                   child: Image.asset(
                                     "assets/images/common/icon_message_main.png",
                                     width: 24.w*3,
@@ -1208,16 +1216,16 @@ class MainPage extends StatelessWidget {
                                     fit: BoxFit.fill,
                                   ),
                                 ),
-                                logic.count.value=='0'?const SizedBox():Align(
+                                messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?const SizedBox():Align(
                                   alignment: Alignment.topRight,
                                   child: Container(
                                     decoration: BoxDecoration(
                                         color: HhColors.mainRedColor,
-                                        borderRadius: BorderRadius.all(Radius.circular(10.w))
+                                        borderRadius: BorderRadius.all(Radius.circular(10.w*3))
                                     ),
-                                    width: 25.w + ((logic.count.value.length-1) * 6.w),
-                                    height: 25.w,
-                                    child: Center(child: Text(logic.count.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 16.sp),)),
+                                    width: 15.w*3 + ((parseCount(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}")) * (3.w*3)),
+                                    height: 15.w*3,
+                                    child: Center(child: Text(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}",style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
                                   ),
                                 ),
                               ],
@@ -1234,7 +1242,7 @@ class MainPage extends StatelessWidget {
                             margin: EdgeInsets.fromLTRB(15.w*3, 0, 14.w*3, 10.w),
                             child: Image.asset(
                               "assets/images/common/ic_add.png",
-                              width: 23.w*3,
+                              width: 24.w*3,
                               height: 24.w*3,
                               fit: BoxFit.fill,
                             ),
@@ -1353,7 +1361,7 @@ class MainPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    CommonUtils().parseNameCount("${model['name']}", 5),
+                    CommonUtils().parseNameCount("${model['name']}", 4),
                     style: TextStyle(
                         color: logic.spaceListIndex.value == i?HhColors.blackTextColor:HhColors.gray9TextColor,
                         fontSize: logic.spaceListIndex.value == i?18.sp*3:16.sp*3,
@@ -1467,7 +1475,7 @@ class MainPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: () {
                   Get.back();
-                  CommonUtils().showDeleteDialog(context, '确定要删除该设备吗?', (){
+                  CommonUtils().showDeleteDialog(context, item["shareMark"]==2?'确定要删除“${item['name']}”?\n此设备是好友分享给你的设备':'确定要删除“${item['name']}”?\n删除设备后无法恢复', (){
                     Get.back();
                   }, (){
                     Get.back();

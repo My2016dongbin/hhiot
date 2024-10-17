@@ -44,7 +44,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   dio: ^5.4.2
   dio_cookie_manager: ^3.1.1
-  #  package_info_plus: ^7.0.0
+  package_info_plus: ^5.0.1
   device_info_plus: ^9.1.2
   url_launcher: ^6.2.5
   intl: ^0.18.1

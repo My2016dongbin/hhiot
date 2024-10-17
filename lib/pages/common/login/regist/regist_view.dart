@@ -66,17 +66,18 @@ class RegisterPage extends StatelessWidget {
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
-              padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
+              padding: EdgeInsets.fromLTRB(0, 10.w, 26.w, 10.w),
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back.png",
-                height: 14.h*3,
-                width: 9.w*3,
+                height: 16.w*3,
+                width: 10.w*3,
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
+            height: 200.h*3,
             decoration: BoxDecoration(color: HhColors.whiteColor,
             borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
             margin: EdgeInsets.fromLTRB(14.w*3, 98.h*3, 14.w*3, 0),
@@ -84,234 +85,251 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                SizedBox(height: 2.h*3,),
                 ///账号
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 20,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.accountController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none
+                SizedBox(
+                  height:45.h*3,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          maxLength: 20,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.accountController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
+                            counterText: '',
+                            hintText: '请输入账号',
+                            hintStyle: TextStyle(
+                                color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
-                          counterText: '',
-                          hintText: '请输入账号',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
+                          style:
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                          onChanged: (s){
+                            logic.accountStatus.value = s.isNotEmpty;
+                          },
                         ),
-                        style:
-                        TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
-                        onChanged: (s){
-                          logic.accountStatus.value = s.isNotEmpty;
+                      ),
+                      logic.accountStatus.value? BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          logic.accountController!.clear();
+                          logic.accountStatus.value = false;
                         },
-                      ),
-                    ),
-                    logic.accountStatus.value? BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.accountController!.clear();
-                        logic.accountStatus.value = false;
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
-                      ),
-                    ):const SizedBox()
-                  ],
+                        child: Container(
+                          padding: EdgeInsets.all(5.w),
+                            child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
+                        ),
+                      ):const SizedBox()
+                    ],
+                  ),
                 ),
+                SizedBox(height: 2.h*3,),
                 Container(
-                  color: HhColors.grayCCTextColor,
-                  height: 0.5.w,
+                  color: HhColors.grayLineColor,
+                  height: 1.h*3,
                 ),
-                SizedBox(height: 10.w,),
+                SizedBox(height: 2.h*3,),
                 ///密码
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 20,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.passwordController,
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: !logic.passwordShowStatus.value,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none
+                SizedBox(
+                  height:45.h*3,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          maxLength: 20,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.passwordController,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: !logic.passwordShowStatus.value,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
+                            counterText: '',
+                            hintText: '请输入密码',
+                            hintStyle: TextStyle(
+                                color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
-                          counterText: '',
-                          hintText: '请输入密码',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
+                          style:
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
+                          onChanged: (s){
+                            logic.passwordStatus.value = s.isNotEmpty;
+                          },
                         ),
-                        style:
-                        TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
-                        onChanged: (s){
-                          logic.passwordStatus.value = s.isNotEmpty;
+                      ),
+                      logic.passwordStatus.value?
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          logic.passwordController!.clear();
+                          logic.passwordStatus.value = false;
                         },
-                      ),
-                    ),
-                    logic.passwordStatus.value?
-                    BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.passwordController!.clear();
-                        logic.passwordStatus.value = false;
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
-                      ),
-                    ):const SizedBox(),
-                    SizedBox(width: 10.w,),
-                    BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.passwordShowStatus.value = !logic.passwordShowStatus.value;
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5.w),
-                          child: Image.asset(logic.passwordShowStatus.value?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
-                      ),
-                    )
-                  ],
+                        child: Container(
+                          padding: EdgeInsets.all(5.w),
+                            child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
+                        ),
+                      ):const SizedBox(),
+                      SizedBox(width: 10.w,),
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          logic.passwordShowStatus.value = !logic.passwordShowStatus.value;
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5.w),
+                            child: Image.asset(logic.passwordShowStatus.value?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+                SizedBox(height: 3.h*3,),
                 Container(
-                  color: HhColors.grayCCTextColor,
-                  height: 0.5.w,
+                  color: HhColors.grayLineColor,
+                  height: 1.h*3,
                 ),
-                SizedBox(height: 10.w,),
+                SizedBox(height: 3.h*3,),
                 ///手机号
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 11,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.phoneController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none
+                SizedBox(
+                  height:45.h*3,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          maxLength: 11,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.phoneController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
+                            counterText: '',
+                            hintText: '请输入手机号',
+                            hintStyle: TextStyle(
+                                color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
-                          counterText: '',
-                          hintText: '请输入手机号',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
+                          style:
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                          onChanged: (s){
+                            logic.phoneStatus.value = s.isNotEmpty;
+                          },
                         ),
-                        style:
-                        TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
-                        onChanged: (s){
-                          logic.phoneStatus.value = s.isNotEmpty;
+                      ),
+                      logic.phoneStatus.value? BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          logic.phoneController!.clear();
+                          logic.phoneStatus.value = false;
                         },
-                      ),
-                    ),
-                    logic.phoneStatus.value? BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.phoneController!.clear();
-                        logic.phoneStatus.value = false;
-                      },
-                      child: Container(
-                          padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
-                      ),
-                    ):const SizedBox(),
-                  ],
+                        child: Container(
+                            padding: EdgeInsets.all(5.w),
+                            child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
+                        ),
+                      ):const SizedBox(),
+                    ],
+                  ),
                 ),
+                SizedBox(height: 2.h*3,),
                 Container(
-                  color: HhColors.grayCCTextColor,
-                  height: 0.5.w,
+                  color: HhColors.grayLineColor,
+                  height: 1.h*3,
                 ),
-                SizedBox(height: 10.w,),
+                SizedBox(height: 2.h*3,),
                 ///验证码
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 6,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.codeController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none
+                SizedBox(
+                  height: 44.h*3,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          maxLength: 6,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.codeController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
+                            counterText: '',
+                            hintText: '请输入验证码',
+                            hintStyle: TextStyle(
+                                color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
-                          counterText: '',
-                          hintText: '请输入验证码',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
+                          style:
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                          onChanged: (s){
+                            logic.codeStatus.value = s.isNotEmpty;
+                          },
                         ),
-                        style:
-                        TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
-                        onChanged: (s){
-                          logic.codeStatus.value = s.isNotEmpty;
+                      ),
+                      logic.codeStatus.value? BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          logic.codeController!.clear();
+                          logic.codeStatus.value = false;
                         },
-                      ),
-                    ),
-                    logic.codeStatus.value? BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.codeController!.clear();
-                        logic.codeStatus.value = false;
-                      },
-                      child: Container(
-                          padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
-                      ),
-                    ):const SizedBox(),
-                    BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: () {
-                        //隐藏输入法
-                        FocusScope.of(logic.context).requestFocus(FocusNode());
-                        if(logic.phoneController!.text.length<11){
-                          EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的手机号'));
-                          return;
-                        }
-                        if(logic.time.value!=0){
-                          return;
-                        }
-                        Future.delayed(const Duration(milliseconds: 500),(){
-                          logic.sendCode();
-                        });
-                      },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                        padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
-                        child: Center(
-                          child: Text(
-                            logic.time.value==0?'获取验证码':"${logic.time.value}s后重新发送",
-                            style: TextStyle(
-                                color: HhColors.backBlueOutColor,
-                                fontSize: 15.sp*3,
-                                fontWeight: FontWeight.w600),
+                        child: Container(
+                            padding: EdgeInsets.all(5.w),
+                            child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
+                        ),
+                      ):const SizedBox(),
+                      BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: () {
+                          //隐藏输入法
+                          FocusScope.of(logic.context).requestFocus(FocusNode());
+                          if(logic.phoneController!.text.length<11){
+                            EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的手机号'));
+                            return;
+                          }
+                          if(logic.time.value!=0){
+                            return;
+                          }
+                          Future.delayed(const Duration(milliseconds: 500),(){
+                            logic.sendCode();
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                          padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                          child: Center(
+                            child: Text(
+                              logic.time.value==0?'获取验证码':"${logic.time.value}s后重新发送",
+                              style: TextStyle(
+                                  color: HhColors.backBlueOutColor,
+                                  fontSize: 15.sp*3,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                SizedBox(height: 2.h*3,),
               ],
             ),
           ),
@@ -334,12 +352,14 @@ class RegisterPage extends StatelessWidget {
                           child: Image.asset(logic.confirmStatus.value?'assets/images/common/yes.png':'assets/images/common/no.png',height:12.w*3,width: 12.w*3,fit: BoxFit.fill,)
                       ),
                     ),
-                    InkWell(
-                      onTap: (){
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: (){
                         logic.confirmStatus.value = !logic.confirmStatus.value;
                       },
                       child: Text('我已阅读并同意',
-                        style: TextStyle(color: HhColors.grayBBTextColor,fontSize: 12.sp*3,fontWeight: FontWeight.bold),
+                        style: TextStyle(color: HhColors.grayBBTextColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500),
                       ),
                     ),
                     BouncingWidget(
@@ -349,7 +369,7 @@ class RegisterPage extends StatelessWidget {
                         Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
                       },
                       child: Text('《浩海万联平台隐私政策》',
-                        style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 12.sp*3,fontWeight: FontWeight.bold),
+                        style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -381,10 +401,6 @@ class RegisterPage extends StatelessWidget {
                       EventBusUtil.getInstance().fire(HhToast(title: '请输入验证码'));
                       return;
                     }
-                    /*if(!logic.confirmStatus.value){
-                      EventBusUtil.getInstance().fire(HhToast(title: '请阅读并同意隐私协议'));
-                      return;
-                    }*/
                     if (!logic.confirmStatus.value) {
                       showAgreeDialog();
                       return;

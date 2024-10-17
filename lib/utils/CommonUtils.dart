@@ -33,6 +33,24 @@ class CommonUtils{
     }
     return type;
   }
+  String parseDouble(String s){
+    String type = "0";
+    int index = 0;
+    index = s.indexOf('.');
+    try{
+      type = s.substring(0,index);
+    }catch(e){
+      type = s;
+    }
+    return type;
+  }
+  bool validateSpaceName(String spaceName) {
+    //空间名称不能包含特殊符号
+    final RegExp pattern =
+    RegExp(r'^[a-zA-Z0-9\u4e00-\u9fa5]+$');
+    HhLog.d("$spaceName , ${pattern.hasMatch(spaceName)}");
+    return pattern.hasMatch(spaceName);
+  }
   bool validatePassword(String password) {
     // 正则表达式规则：
     // 最小长度 9 个字符，
@@ -44,7 +62,6 @@ class CommonUtils{
     //密码必须为8-16位由字母、数字、特殊字符两种以上组成
     final RegExp pattern =
     RegExp(r'^((?=.*[A-Za-z])(?=.*\d|[!@#$%^&*(),.?":{}|<>])|(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])|(?=.*[A-Za-z])(?=.*\d)).{8,16}$');
-    // RegExp(r'^(?=.*[A-Za-z])(?=.*\d|[^A-Za-z\d]).{8,16}$');
     HhLog.d("$password , ${pattern.hasMatch(password)}");
     return pattern.hasMatch(password);
   }
@@ -138,16 +155,17 @@ class CommonUtils{
       ],
     );
   }
-  Widget noneWidgetSmall({double? top,String? text}){
+  Widget noneWidgetSmall({String? image,double? top,String? text}){
     return Column(
       children: [
-        SizedBox(height: top??0.2.sw,),
-        Image.asset('assets/images/common/icon_no_message.png',fit: BoxFit.fill,
-          height: 0.2.sw,
-          width: 0.2.sw,),
+        SizedBox(height: top??75.w*3,),
+        Image.asset(image??'assets/images/common/icon_no_message.png',fit: BoxFit.fill,
+          height: 67.w*3,
+          width: 87.w*3,),
+        SizedBox(height: 11.w*3,),
         Text(text??'暂无数据',style: TextStyle(
             color: HhColors.grayBBTextColor,
-            fontSize: 20.sp
+            fontSize: 13.sp*3
         ),),
       ],
     );
@@ -232,11 +250,11 @@ class CommonUtils{
     showCupertinoDialog(context: context, builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: hint==null?240.w:270.w,
-          margin: EdgeInsets.fromLTRB(0.15.sw, 0, 0.15.sw, 0),
+          height: hint==null?162.w*3:180.w*3,
+          margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
           decoration: BoxDecoration(
             color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(14.w)),
+            borderRadius: BorderRadius.all(Radius.circular(8.w*3)),
           ),
           child: Stack(
             children: <Widget>[
@@ -248,9 +266,9 @@ class CommonUtils{
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("$title",style: TextStyle(color: HhColors.gray5TextColor,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
+                      Text("$title",style: TextStyle(color: HhColors.blackTextColor,decoration: TextDecoration.none,fontSize: 16.sp*3,fontWeight: FontWeight.w500),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
                       Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
-                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
+                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 16.sp*3),maxLines: 1,overflow: TextOverflow.ellipsis,))),
                     ],
                   ),
                 ),
@@ -258,17 +276,17 @@ class CommonUtils{
               Align(
                 alignment:Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 15.w),
+                  margin: EdgeInsets.only(bottom: 13.w*3),
                   child: Row(
                     children: <Widget>[
                       Expanded(
                         child: CommonButton(
-                          height: 65.w,
-                          fontSize: 26.sp,
+                          height: 44.w*3,
+                          fontSize: 16.sp*3,
                           backgroundColor: HhColors.whiteColor,
-                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                          margin: EdgeInsets.fromLTRB(20.w*3, 0, 13.w*3, 0),
                           solid:true,
-                          borderRadius: 35.w,
+                          borderRadius: 8.w*3,
                           solidColor: HhColors.grayEDBackColor,
                           textColor: HhColors.titleColor_99,
                           text: leftStr??"取消", onPressed: leftClick,
@@ -276,11 +294,11 @@ class CommonUtils{
                       ),
                       Expanded(
                         child: CommonButton(
-                          height: 65.w,
-                          fontSize: 26.sp,
+                          height: 44.w*3,
+                          fontSize: 16.sp*3,
                           backgroundColor: HhColors.mainBlueColor,
-                          margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
-                          borderRadius: 35.w,
+                          margin: EdgeInsets.fromLTRB(0, 0, 20.w*3, 0),
+                          borderRadius: 8.w*3,
                           textColor: HhColors.whiteColor,
                           text: rightStr??"确定", onPressed: rightClick,
                         ),
@@ -293,18 +311,18 @@ class CommonUtils{
           ),
         ),
       );
-    }, );
+    }, barrierDismissible: true);
   }
   ///通用Dialog（取消/确认）
   showDeleteDialog(context,title,leftClick,rightClick,closeClick,{String? leftStr,String? rightStr,String? hint}){
     showCupertinoDialog(context: context, builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: hint==null?260.w:290.w,
-          margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 0),
+          height: hint==null?162.w*3:180.w*3,
+          margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
           decoration: BoxDecoration(
             color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(20.w)),
+              borderRadius: BorderRadius.all(Radius.circular(8.w*3)),
           ),
           child: Stack(
             children: <Widget>[
@@ -316,9 +334,9 @@ class CommonUtils{
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("$title",style: TextStyle(color: HhColors.gray4TextColor,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
+                      Text("$title",style: TextStyle(color: HhColors.blackTextColor,decoration: TextDecoration.none,fontSize: 16.sp*3,fontWeight: FontWeight.w500),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
                       Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
-                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
+                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 16.sp*3),maxLines: 1,overflow: TextOverflow.ellipsis,))),
                     ],
                   ),
                 ),
@@ -326,30 +344,30 @@ class CommonUtils{
               Align(
                 alignment:Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 25.w),
+                  margin: EdgeInsets.only(bottom: 13.w*3),
                   child: Row(
                     children: <Widget>[
                       Expanded(
                         child: CommonButton(
-                          height: 75.w,
-                          fontSize: 26.sp,
+                          height: 44.w*3,
+                          fontSize: 16.sp*3,
                           backgroundColor: HhColors.whiteColor,
-                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                          margin: EdgeInsets.fromLTRB(20.w*3, 0, 13.w*3, 0),
                           solid:true,
-                          borderRadius: 16.w,
-                          solidColor: HhColors.grayEDBackColor,
-                          textColor: HhColors.gray6TextColor,
+                          borderRadius: 8.w*3,
+                          solidColor: HhColors.grayE6BackColor,
+                          textColor: HhColors.blackTextColor,
                           text: leftStr??"取消", onPressed: leftClick,
                         ),
                       ),
                       Expanded(
                         child: CommonButton(
-                          height: 75.w,
-                          fontSize: 26.sp,
+                          height: 44.w*3,
+                          fontSize: 16.sp*3,
                           backgroundColor: HhColors.whiteColor,
-                          margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
+                          margin: EdgeInsets.fromLTRB(0, 0, 20.w*3, 0),
                           solid:true,
-                          borderRadius: 16.w,
+                          borderRadius: 8.w*3,
                           solidColor: HhColors.mainRedColor,
                           textColor: HhColors.mainRedColor,
                           text: rightStr??"确定", onPressed: rightClick,
@@ -366,10 +384,10 @@ class CommonUtils{
                   scaleFactor: 1.2,
                   onPressed: closeClick,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 30.w, 36.w, 0),
+                    margin: EdgeInsets.fromLTRB(0, 15.w*3, 23.w*3, 0),
                     child: Image.asset('assets/images/common/ic_x.png',fit: BoxFit.fill,
-                      height: 30.w,
-                      width: 30.w,),
+                      height: 14.w*3,
+                      width: 14.w*3,),
                   ),
                 ),
               ),
@@ -377,7 +395,7 @@ class CommonUtils{
           ),
         ),
       );
-    }, );
+    }, barrierDismissible: true);
   }
 
   ///通用Dialog（取消/确认）
@@ -385,11 +403,11 @@ class CommonUtils{
     showCupertinoDialog(context: context, builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: hint==null?260.w:290.w,
-          margin: EdgeInsets.fromLTRB(0.1.sw, 0, 0.1.sw, 0),
+          height: hint==null?162.w*3:180.w*3,
+          margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
           decoration: BoxDecoration(
             color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(20.w)),
+            borderRadius: BorderRadius.all(Radius.circular(8.w*3)),
           ),
           child: Stack(
             children: <Widget>[
@@ -401,9 +419,9 @@ class CommonUtils{
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("$title",style: TextStyle(color: HhColors.gray4TextColor,decoration: TextDecoration.none,fontSize: 26.sp),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
+                      Text("$title",style: TextStyle(color: HhColors.gray4TextColor,decoration: TextDecoration.none,fontSize: 16.sp*3,fontWeight: FontWeight.w500),maxLines: 2,overflow: TextOverflow.ellipsis,textAlign: TextAlign.center,),
                       Offstage(offstage: hint==null,child: SizedBox(height: 20.h,)),
-                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 26.sp),maxLines: 1,overflow: TextOverflow.ellipsis,))),
+                      Offstage(offstage: hint==null,child: Material(color: HhColors.whiteColor,child: Text("$hint",style: TextStyle(color: HhColors.titleColor_33,fontSize: 16.sp*3),maxLines: 1,overflow: TextOverflow.ellipsis,))),
                     ],
                   ),
                 ),
@@ -411,17 +429,17 @@ class CommonUtils{
               Align(
                 alignment:Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 25.w),
+                  margin: EdgeInsets.only(bottom: 13.w*3),
                   child: Row(
                     children: <Widget>[
                       Expanded(
                         child: CommonButton(
-                          height: 75.w,
-                          fontSize: 26.sp,
+                          height: 44.w*3,
+                          fontSize: 16.sp*3,
                           backgroundColor: HhColors.whiteColor,
-                          margin: EdgeInsets.fromLTRB(30.w, 0, 20.w, 0),
+                          margin: EdgeInsets.fromLTRB(20.w*3, 0, 13.w*3, 0),
                           solid:true,
-                          borderRadius: 16.w,
+                          borderRadius: 8.w*3,
                           solidColor: HhColors.grayEDBackColor,
                           textColor: HhColors.blackTextColor,
                           text: leftStr??"取消", onPressed: leftClick,
@@ -429,11 +447,11 @@ class CommonUtils{
                       ),
                       Expanded(
                         child: CommonButton(
-                          height: 75.w,
-                          fontSize: 26.sp,
+                          height: 44.w*3,
+                          fontSize: 16.sp*3,
                           backgroundColor: HhColors.mainBlueColor,
-                          margin: EdgeInsets.fromLTRB(20.w, 0, 30.w, 0),
-                          borderRadius: 16.w,
+                          margin: EdgeInsets.fromLTRB(0, 0, 20.w*3, 0),
+                          borderRadius: 8.w*3,
                           textColor: HhColors.whiteColor,
                           text: rightStr??"确定", onPressed: rightClick,
                         ),
@@ -449,10 +467,10 @@ class CommonUtils{
                   scaleFactor: 1.2,
                   onPressed: closeClick,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 30.w, 36.w, 0),
+                    margin: EdgeInsets.fromLTRB(0, 15.w*3, 23.w*3, 0),
                     child: Image.asset('assets/images/common/ic_x.png',fit: BoxFit.fill,
-                      height: 30.w,
-                      width: 30.w,),
+                      height: 14.w*3,
+                      width: 14.w*3,),
                   ),
                 ),
               ),
@@ -460,7 +478,7 @@ class CommonUtils{
           ),
         ),
       );
-    }, );
+    }, barrierDismissible: true);
   }
 
 

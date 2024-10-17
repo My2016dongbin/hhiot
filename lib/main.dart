@@ -51,6 +51,7 @@ void main() {
   FlutterBugly.postCatchedException(() {
     runApp(MyApp());
   });*/
+  WidgetsFlutterBinding.ensureInitialized();//package_info_plus
   runApp(const HhApp());
 
   if (Platform.isAndroid) {

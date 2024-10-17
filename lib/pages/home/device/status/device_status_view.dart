@@ -204,7 +204,7 @@ class DeviceStatusPage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(20.w))),
                     child: Center(
                       child: Text(
-                        "继续添加",
+                        logicAdd.addingStatus.value==2?"继续添加":"完成",
                         style: TextStyle(
                           color: HhColors.whiteColor,
                           fontSize: 30.sp,),

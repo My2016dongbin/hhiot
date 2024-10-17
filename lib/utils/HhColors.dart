@@ -14,6 +14,7 @@ class HhColors {
   static const grayAATextColor = Color(0xFFAAAAAA);//深灰字体颜色
   static const grayBBTextColor = Color(0xFFBBBBBB);//深灰字体颜色
   static const grayCCTextColor = Color(0xFFCCCCCC);//深灰字体颜色
+  static const grayLineColor = Color(0xFFF3F3F8);//深灰字体颜色
   static const grayDDTextColor = Color(0xFFDDDDDD);//深灰字体颜色
   static const grayF3TextColor = Color(0xFFEEEFF3);//深灰字体颜色
   static const grayXXTextColor = Color(0xFFF5F7F7);//深灰字体颜色
@@ -24,6 +25,7 @@ class HhColors {
   static const gray5TextColor = Color(0xFF555555);//深灰字体颜色
   static const gray4TextColor = Color(0xFF444444);//深灰字体颜色
   static const grayEDBackColor = Color(0xFFEDEDED);//灰色背景颜色
+  static const grayE6BackColor = Color(0xFFE6E6E6);//灰色背景颜色
   static const grayEEBackColor = Color(0xFFEEEEEE);//灰色背景颜色
   static const grayEFBackColor = Color(0x99EFEFEF);//灰色背景颜色
   static const blackTextColor = Color(0xFF333333);//黑色字体颜色
@@ -54,7 +56,8 @@ class HhColors {
   static const whiteColorTrans = Color(0x88FFFFFF); //主题颜色
   static const whiteColorTrans2 = Color(0xFFF2F6FE); //主题颜色
   static const whiteColor = Colors.white;
-  static const blackColor = Colors.black;
+  static const blackColor = Color(0xFF333333);
+  static const blackRealColor = Colors.black;
   static const backBlueInColor = Color(0xFFE1E9F7);
   static const backRedInColor = Color(0xFFFF5C5C);
   static const backBlueOutColor = Color(0xFF3477FF);

@@ -218,8 +218,15 @@ class PersonalLoginPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 4.w*3,),
-                          Text('我已阅读并同意',
-                            style: TextStyle(color: HhColors.gray6TextColor,fontSize: 12.sp*3,fontWeight: FontWeight.w600),
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: (){
+                              logic.confirmStatus.value = !logic.confirmStatus.value;
+                            },
+                            child: Text('我已阅读并同意',
+                              style: TextStyle(color: HhColors.gray6TextColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500),
+                            ),
                           ),
                           BouncingWidget(
                             duration: const Duration(milliseconds: 100),
@@ -229,7 +236,7 @@ class PersonalLoginPage extends StatelessWidget {
                               Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
                             },
                             child: Text('《浩海万联平台隐私政策》',
-                              style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 12.sp*3,fontWeight: FontWeight.w600),
+                              style: TextStyle(color: HhColors.backBlueOutColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -371,7 +378,7 @@ class PersonalLoginPage extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
                   child: Image.asset(
                     'assets/images/common/back_white.png',
-                    height: 14.h*3,
+                    height: 16.w*3,
                     width: 10.w*3,
                     fit: BoxFit.fill,
                   )),

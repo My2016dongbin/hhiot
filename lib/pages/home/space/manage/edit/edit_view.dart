@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/home/space/manage/edit/edit_controller.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -85,7 +86,7 @@ class EditPage extends StatelessWidget {
                       child: TextField(
                         textAlign: TextAlign.left,
                         maxLines: 1,
-                        maxLength: 30,
+                        maxLength: 10,
                         cursorColor: HhColors.titleColor_99,
                         controller: logic.accountController,
                         keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
@@ -134,6 +135,10 @@ class EditPage extends StatelessWidget {
                     FocusScope.of(logic.context).requestFocus(FocusNode());
                     if(logic.accountController!.text.isEmpty){
                       EventBusUtil.getInstance().fire(HhToast(title: '请输入修改内容'));
+                      return;
+                    }
+                    if(!CommonUtils().validateSpaceName(logic.accountController!.text)){
+                      EventBusUtil.getInstance().fire(HhToast(title: '空间名称不能包含特殊字符'));
                       return;
                     }
                     Future.delayed(const Duration(milliseconds: 500),(){

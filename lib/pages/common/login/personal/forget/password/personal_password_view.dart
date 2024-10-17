@@ -62,7 +62,7 @@ class PersonalPasswordPage extends StatelessWidget {
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back_white.png",
-                height: 14.h*3,
+                height: 14.w*3,
                 width: 10.w*3,
                 fit: BoxFit.fill,
               ),

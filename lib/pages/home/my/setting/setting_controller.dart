@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -11,12 +12,17 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
+import 'package:iot/utils/Utils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingController extends GetxController {
   final index = 0.obs;
   final unreadMsgCount = 0.obs;
   final Rx<bool> testStatus = true.obs;
+  final Rx<double> cache = 0.0.obs;
+  final Rx<String> version = ''.obs;
   final Rx<String> ?nickname = ''.obs;
   final Rx<String> ?account = ''.obs;
   final Rx<String> ?tenantTitle = ''.obs;
@@ -30,6 +36,8 @@ class SettingController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    getCacheSize();
+    getVersion();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     nickname!.value = prefs.getString(SPKeys().nickname)!;
     account!.value = prefs.getString(SPKeys().username)!;
@@ -47,6 +55,7 @@ class SettingController extends GetxController {
           email!.value = prefs.getString(SPKeys().email)!;
           avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
         });
+
     super.onInit();
   }
   // 将文件转换为字节数组
@@ -105,5 +114,30 @@ class SettingController extends GetxController {
     } catch (e) {
       HhLog.d("上传失败: $e");
     }
+  }
+
+  Future<void> getCacheSize() async {
+    final tempDir = await getTemporaryDirectory();
+    cache.value = await Utils.getTotalSizeOfFilesInDir(tempDir);
+    HhLog.d("cache ${cache.value/10000}");
+  }
+  Future<void> clearCache() async {
+    try {
+      final tempDir = await getTemporaryDirectory();
+      EventBusUtil.getInstance().fire(HhLoading(show: true));
+      await Utils.requestPermission(tempDir);
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
+      EventBusUtil.getInstance().fire(HhToast(title: '缓存已清除',type: 0));
+      getCacheSize();
+    } catch (err) {
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
+      EventBusUtil.getInstance().fire(HhToast(title: '缓存清除失败',type: 0));
+    }
+  }
+
+  Future<void> getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version.value = packageInfo.version;
+    HhLog.d('getVersion ${version.value}');
   }
 }

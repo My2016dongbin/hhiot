@@ -14,12 +14,14 @@ import 'package:iot/utils/RequestUtils.dart';
 class SearchLocationController extends GetxController {
   late BuildContext context;
   final Rx<bool> testStatus = true.obs;
+  final Rx<int> index = 0.obs;
   final Rx<bool> searchStatus = false.obs;
   final Rx<double> longitude = 0.0.obs;
   final Rx<double> latitude = 0.0.obs;
   final Rx<String> locText = ''.obs;
   final Rx<String> locCity = ''.obs;
   late int searchIndex = 0;
+  late bool choose = false;
   BMFMapController ?controller;
   late List<BMFPoiInfo> searchList = [];
   TextEditingController ?searchController = TextEditingController();

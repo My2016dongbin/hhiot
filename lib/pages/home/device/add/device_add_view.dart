@@ -11,6 +11,7 @@ import 'package:iot/pages/common/location/search/search_view.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
+import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -211,6 +212,7 @@ class DeviceAddPage extends StatelessWidget {
                         child: TextField(
                           textAlign: TextAlign.left,
                           maxLines: 1,
+                          maxLength: 10,
                           cursorColor: HhColors.titleColor_99,
                           controller: logic.nameController,
                           keyboardType: TextInputType.text,
@@ -219,6 +221,7 @@ class DeviceAddPage extends StatelessWidget {
                             border: const OutlineInputBorder(
                                 borderSide: BorderSide.none
                             ),
+                            counterText: '',
                             hintText: '请输入设备名称',
                             hintStyle: TextStyle(
                                 color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
@@ -280,10 +283,14 @@ class DeviceAddPage extends StatelessWidget {
                         EventBusUtil.getInstance().fire(HhToast(title: '请输入设备SN码'));
                         return;
                       }
-                      /*if(logic.nameController!.text == ''){
+                      if(logic.nameController!.text == ''){
                         EventBusUtil.getInstance().fire(HhToast(title: '请输入设备名称'));
                         return;
-                      }*/
+                      }
+                      if(!CommonUtils().validateSpaceName(logic.nameController!.text)){
+                        EventBusUtil.getInstance().fire(HhToast(title: '设备名称不能包含特殊字符'));
+                        return;
+                      }
                       if(logic.spaceId == '' || logic.spaceId == 'null'){
                         EventBusUtil.getInstance().fire(HhToast(title: '请选择设备空间'));
                         return;
@@ -292,6 +299,9 @@ class DeviceAddPage extends StatelessWidget {
                       if(logic.isEdit.value){
                         logic.model["name"] = logic.nameController!.text;
                         logic.model["spaceId"] = logic.spaceId;
+                        logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:logic.model["latitude"];
+                        logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:logic.model["longitude"];
+                        logic.locText.value = logicLocation.choose?logicLocation.locText.value:logic.model["location"];
                         logic.updateDevice();
                       }else{
                         if(logicLocation.locText.value == '' || logicLocation.locText.value == '已搜索'){
@@ -300,6 +310,7 @@ class DeviceAddPage extends StatelessWidget {
                         }
                         logic.latitude.value = logicLocation.latitude.value;
                         logic.longitude.value = logicLocation.longitude.value;
+                        logic.locText.value = logicLocation.locText.value;
                         logic.createDevice();
                       }
                     },
@@ -312,7 +323,7 @@ class DeviceAddPage extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(20.w))),
                       child: Center(
                         child: Text(
-                          logic.isEdit.value?"保存":"添加设备",
+                          logic.isEdit.value?"保存":"确定添加",
                           style: TextStyle(
                               color: HhColors.whiteColor,
                               fontSize: 30.sp,),

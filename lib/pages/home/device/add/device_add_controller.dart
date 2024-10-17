@@ -29,7 +29,7 @@ class DeviceAddController extends GetxController {
   late String spaceId = '';
   final Rx<String> locText = ''.obs;
   TextEditingController ?snController = TextEditingController();
-  TextEditingController ?nameController = TextEditingController();
+  TextEditingController ?nameController = TextEditingController(text:'新的设备');
   List<dynamic> newItems = [];
   StreamSubscription ?locTextSubscription;
   StreamSubscription ?spaceListSubscription;
@@ -152,6 +152,7 @@ class DeviceAddController extends GetxController {
       "spaceId":spaceId,
       "longitude":"${longitude.value}",
       "latitude":"${latitude.value}",
+      "location":locText.value,
     });
     HhLog.d("createDevice -- $result");
     if(result["code"]==0 && result["data"]!=null){
@@ -172,6 +173,9 @@ class DeviceAddController extends GetxController {
       HhLog.d("newItems[index.value] ${newItems[index.value]}");
       model['spaceName'] = newItems[index.value]['name'];
       model['spaceId'] = newItems[index.value]['id'];
+      model['longitude'] = "${longitude.value}";
+      model['latitude'] = "${latitude.value}";
+      model['location'] = locText.value;
       HhLog.d("model $model");
     }catch(e){
       //
@@ -181,7 +185,7 @@ class DeviceAddController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("updateDevice -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      EventBusUtil.getInstance().fire(HhToast(title: '保存成功',type: 1));
+      EventBusUtil.getInstance().fire(HhToast(title: '修改设备成功',type: 0));
       EventBusUtil.getInstance().fire(DeviceList());
       EventBusUtil.getInstance().fire(SpaceList());
       EventBusUtil.getInstance().fire(DeviceInfo());

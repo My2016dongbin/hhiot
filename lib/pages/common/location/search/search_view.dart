@@ -49,29 +49,30 @@ class SearchLocationPage extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Container(
-            margin: EdgeInsets.only(top: 90.w),
+            margin: EdgeInsets.only(top: 54.w*3),
             color: HhColors.trans,
             child: Text(
               '设备定位',
               style: TextStyle(
                   color: HhColors.blackTextColor,
-                  fontSize: 30.sp,
+                  fontSize: 18.sp*3,
                   fontWeight: FontWeight.bold),
             ),
           ),
         ),
         InkWell(
           onTap: () {
+            EventBusUtil.getInstance().fire(LocText(text: logic.locText.value));
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-            padding: EdgeInsets.all(10.w),
+            margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
-              width: 18.w,
-              height: 30.w,
+              height: 14.w*3,
+              width: 9.w*3,
               fit: BoxFit.fill,
             ),
           ),
@@ -84,36 +85,37 @@ class SearchLocationPage extends StatelessWidget {
                 EventBusUtil.getInstance().fire(HhToast(title: '请选择定位'));
                 return;
               }
+              EventBusUtil.getInstance().fire(LocText(text: logic.locText.value));
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 90.w, 36.w, 0),
-              padding: EdgeInsets.fromLTRB(23.w, 8.w, 23.w, 10.w),
+              margin: EdgeInsets.fromLTRB(0, 51.w*3, 14.w*3, 0),
+              padding: EdgeInsets.fromLTRB(14.w*3, 5.w*3, 14.w*3, 5.w*3),
               decoration: BoxDecoration(
                 color: HhColors.mainBlueColor,
-                borderRadius: BorderRadius.all(Radius.circular(8.w),),
+                borderRadius: BorderRadius.all(Radius.circular(4.w*3),),
               ),
               child: Text(
                 '确定',
                 style: TextStyle(
                     color: HhColors.whiteColor,
-                    fontSize: 26.sp,),
+                    fontSize: 14.sp*3,),
               ),
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 160.w),
+          margin: EdgeInsets.only(top: 91.w*3),
           child: Row(
             children: [
               Expanded(
                 child: Container(
-                  // height: 90.w,
-                  margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-                  padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  height: 32.h*3,
+                  margin: EdgeInsets.fromLTRB(14.w*3, 0, 13.w*3, 0),
+                  padding: EdgeInsets.fromLTRB(12.w*3, 7.w*3, 12.w*3, 7.w*3),
                   decoration: BoxDecoration(
                       color: HhColors.grayEEBackColor,
-                      borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -124,8 +126,8 @@ class SearchLocationPage extends StatelessWidget {
                       ),
                       Image.asset(
                         "assets/images/common/icon_search.png",
-                        width: 45.w,
-                        height: 45.w,
+                        width: 18.w*3,
+                        height: 18.w*3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
@@ -143,14 +145,16 @@ class SearchLocationPage extends StatelessWidget {
                             logic.nameSearch();
                           },
                           decoration: InputDecoration(
-                            //contentPadding: EdgeInsets.zero,
-                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(bottom: 5.w),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
                             hintText: '搜索位置',
                             hintStyle: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 26.sp),
+                                color: HhColors.gray9TextColor, fontSize: 14.sp*3),
                           ),
                           style:
-                          TextStyle(color: HhColors.textColor, fontSize: 26.sp),
+                          TextStyle(color: HhColors.textColor, fontSize: 14.sp*3),
                         ),
                       ),
                     ],
@@ -163,10 +167,10 @@ class SearchLocationPage extends StatelessWidget {
                   logic.searchStatus.value = false;
                 },
                 child: Container(
-                  margin: EdgeInsets.only(right: 30.w),
+                  margin: EdgeInsets.only(right: 14.w*3),
                   child: Text('取消',style: TextStyle(
                       color: HhColors.gray6TextColor,
-                      fontSize: 26.sp
+                      fontSize: 14.sp*3
                   ),),
                 ),
               ),
@@ -174,7 +178,7 @@ class SearchLocationPage extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 265.w),
+          margin: EdgeInsets.only(top: 135.w*3),
           child: BMFMapWidget(
             onBMFMapCreated: (controller) {
               logic.onBMFMapCreated(controller);
@@ -192,12 +196,13 @@ class SearchLocationPage extends StatelessWidget {
         logic.locText.value==""?const SizedBox():Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            margin: EdgeInsets.fromLTRB(60.w,0,60.w,0),
+            margin: EdgeInsets.fromLTRB(14.w*3,0,14.w*3,58.w*3),
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(10.w))
+                borderRadius: BorderRadius.all(Radius.circular(8.w*3))
             ),
-            height: 0.4.sh,
+            height: 240.h*3,
             width: 1.sw,
             child: SingleChildScrollView(
               child: Column(
@@ -217,6 +222,7 @@ class SearchLocationPage extends StatelessWidget {
       list.add(
           InkWell(
             onTap: (){
+              logic.choose = true;
               logic.locText.value = CommonUtils().parseNull("${info.name}", "定位中..");
               logic.controller?.setCenterCoordinate(
                 BMFCoordinate(info.pt!.latitude,info.pt!.longitude), false,
@@ -240,30 +246,48 @@ class SearchLocationPage extends StatelessWidget {
 
               /// 添加Marker
               logic.controller?.addMarker(marker);
+              logic.index.value = i;
             },
             child: Container(
-              width: 1.sw,
-              padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
-              margin: EdgeInsets.fromLTRB(20.w,0,20.w,0),
+              padding: EdgeInsets.fromLTRB(15.w*3, 20.w*3, 15.w*3, 0),
+              // margin: EdgeInsets.fromLTRB(20.w,0,20.w,0),
               decoration: const BoxDecoration(
                   color: HhColors.whiteColor,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                      info.name??""
-                  ),
-                  SizedBox(height: 20.w,),
-                  Text(
-                      '（${CommonUtils().parseLatLngPoint('${info.pt!.longitude}',2)}，${CommonUtils().parseLatLngPoint('${info.pt!.latitude}',2)}）',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.sp),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                                info.name??"",style: TextStyle(color: HhColors.textBlackColor,fontSize: 15.sp*3),
+                            ),
+                            SizedBox(height: 20.w,),
+                            Text(
+                                '（${CommonUtils().parseLatLngPoint('${info.pt!.longitude}',2)},${CommonUtils().parseLatLngPoint('${info.pt!.latitude}',2)}）',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),
+                            ),
+                          ],
+                        ),
+                      ),
+                      logic.index.value == i?Image.asset(
+                        "assets/images/common/icon_yes.png",
+                        width: 20.w*3,
+                        height: 20.w*3,
+                        fit: BoxFit.fill,
+                      ):const SizedBox(),
+                      SizedBox(width: 9.w*3,),
+                    ],
                   ),
                   SizedBox(height: 30.w,),
                   Container(
                     width: 1.sw,
-                    height: 1.w,
-                    color: HhColors.backColorF0,
+                    height: 1.w*3,
+                    color: HhColors.grayLineColor,
                   ),
                 ],
               ),

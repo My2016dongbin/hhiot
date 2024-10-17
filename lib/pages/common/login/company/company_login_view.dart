@@ -244,12 +244,19 @@ class CompanyLoginPage extends StatelessWidget {
                             fit: BoxFit.fill,
                           )),
                     ),
-                    Text(
-                      '我已阅读并同意',
-                      style: TextStyle(
-                          color: HhColors.grayBBTextColor,
-                          fontSize: 21.sp,
-                          fontWeight: FontWeight.bold),
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
+                        logic.confirmStatus.value = !logic.confirmStatus.value;
+                      },
+                      child: Text(
+                        '我已阅读并同意',
+                        style: TextStyle(
+                            color: HhColors.grayBBTextColor,
+                            fontSize: 21.sp,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                     BouncingWidget(
                       duration: const Duration(milliseconds: 100),
@@ -262,7 +269,7 @@ class CompanyLoginPage extends StatelessWidget {
                         style: TextStyle(
                             color: HhColors.backBlueOutColor,
                             fontSize: 21.sp,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
