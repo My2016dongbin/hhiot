@@ -72,6 +72,7 @@ dependencies:
   bouncing_widget: ^2.0.0
   draggable_widget: ^2.0.0
 
+  flutter_bugly: ^1.0.2
   webview_flutter: ^4.8.0
   just_audio: ^0.9.39
   path_provider: ^2.1.4

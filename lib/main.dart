@@ -5,6 +5,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bmflocation/flutter_bmflocation.dart';
+import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,15 @@ void main() {
     runApp(MyApp());
   });*/
   WidgetsFlutterBinding.ensureInitialized();//package_info_plus
-  runApp(const HhApp());
+  FlutterBugly.postCatchedException(() {
+    // 如果需要 ensureInitialized，请在这里运行。
+    // WidgetsFlutterBinding.ensureInitialized();
+    runApp(const HhApp());
+    ///注册bugly
+    FlutterBugly.init(
+        androidAppId: "0e51144628",
+        iOSAppId: "ed96239f50");
+  });
 
   if (Platform.isAndroid) {
     // android沉浸式。
@@ -90,10 +99,6 @@ class MyAppState extends State<HhApp> {
       // 请在主工程的Manifest文件里设置，详细配置方法请参考官网(https://lbsyun.baidu.com/)demo
       BMFMapSDK.setCoordType(BMF_COORD_TYPE.BD09LL);
     }
-    /*///注册bugly
-    FlutterBugly.init(
-        androidAppId: "91c90c0246",
-        iOSAppId: "ed96239f50");*/
 
     ///推送注册
     if (Platform.isIOS) {

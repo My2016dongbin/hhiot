@@ -54,85 +54,66 @@ class SharePage extends StatelessWidget {
         ),
 
         ///title
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            margin: EdgeInsets.only(top: 54.w*3),
+            color: HhColors.trans,
+            child: Text(
+              '共享设备',
+              style: TextStyle(
+                  color: HhColors.blackTextColor,
+                  fontSize: 18.sp*3,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
         InkWell(
           onTap: () {
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-            padding: EdgeInsets.all(10.w),
+            margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
-              width: 18.w,
-              height: 30.w,
+              height: 14.w*3,
+              width: 9.w*3,
               fit: BoxFit.fill,
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            margin: EdgeInsets.only(top: 90.w),
-            color: HhColors.trans,
-            child: Text(
-              "共享设备",
-              style: TextStyle(
-                  color: HhColors.blackTextColor,
-                  fontSize: 30.sp,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-        /*Align(
-          alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: (){
-              Get.to(()=>ConfirmPage(),binding: ConfirmBinding());
-            },
-            child: Container(
-              margin: EdgeInsets.fromLTRB(0, 90.w, 20.w, 0),
-              color: HhColors.trans,
-              child: Text(
-                "确认",
-                style: TextStyle(
-                    color: HhColors.blackTextColor,
-                    fontSize: 30.sp,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ),*/
 
        Expanded(
          child: Container(
-           margin: EdgeInsets.only(top: 160.w),
+           margin: EdgeInsets.only(top: 99.w*3),
            child: SingleChildScrollView(
              child: Column(
                children: [
                  ///菜单
                  Container(
-                   margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                   margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 0),
                    clipBehavior: Clip.hardEdge,
                    decoration: BoxDecoration(
                        color: HhColors.whiteColor,
-                       borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                       borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                    child: SingleChildScrollView(
                      child: Column(
                        mainAxisSize: MainAxisSize.min,
                        children: [
                          SizedBox(
-                           height: 40.w,
+                           height: 20.w*3,
                          ),
                          Container(
                            clipBehavior: Clip.hardEdge,
                            decoration: BoxDecoration(
                                color: HhColors.whiteColor,
-                               borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                               borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                            child: Image.asset(
                              "assets/images/common/icon_share_camera.png",
-                             width: 230.w,
-                             height: 230.w,
+                             width: 110.w*3,
+                             height: 110.w*3,
                              fit: BoxFit.fill,
                            ),
                          ),
@@ -144,23 +125,20 @@ class SharePage extends StatelessWidget {
                                Text(
                                  '${logic.arguments["appShareDetailSaveReqVOList"][0]["deviceName"]}',
                                  style: TextStyle(
-                                     color: HhColors.blackTextColor, fontSize: 26.sp),
+                                     color: HhColors.gray6TextColor, fontSize: 16.sp*3),
                                ),
                                InkWell(
                                  onTap: () {
-                                   /*EventBusUtil.getInstance().fire(HhToast(
-                                    title: '分享该设备，您可以输入被分享人的用户名或手机号，在对方同意后该设备则分享成功',
-                                    type: 0));*/
                                    showCupertinoDialog(context: logic.context, builder: (context) => Align(
                                      alignment: Alignment.bottomCenter,
                                      child: Container(
                                        width: 1.sw,
-                                       height: 180.w,
-                                       margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 20.w),
-                                       padding: EdgeInsets.fromLTRB(30.w, 30.w, 30.w, 25.w),
+                                       height: 110.w*3,
+                                       margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 35.w*3),
+                                       // padding: EdgeInsets.fromLTRB(34.w*3, 0, 22.w*3, 0),
                                        decoration: BoxDecoration(
                                            color: HhColors.blackTextColor,
-                                           borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                                           borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                                        child: Stack(
                                          children: [
                                            Align(
@@ -172,11 +150,12 @@ class SharePage extends StatelessWidget {
                                                  Get.back();
                                                },
                                                child: Container(
+                                                 margin: EdgeInsets.fromLTRB(0, 15.w*3, 22.w*3, 0),
                                                  padding: EdgeInsets.only(right: 10.w),
                                                  child: Image.asset(
                                                    "assets/images/common/ic_x_white.png",
-                                                   width: 26.w,
-                                                   height: 26.w,
+                                                   width: 10.w*3,
+                                                   height: 10.w*3,
                                                    fit: BoxFit.fill,
                                                  ),
                                                ),
@@ -185,8 +164,8 @@ class SharePage extends StatelessWidget {
                                            SizedBox(height: 10.w,),
                                            Center(
                                              child: Container(
-                                               margin: EdgeInsets.fromLTRB(20.w, 20.w, 0, 0),
-                                               child: Text('分享该设备，您可以输入被分享人的用户名或手机号，在对方同意后该设备则分享成功',style: TextStyle(color: HhColors.backColorRegister,fontSize: 27.sp,
+                                               margin: EdgeInsets.fromLTRB(34.w*3, 0, 28.w*3, 0),
+                                               child: Text('分享该设备，您可以输入被分享人的用户名或手机号，在对方同意后该设备则分享成功',style: TextStyle(color: HhColors.whiteColor,fontSize: 15.sp*3,
                                                  decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                                              ),
                                            ),
@@ -196,11 +175,11 @@ class SharePage extends StatelessWidget {
                                    ),barrierDismissible: true);
                                  },
                                  child: Container(
-                                   padding: EdgeInsets.all(10.w),
+                                   padding: EdgeInsets.all(8.w*3),
                                    child: Image.asset(
                                      "assets/images/common/wenhao.png",
-                                     width: 23.w,
-                                     height: 23.w,
+                                     width: 14.w*3,
+                                     height: 14.w*3,
                                      fit: BoxFit.fill,
                                    ),
                                  ),
@@ -211,24 +190,24 @@ class SharePage extends StatelessWidget {
                          Row(
                            children: [
                              Container(
-                               margin: EdgeInsets.fromLTRB(30.w, 30.w, 20.w, 20.w),
+                               margin: EdgeInsets.fromLTRB(20.w*3, 16.w*3, 20.w*3, 0),
                                child: Text(
                                  '请输入被分享人的用户名/手机号',
                                  style: TextStyle(
                                      color: HhColors.blackColor,
-                                     fontSize: 26.sp,
+                                     fontSize: 15.sp*3,
                                      fontWeight: FontWeight.w500),
                                ),
                              ),
                            ],
                          ),
                          Container(
-                           height: 90.w,
-                           margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
-                           padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                           height: 50.w*3,
+                           margin: EdgeInsets.fromLTRB(14.w*3, 12.w*3, 14.w*3, 0),
+                           padding: EdgeInsets.fromLTRB(14.w*3, 15.w*3, 14.w*3, 14.w*3),
                            decoration: BoxDecoration(
                                color: HhColors.grayEFBackColor,
-                               borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                               borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                            child: Row(
                              crossAxisAlignment: CrossAxisAlignment.center,
                              mainAxisSize: MainAxisSize.min,
@@ -247,15 +226,15 @@ class SharePage extends StatelessWidget {
                                      border: const OutlineInputBorder(
                                          borderSide: BorderSide.none
                                      ),
-                                     hintText: '请输入被分享人的用户名/手机号',
+                                     hintText: '请输入用户名/手机号',
                                      hintStyle: TextStyle(
                                          color: HhColors.gray9TextColor,
-                                         fontSize: 26.sp,
+                                         fontSize: 15.sp*3,
                                          fontWeight: FontWeight.w500),
                                    ),
                                    style: TextStyle(
                                        color: HhColors.blackTextColor,
-                                       fontSize: 26.sp,
+                                       fontSize: 15.sp*3,
                                        fontWeight: FontWeight.bold),
                                  ),
                                ),
@@ -319,8 +298,8 @@ class SharePage extends StatelessWidget {
 
               Container(
                 width: 1.sw,
-                height: 1.w,
-                margin: EdgeInsets.only(bottom:20.w),
+                height: 1.w*3,
+                margin: EdgeInsets.only(bottom:18.w*3),
                 color: HhColors.grayDDTextColor,
               ),
 
@@ -345,18 +324,18 @@ class SharePage extends StatelessWidget {
                   },rightStr: "共享");
                 },
                 child: Container(
-                  height: 80.w,
+                  height: 44.w*3,
                   width: 1.sw,
-                  margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 50.w),
+                  margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 35.w*3),
                   decoration: BoxDecoration(
                       color: HhColors.mainBlueColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                   child: Center(
                     child: Text(
                       "确定",
                       style: TextStyle(
                         color: HhColors.whiteColor,
-                        fontSize: 30.sp,
+                        fontSize: 16.sp*3,
                       ),
                     ),
                   ),

@@ -302,6 +302,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.6.0"
+  flutter_bugly:
+    dependency: "direct main"
+    description:
+      name: flutter_bugly
+      sha256: a2d3c034dfea70052b4d4d8ed71d09d12c6cac1eb00b915832bb4386ed648087
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
