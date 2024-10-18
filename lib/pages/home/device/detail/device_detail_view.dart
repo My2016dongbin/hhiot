@@ -59,20 +59,20 @@ class DeviceDetailPage extends StatelessWidget {
               Image.asset(
                 "assets/images/common/test_video.jpg",
                 width: 1.sw,
-                height: 500.w,
+                height: 254.w*3,
                 fit: BoxFit.fill,
               ),
               Container(
                 width: 1.sw,
-                height: 500.w,
+                height: 254.w*3,
                 color: HhColors.blackColor,
               ),
               logic.playTag.value
                   ? Container(
-                      margin: EdgeInsets.only(top: 60.w),
+                      margin: EdgeInsets.only(top: 0.w*3),
                       child: FijkView(
                           width: 1.sw,
-                          height: 440.w,
+                          height: 254.w*3,
                           player: logic.player,
                           color: HhColors.blackColor,
                           fit: FijkFit.fill))
@@ -84,27 +84,27 @@ class DeviceDetailPage extends StatelessWidget {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 100.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
                   color: HhColors.trans,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         "assets/images/common/back_white.png",
-                        width: 18.w,
-                        height: 30.w,
+                        width: 9.w*3,
+                        height: 14.w*3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
-                        width: 10.w,
+                        width: 12.w*3,
                       ),
                       Expanded(
                         child: Text(
                           logic.name.value,
                           style: TextStyle(
                               color: HhColors.whiteColor,
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 16.sp*3,
+                              fontWeight: FontWeight.w500),
                         ),
                       )
                     ],
@@ -123,43 +123,22 @@ class DeviceDetailPage extends StatelessWidget {
                     showEditDeviceDialog(logic.item);
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 100.w, 36.w, 0),
+                    margin: EdgeInsets.fromLTRB(0, 53.w*3, 14.w*3, 0),
                     child: Image.asset(
                       "assets/images/common/icon_video_set.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
               ),
-              /*Align(//test
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  onTap: () {
-                    if(logic.item['deviceNo']==null){
-                      EventBusUtil.getInstance().fire(HhToast(title: '设备信息加载中..请稍候',type: 0));
-                      return;
-                    }
-                    Get.to(()=>CallPage('${logic.item['deviceNo']}','${logic.item['id']}',logic.shareMark),binding: CallBinding());
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 100.w, 136.w, 0),
-                    child: Image.asset(
-                      "assets/images/common/icon_video_set.png",
-                      width: 45.w,
-                      height: 45.w,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),*/
 
               ///tab
               Container(
-                height: 90.w,
+                height: 45.w*3,
                 color: HhColors.whiteColor,
-                margin: EdgeInsets.fromLTRB(0, 500.w, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 259.w*3, 0, 0),
                 child: Row(
                   children: [
                     Expanded(
@@ -173,7 +152,7 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.tabIndex.value = 0;
                             },
                             child: Container(
-                              height: 70.w,
+                              height: 40.w*3,
                               color: HhColors.trans,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -184,8 +163,8 @@ class DeviceDetailPage extends StatelessWidget {
                                       logic.tabIndex.value == 0
                                           ? "assets/images/common/icon_live.png"
                                           : "assets/images/common/icon_live_.png",
-                                      width: 30.w,
-                                      height: 30.w,
+                                      width: 16.w*3,
+                                      height: 16.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -197,12 +176,12 @@ class DeviceDetailPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: logic.tabIndex.value == 0
                                             ? HhColors.mainBlueColor
-                                            : HhColors.gray9TextColor,
+                                            : HhColors.gray6TextColor,
                                         fontSize: logic.tabIndex.value == 0
-                                            ? 30.sp
-                                            : 26.sp,
+                                            ? 14.sp*3
+                                            : 14.sp*3,
                                         fontWeight: logic.tabIndex.value == 0
-                                            ? FontWeight.bold
+                                            ? FontWeight.w500
                                             : FontWeight.w200),
                                   ),
                                 ],
@@ -236,7 +215,7 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.tabIndex.value = 1;
                             },
                             child: Container(
-                              height: 70.w,
+                              height: 40.w*3,
                               color: HhColors.trans,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -247,8 +226,8 @@ class DeviceDetailPage extends StatelessWidget {
                                       logic.tabIndex.value == 1
                                           ? "assets/images/common/icon_msg_.png"
                                           : "assets/images/common/icon_msg.png",
-                                      width: 30.w,
-                                      height: 30.w,
+                                      width: 16.w*3,
+                                      height: 16.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -260,12 +239,12 @@ class DeviceDetailPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: logic.tabIndex.value == 1
                                             ? HhColors.mainBlueColor
-                                            : HhColors.gray9TextColor,
+                                            : HhColors.gray6TextColor,
                                         fontSize: logic.tabIndex.value == 1
-                                            ? 30.sp
-                                            : 26.sp,
+                                            ? 14.sp*3
+                                            : 14.sp*3,
                                         fontWeight: logic.tabIndex.value == 1
-                                            ? FontWeight.bold
+                                            ? FontWeight.w500
                                             : FontWeight.w200),
                                   ),
                                 ],
@@ -293,7 +272,7 @@ class DeviceDetailPage extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.fromLTRB(0, 600.w, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 305.w*3, 0, 0),
                 child: logic.tabIndex.value == 0 ? livePage() : historyPage(),
               ),
 
@@ -328,12 +307,12 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  width: 0.6.sw,
-                  height: 0.6.sw,
-                  margin: EdgeInsets.only(bottom: 15.w),
+                  width: 220.w*3,
+                  height: 220.w*3,
+                  // margin: EdgeInsets.only(bottom: 15.w),
                   decoration: BoxDecoration(
                       color: HhColors.videoControlShadowColor,
-                      borderRadius: BorderRadius.all(Radius.circular(0.3.sw))),
+                      borderRadius: BorderRadius.all(Radius.circular(110.w*3))),
                 ),
               ),
 
@@ -409,24 +388,24 @@ class DeviceDetailPage extends StatelessWidget {
                       logic.controlPost(1);
                     },
                     child: SizedBox(
-                      width: 0.66.sw,
-                      height: 0.66.sw,
+                      width: 240.w*3,
+                      height: 240.w*3,
                       child: Stack(
                         children: [
                           Image.asset(
                             "assets/images/common/video_board.png",
-                            width: 0.66.sw,
-                            height: 0.66.sw,
+                            width: 240.w*3,
+                            height: 240.w*3,
                             fit: BoxFit.fill,
                           ),
                           Align(
                             alignment: Alignment.topCenter,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 40.w, 0, 0),
+                              margin: EdgeInsets.fromLTRB(0, 20.w*3, 0, 0),
                               child: Image.asset(
                                 "assets/images/common/top.png",
-                                width: 60.w,
-                                height: 60.w,
+                                width: 25.w*3,
+                                height: 25.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -434,11 +413,11 @@ class DeviceDetailPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 55.w),
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w*3),
                               child: Image.asset(
                                 "assets/images/common/bottom.png",
-                                width: 60.w,
-                                height: 60.w,
+                                width: 25.w*3,
+                                height: 25.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -446,11 +425,11 @@ class DeviceDetailPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(45.w, 0, 0, 0),
+                              margin: EdgeInsets.fromLTRB(25.w*3, 0, 0, 0),
                               child: Image.asset(
                                 "assets/images/common/left.png",
-                                width: 60.w,
-                                height: 60.w,
+                                width: 25.w*3,
+                                height: 25.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -458,11 +437,11 @@ class DeviceDetailPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 45.w, 0),
+                              margin: EdgeInsets.fromLTRB(0, 0, 23.w*3, 0),
                               child: Image.asset(
                                 "assets/images/common/right.png",
-                                width: 60.w,
-                                height: 60.w,
+                                width: 25.w*3,
+                                height: 25.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -474,7 +453,7 @@ class DeviceDetailPage extends StatelessWidget {
                               child: Text(
                                 "切换角度",
                                 style: TextStyle(
-                                    color: HhColors.textColor, fontSize: 23.sp),
+                                    color: HhColors.gray6TextColor, fontSize: 14.sp*3),
                               ),
                             ),
                           ),
@@ -509,20 +488,20 @@ class DeviceDetailPage extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.only(left: 30.w),
+                      margin: EdgeInsets.only(left: 13.w*3),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
                             "assets/images/common/ic_video.png",
-                            width: 130.w,
-                            height: 130.w,
+                            width: 58.w*3,
+                            height: 58.w*3,
                             fit: BoxFit.fill,
                           ),
                           Text(
                             logic.videoTag.value?'正在录像':'录像',
                             style: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 23.sp),
+                                color: HhColors.blackTextColor, fontSize: 14.sp*3),
                           )
                         ],
                       ),
@@ -535,20 +514,20 @@ class DeviceDetailPage extends StatelessWidget {
                       logic.saveImageToGallery();
                     },
                     child: Container(
-                      margin: EdgeInsets.only(left: 30.w),
+                      margin: EdgeInsets.only(left: 13.w*3),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
                             "assets/images/common/ic_picture.png",
-                            width: 130.w,
-                            height: 130.w,
+                            width: 58.w*3,
+                            height: 58.w*3,
                             fit: BoxFit.fill,
                           ),
                           Text(
                             '拍照',
                             style: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 23.sp),
+                                color: HhColors.blackTextColor, fontSize: 14.sp*3),
                           )
                         ],
                       ),
@@ -569,7 +548,7 @@ class DeviceDetailPage extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.only(left: 30.w),
+                      margin: EdgeInsets.only(left: 13.w*3),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -588,52 +567,19 @@ class DeviceDetailPage extends StatelessWidget {
                               )):const SizedBox(),*/
                           Image.asset(
                             logic.recordTag.value?"assets/images/common/ic_yy_ing.png":"assets/images/common/ic_yy.png",
-                            width: 130.w,
-                            height: 130.w,
+                            width: 58.w*3,
+                            height: 58.w*3,
                             fit: BoxFit.fill,
                           ),
                           Text(
                             logic.recordTag.value?'正在对讲':'对讲',
                             style: TextStyle(
-                                color: logic.recordTag.value?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: 23.sp),
+                                color: logic.recordTag.value?HhColors.mainBlueColor:HhColors.blackTextColor, fontSize: 14.sp*3),
                           )
                         ],
                       ),
                     ),
                   ):const SizedBox(),
-                  /*BouncingWidget(
-                    duration: const Duration(milliseconds: 100),
-                    scaleFactor: 1.2,
-                    onPressed: () {
-                      logic.voiceTag.value = !logic.voiceTag.value;
-                      if(logic.voiceTag.value){
-                        //开启声音
-
-                      }else{
-                        //关闭声音
-
-                      }
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          "assets/images/common/ic_voice.png",
-                          width: 130.w,
-                          height: 130.w,
-                          fit: BoxFit.fill,
-                        ),
-                        Text(
-                          logic.voiceTag.value?'声音':'已关闭',
-                          style: TextStyle(
-                              color: HhColors.gray9TextColor, fontSize: 23.sp),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20.w,
-                  ),*/
                 logic.functionItem.value.contains('设置')?BouncingWidget(
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.2,
@@ -642,20 +588,20 @@ class DeviceDetailPage extends StatelessWidget {
                                 binding: LiGanDetailBinding());
                           },
                           child: Container(
-                            margin: EdgeInsets.only(left: 30.w),
+                            margin: EdgeInsets.only(left: 13.w*3),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
                                   "assets/images/common/icon_setting_video.png",
-                                  width: 130.w,
-                                  height: 130.w,
+                                  width: 58.w*3,
+                                  height: 58.w*3,
                                   fit: BoxFit.fill,
                                 ),
                                 Text(
                                   '设置',
                                   style: TextStyle(
-                                      color: HhColors.gray9TextColor, fontSize: 23.sp),
+                                      color: HhColors.blackTextColor, fontSize: 14.sp*3),
                                 )
                               ],
                             ),
@@ -688,12 +634,12 @@ class DeviceDetailPage extends StatelessWidget {
           itemBuilder: (context, item, index) => InkWell(
             onTap: () {},
             child: Container(
-              height: 180.w,
-              margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 0),
+              height: 70.w*3,
+              margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 0),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                   color: HhColors.trans,
-                  borderRadius: BorderRadius.all(Radius.circular(10.w))),
+                  borderRadius: BorderRadius.all(Radius.circular(6.w*3))),
               child: Stack(
                 children: [
                   Align(
@@ -705,15 +651,15 @@ class DeviceDetailPage extends StatelessWidget {
                               BorderRadius.all(Radius.circular(20.w))),
                       child: Image.network(
                         '${logic.endpoint}${item['alarmImageUrl']}',
-                        width: 250.w,
-                        height: 150.w,
+                        width: 109.w*3,
+                        height: 59.w*3,
                         fit: BoxFit.fill,
                         errorBuilder: (BuildContext context, Object exception,
                             StackTrace? stackTrace) {
                           return Image.asset(
                             "assets/images/common/test_video.jpg",
-                            width: 250.w,
-                            height: 150.w,
+                            width: 109.w*3,
+                            height: 59.w*3,
                             fit: BoxFit.fill,
                           );
                         },
@@ -721,33 +667,33 @@ class DeviceDetailPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(40.w, 10.w, 0, 50.w),
+                    margin: EdgeInsets.fromLTRB(20.w*3, 10.w, 0, 50.w),
                     child: Text(
                       logic.parseDate(item['alarmTimestamp']),
                       style: TextStyle(
                           color: HhColors.textBlackColor,
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.bold),
+                          fontSize: 15.sp*3,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(40.w, 55.w, 0, 0),
+                      margin: EdgeInsets.fromLTRB(20.w*3, 30.w*3, 0, 0),
                       child: Text(
                         logic.parseType(item['alarmType']),
                         style: TextStyle(
                             color: HhColors.textBlackColor,
-                            fontSize: 26.sp,
-                            fontWeight: FontWeight.w200),
+                            fontSize: 14.sp*3,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 4.w,
-                      margin: EdgeInsets.fromLTRB(15.w, 42.w, 0, 0),
+                      width: 1.5.w*3,
+                      margin: EdgeInsets.fromLTRB(6.w*3, 20.w*3, 0, 0),
                       decoration: BoxDecoration(
                           color: HhColors.blueEAColor,
                           borderRadius:
@@ -757,12 +703,12 @@ class DeviceDetailPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 14.w,
-                      height: 14.w,
-                      margin: EdgeInsets.fromLTRB(10.w, 20.w, 0, 0),
+                      width: 6.w*3,
+                      height: 6.w*3,
+                      margin: EdgeInsets.fromLTRB(10.w, 10.w*3, 0, 0),
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(7.w))),
+                          borderRadius: BorderRadius.all(Radius.circular(3.w*3))),
                     ),
                   ),
                 ],
@@ -779,7 +725,7 @@ class DeviceDetailPage extends StatelessWidget {
     showCupertinoDialog(context: logic.context, builder: (context) => Center(
       child: Container(
         width: 1.sw,
-        height: 160.w,
+        height: 70.w*3,
         margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
         padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
         decoration: BoxDecoration(
@@ -816,13 +762,13 @@ class DeviceDetailPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       item["shareMark"]==2?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(height: 10.w,),
-                    Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.gray6TextColor,fontSize: 26.sp,
-                      decoration: TextDecoration.none,),),
+                    SizedBox(height: 2.w*3,),
+                    Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.blackTextColor,fontSize: 14.sp*3,
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -841,13 +787,13 @@ class DeviceDetailPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/common/icon_edit_edit.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(height: 10.w,),
-                    Text('修改',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
-                      decoration: TextDecoration.none,),),
+                    SizedBox(height: 2.w*3,),
+                    Text('修改',style: TextStyle(color: HhColors.blackTextColor,fontSize: 14.sp*3,
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -866,13 +812,13 @@ class DeviceDetailPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/common/icon_video_reset.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24*3.w,
+                      height: 24*3.w,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(height: 10.w,),
-                    Text('重启',style: TextStyle(color: HhColors.gray6TextColor,fontSize: 26.sp,
-                      decoration: TextDecoration.none,),),
+                    SizedBox(height: 2.w*3,),
+                    Text('重启',style: TextStyle(color: HhColors.blackTextColor,fontSize: 14.sp*3,
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -898,13 +844,13 @@ class DeviceDetailPage extends StatelessWidget {
                   children: [
                     Image.asset(
                       "assets/images/common/icon_edit_delete.png",
-                      width: 45.w,
-                      height: 45.w,
+                      width: 24.w*3,
+                      height: 24.w*3,
                       fit: BoxFit.fill,
                     ),
-                    SizedBox(height: 10.w,),
-                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 26.sp,
-                      decoration: TextDecoration.none,),),
+                    SizedBox(height: 2.w*3,),
+                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 14.sp*3,
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -928,22 +874,23 @@ class DeviceDetailPage extends StatelessWidget {
               logic.getPlayUrl(logic.deviceId,logic.channelNumber);
             },
             child: Container(
-                padding: EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
-                margin: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 0),
+                padding: EdgeInsets.fromLTRB(13.w*3, 10.w*3, 12.w*3, 10.w*3),
+                margin: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0, 0),
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
                     borderRadius: BorderRadius.all(
-                        Radius.circular(12.w)),
-                  border: Border.all(color: HhColors.grayDDTextColor,width: 1.w)
+                        Radius.circular(8.w*3)),
+                  border: Border.all(color: HhColors.grayDDTextColor,width: 0.5.w*3)
                 ),
                 child: Text(
                   '${live['positionName']}',
                   style: TextStyle(
-                      color: logic.liveIndex.value == i?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: 23.w),
+                      color: logic.liveIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor, fontSize: 14.sp*3),
                 )),
           )
       );
     }
+    list.add(SizedBox(width: 10.w*3,));
     return list;
   }
 }

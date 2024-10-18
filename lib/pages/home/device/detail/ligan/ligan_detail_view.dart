@@ -61,7 +61,7 @@ class LiGanDetailPage extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Container(
-            height: 160.w,
+            height: 88.w*3,
             color: HhColors.whiteColor,
           ),
         ),
@@ -70,13 +70,13 @@ class LiGanDetailPage extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Container(
-            margin: EdgeInsets.only(top: 90.w),
+            margin: EdgeInsets.only(top: 54.w*3),
             color: HhColors.trans,
             child: Text(
-              "设置",
+              '设置',
               style: TextStyle(
                   color: HhColors.blackTextColor,
-                  fontSize: 30.sp,
+                  fontSize: 18.sp*3,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -86,19 +86,19 @@ class LiGanDetailPage extends StatelessWidget {
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-            padding: EdgeInsets.all(10.w),
+            margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
-              width: 18.w,
-              height: 30.w,
+              height: 14.w*3,
+              width: 9.w*3,
               fit: BoxFit.fill,
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.fromLTRB(20.w, 160.w, 20.w, 30.w),
+          margin: EdgeInsets.fromLTRB(14.w*3, 98.w*3, 14.w*3, 0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,11 +106,10 @@ class LiGanDetailPage extends StatelessWidget {
               children: [
                 ///Tab页
                 Container(
-                  margin: EdgeInsets.only(top: 20.w),
-                  height: 100.w,
+                  height: 50.w*3,
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -131,7 +130,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   color: logic.tabIndex.value == 0
                                       ? HhColors.mainBlueColor
                                       : HhColors.gray9TextColor,
-                                  fontSize: 28.sp,
+                                  fontSize: 16.sp*3,
                                 ),
                               ),
                               SizedBox(
@@ -170,7 +169,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   color: logic.tabIndex.value == 1
                                       ? HhColors.mainBlueColor
                                       : HhColors.gray9TextColor,
-                                  fontSize: 28.sp,
+                                  fontSize: 16.sp*3,
                                 ),
                               ),
                               SizedBox(
@@ -209,7 +208,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   color: logic.tabIndex.value == 2
                                       ? HhColors.mainBlueColor
                                       : HhColors.gray9TextColor,
-                                  fontSize: 28.sp,
+                                  fontSize: 16.sp*3,
                                 ),
                               ),
                               SizedBox(
@@ -247,19 +246,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '可用提示音',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 logic.playing.value == 1
@@ -293,8 +292,8 @@ class LiGanDetailPage extends StatelessWidget {
                                                   children: [
                                                     Image.asset(
                                                         "assets/images/common/icon_pause.png",
-                                                        height: 22.w,
-                                                        width: 22.w),
+                                                        height: 14.w*3,
+                                                        width: 14.w*3),
                                                     SizedBox(
                                                       width: 5.w,
                                                     ),
@@ -302,7 +301,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                         style: TextStyle(
                                                           color: HhColors
                                                               .mainBlueColor,
-                                                          fontSize: 23.sp,
+                                                          fontSize: 14.sp*3,
                                                         )),
                                                   ],
                                                 ),
@@ -316,11 +315,11 @@ class LiGanDetailPage extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 20.w),
+                            margin: EdgeInsets.only(top: 14.w*3),
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: logic.voiceTopStatus.value
                                 ? Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -335,9 +334,9 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
@@ -347,7 +346,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   '设备提示音',
                                   style: TextStyle(
                                       color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Expanded(
@@ -362,10 +361,10 @@ class LiGanDetailPage extends StatelessWidget {
                                         },
                                         child: Container(
                                           padding: EdgeInsets.fromLTRB(
-                                              10.w, 3.w, 10.w, 3.w),
+                                              9.w*3, 4.w*3, 9.w*3, 4.w*3),
                                           margin: EdgeInsets.only(
                                               right: logic.playing.value == 1
-                                                  ? 160.w
+                                                  ? 95.w*3
                                                   : 0),
                                           decoration: BoxDecoration(
                                               color: HhColors.whiteColor,
@@ -374,7 +373,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                       HhColors.grayBBTextColor,
                                                   width: 1.w),
                                               borderRadius: BorderRadius.all(
-                                                  Radius.circular(5.w))),
+                                                  Radius.circular(4.w*3))),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             crossAxisAlignment:
@@ -382,16 +381,16 @@ class LiGanDetailPage extends StatelessWidget {
                                             children: [
                                               Image.asset(
                                                   "assets/images/common/icon_refresh.png",
-                                                  height: 22.w,
-                                                  width: 22.w),
+                                                  height: 13.w*3,
+                                                  width: 13.w*3),
                                               SizedBox(
-                                                width: 5.w,
+                                                width: 4.w*3,
                                               ),
                                               Text('刷新',
                                                   style: TextStyle(
                                                     color:
                                                         HhColors.mainBlueColor,
-                                                    fontSize: 23.sp,
+                                                    fontSize: 13.sp*3,
                                                   )),
                                             ],
                                           ),
@@ -407,7 +406,7 @@ class LiGanDetailPage extends StatelessWidget {
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.fromLTRB(
-                                                    10.w, 3.w, 10.w, 3.w),
+                                                    9.w*3, 4.w*3, 9.w*3, 4.w*3),
                                                 decoration: BoxDecoration(
                                                     color: HhColors.whiteColor,
                                                     border: Border.all(
@@ -417,7 +416,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(
-                                                                5.w))),
+                                                                4.w*3))),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -426,16 +425,16 @@ class LiGanDetailPage extends StatelessWidget {
                                                   children: [
                                                     Image.asset(
                                                         "assets/images/common/icon_pause.png",
-                                                        height: 22.w,
-                                                        width: 22.w),
+                                                        height: 13.w*3,
+                                                        width: 13.w*3),
                                                     SizedBox(
-                                                      width: 5.w,
+                                                      width: 4.w*3,
                                                     ),
                                                     Text('停止播放',
                                                         style: TextStyle(
                                                           color: HhColors
                                                               .mainBlueColor,
-                                                          fontSize: 23.sp,
+                                                          fontSize: 13.sp*3,
                                                         )),
                                                   ],
                                                 ),
@@ -453,7 +452,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: buildVoiceListBottom(),
@@ -466,9 +465,9 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
@@ -478,7 +477,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   '配置提示音',
                                   style: TextStyle(
                                       color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -489,13 +488,13 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -503,7 +502,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '人形检测',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,fontWeight: FontWeight.w600
                                           ),
                                         ),
                                       ),
@@ -513,7 +512,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -529,7 +528,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -537,7 +536,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '提示音',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -547,7 +546,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -563,7 +562,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -571,7 +570,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '音量',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -591,19 +590,19 @@ class LiGanDetailPage extends StatelessWidget {
                                                       0, s.indexOf(".")));
                                             },
                                           ),
-                                          Text(
+                                          /*Text(
                                             '${logic.voiceHuman.value}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               color: HhColors.gray9TextColor,
-                                              fontSize: 26.sp,
+                                                fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                             ),
-                                          )
+                                          )*/
                                         ],
                                       ),
-                                      SizedBox(
+                                      /*SizedBox(
                                         width: 10.w,
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -613,7 +612,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -621,7 +620,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '播放时间段',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -631,7 +630,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -655,7 +654,7 @@ class LiGanDetailPage extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -663,7 +662,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '车辆检测',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w600
                                           ),
                                         ),
                                       ),
@@ -673,7 +672,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -689,7 +688,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -697,7 +696,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '提示音',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -707,7 +706,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -723,7 +722,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -731,7 +730,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '音量',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -751,19 +750,19 @@ class LiGanDetailPage extends StatelessWidget {
                                                       0, s.indexOf(".")));
                                             },
                                           ),
-                                          Text(
+                                          /*Text(
                                             '${logic.voiceCar.value}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               color: HhColors.gray9TextColor,
-                                              fontSize: 26.sp,
+                                              fontSize: 15.sp*3,
                                             ),
-                                          )
+                                          )*/
                                         ],
                                       ),
-                                      SizedBox(
+                                      /*SizedBox(
                                         width: 10.w,
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -773,7 +772,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -781,7 +780,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '播放时间段',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -791,7 +790,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -815,7 +814,7 @@ class LiGanDetailPage extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -823,7 +822,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '开盖检测',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w600
                                           ),
                                         ),
                                       ),
@@ -833,7 +832,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -849,7 +848,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -857,7 +856,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '提示音',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -867,7 +866,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -883,7 +882,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -891,7 +890,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '音量',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -911,19 +910,19 @@ class LiGanDetailPage extends StatelessWidget {
                                                       0, s.indexOf(".")));
                                             },
                                           ),
-                                          Text(
+                                          /*Text(
                                             '${logic.voiceCap.value}',
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               color: HhColors.gray9TextColor,
-                                              fontSize: 26.sp,
+                                              fontSize: 15.sp*3,
                                             ),
-                                          )
+                                          )*/
                                         ],
                                       ),
-                                      SizedBox(
+                                      /*SizedBox(
                                         width: 10.w,
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -933,7 +932,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -941,7 +940,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '播放时间段',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -951,7 +950,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                              fontSize: 15.sp*3,fontWeight: FontWeight.w400
                                           ),
                                         ),
                                       ),
@@ -975,19 +974,19 @@ class LiGanDetailPage extends StatelessWidget {
                             },
                             child: Container(
                               width: 1.sw,
-                              height: 90.w,
-                              margin: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
+                              height: 44.w*3,
+                              margin: EdgeInsets.fromLTRB(0, 10.w*3, 0, 10.w*3),
                               decoration: BoxDecoration(
                                   color: HhColors.mainBlueColor,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(16.w))),
+                                      BorderRadius.all(Radius.circular(8.w*3))),
                               child: Center(
                                 child: Text(
                                   "确定",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: HhColors.whiteColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w200),
                                 ),
@@ -1010,19 +1009,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '显示设置',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -1033,13 +1032,13 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -1047,7 +1046,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '滑动速度',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -1072,7 +1071,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                               color: HhColors.gray9TextColor,
-                                              fontSize: 26.sp,
+                                              fontSize: 15.sp*3,
                                             ),
                                           )*/
                                         ],
@@ -1089,7 +1088,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -1097,7 +1096,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '滑动方向',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -1126,7 +1125,7 @@ class LiGanDetailPage extends StatelessWidget {
                                               '向上',
                                               style: TextStyle(
                                                 color: HhColors.blackColor,
-                                                fontSize: 26.sp,
+                                                fontSize: 15.sp*3,
                                               ),
                                             ),
                                             SizedBox(
@@ -1150,7 +1149,7 @@ class LiGanDetailPage extends StatelessWidget {
                                               '向下',
                                               style: TextStyle(
                                                 color: HhColors.blackColor,
-                                                fontSize: 26.sp,
+                                                fontSize: 15.sp*3,
                                               ),
                                             ),
                                           ],
@@ -1168,7 +1167,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -1176,7 +1175,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '显示内容',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -1188,11 +1187,13 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   margin: EdgeInsets.fromLTRB(
-                                      20.w, 10.w, 20.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
+                                  padding: EdgeInsets.fromLTRB(
+                                      6.w*3, 5.w*3, 6.w*3, 5.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.backColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(16.w))),
+                                          Radius.circular(8.w*3))),
                                   child: TextField(
                                     textAlign: TextAlign.left,
                                     maxLines: 3,
@@ -1209,7 +1210,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       hintText: '此处设置显示内容',
                                       hintStyle: TextStyle(
                                           color: HhColors.gray9TextColor,
-                                          fontSize: 26.sp,
+                                          fontSize: 15.sp*3,
                                           fontWeight: FontWeight.w200),
                                     ),
                                     onChanged: (s) {
@@ -1217,7 +1218,7 @@ class LiGanDetailPage extends StatelessWidget {
                                     },
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
-                                        fontSize: 26.sp),
+                                        fontSize: 15.sp*3),
                                   ),
                                 )
                               ],
@@ -1230,19 +1231,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '息屏设置',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -1253,20 +1254,20 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '息屏开关',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 26.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1328,7 +1329,7 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      20.w, 25.w, 20.w, 25.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -1336,7 +1337,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '息屏时间',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -1346,7 +1347,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             color: HhColors.gray9TextColor,
-                                            fontSize: 26.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ),
@@ -1381,7 +1382,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: HhColors.whiteColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w200),
                                 ),
@@ -1405,19 +1406,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '报警设置',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -1428,20 +1429,20 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      30.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '枪机1',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1511,14 +1512,14 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      30.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '枪机2',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1589,14 +1590,14 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      30.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '枪机3',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1667,14 +1668,14 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      30.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '球机',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1745,14 +1746,14 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      30.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '传感器',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1823,14 +1824,14 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      30.w, 10.w, 30.w, 10.w),
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '开盖报警',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       Expanded(
@@ -1905,19 +1906,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '数据上报间隔',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -1941,7 +1942,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '太阳能控制器',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       SizedBox(
@@ -1999,7 +2000,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             hintText: '',
                                             hintStyle: TextStyle(
                                                 color: HhColors.grayCCTextColor,
-                                                fontSize: 28.sp,
+                                                fontSize: 15.sp*3,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                           onChanged: (s) {
@@ -2007,7 +2008,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           },
                                           style: TextStyle(
                                               color: HhColors.blueTextColor,
-                                              fontSize: 28.sp,
+                                              fontSize: 15.sp*3,
                                               fontWeight: FontWeight.w400),
                                         ),
                                       ),
@@ -2015,7 +2016,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '分',
                                         style: TextStyle(
                                           color: HhColors.gray9TextColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                     ],
@@ -2030,7 +2031,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '一体式气象站',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       SizedBox(
@@ -2088,7 +2089,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             hintText: '',
                                             hintStyle: TextStyle(
                                                 color: HhColors.grayCCTextColor,
-                                                fontSize: 28.sp,
+                                                fontSize: 15.sp*3,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                           onChanged: (s) {
@@ -2096,7 +2097,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           },
                                           style: TextStyle(
                                               color: HhColors.blueTextColor,
-                                              fontSize: 28.sp,
+                                              fontSize: 15.sp*3,
                                               fontWeight: FontWeight.w400),
                                         ),
                                       ),
@@ -2104,7 +2105,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '分',
                                         style: TextStyle(
                                           color: HhColors.gray9TextColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                     ],
@@ -2119,7 +2120,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '土壤传感器',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       SizedBox(
@@ -2177,7 +2178,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             hintText: '',
                                             hintStyle: TextStyle(
                                                 color: HhColors.gray9TextColor,
-                                                fontSize: 28.sp,
+                                                fontSize: 15.sp*3,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                           onChanged: (s) {
@@ -2185,7 +2186,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           },
                                           style: TextStyle(
                                               color: HhColors.blueTextColor,
-                                              fontSize: 28.sp,
+                                              fontSize: 15.sp*3,
                                               fontWeight: FontWeight.w400),
                                         ),
                                       ),
@@ -2193,7 +2194,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '分',
                                         style: TextStyle(
                                           color: HhColors.gray9TextColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                     ],
@@ -2257,7 +2258,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: HhColors.blackTextColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                             decoration: TextDecoration.none,
                                             fontWeight: FontWeight.w200),
                                       ),
@@ -2275,19 +2276,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '防火等级',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -2298,7 +2299,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -2308,8 +2309,8 @@ class LiGanDetailPage extends StatelessWidget {
                                     logic.settingLevel();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
+                                    margin:EdgeInsets.fromLTRB(
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                     child: Row(
                                       children: [
                                         Image.asset(
@@ -2325,7 +2326,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '极高风险',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2338,8 +2339,8 @@ class LiGanDetailPage extends StatelessWidget {
                                     logic.settingLevel();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
+                                    margin:EdgeInsets.fromLTRB(
+                                        16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                     child: Row(
                                       children: [
                                         Image.asset(
@@ -2355,7 +2356,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '高风险',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2368,8 +2369,8 @@ class LiGanDetailPage extends StatelessWidget {
                                     logic.settingLevel();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
+                                    margin:EdgeInsets.fromLTRB(
+                                        16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                     child: Row(
                                       children: [
                                         Image.asset(
@@ -2385,7 +2386,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '较高风险',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2398,8 +2399,8 @@ class LiGanDetailPage extends StatelessWidget {
                                     logic.settingLevel();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
+                                    margin:EdgeInsets.fromLTRB(
+                                        16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                     child: Row(
                                       children: [
                                         Image.asset(
@@ -2415,7 +2416,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '较低风险',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2428,8 +2429,8 @@ class LiGanDetailPage extends StatelessWidget {
                                     logic.settingLevel();
                                   },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 30.w, 30.w, 30.w),
+                                    margin:EdgeInsets.fromLTRB(
+                                        16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                     child: Row(
                                       children: [
                                         Image.asset(
@@ -2445,7 +2446,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '低风险',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2474,7 +2475,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   '枪球联动',
                                   style: TextStyle(
                                       color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -2511,7 +2512,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '关闭',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2540,7 +2541,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           '开启',
                                           style: TextStyle(
                                             color: HhColors.blackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                           ),
                                         ),
                                       ],
@@ -2557,19 +2558,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '固件版本号',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -2585,15 +2586,15 @@ class LiGanDetailPage extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      30.w, 30.w, 30.w, 10.w),
+                                  margin:EdgeInsets.fromLTRB(
+                                      16.w*3, 15.w*3, 16.w*3, 15.w*3),
                                   child: Row(
                                     children: [
                                       Text(
                                         '当前版本:',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                       SizedBox(
@@ -2603,7 +2604,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         '${logic.deviceVer}',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                         ),
                                       ),
                                     ],
@@ -2639,7 +2640,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: HhColors.blackTextColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                             decoration: TextDecoration.none,
                                             fontWeight: FontWeight.w200),
                                       ),
@@ -2656,19 +2657,19 @@ class LiGanDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 30.w,
-                                  width: 5.w,
-                                  margin: EdgeInsets.only(right: 10.w),
+                                  height: 19.w*3,
+                                  width: 3.w*3,
+                                  margin: EdgeInsets.only(right: 7.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(3.w))),
+                                          Radius.circular(2.w*3))),
                                 ),
                                 Text(
                                   '设备重启',
                                   style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 28.sp,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -2679,22 +2680,24 @@ class LiGanDetailPage extends StatelessWidget {
                               showReStartDialog();
                             },
                             child: Container(
-                              margin: EdgeInsets.only(top: 20.w),
-                              padding:
-                                  EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                              margin: EdgeInsets.only(top: 10.w*3),
+                              padding:EdgeInsets.fromLTRB(
+                                  16.w*3, 9.w*3, 16.w*3, 9.w*3),
                               decoration: BoxDecoration(
                                   color: HhColors.whiteColor,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(16.w))),
+                                      BorderRadius.all(Radius.circular(8.w*3)),
+                              border: Border.all(color: HhColors.grayCCTextColor,width: 0.5.w*3)),
                               child: Text(
                                 '设备重启',
                                 style: TextStyle(
                                   color: HhColors.blackColor,
-                                  fontSize: 28.sp,
+                                  fontSize: 15.sp*3,
                                 ),
                               ),
                             ),
                           ),
+                          SizedBox(height: 30.w,),
                         ],
                       )
                     : const SizedBox(),
@@ -2719,7 +2722,7 @@ class LiGanDetailPage extends StatelessWidget {
     List<Widget> list = [];
     list.add(
       Container(
-        padding: EdgeInsets.fromLTRB(20.w, 25.w, 20.w, 25.w),
+        padding: EdgeInsets.fromLTRB(16.w*3, 15.w*3, 16.w*3, 15.w*3),
         child: Row(
           children: [
             Expanded(
@@ -2727,7 +2730,7 @@ class LiGanDetailPage extends StatelessWidget {
                 '名称',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 28.sp,
+                    fontSize: 15.sp*3,
                     fontWeight: FontWeight.w600),
               ),
             ),
@@ -2736,7 +2739,7 @@ class LiGanDetailPage extends StatelessWidget {
                 '描述',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 28.sp,
+                    fontSize: 15.sp*3,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -2745,7 +2748,7 @@ class LiGanDetailPage extends StatelessWidget {
                 '操作',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 28.sp,
+                    fontSize: 15.sp*3,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -2763,7 +2766,7 @@ class LiGanDetailPage extends StatelessWidget {
       );
       list.add(
         Container(
-          padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
+          padding: EdgeInsets.fromLTRB(16.w*3, 13.w*3, 16.w*3, 13.w*3),
           child: Row(
             children: [
               Expanded(
@@ -2771,7 +2774,7 @@ class LiGanDetailPage extends StatelessWidget {
                   '${model["name"]}',
                   style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 26.sp,
+                    fontSize: 14.sp*3,
                   ),
                 ),
               ),
@@ -2786,7 +2789,7 @@ class LiGanDetailPage extends StatelessWidget {
                   '上传',
                   style: TextStyle(
                     color: HhColors.mainBlueColor,
-                    fontSize: 26.sp,
+                    fontSize: 14.sp*3,
                   ),
                 ),
               ),
@@ -2805,7 +2808,7 @@ class LiGanDetailPage extends StatelessWidget {
     List<Widget> list = [];
     list.add(
       Container(
-        padding: EdgeInsets.fromLTRB(20.w, 25.w, 20.w, 25.w),
+        padding: EdgeInsets.fromLTRB(16.w*3, 15.w*3, 16.w*3, 15.w*3),
         child: Row(
           children: [
             Expanded(
@@ -2813,8 +2816,8 @@ class LiGanDetailPage extends StatelessWidget {
                 '名称',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.bold),
+                    fontSize: 15.sp*3,
+                    fontWeight: FontWeight.w600),
               ),
             ),
             Expanded(
@@ -2822,7 +2825,7 @@ class LiGanDetailPage extends StatelessWidget {
                 '描述',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 28.sp,
+                    fontSize: 15.sp*3,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -2831,7 +2834,7 @@ class LiGanDetailPage extends StatelessWidget {
                 '操作',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 28.sp,
+                    fontSize: 15.sp*3,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -2849,7 +2852,7 @@ class LiGanDetailPage extends StatelessWidget {
       );
       list.add(
         Container(
-          padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 20.w),
+          padding: EdgeInsets.fromLTRB(16.w*3, 13.w*3, 16.w*3, 13.w*3),
           child: Row(
             children: [
               Expanded(
@@ -2857,7 +2860,7 @@ class LiGanDetailPage extends StatelessWidget {
                   '${model["name"]}',
                   style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 26.sp,
+                    fontSize: 14.sp*3,
                   ),
                 ),
               ),
@@ -2874,7 +2877,7 @@ class LiGanDetailPage extends StatelessWidget {
                     '播放',
                     style: TextStyle(
                       color: HhColors.mainBlueColor,
-                      fontSize: 26.sp,
+                      fontSize: 14.sp*3,
                     ),
                   ),
                 ),
@@ -2890,7 +2893,7 @@ class LiGanDetailPage extends StatelessWidget {
                   '删除',
                   style: TextStyle(
                     color: HhColors.mainBlueColor,
-                    fontSize: 26.sp,
+                    fontSize: 14.sp*3,
                   ),
                 ),
               ),
@@ -2921,7 +2924,8 @@ class LiGanDetailPage extends StatelessWidget {
           logic.version.value = i;
         },
         child: Container(
-          margin: EdgeInsets.fromLTRB(30.w, 30.w, 30.w, 30.w),
+          margin:EdgeInsets.fromLTRB(
+              16.w*3, 15.w*3, 16.w*3, 15.w*3),
           child: Row(
             children: [
               Image.asset(
@@ -2937,7 +2941,7 @@ class LiGanDetailPage extends StatelessWidget {
                 '${model["version"]}',
                 style: TextStyle(
                   color: HhColors.blackColor,
-                  fontSize: 28.sp,
+                  fontSize: 15.sp*3,
                 ),
               ),
             ],
