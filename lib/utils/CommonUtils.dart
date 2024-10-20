@@ -123,6 +123,13 @@ class CommonUtils{
     time = time.replaceAll("T", " ");
     return time;
   }
+  String parseLongTimeHourMinuteSecond(String s){
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+    String time = date.toIso8601String();
+    time = time.substring(11,19);
+    time = time.replaceAll("T", " ");
+    return time;
+  }
   String parseLongTimeYearDay(String s){
     DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
     String time = date.toIso8601String();

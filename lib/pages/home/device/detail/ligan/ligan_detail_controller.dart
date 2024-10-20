@@ -64,6 +64,19 @@ class LiGanDetailController extends GetxController {
   TextEditingController? time2Controller = TextEditingController();
   TextEditingController? time3Controller = TextEditingController();
 
+  final Rx<bool> personStatus = false.obs;
+  final Rx<String> personStart = ''.obs;
+  final Rx<String> personEnd = ''.obs;
+  final Rx<bool> carStatus = false.obs;
+  final Rx<String> carStart = ''.obs;
+  final Rx<String> carEnd = ''.obs;
+  final Rx<bool> openStatus = false.obs;
+  final Rx<String> openStart = ''.obs;
+  final Rx<String> openEnd = ''.obs;
+  final Rx<bool> closeStatus = false.obs;
+  final Rx<String> closeStart = ''.obs;
+  final Rx<String> closeEnd = ''.obs;
+
   @override
   Future<void> onInit() async {
     Future.delayed(const Duration(seconds: 1),(){
@@ -153,6 +166,30 @@ class LiGanDetailController extends GetxController {
     HhLog.d("getDeviceConfig -- $result");
     if(result["code"]==0 && result["data"]!=null){
       config = result["data"];
+      try{
+        personStart.value = "${config["audioHumanTime"]}".substring(0,8);
+        personEnd.value = "${config["audioHumanTime"]}".substring(9,17);
+      }catch(e){
+        //
+      }
+      try{
+        carStart.value = "${config["audioCarTime"]}".substring(0,8);
+        carEnd.value = "${config["audioCarTime"]}".substring(9,17);
+      }catch(e){
+        //
+      }
+      try{
+        openStart.value = "${config["audioOpenTime"]}".substring(0,8);
+        openEnd.value = "${config["audioOpenTime"]}".substring(9,17);
+      }catch(e){
+        //
+      }
+      try{
+        closeStart.value = "${config["ledTime"]}".substring(0,8);
+        closeEnd.value = "${config["ledTime"]}".substring(9,17);
+      }catch(e){
+        //
+      }
       voiceBottomList = result["data"]["audioArray"];
       voiceBottomStatus.value = false;
       voiceBottomStatus.value = true;
