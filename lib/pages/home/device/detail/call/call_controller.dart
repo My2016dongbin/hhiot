@@ -19,17 +19,20 @@ import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CallController extends GetxController {
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
+  final Rx<bool> callStatus = false.obs;
   final Rx<String> name = ''.obs;
+  final Rx<String> timeStr = '00:00'.obs;
+  final Rx<int> timeLeft = 0.obs;
+  final Rx<int> timeRight = 0.obs;
   final Rx<bool> recordTag = false.obs;
+  final Rx<bool> voice = true.obs;
   late BuildContext context;
-  late String deviceNo;
+  late Rx<String> deviceNo = ''.obs;
   late String id;
   late int shareMark;
   late String deviceId;
@@ -45,7 +48,15 @@ class CallController extends GetxController {
     Future.delayed(const Duration(seconds: 1), () {
       // getDeviceInfo();
     });
+    /*callStatus.value = true;
+    timer();*/
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    callStatus.value = false;
+    super.dispose();
   }
 
 
@@ -81,7 +92,7 @@ class CallController extends GetxController {
 
   Future<void> chatStatus() async {
     Map<String, dynamic> map = {};
-    map['deviceNo'] = deviceNo;
+    map['deviceNo'] = deviceNo.value;
     var tenantResult = await HhHttp()
         .request(RequestUtils.chatStatus, method: DioMethod.get, params: map);
     HhLog.d("chatStatus socket -- $tenantResult");
@@ -110,8 +121,11 @@ class CallController extends GetxController {
     manager =
     // WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
     WebSocketManager('ws://117.132.5.139:18030/$nickname', '');
-    manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
-    CommonData.deviceNo = deviceNo;
+    manager.sendMessage({"CallType": "Active", "Dest": deviceNo.value});
+    CommonData.deviceNo = deviceNo.value;
+
+    callStatus.value = true;
+    timer();
   }
 
   void chatClose() {
@@ -126,7 +140,7 @@ class CallController extends GetxController {
   Future<void> chatClosePost() async {
     var tenantResult = await HhHttp()
         .request(RequestUtils.chatCreate, method: DioMethod.post, data: {
-      "deviceNo": deviceNo,
+      "deviceNo": deviceNo.value,
       "state": '0',
       "sessionId": CommonData.sessionId,
     });
@@ -142,6 +156,23 @@ class CallController extends GetxController {
   Future<void> initData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     endpoint = prefs.getString(SPKeys().endpoint);
+  }
+
+  void timer() {
+    Future.delayed(const Duration(seconds: 1), () {
+      try{
+        timeRight.value++;
+        if(timeRight.value==60){
+          timeRight.value = 0;
+          timeLeft.value++;
+        }
+        if(callStatus.value){
+          timer();
+        }
+      }catch(e){
+        //
+      }
+    });
   }
 
 }

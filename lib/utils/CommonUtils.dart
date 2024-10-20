@@ -33,6 +33,15 @@ class CommonUtils{
     }
     return type;
   }
+  String parseZero(int s){
+    String type = "00";
+    if(s>9){
+      type = "$s";
+    }else{
+      type = "0$s";
+    }
+    return type;
+  }
   String parseDouble(String s){
     String type = "0";
     int index = 0;
@@ -250,7 +259,7 @@ class CommonUtils{
     showCupertinoDialog(context: context, builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: hint==null?162.w*3:180.w*3,
+          height: hint==null?152.w*3:170.w*3,
           margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
           decoration: BoxDecoration(
             color: HhColors.whiteColor,
@@ -261,7 +270,7 @@ class CommonUtils{
               Align(
                 alignment:Alignment.center,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 60.w),
+                  margin: EdgeInsets.only(bottom: 40.w*3),
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -318,7 +327,7 @@ class CommonUtils{
     showCupertinoDialog(context: context, builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: hint==null?162.w*3:180.w*3,
+          height: hint==null?152.w*3:170.w*3,
           margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
           decoration: BoxDecoration(
             color: HhColors.whiteColor,
@@ -329,7 +338,7 @@ class CommonUtils{
               Align(
                 alignment:Alignment.center,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 60.w),
+                  margin: EdgeInsets.only(bottom: 40.w*3),
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -403,7 +412,7 @@ class CommonUtils{
     showCupertinoDialog(context: context, builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: hint==null?162.w*3:180.w*3,
+          height: hint==null?152.w*3:170.w*3,
           margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
           decoration: BoxDecoration(
             color: HhColors.whiteColor,
@@ -414,7 +423,7 @@ class CommonUtils{
               Align(
                 alignment:Alignment.center,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 60.w),
+                  margin: EdgeInsets.only(bottom: 40.w*3),
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
