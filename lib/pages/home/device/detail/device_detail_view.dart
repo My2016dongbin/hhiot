@@ -25,6 +25,8 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:screen_recorder/screen_recorder.dart';
+import 'package:screenshot/screenshot.dart';
 
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
@@ -59,23 +61,33 @@ class DeviceDetailPage extends StatelessWidget {
               Image.asset(
                 "assets/images/common/test_video.jpg",
                 width: 1.sw,
-                height: 254.w*3,
+                height: 254.w * 3,
                 fit: BoxFit.fill,
               ),
               Container(
                 width: 1.sw,
-                height: 254.w*3,
+                height: 254.w * 3,
                 color: HhColors.blackColor,
               ),
               logic.playTag.value
                   ? Container(
-                      margin: EdgeInsets.only(top: 0.w*3),
-                      child: FijkView(
-                          width: 1.sw,
-                          height: 254.w*3,
-                          player: logic.player,
-                          color: HhColors.blackColor,
-                          fit: FijkFit.fill))
+                      margin: EdgeInsets.only(top: 0.w * 3),
+                      child: ScreenRecorder(
+                        width: 1.sw,
+                        height: 254.w * 3,
+                        background: Colors.white,
+                        controller: logic.recordController,
+                        child: Screenshot(
+                          controller: logic.screenshotController,
+                          child: FijkView(
+                              width: 1.sw,
+                              height: 254.w * 3,
+                              player: logic.player,
+                              color: HhColors.blackColor,
+                              fit: FijkFit.fill),
+                        ),
+                      ),
+                    )
                   : const SizedBox(),
 
               ///title
@@ -84,26 +96,26 @@ class DeviceDetailPage extends StatelessWidget {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+                  margin: EdgeInsets.fromLTRB(23.w * 3, 59.h * 3, 0, 0),
                   color: HhColors.trans,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         "assets/images/common/back_white.png",
-                        width: 9.w*3,
-                        height: 14.w*3,
+                        width: 9.w * 3,
+                        height: 14.w * 3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
-                        width: 12.w*3,
+                        width: 12.w * 3,
                       ),
                       Expanded(
                         child: Text(
                           logic.name.value,
                           style: TextStyle(
                               color: HhColors.whiteColor,
-                              fontSize: 16.sp*3,
+                              fontSize: 16.sp * 3,
                               fontWeight: FontWeight.w500),
                         ),
                       )
@@ -111,23 +123,25 @@ class DeviceDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
+
               ///setting
               Align(
                 alignment: Alignment.topRight,
                 child: InkWell(
                   onTap: () {
-                    if(logic.item['deviceNo']==null){
-                      EventBusUtil.getInstance().fire(HhToast(title: '设备信息加载中..请稍候',type: 0));
+                    if (logic.item['deviceNo'] == null) {
+                      EventBusUtil.getInstance()
+                          .fire(HhToast(title: '设备信息加载中..请稍候', type: 0));
                       return;
                     }
                     showEditDeviceDialog(logic.item);
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 53.w*3, 14.w*3, 0),
+                    margin: EdgeInsets.fromLTRB(0, 53.w * 3, 14.w * 3, 0),
                     child: Image.asset(
                       "assets/images/common/icon_video_set.png",
-                      width: 24.w*3,
-                      height: 24.w*3,
+                      width: 24.w * 3,
+                      height: 24.w * 3,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -136,9 +150,9 @@ class DeviceDetailPage extends StatelessWidget {
 
               ///tab
               Container(
-                height: 45.w*3,
+                height: 45.w * 3,
                 color: HhColors.whiteColor,
-                margin: EdgeInsets.fromLTRB(0, 259.w*3, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 259.w * 3, 0, 0),
                 child: Row(
                   children: [
                     Expanded(
@@ -152,7 +166,7 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.tabIndex.value = 0;
                             },
                             child: Container(
-                              height: 40.w*3,
+                              height: 40.w * 3,
                               color: HhColors.trans,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -163,8 +177,8 @@ class DeviceDetailPage extends StatelessWidget {
                                       logic.tabIndex.value == 0
                                           ? "assets/images/common/icon_live.png"
                                           : "assets/images/common/icon_live_.png",
-                                      width: 16.w*3,
-                                      height: 16.w*3,
+                                      width: 16.w * 3,
+                                      height: 16.w * 3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -178,8 +192,8 @@ class DeviceDetailPage extends StatelessWidget {
                                             ? HhColors.mainBlueColor
                                             : HhColors.gray6TextColor,
                                         fontSize: logic.tabIndex.value == 0
-                                            ? 14.sp*3
-                                            : 14.sp*3,
+                                            ? 14.sp * 3
+                                            : 14.sp * 3,
                                         fontWeight: logic.tabIndex.value == 0
                                             ? FontWeight.w500
                                             : FontWeight.w200),
@@ -215,7 +229,7 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.tabIndex.value = 1;
                             },
                             child: Container(
-                              height: 40.w*3,
+                              height: 40.w * 3,
                               color: HhColors.trans,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -226,8 +240,8 @@ class DeviceDetailPage extends StatelessWidget {
                                       logic.tabIndex.value == 1
                                           ? "assets/images/common/icon_msg_.png"
                                           : "assets/images/common/icon_msg.png",
-                                      width: 16.w*3,
-                                      height: 16.w*3,
+                                      width: 16.w * 3,
+                                      height: 16.w * 3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -241,8 +255,8 @@ class DeviceDetailPage extends StatelessWidget {
                                             ? HhColors.mainBlueColor
                                             : HhColors.gray6TextColor,
                                         fontSize: logic.tabIndex.value == 1
-                                            ? 14.sp*3
-                                            : 14.sp*3,
+                                            ? 14.sp * 3
+                                            : 14.sp * 3,
                                         fontWeight: logic.tabIndex.value == 1
                                             ? FontWeight.w500
                                             : FontWeight.w200),
@@ -272,7 +286,7 @@ class DeviceDetailPage extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.fromLTRB(0, 305.w*3, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 305.w * 3, 0, 0),
                 child: logic.tabIndex.value == 0 ? livePage() : historyPage(),
               ),
 
@@ -293,26 +307,29 @@ class DeviceDetailPage extends StatelessWidget {
           height: 1.sw,
           child: Stack(
             children: [
-              logic.liveStatus.value?Align(
-                alignment: Alignment.topLeft,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: buildCameraTabs(),
-                  ),
-                ),
-              ):const SizedBox(),
+              logic.liveStatus.value
+                  ? Align(
+                      alignment: Alignment.topLeft,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: buildCameraTabs(),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
 
               ///控制背景阴影
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  width: 220.w*3,
-                  height: 220.w*3,
+                  width: 220.w * 3,
+                  height: 220.w * 3,
                   // margin: EdgeInsets.only(bottom: 15.w),
                   decoration: BoxDecoration(
                       color: HhColors.videoControlShadowColor,
-                      borderRadius: BorderRadius.all(Radius.circular(110.w*3))),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(110.w * 3))),
                 ),
               ),
 
@@ -333,45 +350,46 @@ class DeviceDetailPage extends StatelessWidget {
                       double x = details.delta.dx;
                       double y = details.delta.dy;
                       int time = DateTime.now().millisecondsSinceEpoch;
-                      if(time - logic.controlTime > 1000){
-                        HhLog.d("move ${details.delta.dx} , ${details.delta.dy}");
+                      if (time - logic.controlTime > 1000) {
+                        HhLog.d(
+                            "move ${details.delta.dx} , ${details.delta.dy}");
                         logic.controlTime = time;
-                        if(x > 0 && y < 0){
+                        if (x > 0 && y < 0) {
                           msg = "右上";
                           logic.commandLast = logic.command;
                           logic.command = "RIGHT_UP";
                         }
-                        if(x > 0 && y == 0){
+                        if (x > 0 && y == 0) {
                           msg = "右";
                           logic.commandLast = logic.command;
                           logic.command = "RIGHT";
                         }
-                        if(x > 0 && y > 0){
+                        if (x > 0 && y > 0) {
                           msg = "右下";
                           logic.commandLast = logic.command;
                           logic.command = "RIGHT_DOWN";
                         }
-                        if(x == 0 && y > 0){
+                        if (x == 0 && y > 0) {
                           msg = "下";
                           logic.commandLast = logic.command;
                           logic.command = "DOWN";
                         }
-                        if(x < 0 && y > 0){
+                        if (x < 0 && y > 0) {
                           msg = "左下";
                           logic.commandLast = logic.command;
                           logic.command = "LEFT_DOWN";
                         }
-                        if(x < 0 && y == 0){
+                        if (x < 0 && y == 0) {
                           msg = "左";
                           logic.commandLast = logic.command;
                           logic.command = "LEFT";
                         }
-                        if(x < 0 && y < 0){
+                        if (x < 0 && y < 0) {
                           msg = "左上";
                           logic.commandLast = logic.command;
                           logic.command = "LEFT_UP";
                         }
-                        if(x == 0 && y < 0){
+                        if (x == 0 && y < 0) {
                           msg = "上";
                           logic.commandLast = logic.command;
                           logic.command = "UP";
@@ -388,24 +406,24 @@ class DeviceDetailPage extends StatelessWidget {
                       logic.controlPost(1);
                     },
                     child: SizedBox(
-                      width: 240.w*3,
-                      height: 240.w*3,
+                      width: 240.w * 3,
+                      height: 240.w * 3,
                       child: Stack(
                         children: [
                           Image.asset(
                             "assets/images/common/video_board.png",
-                            width: 240.w*3,
-                            height: 240.w*3,
+                            width: 240.w * 3,
+                            height: 240.w * 3,
                             fit: BoxFit.fill,
                           ),
                           Align(
                             alignment: Alignment.topCenter,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 20.w*3, 0, 0),
+                              margin: EdgeInsets.fromLTRB(0, 20.w * 3, 0, 0),
                               child: Image.asset(
                                 "assets/images/common/top.png",
-                                width: 25.w*3,
-                                height: 25.w*3,
+                                width: 25.w * 3,
+                                height: 25.w * 3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -413,11 +431,11 @@ class DeviceDetailPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w*3),
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w * 3),
                               child: Image.asset(
                                 "assets/images/common/bottom.png",
-                                width: 25.w*3,
-                                height: 25.w*3,
+                                width: 25.w * 3,
+                                height: 25.w * 3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -425,11 +443,11 @@ class DeviceDetailPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(25.w*3, 0, 0, 0),
+                              margin: EdgeInsets.fromLTRB(25.w * 3, 0, 0, 0),
                               child: Image.asset(
                                 "assets/images/common/left.png",
-                                width: 25.w*3,
-                                height: 25.w*3,
+                                width: 25.w * 3,
+                                height: 25.w * 3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -437,11 +455,11 @@ class DeviceDetailPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 23.w*3, 0),
+                              margin: EdgeInsets.fromLTRB(0, 0, 23.w * 3, 0),
                               child: Image.asset(
                                 "assets/images/common/right.png",
-                                width: 25.w*3,
-                                height: 25.w*3,
+                                width: 25.w * 3,
+                                height: 25.w * 3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -453,7 +471,8 @@ class DeviceDetailPage extends StatelessWidget {
                               child: Text(
                                 "切换角度",
                                 style: TextStyle(
-                                    color: HhColors.gray6TextColor, fontSize: 14.sp*3),
+                                    color: HhColors.gray6TextColor,
+                                    fontSize: 14.sp * 3),
                               ),
                             ),
                           ),
@@ -474,85 +493,92 @@ class DeviceDetailPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  logic.functionItem.value.contains('录像')?BouncingWidget(
-                    duration: const Duration(milliseconds: 100),
-                    scaleFactor: 1.2,
-                    onPressed: () {
-                      logic.videoTag.value = !logic.videoTag.value;
-                      if(logic.videoTag.value){
-                        //开启录像
-
-                      }else{
-                        //关闭录像
-
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(left: 13.w*3),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            "assets/images/common/ic_video.png",
-                            width: 58.w*3,
-                            height: 58.w*3,
-                            fit: BoxFit.fill,
+                  logic.functionItem.value.contains('录像')
+                      ? BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            logic.videoTag.value = !logic.videoTag.value;
+                            if (logic.videoTag.value) {
+                              //开启录像
+                              logic.startRecord();
+                            } else {
+                              //关闭录像
+                              logic.stopRecord();
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 13.w * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/ic_video.png",
+                                  width: 58.w * 3,
+                                  height: 58.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Text(
+                                  logic.videoTag.value ? '正在录像' : '录像',
+                                  style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
                           ),
-                          Text(
-                            logic.videoTag.value?'正在录像':'录像',
-                            style: TextStyle(
-                                color: HhColors.blackTextColor, fontSize: 14.sp*3),
-                          )
-                        ],
-                      ),
-                    ),
-                  ):const SizedBox(),
-                  logic.functionItem.value.contains('截图')?BouncingWidget(
-                    duration: const Duration(milliseconds: 100),
-                    scaleFactor: 1.2,
-                    onPressed: () {
-                      logic.saveImageToGallery();
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(left: 13.w*3),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            "assets/images/common/ic_picture.png",
-                            width: 58.w*3,
-                            height: 58.w*3,
-                            fit: BoxFit.fill,
+                        )
+                      : const SizedBox(),
+                  logic.functionItem.value.contains('截图')
+                      ? BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            logic.saveImageToGallery();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 13.w * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/ic_picture.png",
+                                  width: 58.w * 3,
+                                  height: 58.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Text(
+                                  '拍照',
+                                  style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
                           ),
-                          Text(
-                            '拍照',
-                            style: TextStyle(
-                                color: HhColors.blackTextColor, fontSize: 14.sp*3),
-                          )
-                        ],
-                      ),
-                    ),
-                  ):const SizedBox(),
-                  logic.functionItem.value.contains('对讲')?BouncingWidget(
-                    duration: const Duration(milliseconds: 100),
-                    scaleFactor: 1.2,
-                    onPressed: () {
-                      logic.recordTag.value = !logic.recordTag.value;
-                      if(logic.recordTag.value){
-                        //开始
-                        logic.chatStatus();
-                      }else{
-                        //结束
-                        logic.manager.stopRecording();
-                        logic.chatClose();
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(left: 13.w*3),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          /*logic.recordTag.value?Container(
+                        )
+                      : const SizedBox(),
+                  logic.functionItem.value.contains('对讲')
+                      ? BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            logic.recordTag.value = !logic.recordTag.value;
+                            if (logic.recordTag.value) {
+                              //开始
+                              logic.chatStatus();
+                            } else {
+                              //结束
+                              logic.manager.stopRecording();
+                              logic.chatClose();
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 13.w * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                /*logic.recordTag.value?Container(
                               width: 230.w,
                               height: 80.w,
                               clipBehavior: Clip.hardEdge,
@@ -565,48 +591,58 @@ class DeviceDetailPage extends StatelessWidget {
                                 height: 230.w,
                                 width: 80.w,
                               )):const SizedBox(),*/
-                          Image.asset(
-                            logic.recordTag.value?"assets/images/common/ic_yy_ing.png":"assets/images/common/ic_yy.png",
-                            width: 58.w*3,
-                            height: 58.w*3,
-                            fit: BoxFit.fill,
+                                Image.asset(
+                                  logic.recordTag.value
+                                      ? "assets/images/common/ic_yy_ing.png"
+                                      : "assets/images/common/ic_yy.png",
+                                  width: 58.w * 3,
+                                  height: 58.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Text(
+                                  logic.recordTag.value ? '正在对讲' : '对讲',
+                                  style: TextStyle(
+                                      color: logic.recordTag.value
+                                          ? HhColors.mainBlueColor
+                                          : HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
                           ),
-                          Text(
-                            logic.recordTag.value?'正在对讲':'对讲',
-                            style: TextStyle(
-                                color: logic.recordTag.value?HhColors.mainBlueColor:HhColors.blackTextColor, fontSize: 14.sp*3),
-                          )
-                        ],
-                      ),
-                    ),
-                  ):const SizedBox(),
-                logic.functionItem.value.contains('设置')?BouncingWidget(
+                        )
+                      : const SizedBox(),
+                  logic.functionItem.value.contains('设置')
+                      ? BouncingWidget(
                           duration: const Duration(milliseconds: 100),
                           scaleFactor: 1.2,
                           onPressed: () {
-                            Get.to(() => LiGanDetailPage(logic.deviceNo, logic.id),
+                            Get.to(
+                                () => LiGanDetailPage(logic.deviceNo, logic.id),
                                 binding: LiGanDetailBinding());
                           },
                           child: Container(
-                            margin: EdgeInsets.only(left: 13.w*3),
+                            margin: EdgeInsets.only(left: 13.w * 3),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
                                   "assets/images/common/icon_setting_video.png",
-                                  width: 58.w*3,
-                                  height: 58.w*3,
+                                  width: 58.w * 3,
+                                  height: 58.w * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Text(
                                   '设置',
                                   style: TextStyle(
-                                      color: HhColors.blackTextColor, fontSize: 14.sp*3),
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
                                 )
                               ],
                             ),
                           ),
-                        ):const SizedBox(),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),
@@ -634,12 +670,12 @@ class DeviceDetailPage extends StatelessWidget {
           itemBuilder: (context, item, index) => InkWell(
             onTap: () {},
             child: Container(
-              height: 70.w*3,
-              margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 0),
+              height: 70.w * 3,
+              margin: EdgeInsets.fromLTRB(14.w * 3, 0, 14.w * 3, 0),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                   color: HhColors.trans,
-                  borderRadius: BorderRadius.all(Radius.circular(6.w*3))),
+                  borderRadius: BorderRadius.all(Radius.circular(6.w * 3))),
               child: Stack(
                 children: [
                   Align(
@@ -651,15 +687,15 @@ class DeviceDetailPage extends StatelessWidget {
                               BorderRadius.all(Radius.circular(20.w))),
                       child: Image.network(
                         '${logic.endpoint}${item['alarmImageUrl']}',
-                        width: 109.w*3,
-                        height: 59.w*3,
+                        width: 109.w * 3,
+                        height: 59.w * 3,
                         fit: BoxFit.fill,
                         errorBuilder: (BuildContext context, Object exception,
                             StackTrace? stackTrace) {
                           return Image.asset(
                             "assets/images/common/test_video.jpg",
-                            width: 109.w*3,
-                            height: 59.w*3,
+                            width: 109.w * 3,
+                            height: 59.w * 3,
                             fit: BoxFit.fill,
                           );
                         },
@@ -667,24 +703,24 @@ class DeviceDetailPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(20.w*3, 10.w, 0, 50.w),
+                    margin: EdgeInsets.fromLTRB(20.w * 3, 10.w, 0, 50.w),
                     child: Text(
                       logic.parseDate(item['alarmTimestamp']),
                       style: TextStyle(
                           color: HhColors.textBlackColor,
-                          fontSize: 15.sp*3,
+                          fontSize: 15.sp * 3,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(20.w*3, 30.w*3, 0, 0),
+                      margin: EdgeInsets.fromLTRB(20.w * 3, 30.w * 3, 0, 0),
                       child: Text(
                         logic.parseType(item['alarmType']),
                         style: TextStyle(
                             color: HhColors.textBlackColor,
-                            fontSize: 14.sp*3,
+                            fontSize: 14.sp * 3,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -692,8 +728,8 @@ class DeviceDetailPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 1.5.w*3,
-                      margin: EdgeInsets.fromLTRB(6.w*3, 20.w*3, 0, 0),
+                      width: 1.5.w * 3,
+                      margin: EdgeInsets.fromLTRB(6.w * 3, 20.w * 3, 0, 0),
                       decoration: BoxDecoration(
                           color: HhColors.blueEAColor,
                           borderRadius:
@@ -703,12 +739,13 @@ class DeviceDetailPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 6.w*3,
-                      height: 6.w*3,
-                      margin: EdgeInsets.fromLTRB(10.w, 10.w*3, 0, 0),
+                      width: 6.w * 3,
+                      height: 6.w * 3,
+                      margin: EdgeInsets.fromLTRB(10.w, 10.w * 3, 0, 0),
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(3.w*3))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(3.w * 3))),
                     ),
                   ),
                 ],
@@ -720,177 +757,242 @@ class DeviceDetailPage extends StatelessWidget {
     );
   }
 
-
   void showEditDeviceDialog(dynamic item) {
-    showCupertinoDialog(context: logic.context, builder: (context) => Center(
-      child: Container(
-        width: 1.sw,
-        height: 70.w*3,
-        margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-        padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
-        decoration: BoxDecoration(
-            color: HhColors.whiteColor,
-            borderRadius: BorderRadius.all(Radius.circular(20.w))),
-        child: Row(
-          children: [
-            CommonData.personal?Expanded(
-              child: BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: (){
-                  if(item["shareMark"]==2){
-                    return;
-                  }
-                  Get.back();
-                  DateTime date = DateTime.now();
-                  String time = date.toIso8601String().substring(0,19).replaceAll("T", " ");
-                  Get.to(()=>SharePage(),binding: ShareBinding(),arguments: {
-                    "shareType": "2",
-                    "expirationTime": time,
-                    "appShareDetailSaveReqVOList": [
-                      {
-                        "spaceId": "${item["spaceId"]}",
-                        "spaceName": "${item["spaceName"]}",
-                        "deviceId": "${item["id"]}",
-                        "deviceName": "${item["name"]}"
-                      }
-                    ]
-                  });
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+    showCupertinoDialog(
+        context: logic.context,
+        builder: (context) => Center(
+              child: Container(
+                width: 1.sw,
+                height: 70.w * 3,
+                margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
+                padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                child: Row(
                   children: [
-                    Image.asset(
-                      item["shareMark"]==2?"assets/images/common/icon_edit_share_no.png":"assets/images/common/icon_edit_share.png",
-                      width: 24.w*3,
-                      height: 24.w*3,
-                      fit: BoxFit.fill,
+                    CommonData.personal
+                        ? Expanded(
+                            child: BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: () {
+                                if (item["shareMark"] == 2) {
+                                  return;
+                                }
+                                Get.back();
+                                DateTime date = DateTime.now();
+                                String time = date
+                                    .toIso8601String()
+                                    .substring(0, 19)
+                                    .replaceAll("T", " ");
+                                Get.to(() => SharePage(),
+                                    binding: ShareBinding(),
+                                    arguments: {
+                                      "shareType": "2",
+                                      "expirationTime": time,
+                                      "appShareDetailSaveReqVOList": [
+                                        {
+                                          "spaceId": "${item["spaceId"]}",
+                                          "spaceName": "${item["spaceName"]}",
+                                          "deviceId": "${item["id"]}",
+                                          "deviceName": "${item["name"]}"
+                                        }
+                                      ]
+                                    });
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    item["shareMark"] == 2
+                                        ? "assets/images/common/icon_edit_share_no.png"
+                                        : "assets/images/common/icon_edit_share.png",
+                                    width: 24.w * 3,
+                                    height: 24.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  SizedBox(
+                                    height: 2.w * 3,
+                                  ),
+                                  Text(
+                                    '分享',
+                                    style: TextStyle(
+                                        color: item["shareMark"] == 2
+                                            ? HhColors.grayCCTextColor
+                                            : HhColors.blackTextColor,
+                                        fontSize: 14.sp * 3,
+                                        decoration: TextDecoration.none,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                    CommonData.personal
+                        ? SizedBox(
+                            width: 50.w,
+                          )
+                        : const SizedBox(),
+                    Expanded(
+                      child: BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: () {
+                          Get.back();
+                          Get.to(
+                              () => DeviceAddPage(
+                                    snCode: '',
+                                  ),
+                              binding: DeviceAddBinding(),
+                              arguments: item);
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/images/common/icon_edit_edit.png",
+                              width: 24.w * 3,
+                              height: 24.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                            SizedBox(
+                              height: 2.w * 3,
+                            ),
+                            Text(
+                              '修改',
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor,
+                                  fontSize: 14.sp * 3,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 2.w*3,),
-                    Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.blackTextColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
-                  ],
-                ),
-              ),
-            ):const SizedBox(),
-            CommonData.personal?SizedBox(width: 50.w,):const SizedBox(),
-            Expanded(
-              child: BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {
-                  Get.back();
-                  Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding(),arguments: item);
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/icon_edit_edit.png",
-                      width: 24.w*3,
-                      height: 24.w*3,
-                      fit: BoxFit.fill,
+                    SizedBox(
+                      width: 50.w,
                     ),
-                    SizedBox(height: 2.w*3,),
-                    Text('修改',style: TextStyle(color: HhColors.blackTextColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
+                    Expanded(
+                      child: BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: () {
+                          Get.back();
+                          logic.resetDevice();
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/images/common/icon_video_reset.png",
+                              width: 24 * 3.w,
+                              height: 24 * 3.w,
+                              fit: BoxFit.fill,
+                            ),
+                            SizedBox(
+                              height: 2.w * 3,
+                            ),
+                            Text(
+                              '重启',
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor,
+                                  fontSize: 14.sp * 3,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50.w,
+                    ),
+                    Expanded(
+                      child: BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: () {
+                          Get.back();
+                          CommonUtils().showDeleteDialog(
+                              context,
+                              logic.shareMark == 2
+                                  ? '确定要删除“${item['name']}”?\n此设备是好友分享给你的设备'
+                                  : '确定要删除“${item['name']}”?\n删除设备后无法恢复', () {
+                            Get.back();
+                          }, () {
+                            Get.back();
+                            logic.deleteDevice(item);
+                          }, () {
+                            Get.back();
+                          });
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              "assets/images/common/icon_edit_delete.png",
+                              width: 24.w * 3,
+                              height: 24.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                            SizedBox(
+                              height: 2.w * 3,
+                            ),
+                            Text(
+                              '删除',
+                              style: TextStyle(
+                                  color: HhColors.mainRedColor,
+                                  fontSize: 14.sp * 3,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            SizedBox(width: 50.w,),
-            Expanded(
-              child: BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {
-                  Get.back();
-                  logic.resetDevice();
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/icon_video_reset.png",
-                      width: 24*3.w,
-                      height: 24*3.w,
-                      fit: BoxFit.fill,
-                    ),
-                    SizedBox(height: 2.w*3,),
-                    Text('重启',style: TextStyle(color: HhColors.blackTextColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(width: 50.w,),
-            Expanded(
-              child: BouncingWidget(
-                duration: const Duration(milliseconds: 100),
-                scaleFactor: 1.2,
-                onPressed: () {
-                  Get.back();
-                  CommonUtils().showDeleteDialog(context, logic.shareMark==2?'确定要删除“${item['name']}”?\n此设备是好友分享给你的设备':'确定要删除“${item['name']}”?\n删除设备后无法恢复', (){
-                    Get.back();
-                  }, (){
-                    Get.back();
-                    logic.deleteDevice(item);
-                  }, (){
-                    Get.back();
-                  });
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      "assets/images/common/icon_edit_delete.png",
-                      width: 24.w*3,
-                      height: 24.w*3,
-                      fit: BoxFit.fill,
-                    ),
-                    SizedBox(height: 2.w*3,),
-                    Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),barrierDismissible: true);
+        barrierDismissible: true);
   }
 
   buildCameraTabs() {
     List<Widget> list = [];
-    for(int i = 0; i < logic.liveList.length;i++){
+    for (int i = 0; i < logic.liveList.length; i++) {
       dynamic live = logic.liveList[i];
-      list.add(
-          InkWell(
-            onTap: () {
-              logic.liveIndex.value = i;
-              logic.deviceId = logic.liveList[logic.liveIndex.value]["deviceId"];
-              logic.channelNumber = logic.liveList[logic.liveIndex.value]["number"];
-              logic.getPlayUrl(logic.deviceId,logic.channelNumber);
-            },
-            child: Container(
-                padding: EdgeInsets.fromLTRB(13.w*3, 10.w*3, 12.w*3, 10.w*3),
-                margin: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0, 0),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(8.w*3)),
-                  border: Border.all(color: HhColors.grayDDTextColor,width: 0.5.w*3)
-                ),
-                child: Text(
-                  '${live['positionName']}',
-                  style: TextStyle(
-                      color: logic.liveIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor, fontSize: 14.sp*3),
-                )),
-          )
-      );
+      list.add(InkWell(
+        onTap: () {
+          logic.liveIndex.value = i;
+          logic.deviceId = logic.liveList[logic.liveIndex.value]["deviceId"];
+          logic.channelNumber = logic.liveList[logic.liveIndex.value]["number"];
+          logic.getPlayUrl(logic.deviceId, logic.channelNumber);
+        },
+        child: Container(
+            padding:
+                EdgeInsets.fromLTRB(13.w * 3, 10.w * 3, 12.w * 3, 10.w * 3),
+            margin: EdgeInsets.fromLTRB(10.w * 3, 10.w * 3, 0, 0),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(8.w * 3)),
+                border: Border.all(
+                    color: HhColors.grayDDTextColor, width: 0.5.w * 3)),
+            child: Text(
+              '${live['positionName']}',
+              style: TextStyle(
+                  color: logic.liveIndex.value == i
+                      ? HhColors.mainBlueColor
+                      : HhColors.blackColor,
+                  fontSize: 14.sp * 3),
+            )),
+      ));
     }
-    list.add(SizedBox(width: 10.w*3,));
+    list.add(SizedBox(
+      width: 10.w * 3,
+    ));
     return list;
   }
 }

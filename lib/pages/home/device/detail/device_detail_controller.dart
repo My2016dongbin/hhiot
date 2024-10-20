@@ -21,6 +21,8 @@ import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:screen_recorder/screen_recorder.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceDetailController extends GetxController {
@@ -34,8 +36,8 @@ class DeviceDetailController extends GetxController {
   final Rx<bool> voiceTag = true.obs;
   final Rx<int> liveIndex = 0.obs;
   final Rx<bool> liveStatus = true.obs;
-  final PagingController<int, dynamic> deviceController = PagingController(
-      firstPageKey: 0);
+  final PagingController<int, dynamic> deviceController =
+      PagingController(firstPageKey: 0);
   late int pageNum = 1;
   late int pageSize = 20;
   late DragController dragController;
@@ -60,7 +62,12 @@ class DeviceDetailController extends GetxController {
   late Alignment animateAlign = Alignment.center;
   final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
   late String? endpoint;
-  StreamSubscription? deviceSubscription;
+  late StreamSubscription? deviceSubscription;
+  late ScreenshotController screenshotController = ScreenshotController();
+  late ScreenRecorderController recordController = ScreenRecorderController(
+    pixelRatio: 1,
+    skipFramesBetweenCaptures: 0,
+  );
   late dynamic item = {};
 
   @override
@@ -73,50 +80,47 @@ class DeviceDetailController extends GetxController {
     });
     deviceSubscription =
         EventBusUtil.getInstance().on<DeviceInfo>().listen((event) {
-          getDeviceStream();
-          getDeviceInfo();
-          getDeviceHistory();
-        });
+      getDeviceStream();
+      getDeviceInfo();
+      getDeviceHistory();
+    });
     super.onInit();
   }
 
-  Future<void> saveImageToGallery() async {
-    // 请求存储权限
-    await Permission.storage.request();
-
-    // 获取当前帧的图像
-    final Uint8List image = await player.takeSnapShot();
-
-    // if (image != null) {
-    //   // 保存到相册
-    //   final result = await ImageGallerySaver.saveImage(image);
-    //   print(result);
-    // } else {
-    //   print("无法获取截图");
-    // }
-  }
-
-  Future<void> saveImageToGallery2() async {
+  saveImageToGallery() async {
     HhLog.d("saveImageToGallery ");
-    Uint8List imageBytes = await player.takeSnapShot();
-    final result = await ImagePicker().pickImage(source: ImageSource.gallery);
-    HhLog.d("saveImageToGallery result $result");
-    if (result != null) {
+    screenshotController.capture().then((value) async {
       HhLog.d("saveImageToGallery ");
       // 将图片保存到相册
-      final tempDir = await getTemporaryDirectory();
-      final filePath = '${tempDir.path}/image_${DateTime
-          .now()
-          .millisecondsSinceEpoch}.png';
+      final tempDir = await getDownloadsDirectory();
+      final filePath =
+          '${tempDir!.path}/image_${DateTime.now().millisecondsSinceEpoch}.png';
       final file = File(filePath);
-      await file.writeAsBytes(imageBytes);
+      File a = await file.writeAsBytes(value!);
+      HhLog.d("saveImageToGallery $a");
+      EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至“$filePath”'));
+    }).catchError((onError) {
+      EventBusUtil.getInstance().fire(HhToast(title: '拍照失败请重试'));
+    });
+  }
 
-      EventBusUtil.getInstance().fire(HhToast(title: '已保存至“$filePath”'));
+  void startRecord() {
+    recordController.start();
+  }
 
-      HhLog.d("saveImageToGallery ");
-      // 通知系统相册更新
-      // await MediaStore.saveFile(file.path);
-    }
+  Future<void> stopRecord() async {
+    recordController.stop();
+    List<int>? exportGif = await recordController.exporter.exportGif();
+
+    HhLog.d("stopRecord ");
+    // 将图片保存到相册
+    final tempDir = await getDownloadsDirectory();
+    final filePath =
+        '${tempDir!.path}/video_${DateTime.now().millisecondsSinceEpoch}.gif';
+    final file = File(filePath);
+    File a = await file.writeAsBytes(exportGif!);
+    HhLog.d("stopRecord $a");
+    EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至“$filePath”'));
   }
 
   void fetchPageDevice(int pageKey) {
@@ -138,8 +142,8 @@ class DeviceDetailController extends GetxController {
   Future<void> getDeviceStream() async {
     Map<String, dynamic> map = {};
     map['deviceNo'] = deviceNo;
-    var result = await HhHttp().request(
-        RequestUtils.deviceStream, method: DioMethod.get, params: map);
+    var result = await HhHttp()
+        .request(RequestUtils.deviceStream, method: DioMethod.get, params: map);
     HhLog.d("getDeviceStream -- $deviceNo");
     HhLog.d("getDeviceStream -- $result");
     if (result["code"] == 0 && result["data"] != null) {
@@ -156,8 +160,8 @@ class DeviceDetailController extends GetxController {
         HhLog.e(e.toString());
       }
     } else {
-      EventBusUtil.getInstance().fire(
-          HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -171,19 +175,17 @@ class DeviceDetailController extends GetxController {
       'streamType': 0,
       'transMode': "TCP"
     };
-    var result = await HhHttp().request(
-        RequestUtils.devicePlayUrl, method: DioMethod.post, data: data);
+    var result = await HhHttp().request(RequestUtils.devicePlayUrl,
+        method: DioMethod.post, data: data);
     HhLog.d("getPlayUrl data -- $data");
     HhLog.d("getPlayUrl result -- $result");
     if (result["code"] == 200 && result["data"] != null) {
       try {
-        String url = /*RequestUtils.rtsp + */result["data"][0]['url'];
+        String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
         playTag.value = false;
         player.release();
         player = FijkPlayer();
-        player.setDataSource(
-            url,
-            autoPlay: true);
+        player.setDataSource(url, autoPlay: true);
         player.setOption(FijkOption.playerCategory, "mediacodec-hevc", 1);
         player.setOption(FijkOption.playerCategory, "framedrop", 1);
         player.setOption(FijkOption.playerCategory, "start-on-prepared", 0);
@@ -193,9 +195,8 @@ class DeviceDetailController extends GetxController {
         player.setOption(FijkOption.playerCategory, "packet-buffering", 0);
         player.setOption(
             FijkOption.playerCategory, "mediacodec-auto-rotate", 0);
-        player.setOption(
-            FijkOption.playerCategory, "mediacodec-handle-resolution-change",
-            0);
+        player.setOption(FijkOption.playerCategory,
+            "mediacodec-handle-resolution-change", 0);
         player.setOption(FijkOption.playerCategory, "min-frames", 2);
         player.setOption(FijkOption.playerCategory, "max_cached_duration", 3);
         player.setOption(FijkOption.playerCategory, "infbuf", 1);
@@ -225,8 +226,8 @@ class DeviceDetailController extends GetxController {
         HhLog.e(e.toString());
       }
     } else {
-      EventBusUtil.getInstance().fire(
-          HhToast(title: CommonUtils().msgString(result["message"])));
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["message"])));
     }
   }
 
@@ -234,8 +235,8 @@ class DeviceDetailController extends GetxController {
     Map<String, dynamic> map = {};
     map['id'] = id;
     map['shareMark'] = shareMark;
-    var result = await HhHttp().request(
-        RequestUtils.deviceInfo, method: DioMethod.get, params: map);
+    var result = await HhHttp()
+        .request(RequestUtils.deviceInfo, method: DioMethod.get, params: map);
     HhLog.d("getDeviceInfo -- $id");
     HhLog.d("getDeviceInfo -- $result");
     if (result["code"] == 0 && result["data"] != null) {
@@ -244,8 +245,8 @@ class DeviceDetailController extends GetxController {
       productName.value = result["data"]["productName"] ?? '';
       functionItem.value = item['functionItem'];
     } else {
-      EventBusUtil.getInstance().fire(
-          HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -255,8 +256,8 @@ class DeviceDetailController extends GetxController {
     map['deviceId'] = id;
     map['pageNo'] = pageNum;
     map['pageSize'] = pageSize;
-    var result = await HhHttp().request(
-        RequestUtils.deviceHistory, method: DioMethod.get, params: map);
+    var result = await HhHttp().request(RequestUtils.deviceHistory,
+        method: DioMethod.get, params: map);
     HhLog.d("getDeviceHistory -- $pageNum");
     HhLog.d("getDeviceHistory -- $result");
     Future.delayed(const Duration(seconds: 1), () {
@@ -275,8 +276,8 @@ class DeviceDetailController extends GetxController {
       }
       deviceController.appendLastPage(newItems);
     } else {
-      EventBusUtil.getInstance().fire(
-          HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -325,8 +326,8 @@ class DeviceDetailController extends GetxController {
     channel.sink.add({"CallType": "Active", "Dest": "000001"});*/
 
     manager =
-    // WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
-    WebSocketManager('ws://117.132.5.139:18030/$nickname', '');
+        // WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
+        WebSocketManager('ws://117.132.5.139:18030/$nickname', '');
     manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
     CommonData.deviceNo = deviceNo;
   }
@@ -374,7 +375,6 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["data"][0]["msg"])));
     }*/
-
   }
 
   Future<void> deleteDevice(item) async {
@@ -382,8 +382,8 @@ class DeviceDetailController extends GetxController {
     Map<String, dynamic> map = {};
     map['id'] = '${item['id']}';
     map['shareMark'] = '${item['shareMark']}';
-    var result = await HhHttp().request(
-        RequestUtils.deviceDelete, method: DioMethod.delete, params: map);
+    var result = await HhHttp().request(RequestUtils.deviceDelete,
+        method: DioMethod.delete, params: map);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("deleteDevice -- $map");
     HhLog.d("deleteDevice -- $result");
@@ -393,27 +393,24 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance().fire(SpaceList());
       EventBusUtil.getInstance().fire(DeviceList());
     } else {
-      EventBusUtil.getInstance().fire(
-          HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
   Future<void> resetDevice() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
-    dynamic data = {
-      "deviceNo": deviceNo,
-      "cmdType": "deviceSetReboot"
-    };
-    var result = await HhHttp().request(
-        RequestUtils.deviceConfigScreenTop, method: DioMethod.post, data: data);
+    dynamic data = {"deviceNo": deviceNo, "cmdType": "deviceSetReboot"};
+    var result = await HhHttp().request(RequestUtils.deviceConfigScreenTop,
+        method: DioMethod.post, data: data);
     HhLog.d("resetDevice -- $data");
     HhLog.d("resetDevice -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (result["code"] == 0) {
       EventBusUtil.getInstance().fire(HhToast(title: "重启下发成功", type: 1));
     } else {
-      EventBusUtil.getInstance().fire(
-          HhToast(title: CommonUtils().msgString(result["msg"])));
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -421,5 +418,4 @@ class DeviceDetailController extends GetxController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     endpoint = prefs.getString(SPKeys().endpoint);
   }
-
 }
