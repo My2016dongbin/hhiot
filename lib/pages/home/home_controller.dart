@@ -135,12 +135,12 @@ class HomeController extends GetxController {
       showCupertinoDialog(context: context, builder: (context) => Center(
         child: Container(
           width: 1.sw,
-          height: 640.w,
-          margin: EdgeInsets.fromLTRB(50.w, 0, 50.w, 0),
-          padding: EdgeInsets.fromLTRB(45.w, 35.w, 45.w, 15.w),
+          height: 300.w*3,
+          margin: EdgeInsets.fromLTRB(30.w*3, 0, 30.w*3, 0),
+          padding: EdgeInsets.fromLTRB(20.w*3, 17.w*3, 20.w*3, 12.w*3),
           decoration: BoxDecoration(
               color: HhColors.whiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(20.w))),
+              borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
           child: Stack(
             children: [
               Align(
@@ -153,8 +153,8 @@ class HomeController extends GetxController {
                   },
                   child: Image.asset(
                     "assets/images/common/ic_x.png",
-                    width: 35.w,
-                    height: 35.w,
+                    width: 10.w*3,
+                    height: 10.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -162,7 +162,7 @@ class HomeController extends GetxController {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top: 25.w),
+                  margin: EdgeInsets.only(top: 9.w*3),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -170,32 +170,32 @@ class HomeController extends GetxController {
                         CommonUtils().parseNull("${model['shareUrerName']??''}", ""),
                         style: TextStyle(
                             color: HhColors.blackTextColor,
-                            fontSize: 32.sp,
+                            fontSize: 18.sp*3,
                             decoration: TextDecoration.none,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10.w,),
+                      SizedBox(height: 4.w*3,),
                       Text(
                         "共享给您",
                         style: TextStyle(
                             color: HhColors.blackTextColor,
-                            fontSize: 32.sp,
+                            fontSize: 18.sp*3,
                             decoration: TextDecoration.none,
                             fontWeight: FontWeight.w200),
                       ),
-                      SizedBox(height: 20.w,),
+                      SizedBox(height: 12.w*3,),
                       Image.asset(
                         "assets/images/common/icon_camera_space.png",
-                        width: 240.w,
-                        height: 240.w,
+                        width: 110.w*3,
+                        height: 110.w*3,
                         fit: BoxFit.fill,
                       ),
-                      SizedBox(height: 20.w,),
+                      SizedBox(height: 10.w*3,),
                       Text(
                         CommonUtils().parseNull("${model['deviceName']??''}", ""),
                         style: TextStyle(
                             color: HhColors.gray6TextColor,
-                            fontSize: 30.sp,
+                            fontSize: 16.sp*3,
                             decoration: TextDecoration.none,
                             fontWeight: FontWeight.w200),
                       ),
@@ -209,11 +209,11 @@ class HomeController extends GetxController {
                                 handleShare("${model['id']??''}", 2,"${model['deviceName']??''}");
                               },
                               child: Container(
-                                height: 90.w,
+                                height: 44.w*3,
                                 margin: EdgeInsets.fromLTRB(0, 30.w, 20.w, 0),
                                 decoration: BoxDecoration(
                                     color: HhColors.whiteColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(20.w)),
+                                    borderRadius: BorderRadius.all(Radius.circular(8.w*3)),
                                   border: Border.all(color: HhColors.grayEEBackColor,width: 1.w)
                                 ),
                                 child: Center(
@@ -223,7 +223,7 @@ class HomeController extends GetxController {
                                       color: HhColors.blackTextColor,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w300,
-                                      fontSize: 30.sp,),
+                                      fontSize: 16.sp*3,),
                                   ),
                                 ),
                               ),
@@ -236,11 +236,11 @@ class HomeController extends GetxController {
                                 handleShare("${model['id']??''}", 1,"${model['deviceName']??''}");
                               },
                               child: Container(
-                                height: 90.w,
-                                margin: EdgeInsets.fromLTRB(20.w, 30.w, 0, 0),
+                                height: 44.w*3,
+                                margin: EdgeInsets.fromLTRB(13.w*3, 30.w, 0, 0),
                                 decoration: BoxDecoration(
                                     color: HhColors.mainBlueColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                                 child: Center(
                                   child: Text(
                                     "同意共享",
@@ -248,7 +248,7 @@ class HomeController extends GetxController {
                                       color: HhColors.whiteColor,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w300,
-                                      fontSize: 30.sp,),
+                                      fontSize: 16.sp*3,),
                                   ),
                                 ),
                               ),

@@ -14,7 +14,9 @@ import 'package:iot/utils/HhColors.dart';
 class EditPage extends StatelessWidget {
   final logic = Get.find<EditController>();
 
-  EditPage({super.key,});
+  EditPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class EditPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
-            () => Container(
+        () => Container(
           height: 1.sh,
           width: 1.sw,
           padding: EdgeInsets.zero,
@@ -46,13 +48,13 @@ class EditPage extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 90.w),
+              margin: EdgeInsets.only(top: 54.w * 3),
               color: HhColors.trans,
               child: Text(
                 '修改空间',
                 style: TextStyle(
                     color: HhColors.blackTextColor,
-                    fontSize: 30.sp,
+                    fontSize: 18.sp * 3,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -62,92 +64,119 @@ class EditPage extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-              padding: EdgeInsets.all(10.w),
+              margin: EdgeInsets.fromLTRB(23.w * 3, 59.h * 3, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back.png",
-                width: 18.w,
-                height: 30.w,
+                height: 14.w * 3,
+                width: 9.w * 3,
                 fit: BoxFit.fill,
               ),
             ),
           ),
 
           Container(
-            margin: EdgeInsets.fromLTRB(30.w, 200.w, 30.w, 0),
+            margin: EdgeInsets.fromLTRB(14.w*3, 108.w*3, 14.w*3, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ///修改内容
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 10,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.accountController,
-                        keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none
+                Container(
+                  decoration: BoxDecoration(
+                      color: HhColors.grayE8BackColor,
+                      borderRadius: BorderRadius.circular(8.w*3)
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 18.w*3,),
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          maxLength: 10,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.accountController,
+                          keyboardType: logic.pageStatus.value
+                              ? TextInputType.number
+                              : TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none),
+                            counterText: '',
+                            hintText: '请输入新的空间名称',
+                            hintStyle: TextStyle(
+                                color: HhColors.grayCCTextColor,
+                                fontSize: 16.sp*3,
+                                fontWeight: FontWeight.w200),
                           ),
-                          counterText: '',
-                          hintText: '请输入新的空间名称',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                          style: TextStyle(
+                              color: HhColors.textBlackColor,
+                              fontSize: 16.sp*3,
+                              fontWeight: FontWeight.bold),
+                          onChanged: (s) {
+                            logic.accountStatus.value = s.isNotEmpty;
+                          },
                         ),
-                        style:
-                        TextStyle(color: HhColors.textBlackColor, fontSize: 32.sp,fontWeight: FontWeight.bold),
-                        onChanged: (s){
-                          logic.accountStatus.value = s.isNotEmpty;
-                        },
                       ),
-                    ),
-                    logic.accountStatus.value? BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.accountController!.clear();
-                        logic.accountStatus.value = false;
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
+                      logic.accountStatus.value
+                          ? BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: () {
+                                logic.accountController!.clear();
+                                logic.accountStatus.value = false;
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.all(5.w),
+                                  child: Image.asset(
+                                    'assets/images/common/ic_close.png',
+                                    height: 16.w * 3,
+                                    width: 16.w * 3,
+                                    fit: BoxFit.fill,
+                                  )),
+                            )
+                          : const SizedBox(),
+                      SizedBox(
+                        width: 16.w * 3,
                       ),
-                    ):const SizedBox()
-                  ],
+                    ],
+                  ),
                 ),
                 Container(
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
                 ),
-                SizedBox(height: 26.w,),
+                SizedBox(
+                  height: 26.w,
+                ),
+
                 ///保存
                 BouncingWidget(
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
-                  onPressed: (){
+                  onPressed: () {
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
-                    if(logic.accountController!.text.isEmpty){
-                      EventBusUtil.getInstance().fire(HhToast(title: '请输入修改内容'));
+                    if (logic.accountController!.text.isEmpty) {
+                      EventBusUtil.getInstance()
+                          .fire(HhToast(title: '请输入修改内容'));
                       return;
                     }
-                    if(!CommonUtils().validateSpaceName(logic.accountController!.text)){
-                      EventBusUtil.getInstance().fire(HhToast(title: '空间名称不能包含特殊字符'));
+                    if (!CommonUtils()
+                        .validateSpaceName(logic.accountController!.text)) {
+                      EventBusUtil.getInstance()
+                          .fire(HhToast(title: '空间名称不能包含特殊字符'));
                       return;
                     }
-                    Future.delayed(const Duration(milliseconds: 500),(){
+                    Future.delayed(const Duration(milliseconds: 500), () {
                       logic.userEdit();
                     });
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
+                    height: 45.w * 3,
                     margin: EdgeInsets.fromLTRB(0, 32.w, 0, 50.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
@@ -156,7 +185,10 @@ class EditPage extends StatelessWidget {
                       child: Text(
                         "保存",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        style: TextStyle(
+                            color: HhColors.whiteColor,
+                            fontSize: 16.sp * 3,
+                            fontWeight: FontWeight.w200),
                       ),
                     ),
                   ),
@@ -168,5 +200,4 @@ class EditPage extends StatelessWidget {
       ),
     );
   }
-
 }

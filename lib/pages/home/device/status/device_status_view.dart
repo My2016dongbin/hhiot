@@ -38,32 +38,33 @@ class DeviceStatusPage extends StatelessWidget {
           child: Stack(
             children: [
               ///title
-              InkWell(
-                onTap: (){
-                  Get.back();
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-                  padding: EdgeInsets.all(10.w),
-                  color: HhColors.trans,
-                  child: Image.asset(
-                    "assets/images/common/back.png",
-                    width: 18.w,
-                    height: 30.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top:90.w),
+                  margin: EdgeInsets.only(top: 54.w*3),
                   color: HhColors.trans,
                   child: Text(
-                    "添加设备",
+                    '添加设备',
                     style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 30.sp,fontWeight: FontWeight.bold),
+                        fontSize: 18.sp*3,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
+                  color: HhColors.trans,
+                  child: Image.asset(
+                    "assets/images/common/back.png",
+                    height: 14.w*3,
+                    width: 9.w*3,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -72,12 +73,12 @@ class DeviceStatusPage extends StatelessWidget {
               Align(
                 alignment:Alignment.topCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top:400.w),
+                  margin: EdgeInsets.only(top:225.w*3),
                   color: HhColors.trans,
                   child: Image.asset(
                     logicAdd.addingStatus.value == 2?"assets/images/common/status_no.png":"assets/images/common/status_yes.png",
-                    width: 0.53.sw,
-                    height: 0.3.sw,
+                    width: 237.w*3,
+                    height: 127.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -85,29 +86,56 @@ class DeviceStatusPage extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top:430.w+0.3.sw),
+                  margin: EdgeInsets.only(top:368.w*3),
                   color: HhColors.trans,
                   child: Text(
                     logicAdd.addingStatus.value == 0?"添加设备中":logicAdd.addingStatus.value == 1?"添加设备成功":"添加设备失败",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 36.sp,fontWeight: FontWeight.bold),
+                        fontSize: 18.sp*3,fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
+              logicAdd.addingStatus.value == 2?Align(
+                alignment: Alignment.topCenter,
+                child: BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: (){
+                      Get.back();
+                  },
+                  child: Container(
+                    height: 44.w*3,
+                    width: 168.w*3,
+                    margin: EdgeInsets.fromLTRB(14.w*3, 415.w*3, 14.w*3, 25.w*3),
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        border: Border.all(color: HhColors.mainBlueColor,width: 1.w*3),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
+                    child: Center(
+                      child: Text(
+                        "返回",
+                        style: TextStyle(
+                          color: HhColors.mainBlueColor,
+                          fontSize: 16.sp*3,),
+                      ),
+                    ),
+                  ),
+                ),
+              ):const SizedBox(),
               ///流程
               logicAdd.addingStatus.value == 2?const SizedBox():Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(240.w,520.w+0.3.sw,0,0),
+                  margin: EdgeInsets.fromLTRB(136.w*3,412.w*3,0,0),
                   color: HhColors.trans,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         logicAdd.addingStep>0?"assets/images/common/yes.png":"assets/images/common/ic_loading.png",
-                        width: 26.w,
-                        height: 26.w,
+                        width: 14.w*3,
+                        height: 14.w*3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(width: 8.w,),
@@ -115,7 +143,7 @@ class DeviceStatusPage extends StatelessWidget {
                         logicAdd.addingStep>0?"连接设备成功":"连接设备",
                         style: TextStyle(
                             color: HhColors.gray9TextColor,
-                            fontSize: 26.sp),
+                            fontSize: 14.sp*3),
                       ),
                     ],
                   ),
@@ -124,15 +152,15 @@ class DeviceStatusPage extends StatelessWidget {
               logicAdd.addingStatus.value == 2?const SizedBox():Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(240.w,580.w+0.3.sw,0,0),
+                  margin: EdgeInsets.fromLTRB(136.w*3,442.w*3,0,0),
                   color: HhColors.trans,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         logicAdd.addingStep>1?"assets/images/common/yes.png":"assets/images/common/ic_loading.png",
-                        width: 26.w,
-                        height: 26.w,
+                        width: 14.w*3,
+                        height: 14.w*3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(width: 8.w,),
@@ -140,7 +168,7 @@ class DeviceStatusPage extends StatelessWidget {
                         logicAdd.addingStep>1?"标准认证成功":"标准认证",
                         style: TextStyle(
                             color: HhColors.gray9TextColor,
-                            fontSize: 26.sp),
+                            fontSize: 14.sp*3),
                       ),
                     ],
                   ),
@@ -149,15 +177,15 @@ class DeviceStatusPage extends StatelessWidget {
               logicAdd.addingStatus.value == 2?const SizedBox():Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(240.w,640.w+0.3.sw,0,0),
+                  margin: EdgeInsets.fromLTRB(136.w*3,472.w*3,0,0),
                   color: HhColors.trans,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         logicAdd.addingStep>2?"assets/images/common/yes.png":"assets/images/common/ic_loading.png",
-                        width: 26.w,
-                        height: 26.w,
+                        width: 14.w*3,
+                        height: 14.w*3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(width: 8.w,),
@@ -165,7 +193,7 @@ class DeviceStatusPage extends StatelessWidget {
                         logicAdd.addingStep>2?"设备绑定账号成功":"设备绑定账号",
                         style: TextStyle(
                             color: HhColors.gray9TextColor,
-                            fontSize: 26.sp),
+                            fontSize: 14.sp*3),
                       ),
                     ],
                   ),
@@ -196,18 +224,18 @@ class DeviceStatusPage extends StatelessWidget {
                     Get.back();
                   },
                   child: Container(
-                    height: 80.w,
+                    height: 44.w*3,
                     width: 1.sw,
-                    margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 50.w),
+                    margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 25.w*3),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Center(
                       child: Text(
                         logicAdd.addingStatus.value==2?"继续添加":"完成",
                         style: TextStyle(
                           color: HhColors.whiteColor,
-                          fontSize: 30.sp,),
+                          fontSize: 16.sp*3,),
                       ),
                     ),
                   ),

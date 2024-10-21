@@ -23,6 +23,11 @@ class CommonUtils{
 
     return gradientColors;
   }
+  List<Color> gradientColors2(){
+    List<Color> gradientColors = [HhColors.backTransColor1,HhColors.backTransColor1, HhColors.backTransColor21,HhColors.backTransColor22,  HhColors.backTransColor3];
+
+    return gradientColors;
+  }
   String parseMessageType(String s){
     String type = "设备报警";
     if(s == 'deviceAlarm'){
@@ -166,7 +171,7 @@ class CommonUtils{
         SizedBox(height: mid??0,),
         Text(info??'暂无数据',style: TextStyle(
             color: HhColors.grayBBTextColor,
-            fontSize: 26.sp
+            fontSize: 14.sp*3
         ),),
       ],
     );

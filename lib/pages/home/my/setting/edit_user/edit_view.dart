@@ -29,7 +29,7 @@ class EditPage extends StatelessWidget {
       statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
     ));
     return Scaffold(
-      backgroundColor: HhColors.backColor,
+      backgroundColor: HhColors.backColor2,
       body: Obx(
             () => Container(
           height: 1.sh,
@@ -50,13 +50,13 @@ class EditPage extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 90.w),
+              margin: EdgeInsets.only(top: 54.w*3),
               color: HhColors.trans,
               child: Text(
                 logic.titles.value,
                 style: TextStyle(
                     color: HhColors.blackTextColor,
-                    fontSize: 30.sp,
+                    fontSize: 18.sp*3,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -66,69 +66,78 @@ class EditPage extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-              padding: EdgeInsets.all(10.w),
+              margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back.png",
-                width: 18.w,
-                height: 30.w,
+                height: 14.w*3,
+                width: 9.w*3,
                 fit: BoxFit.fill,
               ),
             ),
           ),
 
           Container(
-            margin: EdgeInsets.fromLTRB(30.w, 200.w, 30.w, 0),
+            margin: EdgeInsets.fromLTRB(14.w*3, 108.w*3, 14.w*3, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ///修改内容
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        maxLength: 30,
-                        cursorColor: HhColors.titleColor_99,
-                        controller: logic.accountController,
-                        keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none
-                          ),
-                          counterText: '',
-                          hintText: '请输入修改内容',
-                          hintStyle: TextStyle(
-                              color: HhColors.grayCCTextColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
-                        ),
-                        style:
-                        TextStyle(color: HhColors.textBlackColor, fontSize: 32.sp,fontWeight: FontWeight.bold),
-                        onChanged: (s){
-                          logic.accountStatus.value = s.isNotEmpty;
-                        },
-                      ),
-                    ),
-                    logic.accountStatus.value? BouncingWidget(
-                      duration: const Duration(milliseconds: 100),
-                      scaleFactor: 1.2,
-                      onPressed: (){
-                        logic.accountController!.clear();
-                        logic.accountStatus.value = false;
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(5.w),
-                          child: Image.asset('assets/images/common/ic_close.png',height:30.w,width: 30.w,fit: BoxFit.fill,)
-                      ),
-                    ):const SizedBox()
-                  ],
-                ),
                 Container(
+                  height: 45.w*3,
+                  decoration: BoxDecoration(
+                    color: HhColors.grayE8BackColor,
+                    borderRadius: BorderRadius.circular(8.w*3),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 18.w*3,),
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          maxLength: 30,
+                          cursorColor: HhColors.titleColor_99,
+                          controller: logic.accountController,
+                          keyboardType: logic.pageStatus.value?TextInputType.number:TextInputType.text,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            ),
+                            counterText: '',
+                            hintText: '请输入修改内容',
+                            hintStyle: TextStyle(
+                                color: HhColors.grayCCTextColor, fontSize: 16.sp*3,fontWeight: FontWeight.w200),
+                          ),
+                          style:
+                          TextStyle(color: HhColors.textBlackColor, fontSize: 16.sp*3,fontWeight: FontWeight.bold),
+                          onChanged: (s){
+                            logic.accountStatus.value = s.isNotEmpty;
+                          },
+                        ),
+                      ),
+                      logic.accountStatus.value? BouncingWidget(
+                        duration: const Duration(milliseconds: 100),
+                        scaleFactor: 1.2,
+                        onPressed: (){
+                          logic.accountController!.clear();
+                          logic.accountStatus.value = false;
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5.w),
+                            child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
+                        ),
+                      ):const SizedBox(),
+                      SizedBox(width: 16.w*3,),
+                    ],
+                  ),
+                ),
+                /*Container(
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
-                ),
+                ),*/
                 SizedBox(height: 26.w,),
                 ///保存
                 BouncingWidget(
@@ -148,16 +157,16 @@ class EditPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
+                    height: 45.w*3,
                     margin: EdgeInsets.fromLTRB(0, 32.w, 0, 50.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Center(
                       child: Text(
                         "保存",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        style: TextStyle(color: HhColors.whiteColor, fontSize: 16.sp*3,fontWeight: FontWeight.w200),
                       ),
                     ),
                   ),

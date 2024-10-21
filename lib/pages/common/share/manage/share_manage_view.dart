@@ -1,19 +1,9 @@
-import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/common/share/manage/share_manage_controller.dart';
-import 'package:iot/pages/common/share/share_binding.dart';
-import 'package:iot/pages/common/share/share_view.dart';
-import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/device_detail_view.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
-import 'package:iot/pages/home/device/manage/device_manage_controller.dart';
-import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -35,33 +25,33 @@ class ShareManagePage extends StatelessWidget {
           child: Stack(
             children: [
               ///title
-              InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-                  padding: EdgeInsets.all(10.w),
-                  color: HhColors.trans,
-                  child: Image.asset(
-                    "assets/images/common/back.png",
-                    width: 18.w,
-                    height: 30.w,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top: 90.w),
+                  margin: EdgeInsets.only(top: 54.w*3),
                   color: HhColors.trans,
                   child: Text(
                     "分享管理",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 30.sp,
+                        fontSize: 18.sp*3,
                         fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
+                  color: HhColors.trans,
+                  child: Image.asset(
+                    "assets/images/common/back.png",
+                    height: 14.w*3,
+                    width: 9.w*3,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -71,7 +61,7 @@ class ShareManagePage extends StatelessWidget {
 
               ///tab
               Container(
-                margin: EdgeInsets.fromLTRB(50.w, 180.w, 0, 0),
+                margin: EdgeInsets.fromLTRB(24.w*3, 110.w*3, 0, 0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -88,7 +78,7 @@ class ShareManagePage extends StatelessWidget {
 
   deviceList() {
     return Container(
-      margin: EdgeInsets.only(top: 240.w),
+      margin: EdgeInsets.only(top: 149.w*3),
       child: EasyRefresh(
         onRefresh: () {
           logic.pageNum = 1;
@@ -108,12 +98,12 @@ class ShareManagePage extends StatelessWidget {
             itemBuilder: (context, item, index) => InkWell(
               onTap: () {},
               child: Container(
-                margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                padding: EdgeInsets.all(20.w),
+                margin: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 14.w*3, 0),
+                padding: EdgeInsets.all(10.w*3),
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -125,14 +115,14 @@ class ShareManagePage extends StatelessWidget {
                         item['productName'] == '浩海一体机'
                             ? "assets/images/common/icon_camera_space.png"
                             : "assets/images/common/ic_gan.png",
-                        width: 80.w,
-                        height: 80.w,
+                        width: 52.w*3,
+                        height: 52.w*3,
                         fit: BoxFit.fill,
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(30.w, 0, 10.w, 0),
+                        margin: EdgeInsets.fromLTRB(8.w*3, 0, 8.w*3, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,22 +132,22 @@ class ShareManagePage extends StatelessWidget {
                               maxLines: 2,
                               style: TextStyle(
                                   color: HhColors.textBlackColor,
-                                  fontSize: 26.sp,
+                                  fontSize: 15.sp*3,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 5.w,
+                              height: 6.w*3,
                             ),
                             Text(
                               "时间：${CommonUtils().parseLongTime('${item['createTime']}')}",
                               maxLines: 2,
                               style: TextStyle(
                                   color: HhColors.grayBBTextColor,
-                                  fontSize: 23.sp,
+                                  fontSize: 18.sp*3,
                                   fontWeight: FontWeight.w400),
                             ),
                             SizedBox(
-                              height: 5.w,
+                              height: 6.w*3,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -182,14 +172,14 @@ class ShareManagePage extends StatelessWidget {
                                             maxLines: 2,
                                             style: TextStyle(
                                                 color: HhColors.mainRedColor,
-                                                fontSize: 26.sp,
+                                                fontSize: 14.sp*3,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                         ),
                                       )
                                     : const SizedBox(),
                                 SizedBox(
-                                  width: 20.w,
+                                  width: 20.w*3,
                                 ),
                                 item['status'] == 0
                                     ? InkWell(
@@ -211,7 +201,7 @@ class ShareManagePage extends StatelessWidget {
                                             maxLines: 2,
                                             style: TextStyle(
                                                 color: HhColors.mainBlueColor,
-                                                fontSize: 26.sp,
+                                                fontSize: 14.sp*3,
                                                 fontWeight: FontWeight.w200),
                                           ),
                                         ),
@@ -225,11 +215,14 @@ class ShareManagePage extends StatelessWidget {
                                           maxLines: 2,
                                           style: TextStyle(
                                               color: HhColors.grayBBTextColor,
-                                              fontSize: 26.sp,
+                                              fontSize: 14.sp*3,
                                               fontWeight: FontWeight.w200),
                                         ),
                                       )
                                     : const SizedBox(),
+                                SizedBox(
+                                  width: 10.w*3,
+                                ),
                               ],
                             ),
                           ],
@@ -267,7 +260,7 @@ class ShareManagePage extends StatelessWidget {
                     color: logic.tabIndex.value == i
                         ? HhColors.mainBlueColor
                         : HhColors.gray9TextColor,
-                    fontSize: logic.tabIndex.value == i ? 32.sp : 28.sp,
+                    fontSize: logic.tabIndex.value == i ? 18.sp*3 : 15.sp*3,
                     fontWeight: logic.tabIndex.value == i
                         ? FontWeight.bold
                         : FontWeight.w200),
@@ -278,11 +271,11 @@ class ShareManagePage extends StatelessWidget {
             ),
             logic.tabIndex.value == i
                 ? Container(
-                    height: 4.w,
-                    width: 26.w,
+                    height: 6.w,
+                    width: 30.w,
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(2.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(3.w))),
                   )
                 : const SizedBox()
           ],

@@ -59,19 +59,19 @@ class MyPage extends StatelessWidget {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: CommonUtils().gradientColors()),
+                colors: CommonUtils().gradientColors2()),
           ),
         ),
 
         ///title
         Container(
-          margin: EdgeInsets.fromLTRB(30.w, 90.w, 0, 0),
+          margin: EdgeInsets.fromLTRB(14.w*3, 53.w*3, 0, 0),
           child: Text(
             "我的",
             style: TextStyle(
                 color: HhColors.blackTextColor,
-                fontSize: 34.sp,
-                fontWeight: FontWeight.bold),
+                fontSize: 18.sp*3,
+                fontWeight: FontWeight.w600),
           ),
         ),
         Align(
@@ -97,11 +97,11 @@ class MyPage extends StatelessWidget {
               }
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 90.w, 40.w, 0),
+              margin: EdgeInsets.fromLTRB(0, 53.w*3, 14.w*3, 0),
               child: Image.asset(
                 "assets/images/common/icon_scanner.png",
-                width: 45.w,
-                height: 45.w,
+                width: 24.w*3,
+                height: 24.w*3,
                 fit: BoxFit.fill,
               ),
             ),
@@ -128,7 +128,7 @@ class MyPage extends StatelessWidget {
         ),*/
 
         Container(
-          margin: EdgeInsets.only(top: 120.w),
+          margin: EdgeInsets.only(top: 114.w*3),
           child: EasyRefresh(
             onRefresh: () {
               logic.getSpaceList();
@@ -150,21 +150,21 @@ class MyPage extends StatelessWidget {
                         },
                         child: Container(
                           clipBehavior: Clip.hardEdge,
-                          margin: EdgeInsets.fromLTRB(36.w, 70.w, 0.w, 0),
+                          margin: EdgeInsets.fromLTRB(22.w*3, 0, 0.w, 0),
                           decoration: BoxDecoration(
                               color: HhColors.whiteColor,
-                              borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                              borderRadius: BorderRadius.all(Radius.circular(25.w*3))),
                           child: Image.network(
                             logic.avatar!.value,
                             // 'https://i-blog.csdnimg.cn/blog_migrate/5e75d62a5497d2d0da5f65ba2a2e1748.png',
-                            width: 100.w,
-                            height: 100.w,
+                            width: 50.w*3,
+                            height: 50.w*3,
                             fit: BoxFit.fill,
                             errorBuilder: (BuildContext context,Object exception,StackTrace? stackTrace){
                               return Image.asset(
                                 "assets/images/common/user.png",
-                                width: 100.w,
-                                height: 100.w,
+                                width: 50.w*3,
+                                height: 50.w*3,
                                 fit: BoxFit.fill,
                               );
                             },
@@ -176,12 +176,12 @@ class MyPage extends StatelessWidget {
                           Get.to(() => SettingPage(), binding: SettingBinding());
                         },
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(150.w, 80.w, 0, 0),
+                          margin: EdgeInsets.fromLTRB(80.w*3, 0, 0, 0),
                           child: Text(
                             logic.nickname!.value,
                             style: TextStyle(
                                 color: HhColors.blackTextColor,
-                                fontSize: 30.sp,
+                                fontSize: 18.sp*3,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -191,10 +191,10 @@ class MyPage extends StatelessWidget {
                           Get.to(() => SettingPage(), binding: SettingBinding());
                         },
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(150.w, 124.w, 0, 0),
+                          margin: EdgeInsets.fromLTRB(80.w*3, 30.w*3, 0, 0),
                           child: Text(
                             CommonUtils().mobileString(logic.mobile!.value),
-                            style: TextStyle(color: HhColors.gray6TextColor, fontSize: 23.sp),
+                            style: TextStyle(color: HhColors.gray6TextColor, fontSize: 13.sp*3),
                           ),
                         ),
                       ),
@@ -203,7 +203,7 @@ class MyPage extends StatelessWidget {
 
                   ///设备&&空间
                   Container(
-                    margin: EdgeInsets.fromLTRB(20.w, 40.w, 20.w, 0),
+                    margin: EdgeInsets.fromLTRB(14.w*3, 24.w*3, 14.w*3, 0),
                     child: Row(
                       children: [
                         Expanded(
@@ -213,52 +213,51 @@ class MyPage extends StatelessWidget {
                                     binding: DeviceManageBinding());
                               },
                               child: Container(
-                                height: 160.w,
-                                margin: EdgeInsets.only(right: 10.w),
+                                height: 80.w*3,
                                 decoration: BoxDecoration(
                                     color: HhColors.whiteColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                                 child: Stack(
                                   children: [
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Container(
                                         clipBehavior: Clip.hardEdge,
-                                        margin: EdgeInsets.fromLTRB(30.w, 0.w, 0.w, 0.w),
+                                        margin: EdgeInsets.fromLTRB(21.w*3, 0.w, 0.w, 0.w),
                                         decoration: BoxDecoration(
                                             color: HhColors.whiteColor,
                                             borderRadius:
-                                            BorderRadius.all(Radius.circular(50.w))),
+                                            BorderRadius.all(Radius.circular(21.w*3))),
                                         child: Image.asset(
                                           "assets/images/common/ic_my_left.png",
-                                          width: 75.w,
-                                          height: 75.w,
+                                          width: 42.w*3,
+                                          height: 42.w*3,
                                           fit: BoxFit.fill,
                                         ),
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: Container(
-                                        margin: EdgeInsets.fromLTRB(130.w, 0.w, 0.w, 45.w),
+                                        margin: EdgeInsets.fromLTRB(82.w*3, 15.w*3, 0.w, 0),
                                         child: Text(
                                           "${logic.deviceNum}",
                                           style: TextStyle(
                                               color: HhColors.blackColor,
-                                              fontSize: 40.sp,
+                                              fontSize: 24.sp*3,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: Container(
-                                        margin: EdgeInsets.fromLTRB(130.w, 45.w, 0.w, 0.w),
+                                        margin: EdgeInsets.fromLTRB(82.w*3, 50.w*3, 0.w, 0.w),
                                         child: Text(
                                           "智能设备",
                                           style: TextStyle(
                                               color: HhColors.gray9TextColor,
-                                              fontSize: 23.sp),
+                                              fontSize: 13.sp*3),
                                         ),
                                       ),
                                     ),
@@ -273,52 +272,52 @@ class MyPage extends StatelessWidget {
                                     binding: SpaceManageBinding());
                               },
                               child: Container(
-                                height: 160.w,
-                                margin: EdgeInsets.only(left: 10.w),
+                                height: 80.w*3,
+                                margin: EdgeInsets.only(left: 10.w*3),
                                 decoration: BoxDecoration(
                                     color: HhColors.whiteColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                                 child: Stack(
                                   children: [
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Container(
                                         clipBehavior: Clip.hardEdge,
-                                        margin: EdgeInsets.fromLTRB(30.w, 0.w, 0.w, 0.w),
+                                        margin: EdgeInsets.fromLTRB(21.w*3, 0.w, 0.w, 0.w),
                                         decoration: BoxDecoration(
                                             color: HhColors.whiteColor,
                                             borderRadius:
-                                            BorderRadius.all(Radius.circular(50.w))),
+                                            BorderRadius.all(Radius.circular(21.w*3))),
                                         child: Image.asset(
                                           "assets/images/common/ic_my_right.png",
-                                          width: 75.w,
-                                          height: 75.w,
+                                          width: 42.w*3,
+                                          height: 42.w*3,
                                           fit: BoxFit.fill,
                                         ),
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: Container(
-                                        margin: EdgeInsets.fromLTRB(130.w, 0.w, 0.w, 45.w),
+                                        margin: EdgeInsets.fromLTRB(82.w*3, 15.w*3, 0.w, 45.w),
                                         child: Text(
                                           "${logic.spaceNum}",
                                           style: TextStyle(
                                               color: HhColors.blackColor,
-                                              fontSize: 40.sp,
+                                              fontSize: 24.sp*3,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: Container(
-                                        margin: EdgeInsets.fromLTRB(130.w, 45.w, 0.w, 0.w),
+                                        margin: EdgeInsets.fromLTRB(82.w*3, 50.w*3, 0.w, 0.w),
                                         child: Text(
                                           "空间管理",
                                           style: TextStyle(
                                               color: HhColors.gray9TextColor,
-                                              fontSize: 23.sp),
+                                              fontSize: 13.sp*3),
                                         ),
                                       ),
                                     ),
@@ -332,11 +331,11 @@ class MyPage extends StatelessWidget {
 
                   ///菜单
                   Container(
-                    margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                    margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                         color: HhColors.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -419,18 +418,18 @@ class MyPage extends StatelessWidget {
                             Get.to(() => SettingPage(), binding: SettingBinding());
                           },
                           child: Container(
-                            height: 110.w,
+                            height: 50.w*3,
                             color: HhColors.trans,
                             child: Stack(
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 20.w),
+                                    margin: EdgeInsets.only(left: 10.w*3),
                                     child: Image.asset(
                                       "assets/images/common/ic_setting.png",
-                                      width: 36.w,
-                                      height: 36.w,
+                                      width: 20.w*3,
+                                      height: 20.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -438,12 +437,12 @@ class MyPage extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 70.w),
+                                    margin: EdgeInsets.only(left: 40.w*3),
                                     child: Text(
                                       "设置",
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -454,8 +453,8 @@ class MyPage extends StatelessWidget {
                                     margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
                                     child: Image.asset(
                                       "assets/images/common/back_role.png",
-                                      width: 25.w,
-                                      height: 25.w,
+                                      width: 14.w*3,
+                                      height: 14.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -479,18 +478,18 @@ class MyPage extends StatelessWidget {
                             Get.to(() => ShareManagePage(), binding: ShareManageBinding());
                           },
                           child: Container(
-                            height: 110.w,
+                            height: 50.w*3,
                             color: HhColors.trans,
                             child: Stack(
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 20.w),
+                                    margin: EdgeInsets.only(left: 10.w*3),
                                     child: Image.asset(
                                       "assets/images/common/icon_edit_share.png",
-                                      width: 32.w,
-                                      height: 32.w,
+                                      width: 20.w*3,
+                                      height: 20.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -498,12 +497,12 @@ class MyPage extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 70.w),
+                                    margin: EdgeInsets.only(left: 40.w*3),
                                     child: Text(
                                       "分享管理",
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -514,8 +513,8 @@ class MyPage extends StatelessWidget {
                                     margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
                                     child: Image.asset(
                                       "assets/images/common/back_role.png",
-                                      width: 25.w,
-                                      height: 25.w,
+                                      width: 14.w*3,
+                                      height: 14.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -540,18 +539,18 @@ class MyPage extends StatelessWidget {
                             EventBusUtil.getInstance().fire(HhToast(title: '暂未开放',type: 3));
                           },
                           child: Container(
-                            height: 110.w,
+                            height: 50.w*3,
                             color: HhColors.trans,
                             child: Stack(
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 20.w),
+                                    margin: EdgeInsets.only(left: 10.w*3),
                                     child: Image.asset(
                                       "assets/images/common/ic_help.png",
-                                      width: 36.w,
-                                      height: 36.w,
+                                      width: 20.w*3,
+                                      height: 20.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -559,12 +558,12 @@ class MyPage extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 70.w),
+                                    margin: EdgeInsets.only(left: 40.w*3),
                                     child: Text(
                                       "帮助与反馈",
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
-                                          fontSize: 28.sp,
+                                          fontSize: 15.sp*3,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -575,8 +574,8 @@ class MyPage extends StatelessWidget {
                                     margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
                                     child: Image.asset(
                                       "assets/images/common/back_role.png",
-                                      width: 25.w,
-                                      height: 25.w,
+                                      width: 14.w*3,
+                                      height: 14.w*3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),

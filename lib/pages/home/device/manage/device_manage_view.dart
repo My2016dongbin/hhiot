@@ -8,6 +8,8 @@ import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/model/model_class.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/home/device/add/device_add_binding.dart';
+import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
@@ -35,32 +37,52 @@ class DeviceManagePage extends StatelessWidget {
           child: Stack(
             children: [
               ///title
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 54.w*3),
+                  color: HhColors.trans,
+                  child: Text(
+                    '智能设备',
+                    style: TextStyle(
+                        color: HhColors.blackTextColor,
+                        fontSize: 18.sp*3,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-                  padding: EdgeInsets.all(10.w),
+                  margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
                   color: HhColors.trans,
                   child: Image.asset(
                     "assets/images/common/back.png",
-                    width: 18.w,
-                    height: 30.w,
+                    height: 14.w*3,
+                    width: 9.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  margin: EdgeInsets.only(top:90.w),
-                  color: HhColors.trans,
-                  child: Text(
-                    "智能设备",
-                    style: TextStyle(
-                        color: HhColors.blackTextColor,
-                        fontSize: 30.sp,fontWeight: FontWeight.bold),
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 54.h*3, 14.w*3, 0),
+                    padding: EdgeInsets.fromLTRB(20.w, 10.w, 10.w, 10.w),
+                    color: HhColors.trans,
+                    child: Image.asset(
+                      "assets/images/common/ic_add.png",
+                      height: 24.w*3,
+                      width: 24.w*3,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
@@ -68,7 +90,7 @@ class DeviceManagePage extends StatelessWidget {
               logic.testStatus.value?deviceList():const SizedBox(),
               ///tab
               Container(
-                margin: EdgeInsets.fromLTRB(50.w, 180.w, 0, 0),
+                margin: EdgeInsets.fromLTRB(24.w*3, 110.h*3, 0, 0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -85,7 +107,7 @@ class DeviceManagePage extends StatelessWidget {
 
   deviceList() {
     return Container(
-      margin: EdgeInsets.only(top: 200.w),
+      margin: EdgeInsets.only(top: 149.h*3),
       child: EasyRefresh(
         onRefresh: (){
           logic.pageNum = 1;
@@ -97,22 +119,52 @@ class DeviceManagePage extends StatelessWidget {
         },
         child: PagedListView<int, dynamic>(
           pagingController: logic.deviceController,
+          padding: EdgeInsets.zero,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
-            noItemsFoundIndicatorBuilder: (context) =>CommonUtils().noneWidget(),
-            firstPageProgressIndicatorBuilder: (context) =>Container(),
+            noItemsFoundIndicatorBuilder: (context) =>Column(
+              children: [
+                SizedBox(height:0.4.sw,),
+                Image.asset('assets/images/common/no_message.png',fit: BoxFit.fill,
+                  height: 0.32.sw,
+                  width: 0.6.sw,),
+                SizedBox(height: 100.w,),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    width: 1.sw,
+                    height: 44.w*3,
+                    margin: EdgeInsets.fromLTRB(60.w, 20.w, 60.w, 50.w),
+                    decoration: BoxDecoration(
+                        color: HhColors.mainBlueColor,
+                        borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
+                    child: Center(
+                      child: Text(
+                        "没有设备？去添加",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: HhColors.grayEEBackColor, fontSize: 15.sp*3),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Get.to(()=>DeviceAddPage(snCode: ""),binding: DeviceAddBinding());
+                  },
+                ),
+              ],
+            ),
             itemBuilder: (context, item, index) =>
                 InkWell(
                   onTap: (){
                     Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
                   },
                   child: Container(
-                    height: 180.w,
-                    margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                    padding: EdgeInsets.all(20.w),
+                    height: 80.w*3,
+                    margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
+                    padding: EdgeInsets.fromLTRB(10.w*3, 14.w*3, 15.w*3, 14.w*3),
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                         color: HhColors.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10.w))
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))
                     ),
                     child: Stack(
                       children: [
@@ -125,8 +177,8 @@ class DeviceManagePage extends StatelessWidget {
                             ),
                             child: Image.asset(
                               item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
-                              width: 80.w,
-                              height: 80.w,
+                              width: 52.w*3,
+                              height: 52.w*3,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -134,16 +186,16 @@ class DeviceManagePage extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(100.w, 0, 0, 50.w),
+                            margin: EdgeInsets.fromLTRB(60.w*3, 0, 0, 50.w),
                             child: Text(
                               CommonUtils().parseNull('${item['name']}',""),
                               style: TextStyle(
-                                  color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                  color: HhColors.textBlackColor, fontSize: 16.sp*3,fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
+                          margin: EdgeInsets.fromLTRB(60.w*3, 32.w*3, 0, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -153,34 +205,34 @@ class DeviceManagePage extends StatelessWidget {
                                   CommonUtils().parseNull('${item['spaceName']}', ""),
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      color: HhColors.textColor, fontSize: 22.sp),
+                                      color: HhColors.textColor, fontSize: 13.sp*3),
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsets.fromLTRB(10.w, 0, 20.w, 0),
-                                padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                                padding: EdgeInsets.fromLTRB(6.w*3,2.w*3,6.w*3,2.w*3),
                                 decoration: BoxDecoration(
                                   color: item['status']==1?HhColors.transBlueColors:HhColors.transRedColors,
                                   border: Border.all(color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor,width: 1.w),
-                                  borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                                  borderRadius: BorderRadius.all(Radius.circular(4.w*3)),
                                 ),
                                 child: Text(
                                   item['status']==1?'在线':"离线",
                                   style: TextStyle(
-                                      color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
+                                      color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 12.sp*3),
                                 ),
                               ),
                               CommonData.personal?(item['shareMark']!=0?Container(//设备分享标识 0未分享 1分享中 2好友分享
                                 margin: EdgeInsets.only(left:10.w),
-                                padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                                padding: EdgeInsets.fromLTRB(6.w*3,2.w*3,6.w*3,2.w*3),
                                 decoration: BoxDecoration(
                                     color: item['shareMark']==1?HhColors.mainBlueColor:HhColors.grayEEBackColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(5.w))
+                                    borderRadius: BorderRadius.all(Radius.circular(4.w*3))
                                 ),
                                 child: Text(
                                   item['shareMark']==1?'分享中*${item['shareCount']}': item['shareMark']==2?"好友分享":"",
                                   style: TextStyle(
-                                      color: item['shareMark']==1?HhColors.whiteColor:HhColors.gray9TextColor, fontSize: 23.sp),
+                                      color: item['shareMark']==1?HhColors.whiteColor:HhColors.gray9TextColor, fontSize: 12.sp*3),
                                 ),
                               ):const SizedBox()):const SizedBox(),
                             ],
@@ -215,8 +267,8 @@ class DeviceManagePage extends StatelessWidget {
                               margin: EdgeInsets.only(right: 0.w),
                               child: Image.asset(
                                 item['shareMark']==2?"assets/images/common/shared.png":"assets/images/common/share.png",
-                                width: 50.w,
-                                height: 50.w,
+                                width: 28.w*3,
+                                height: 28.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -231,7 +283,6 @@ class DeviceManagePage extends StatelessWidget {
       ),
     );
   }
-
 
   List<Widget> buildTabs() {
     List<Widget> list = [];
@@ -252,13 +303,13 @@ class DeviceManagePage extends StatelessWidget {
                   child: Text(
                     '${model['name']}',
                     style: TextStyle(
-                        color: logic.tabIndex.value==i?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==i?32.sp:28.sp,fontWeight: logic.tabIndex.value==i?FontWeight.bold:FontWeight.w500),
+                        color: logic.tabIndex.value==i?HhColors.mainBlueColor:HhColors.gray9TextColor, fontSize: logic.tabIndex.value==i?18.sp*3:15.sp*3,fontWeight: logic.tabIndex.value==i?FontWeight.bold:FontWeight.w500),
                   ),
                 ),
                 SizedBox(height: 5.w,),
                 logic.tabIndex.value==i?Container(
-                  height: 4.w,
-                  width: 26.w,
+                  height: 2.w*3,
+                  width: 9.w*3,
                   decoration: BoxDecoration(
                       color: HhColors.mainBlueColor,
                       borderRadius: BorderRadius.all(Radius.circular(2.w))

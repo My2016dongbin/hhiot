@@ -54,75 +54,75 @@ class SettingPage extends StatelessWidget {
         ),
 
         ///title
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            margin: EdgeInsets.only(top: 54.w*3),
+            color: HhColors.trans,
+            child: Text(
+              '设置',
+              style: TextStyle(
+                  color: HhColors.blackTextColor,
+                  fontSize: 18.sp*3,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
         InkWell(
           onTap: () {
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-            padding: EdgeInsets.all(10.w),
+            margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
-              width: 18.w,
-              height: 30.w,
+              height: 14.w*3,
+              width: 9.w*3,
               fit: BoxFit.fill,
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            margin: EdgeInsets.only(top: 90.w),
-            color: HhColors.trans,
-            child: Text(
-              "设置",
-              style: TextStyle(
-                  color: HhColors.blackTextColor,
-                  fontSize: 30.sp,
-                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
 
         ///菜单
         Container(
-          margin: EdgeInsets.fromLTRB(20.w, 160.w, 20.w, 0),
+          margin: EdgeInsets.fromLTRB(14.w*3, 108.w*3, 14.w*3, 0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ///个人信息
                 Container(
-                  margin: EdgeInsets.fromLTRB(15.w, 30.w, 0, 20.w),
+                  margin: EdgeInsets.fromLTRB(9.w*3, 30.w, 0, 20.w),
                   child: Text(
                     "个人信息",
                     style: TextStyle(
-                        color: HhColors.gray6TextColor, fontSize: 28.sp),
+                        color: HhColors.gray6TextColor, fontSize: 14.sp*3),
                   ),
                 ),
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ///头像
                       SizedBox(
-                        height: 150.w,
+                        height: 80.w*3,
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Container(
-                                margin: EdgeInsets.only(left: 30.w),
+                                margin: EdgeInsets.only(left: 15.w*3),
                                 child: Text(
                                   "头像",
                                   style: TextStyle(
                                       color: HhColors.textBlackColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -135,30 +135,30 @@ class SettingPage extends StatelessWidget {
                                 },
                                 child: Container(
                                   clipBehavior: Clip.hardEdge,
-                                  margin: EdgeInsets.only(right: 65.w),
+                                  margin: EdgeInsets.only(right: 37.w*3),
                                   decoration: BoxDecoration(
                                       color: HhColors.whiteColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(50.w))),
+                                          Radius.circular(25.w*3))),
                                   child: logic.picture.value == true
                                       ? Image.file(
                                           File(logic.file.path),
-                                          width: 100.w,
-                                          height: 100.w,
+                                          width: 50.w*3,
+                                          height: 50.w*3,
                                           fit: BoxFit.fill,
                                         )
                                       : Image.network(
                                           logic.avatar!.value,
-                                          width: 100.w,
-                                          height: 100.w,
+                                          width: 50.w*3,
+                                          height: 50.w*3,
                                           fit: BoxFit.fill,
                                           errorBuilder: (BuildContext context,
                                               Object exception,
                                               StackTrace? stackTrace) {
                                             return Image.asset(
                                               "assets/images/common/user.png",
-                                              width: 100.w,
-                                              height: 100.w,
+                                              width: 50.w*3,
+                                              height: 50.w*3,
                                               fit: BoxFit.fill,
                                             );
                                           },
@@ -169,11 +169,11 @@ class SettingPage extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: Container(
-                                margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                margin: EdgeInsets.fromLTRB(0, 6.w, 11.w*3, 0),
                                 child: Image.asset(
                                   "assets/images/common/back_role.png",
-                                  width: 25.w,
-                                  height: 25.w,
+                                  width: 14.w*3,
+                                  height: 14.w*3,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -201,18 +201,18 @@ class SettingPage extends StatelessWidget {
                               binding: EditBinding());
                         },
                         child: SizedBox(
-                          height: 110.w,
+                          height: 50.w*3,
                           child: Stack(
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 30.w),
+                                  margin: EdgeInsets.only(left: 15.w*3),
                                   child: Text(
                                     "昵称",
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
-                                        fontSize: 28.sp,
+                                        fontSize: 15.sp*3,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -220,23 +220,23 @@ class SettingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 65.w),
+                                  margin: EdgeInsets.only(right: 28.w*3),
                                   child: Text(
                                     logic.nickname!.value,
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
-                                        fontSize: 26.sp),
+                                        fontSize: 15.sp*3),
                                   ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                  margin: EdgeInsets.fromLTRB(0, 6.w, 11.w*3, 0),
                                   child: Image.asset(
                                     "assets/images/common/back_role.png",
-                                    width: 25.w,
-                                    height: 25.w,
+                                    width: 14.w*3,
+                                    height: 14.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -257,18 +257,18 @@ class SettingPage extends StatelessWidget {
 
                       ///账号
                       SizedBox(
-                        height: 110.w,
+                        height: 50.w*3,
                         child: Stack(
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Container(
-                                margin: EdgeInsets.only(left: 30.w),
+                                margin: EdgeInsets.only(left: 15.w*3),
                                 child: Text(
                                   "账号",
                                   style: TextStyle(
                                       color: HhColors.textBlackColor,
-                                      fontSize: 28.sp,
+                                      fontSize: 15.sp*3,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -276,12 +276,12 @@ class SettingPage extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: Container(
-                                margin: EdgeInsets.only(right: 65.w),
+                                margin: EdgeInsets.only(right: 15.w*3),
                                 child: Text(
                                   logic.account!.value,
                                   style: TextStyle(
                                       color: HhColors.grayCCTextColor,
-                                      fontSize: 26.sp),
+                                      fontSize: 15.sp*3),
                                 ),
                               ),
                             ),
@@ -313,18 +313,18 @@ class SettingPage extends StatelessWidget {
                       CommonData.personal
                           ? const SizedBox()
                           : SizedBox(
-                              height: 110.w,
+                              height: 50.w*3,
                               child: Stack(
                                 children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 30.w),
+                                      margin: EdgeInsets.only(left: 15.w*3),
                                       child: Text(
                                         "公司信息",
                                         style: TextStyle(
                                             color: HhColors.textBlackColor,
-                                            fontSize: 28.sp,
+                                            fontSize: 15.sp*3,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -332,12 +332,12 @@ class SettingPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Container(
-                                      margin: EdgeInsets.only(right: 65.w),
+                                      margin: EdgeInsets.only(right: 15.w*3),
                                       child: Text(
                                         logic.tenantTitle!.value,
                                         style: TextStyle(
                                             color: HhColors.grayCCTextColor,
-                                            fontSize: 26.sp),
+                                            fontSize: 15.sp*3),
                                       ),
                                     ),
                                   ),
@@ -359,18 +359,18 @@ class SettingPage extends StatelessWidget {
 
                 ///安全设置
                 Container(
-                  margin: EdgeInsets.fromLTRB(15.w, 20.w, 0, 20.w),
+                  margin: EdgeInsets.fromLTRB(9.w*3, 30.w, 0, 20.w),
                   child: Text(
                     "安全设置",
                     style: TextStyle(
-                        color: HhColors.gray6TextColor, fontSize: 28.sp),
+                        color: HhColors.gray6TextColor, fontSize: 14.sp*3),
                   ),
                 ),
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -385,18 +385,18 @@ class SettingPage extends StatelessWidget {
                               binding: PhoneBinding());
                         },
                         child: SizedBox(
-                          height: 110.w,
+                          height: 50.w*3,
                           child: Stack(
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 30.w),
+                                  margin: EdgeInsets.only(left: 15.w*3),
                                   child: Text(
                                     "安全手机",
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
-                                        fontSize: 28.sp,
+                                        fontSize: 15.sp*3,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -404,24 +404,24 @@ class SettingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 65.w),
+                                  margin: EdgeInsets.only(right: 28.w*3),
                                   child: Text(
                                     CommonUtils()
                                         .mobileString(logic.mobile!.value),
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
-                                        fontSize: 26.sp),
+                                        fontSize: 15.sp*3),
                                   ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                  margin: EdgeInsets.fromLTRB(0, 6.w, 11.w*3, 0),
                                   child: Image.asset(
                                     "assets/images/common/back_role.png",
-                                    width: 25.w,
-                                    height: 25.w,
+                                    width: 14.w*3,
+                                    height: 14.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -500,7 +500,7 @@ class SettingPage extends StatelessWidget {
 
                       ///设置新密码
                       SizedBox(
-                        height: 110.w,
+                        height: 50.w*3,
                         child: InkWell(
                           onTap: () {
                             Get.to(
@@ -515,12 +515,12 @@ class SettingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 30.w),
+                                  margin: EdgeInsets.only(left: 15.w*3),
                                   child: Text(
                                     "设置新密码",
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
-                                        fontSize: 28.sp,
+                                        fontSize: 15.sp*3,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -528,23 +528,23 @@ class SettingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 65.w),
+                                  margin: EdgeInsets.only(right: 28.w*3),
                                   child: Text(
                                     "",
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
-                                        fontSize: 26.sp),
+                                        fontSize: 15.sp*3),
                                   ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                  margin: EdgeInsets.fromLTRB(0, 6.w, 11.w*3, 0),
                                   child: Image.asset(
                                     "assets/images/common/back_role.png",
-                                    width: 25.w,
-                                    height: 25.w,
+                                    width: 14.w*3,
+                                    height: 14.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -697,18 +697,18 @@ class SettingPage extends StatelessWidget {
 
                 ///其他设置
                 Container(
-                  margin: EdgeInsets.fromLTRB(15.w, 20.w, 0, 20.w),
+                  margin: EdgeInsets.fromLTRB(9.w*3, 30.w, 0, 20.w),
                   child: Text(
                     "其他设置",
                     style: TextStyle(
-                        color: HhColors.gray6TextColor, fontSize: 28.sp),
+                        color: HhColors.gray6TextColor, fontSize: 14.sp*3),
                   ),
                 ),
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                       color: HhColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -726,18 +726,18 @@ class SettingPage extends StatelessWidget {
                           });
                         },
                         child: SizedBox(
-                          height: 110.w,
+                          height: 50.w*3,
                           child: Stack(
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 30.w),
+                                  margin: EdgeInsets.only(left: 15.w*3),
                                   child: Text(
                                     "清除缓存",
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
-                                        fontSize: 28.sp,
+                                        fontSize: 14.sp*3,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -745,25 +745,25 @@ class SettingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 65.w),
+                                  margin: EdgeInsets.only(right: 28.w*3),
                                   child: Text(
                                     logic.cache.value == 0
                                         ? "无缓存"
                                         : "${CommonUtils().parseDouble("${logic.cache.value / 10000}")}M",
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
-                                        fontSize: 26.sp),
+                                        fontSize: 15.sp*3),
                                   ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                  margin: EdgeInsets.fromLTRB(0, 6.w, 11.w*3, 0),
                                   child: Image.asset(
                                     "assets/images/common/back_role.png",
-                                    width: 25.w,
-                                    height: 25.w,
+                                    width: 14.w*3,
+                                    height: 14.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -790,18 +790,18 @@ class SettingPage extends StatelessWidget {
                               binding: UsBinding());
                         },
                         child: SizedBox(
-                          height: 110.w,
+                          height: 50.w*3,
                           child: Stack(
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 30.w),
+                                  margin: EdgeInsets.only(left: 15.w*3),
                                   child: Text(
                                     "关于我们",
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
-                                        fontSize: 28.sp,
+                                        fontSize: 15.sp*3,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -809,23 +809,23 @@ class SettingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 65.w),
+                                  margin: EdgeInsets.only(right: 28.w*3),
                                   child: Text(
                                     "版本V${logic.version.value}",
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
-                                        fontSize: 26.sp),
+                                        fontSize: 15.sp*3),
                                   ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6.w, 30.w, 0),
+                                  margin: EdgeInsets.fromLTRB(0, 6.w, 11.w*3, 0),
                                   child: Image.asset(
                                     "assets/images/common/back_role.png",
-                                    width: 25.w,
-                                    height: 25.w,
+                                    width: 14.w*3,
+                                    height: 14.w*3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -867,16 +867,16 @@ class SettingPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
+                    height: 44.w*3,
                     margin: EdgeInsets.fromLTRB(0, 50.w, 0, 50.w),
                     decoration: BoxDecoration(
                         color: HhColors.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(14.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Center(
                       child: Text(
                         "退出登录",
                         style: TextStyle(
-                            color: HhColors.titleColorRed, fontSize: 28.sp),
+                            color: HhColors.titleColorRed, fontSize: 15.sp*3),
                       ),
                     ),
                   ),

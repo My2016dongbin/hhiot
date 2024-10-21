@@ -9,10 +9,6 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
-import 'package:iot/pages/home/device/list/device_list_binding.dart';
-import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/pages/home/main/search/search_controller.dart';
@@ -51,43 +47,13 @@ class SearchPage extends StatelessWidget {
       children: [
         ///背景色
         Container(
-          height: 180.w,
+          height: 103.h*3,
           color: HhColors.whiteColor,
         ),
         ///title
-        /*InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            margin: EdgeInsets.fromLTRB(26.w, 80.w, 0, 0),
-            padding: EdgeInsets.all(20.w),
-            color: HhColors.trans,
-            child: Image.asset(
-              "assets/images/common/back.png",
-              width: 18.w,
-              height: 30.w,
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),*/
-        /*Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            margin: EdgeInsets.only(top: 90.w),
-            color: HhColors.trans,
-            child: Text(
-              "搜索",
-              style: TextStyle(
-                  color: HhColors.blackTextColor,
-                  fontSize: 30.sp,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),*/
         Container(
-          height: 80.w,
-          margin: EdgeInsets.only(top: 80.w),
+          height: 44.h*3,
+          margin: EdgeInsets.only(top: 59.h*3),
           child: Row(
             children: [
               InkWell(
@@ -95,22 +61,22 @@ class SearchPage extends StatelessWidget {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(26.w, 0, 0, 0),
-                  padding: EdgeInsets.all(20.w),
+                  margin: EdgeInsets.fromLTRB(23.w*3, 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
                   color: HhColors.trans,
                   child: Image.asset(
                     "assets/images/common/back.png",
-                    width: 18.w,
-                    height: 30.w,
+                    height: 14.w*3,
+                    width: 9.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               Expanded(
                 child: Container(
-                  height: 80.w,
-                  margin: EdgeInsets.fromLTRB(20.w, 0, 10.w, 0),
-                  padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                  height: 32.h*3,
+                  margin: EdgeInsets.fromLTRB(12.w*3, 0, 10.w, 0),
+                  padding: EdgeInsets.fromLTRB(12.w*3, 7.w*3, 12.w*3, 7.w*3),
                   decoration: BoxDecoration(
                       color: HhColors.grayEEBackColor,
                       borderRadius: BorderRadius.all(Radius.circular(50.w))),
@@ -120,16 +86,16 @@ class SearchPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin:EdgeInsets.only(bottom: 2.w),
+                        margin:EdgeInsets.only(top: 2.w),
                         child: Image.asset(
                           "assets/images/common/icon_search.png",
-                          width: 35.w,
-                          height: 35.w,
+                          width: 18.w*3,
+                          height: 18.w*3,
                           fit: BoxFit.fill,
                         ),
                       ),
                       SizedBox(
-                        width: 5.w,
+                        width: 3.w*3,
                       ),
                       Expanded(
                         child: TextField(
@@ -149,10 +115,10 @@ class SearchPage extends StatelessWidget {
                             ),
                             hintText: '搜索设备、空间、消息...',
                             hintStyle: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 24.sp),
+                                color: HhColors.gray9TextColor, fontSize: 14.sp*3),
                           ),
                           style:
-                          TextStyle(color: HhColors.textColor, fontSize: 24.sp),
+                          TextStyle(color: HhColors.textColor, fontSize: 14.sp*3),
                         ),
                       )
                     ],
@@ -166,13 +132,13 @@ class SearchPage extends StatelessWidget {
                   logic.searchController!.text = '';
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
-                  padding: EdgeInsets.fromLTRB(15.w, 5.w, 15.w, 5.w),
+                  margin: EdgeInsets.fromLTRB(21.w*3, 0, 14.w*3, 0),
+                  padding: EdgeInsets.fromLTRB(0, 5.w, 0, 5.w),
                   child: Text(
                     "取消",
                     style: TextStyle(
                         color: HhColors.gray6TextColor,
-                        fontSize: 24.sp,
+                        fontSize: 15.sp*3,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -181,7 +147,7 @@ class SearchPage extends StatelessWidget {
           ),
         ),
         logic.listStatus.value?Container(
-          margin: EdgeInsets.only(top: 180.w),
+          margin: EdgeInsets.only(top: 102.w*3),
           child: EasyRefresh(
             onRefresh: (){
               logic.mainSearch();
@@ -208,8 +174,8 @@ class SearchPage extends StatelessWidget {
     try{
       ///我的设备
       list.add(logic.deviceList.isEmpty?const SizedBox():Container(
-        margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 30.w),
-        child: Text('我的设备',style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
+        margin: EdgeInsets.fromLTRB(24.w*3, 30.w, 0, 30.w),
+        child: Text('我的设备',style: TextStyle(color: HhColors.blackTextColor,fontSize: 18.sp*3,fontWeight: FontWeight.bold),),
       ));
       for(int i = 0;i < logic.deviceList.length; i++){
         dynamic item = logic.deviceList[i];
@@ -223,13 +189,13 @@ class SearchPage extends StatelessWidget {
             }*/
           },
           child: Container(
-            height: 180.w,
-            margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-            padding: EdgeInsets.all(20.w),
+            height: 80.w*3,
+            margin: EdgeInsets.fromLTRB(14.w*3, 20.w, 14.w*3, 0),
+            padding: EdgeInsets.fromLTRB(10.w*3, 14.w*3, 15.w*3, 14.w*3),
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(10.w))
+                borderRadius: BorderRadius.all(Radius.circular(8.w*3))
             ),
             child: Stack(
               children: [
@@ -242,8 +208,8 @@ class SearchPage extends StatelessWidget {
                     ),
                     child: Image.asset(
                       item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
-                      width: 80.w,
-                      height: 80.w,
+                      width: 52.w*3,
+                      height: 52.w*3,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -251,16 +217,16 @@ class SearchPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(100.w, 0, 0, 50.w),
+                    margin: EdgeInsets.fromLTRB(60.w*3, 0, 0, 50.w),
                     child: Text(
                       CommonUtils().parseNull('${item['name']}',""),
                       style: TextStyle(
-                          color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                          color: HhColors.textBlackColor, fontSize: 16.sp*3,fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(100.w, 80.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(60.w*3, 32.w*3, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -270,21 +236,21 @@ class SearchPage extends StatelessWidget {
                           CommonUtils().parseNull('${item['spaceName']}', "默认空间"),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: HhColors.textColor, fontSize: 22.sp),
+                              color: HhColors.textColor, fontSize: 13.sp*3),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(10.w, 0, 20.w, 0),
-                        padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
+                        padding: EdgeInsets.fromLTRB(6.w*3,2.w*3,6.w*3,2.w*3),
                         decoration: BoxDecoration(
                           color: item['status']==1?HhColors.transBlueColors:HhColors.transRedColors,
                           border: Border.all(color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor,width: 1.w),
-                          borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                          borderRadius: BorderRadius.all(Radius.circular(4.w*3)),
                         ),
                         child: Text(
                           item['status']==1?'在线':"离线",
                           style: TextStyle(
-                              color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 23.sp),
+                              color: item['status']==1?HhColors.mainBlueColor:HhColors.mainRedColor, fontSize: 12.sp*3),
                         ),
                       ),
                       CommonData.personal?(item['shareMark']!=0?Container(//设备分享标识 0未分享 1分享中 2好友分享
@@ -292,12 +258,12 @@ class SearchPage extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(15.w,5.w,15.w,5.w),
                         decoration: BoxDecoration(
                             color: item['shareMark']==1?HhColors.mainBlueColor:HhColors.grayEEBackColor,
-                            borderRadius: BorderRadius.all(Radius.circular(5.w))
+                            borderRadius: BorderRadius.all(Radius.circular(4.w*3))
                         ),
                         child: Text(
                           item['shareMark']==1?'分享中*${item['shareCount']}': item['shareMark']==2?"好友分享":"",
                           style: TextStyle(
-                              color: item['shareMark']==1?HhColors.whiteColor:HhColors.gray9TextColor, fontSize: 23.sp),
+                              color: item['shareMark']==1?HhColors.whiteColor:HhColors.gray9TextColor, fontSize: 12.sp*3),
                         ),
                       ):const SizedBox()):const SizedBox(),
                     ],
@@ -332,8 +298,8 @@ class SearchPage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 0.w),
                       child: Image.asset(
                         item['shareMark']==2?"assets/images/common/shared.png":"assets/images/common/share.png",
-                        width: 50.w,
-                        height: 50.w,
+                        width: 28.w*3,
+                        height: 28.w*3,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -351,8 +317,8 @@ class SearchPage extends StatelessWidget {
         List<dynamic> deviceList = space['deviceBaseDOList']??[];
 
         list.add(deviceList.isEmpty?const SizedBox():Container(
-          margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 25.w),
-          child: Text(CommonUtils().parseNameCount('${space['name']}', 10),style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
+          margin: EdgeInsets.fromLTRB(24.w*3, 30.w, 0, 25.w),
+          child: Text(CommonUtils().parseNameCount('${space['name']}', 10),style: TextStyle(color: HhColors.blackTextColor,fontSize: 18.sp*3,fontWeight: FontWeight.bold),),
         ));
         for(int i = 0;i < ((deviceList.length%2==0)?(deviceList.length/2)-1:(deviceList.length/2+1-1)); i++){
           dynamic itemLeft = deviceList[i*2];//0 2 4
@@ -367,7 +333,7 @@ class SearchPage extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: (){
-                      // Get.to(()=>DeviceListPage(id: "${itemLeft['id']}",),binding: DeviceListBinding());
+                      Get.to(()=>DeviceDetailPage('${itemLeft['deviceNo']}','${itemLeft['id']}',itemLeft['shareMark']),binding: DeviceDetailBinding());
                     },
                     child: Container(
                       clipBehavior: Clip.hardEdge, //裁剪
@@ -375,7 +341,7 @@ class SearchPage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0.04.sw, 30.w, 0.02.sw, 0),
                       decoration: BoxDecoration(
                           color: HhColors.whiteColor,
-                          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+                          borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -384,25 +350,25 @@ class SearchPage extends StatelessWidget {
                             height: 0.25.sw,
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
-                                borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                                borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                             child: Image.asset(
                               "assets/images/common/test_video.jpg",
                               fit: BoxFit.fill,
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(20.w, 16.w, 16.w, 0),
+                            margin: EdgeInsets.fromLTRB(18.w*3, 16.w, 16.w, 0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Expanded(
                                   child: Text(
-                                    CommonUtils().parseNameCount("${itemLeft['name']}", 20),
+                                    CommonUtils().parseNameCount("${itemLeft['name']}", 4),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: HhColors.blackColor,
-                                      fontSize: 30.sp,),
+                                      fontSize: 15.sp*3,),
                                   ),
                                 ),
                                 SizedBox(width: 8.w,),
@@ -417,7 +383,7 @@ class SearchPage extends StatelessWidget {
                   ),
                   itemRight['name'] == null?const SizedBox():InkWell(
                     onTap: (){
-                      // Get.to(()=>DeviceListPage(id: "${itemRight['id']}",),binding: DeviceListBinding());
+                      Get.to(()=>DeviceDetailPage('${itemRight['deviceNo']}','${itemRight['id']}',itemRight['shareMark']),binding: DeviceDetailBinding());
                     },
                     child: Container(
                       clipBehavior: Clip.hardEdge, //裁剪
@@ -425,7 +391,7 @@ class SearchPage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0.02.sw, 30.w, 0.04.sw, 0),
                       decoration: BoxDecoration(
                           color: HhColors.whiteColor,
-                          borderRadius: BorderRadius.all(Radius.circular(32.w))),
+                          borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -434,7 +400,7 @@ class SearchPage extends StatelessWidget {
                             height: 0.25.sw,
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
-                                borderRadius: BorderRadius.vertical(top:Radius.circular(32.w))),
+                                borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                             child: Image.asset(
                               "assets/images/common/test_video.jpg",
                               fit: BoxFit.fill,
@@ -447,12 +413,12 @@ class SearchPage extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    CommonUtils().parseNameCount("${itemRight['name']}", 20),
+                                    CommonUtils().parseNameCount("${itemRight['name']}", 4),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: HhColors.blackColor,
-                                      fontSize: 30.sp,),
+                                      fontSize: 15.sp*3,),
                                   ),
                                 ),
                                 SizedBox(width: 8.w,),
@@ -474,8 +440,8 @@ class SearchPage extends StatelessWidget {
       HhLog.d("logic.messageList-- ${logic.messageList}");
       ///我的消息
       list.add(logic.messageList.isEmpty?const SizedBox():Container(
-        margin: EdgeInsets.fromLTRB(40.w, 30.w, 0, 30.w),
-        child: Text('我的消息',style: TextStyle(color: HhColors.blackTextColor,fontSize: 36.sp,fontWeight: FontWeight.bold),),
+        margin: EdgeInsets.fromLTRB(24.w*3, 30.w, 0, 30.w),
+        child: Text('我的消息',style: TextStyle(color: HhColors.blackTextColor,fontSize: 18.sp*3,fontWeight: FontWeight.bold),),
       ));
       /*for(int i = 0;i < logic.messageList.length; i++){
         dynamic item = logic.messageList[i];
@@ -694,40 +660,40 @@ class SearchPage extends StatelessWidget {
       ),
     );*/
     return Container(
-      margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-      padding: EdgeInsets.all(20.w),
+      margin: EdgeInsets.fromLTRB(14.w*3, 20.w, 14.w*3, 0),
+      padding: EdgeInsets.fromLTRB(8.w*3, 12.w*3, 10.w*3, 12.w*3),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
           color: HhColors.whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(10.w))
+          borderRadius: BorderRadius.all(Radius.circular(8.w*3))
       ),
       child: Row(
         children: [
           SizedBox(
-            width: 200.w,
-            height: 130.w,
+            width: 113.w*3,
+            height: 70.w*3,
             child: Stack(
               children: [
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.w),
+                    borderRadius: BorderRadius.circular(8.w*3),
                   ),
                   child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
                     "assets/images/common/icon_message_back.png",
-                    width: 200.w,
-                    height: 130.w,
+                    width: 113.w*3,
+                    height: 70.w*3,
                     fit: BoxFit.fill,
                   ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
                     return Image.asset(
                       "assets/images/common/test_video.jpg",
-                      width: 200.w,
-                      height: 130.w,
+                      width: 113.w*3,
+                      height: 70.w*3,
                       fit: BoxFit.fill,
                     );
                   },
-                    width: 200.w,
-                    height: 130.w,
+                    width: 113.w*3,
+                    height: 70.w*3,
                     fit: BoxFit.fill,),
                 ),
                 item['alarmType']=='tilt'?Align(
@@ -752,28 +718,28 @@ class SearchPage extends StatelessWidget {
           ),
           Expanded(
             child: SizedBox(
-              height: 130.w,
+              // height: 130.w,
               child: Stack(
                 children: [
-                  item['status'] == true?const SizedBox():Container(
+                  /*item['status'] == true?const SizedBox():Container(
                     height: 10.w,
                     width: 10.w,
-                    margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                    margin: EdgeInsets.fromLTRB(10.w*3, 15.w, 0, 0),
                     decoration: BoxDecoration(
                         color: HhColors.backRedInColor,
                         borderRadius: BorderRadius.all(Radius.circular(5.w))
                     ),
-                  ),
+                  ),*/
                   Container(
-                    margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
+                    margin: EdgeInsets.fromLTRB(10.w*3, 5.w, 0, 0),
                     child: Text(
                       parseLeftType("${item['alarmType']}"),
                       style: TextStyle(
-                          color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                          color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                    margin: EdgeInsets.fromLTRB(10.w*3, 27.w*3, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -783,15 +749,15 @@ class SearchPage extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: HhColors.textColor, fontSize: 22.sp),
+                              color: HhColors.textColor, fontSize: 14.sp*3),
                         ),
-                        SizedBox(height: 5.w,),
+                        SizedBox(height: 3.w*3,),
                         Text(
                           CommonUtils().parseNull('${item['spaceName']}', ""),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: HhColors.textColor, fontSize: 22.sp),
+                              color: HhColors.textColor, fontSize: 13.sp*3),
                         ),
                       ],
                     ),
@@ -803,7 +769,7 @@ class SearchPage extends StatelessWidget {
                       child: Text(
                         CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
                         style: TextStyle(
-                            color: HhColors.textColor, fontSize: 22.sp),
+                            color: HhColors.textColor, fontSize: 12.sp*3),
                       ),
                     ),
                   ),

@@ -45,33 +45,33 @@ class DeviceAddPage extends StatelessWidget {
             child: Stack(
               children: [
                 ///title
-                InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
-                    padding: EdgeInsets.all(10.w),
-                    color: HhColors.trans,
-                    child: Image.asset(
-                      "assets/images/common/back.png",
-                      width: 18.w,
-                      height: 30.w,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    margin: EdgeInsets.only(top: 90.w),
+                    margin: EdgeInsets.only(top: 54.w*3),
                     color: HhColors.trans,
                     child: Text(
                       logic.isEdit.value?"修改设备":"添加设备",
                       style: TextStyle(
                           color: HhColors.blackTextColor,
-                          fontSize: 30.sp,
+                          fontSize: 18.sp*3,
                           fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
+                    color: HhColors.trans,
+                    child: Image.asset(
+                      "assets/images/common/back.png",
+                      height: 14.w*3,
+                      width: 9.w*3,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -90,12 +90,12 @@ class DeviceAddPage extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 90.w, 36.w, 0),
+                      margin: EdgeInsets.fromLTRB(0, 59.h*3, 23.w*3, 0),
                       color: HhColors.trans,
                       child: Image.asset(
                         "assets/images/common/icon_scanner.png",
-                        width: 50.w,
-                        height: 50.w,
+                        width: 24.w*3,
+                        height: 24.w*3,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -103,7 +103,7 @@ class DeviceAddPage extends StatelessWidget {
                 ),
                 ///SN码
                 Container(
-                  margin: EdgeInsets.fromLTRB(30.w, 200.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(20.w*3, 114.w*3, 0, 0),
                   child: Row(
                     children: [
                       /*Container(
@@ -119,14 +119,14 @@ class DeviceAddPage extends StatelessWidget {
                         "设备SN码",
                         style: TextStyle(
                           color: HhColors.blackTextColor,
-                          fontSize: 28.sp,),
+                          fontSize: 15.sp*3,),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  height: 90.w,
-                  margin: EdgeInsets.fromLTRB(20.w, 270.w, 20.w, 0),
+                  height: 50.w*3,
+                  margin: EdgeInsets.fromLTRB(14.w*3, 147.w*3, 14.w*3, 0),
                   padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                   decoration: BoxDecoration(
                       color: HhColors.grayEEBackColor,
@@ -150,11 +150,11 @@ class DeviceAddPage extends StatelessWidget {
                             ),
                             hintText: '请输入SN码',
                             hintStyle: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
+                                color: HhColors.gray9TextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           enabled: !logic.isEdit.value,
                           style:
-                          TextStyle(color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                          TextStyle(color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                         ),
                       ),
                       logic.isEdit.value?const SizedBox():BouncingWidget(
@@ -165,8 +165,8 @@ class DeviceAddPage extends StatelessWidget {
                         },
                         child: Image.asset(
                           "assets/images/common/ic_close.png",
-                          width: 35.w,
-                          height: 35.w,
+                          width: 16.w*3,
+                          height: 16.w*3,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -178,27 +178,27 @@ class DeviceAddPage extends StatelessWidget {
                 ),
                 ///名称
                 Container(
-                  margin: EdgeInsets.fromLTRB(30.w, 390.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(20.w*3, 214.w*3, 0, 0),
                   child: Row(
                     children: [
                       Text(
                         "",
                         style: TextStyle(
                           color: HhColors.titleColorRed,
-                          fontSize: 28.sp,),
+                          fontSize: 14.sp*3,),
                       ),
                       Text(
                         "输入设备名称",
                         style: TextStyle(
                           color: HhColors.blackTextColor,
-                          fontSize: 28.sp,),
+                          fontSize: 14.sp*3,),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  height: 90.w,
-                  margin: EdgeInsets.fromLTRB(20.w, 460.w, 20.w, 0),
+                  height: 50.w*3,
+                  margin: EdgeInsets.fromLTRB(14.w*3, 247.w*3, 14.w*3, 0),
                   padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                   decoration: BoxDecoration(
                       color: HhColors.grayEEBackColor,
@@ -224,10 +224,10 @@ class DeviceAddPage extends StatelessWidget {
                             counterText: '',
                             hintText: '请输入设备名称',
                             hintStyle: TextStyle(
-                                color: HhColors.gray9TextColor, fontSize: 26.sp,fontWeight: FontWeight.w200),
+                                color: HhColors.gray9TextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           style:
-                          TextStyle(color: HhColors.blackTextColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                          TextStyle(color: HhColors.blackTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                         ),
                       ),
                       BouncingWidget(
@@ -238,8 +238,8 @@ class DeviceAddPage extends StatelessWidget {
                         },
                         child: Image.asset(
                           "assets/images/common/ic_close.png",
-                          width: 35.w,
-                          height: 35.w,
+                          width: 16.w*3,
+                          height: 16.w*3,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -252,12 +252,12 @@ class DeviceAddPage extends StatelessWidget {
 
                 ///列表
                 Container(
-                  margin: EdgeInsets.fromLTRB(30.w, 580.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(20.w*3, 312.w*3, 0, 0),
                   child: Text(
                     "请选择设备空间",
                     style: TextStyle(
                         color: HhColors.blackTextColor,
-                        fontSize: 28.sp,),
+                        fontSize: 15.sp*3,),
                   ),
                 ),
                 logic.testStatus.value ? deviceList() : const SizedBox(),
@@ -266,7 +266,7 @@ class DeviceAddPage extends StatelessWidget {
                   child: Container(
                     width: 1.sw,
                     height: 1.w,
-                    margin: EdgeInsets.only(bottom: 160.w),
+                    margin: EdgeInsets.only(bottom: 97.w*3),
                     color: HhColors.grayDDTextColor,
                   ),
                 ),
@@ -315,18 +315,18 @@ class DeviceAddPage extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      height: 80.w,
+                      height: 44.w*3,
                       width: 1.sw,
-                      margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 50.w),
+                      margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 35.w*3),
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                          borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                       child: Center(
                         child: Text(
                           logic.isEdit.value?"保存":"确定添加",
                           style: TextStyle(
                               color: HhColors.whiteColor,
-                              fontSize: 30.sp,),
+                              fontSize: 16.sp*3,),
                         ),
                       ),
                     ),
@@ -342,12 +342,12 @@ class DeviceAddPage extends StatelessWidget {
 
   deviceList() {
     return logic.index.value == -1?const SizedBox():Container(
-      margin: EdgeInsets.only(top: 625.w),
+      margin: EdgeInsets.fromLTRB(14.w*3, 345.w*3, 14.w*3, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            constraints: BoxConstraints(maxHeight: 110.w),
+            constraints: BoxConstraints(maxHeight: 50.w*3),
             child: Column(
               children: [
                 Expanded(
@@ -367,14 +367,14 @@ class DeviceAddPage extends StatelessWidget {
                               logic.spaceId = '${item['id']}';
                             },
                             child: Container(
-                              height: 90.w,
+                              height: 45.w*3,
                               margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                              // padding: EdgeInsets.all(20.w),
+                              padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 0),
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
                                   color: logic.index.value==index?HhColors.backBlueInColor:HhColors.whiteColor,
                                   border:logic.index.value==index?Border.all(color: HhColors.backBlueOutColor):null,
-                                  borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                                  borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                               child: Center(
                                 child: Text(
                                   "${item['name']}",
@@ -382,7 +382,7 @@ class DeviceAddPage extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: logic.index.value==index?HhColors.mainBlueColor:HhColors.gray9TextColor,
-                                      fontSize: 26.sp),
+                                      fontSize: 15.sp*3),
                                 ),
                               ),
                             ),
@@ -407,21 +407,21 @@ class DeviceAddPage extends StatelessWidget {
                     Get.to(()=>SpacePage(),binding: SpaceBinding());
                   },
                   child: Container(
-                    height: 80.w,
-                    width: 210.w,
+                    height: 45.w*3,
+                    width: 103.w*3,
                     margin: EdgeInsets.fromLTRB(20.w, 20.w, 0, 0),
                     padding: EdgeInsets.all(20.w),
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                         color: HhColors.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
                           "assets/images/common/ic_add.png",
-                          width: 32.w,
-                          height: 32.w,
+                          width: 18.w*3,
+                          height: 18.w*3,
                           fit: BoxFit.fill,
                         ),
                         SizedBox(
@@ -431,7 +431,7 @@ class DeviceAddPage extends StatelessWidget {
                           "新增空间",
                           style: TextStyle(
                               color: HhColors.gray4TextColor,
-                              fontSize: 25.sp,fontWeight: FontWeight.w200),
+                              fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                         ),
                       ],
                     ),
@@ -440,12 +440,12 @@ class DeviceAddPage extends StatelessWidget {
 
                 ///选择设备定位
                 Container(
-                  margin: EdgeInsets.fromLTRB(30.w, 30.w, 0, 0),
+                  margin: EdgeInsets.fromLTRB(5.w*3, 30.w, 0, 0),
                   child: Text(
                     "选择设备定位",
                     style: TextStyle(
                       color: HhColors.blackTextColor,
-                      fontSize: 28.sp,),
+                      fontSize: 15.sp*3,),
                   ),
                 ),
                 InkWell(
@@ -459,11 +459,12 @@ class DeviceAddPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    margin: EdgeInsets.fromLTRB(30.w, 30.w, 30.w, 0),
-                    padding: EdgeInsets.fromLTRB(20.w, 26.w, 20.w, 26.w),
+                    height: 45.w*3,
+                    margin: EdgeInsets.fromLTRB(5.w*3, 30.w, 5.w*3, 0),
+                    padding: EdgeInsets.fromLTRB(14.w*3, 26.w, 14.w*3, 26.w),
                     decoration: BoxDecoration(
                       color: HhColors.grayEDBackColor,
-                      borderRadius: BorderRadius.circular(12.w)
+                      borderRadius: BorderRadius.circular(8.w*3)
                     ),
                     child: Row(
                       children: [
@@ -471,15 +472,15 @@ class DeviceAddPage extends StatelessWidget {
                           logic.isEdit.value?(logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
                           style: TextStyle(
                             color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
-                            fontSize: 26.sp,fontWeight: FontWeight.bold),
+                            fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                         ),
                         const Expanded(
                           child: SizedBox(),
                         ),
                         Image.asset(
                           "assets/images/common/icon_blue_loc.png",
-                          width: 40.w,
-                          height: 40.w,
+                          width: 20.w*3,
+                          height: 20.w*3,
                           fit: BoxFit.fill,
                         )
                       ],

@@ -3,6 +3,7 @@ import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,7 @@ class MessagePage extends StatelessWidget {
                 child: Stack(
                   children: [
                     Container(
-                      height: 160.w,
+                      height: logic.tabIndex.value==0?132.h*3:90.h*3,
                       width: 1.sw,
                       color: HhColors.whiteColor,
                     ),
@@ -66,13 +67,13 @@ class MessagePage extends StatelessWidget {
                         logicHome.index.value = 0;
                       },
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(36.w, 90.w, 0, 0),
+                        margin: EdgeInsets.fromLTRB(22.w*3, 58.h*3, 0, 0),
                         padding: EdgeInsets.all(10.w),
                         color: HhColors.whiteColor,
                         child: Image.asset(
                           "assets/images/common/back.png",
-                          width: 18.w,
-                          height: 30.w,
+                          width: 9.w*3,
+                          height: 14.w*3,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -80,11 +81,11 @@ class MessagePage extends StatelessWidget {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Container(
-                        height: 100.w,
-                        margin: EdgeInsets.only(top: 75.w),
+                        height: 44.w*3,
+                        margin: EdgeInsets.only(top: 51.h*3),
                         child: Row(
                           children: [
-                            SizedBox(width: 100.w,),
+                            SizedBox(width: 59.w*3,),
                             BouncingWidget(
                               duration: const Duration(milliseconds: 100),
                               scaleFactor: 1.0,
@@ -95,7 +96,7 @@ class MessagePage extends StatelessWidget {
                                 logic.fetchPageRight(1);
                               },
                               child: Container(
-                                width: 130.w,
+                                width: 55.w*3,
                                 padding: EdgeInsets.fromLTRB(0, 10.w, 0, 10.w),
                                 color: HhColors.trans,
                                 child: Stack(
@@ -104,7 +105,7 @@ class MessagePage extends StatelessWidget {
                                         child: Container(
                                             color: HhColors.trans,
                                             margin: EdgeInsets.fromLTRB(0, logic.tabIndex.value==0?0:10.w, 40.w, 0),
-                                            child: Text("报警",style: TextStyle(color: logic.tabIndex.value==0?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==0?36.sp:28.sp,fontWeight: logic.tabIndex.value==0?FontWeight.bold:FontWeight.w200),))),
+                                            child: Text("报警",style: TextStyle(color: logic.tabIndex.value==0?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==0?18.sp*3:14.sp*3,fontWeight: logic.tabIndex.value==0?FontWeight.bold:FontWeight.w200),))),
                                     logic.warnCount.value=="0"?const SizedBox():Align(
                                       alignment: Alignment.topRight,
                                       child: Container(
@@ -112,9 +113,9 @@ class MessagePage extends StatelessWidget {
                                             color: HhColors.mainRedColor,
                                             borderRadius: BorderRadius.all(Radius.circular(20.w))
                                         ),
-                                        width: 36.w + ((logic.noticeCount.value.length-1) * 8.w),
-                                        height: 30.w,
-                                        child: Center(child: Text(logic.warnCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 18.sp),)),
+                                        width: 15.w*3 + ((logic.warnCount.value.length-1) * (3.w*3)),
+                                        height: 15.w*3,
+                                        child: Center(child: Text(logic.warnCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
                                       ),
                                     ),
                                   ],
@@ -132,7 +133,7 @@ class MessagePage extends StatelessWidget {
                                 logic.fetchPageLeft(1);
                               },
                               child: Container(
-                                width: 130.w,
+                                width: 55.w*3,
                                 padding: EdgeInsets.fromLTRB(0, 10.w, 0, 10.w),
                                 color: HhColors.trans,
                                 child: Stack(
@@ -141,7 +142,7 @@ class MessagePage extends StatelessWidget {
                                         child: Container(
                                             color: HhColors.trans,
                                             margin: EdgeInsets.fromLTRB(0, logic.tabIndex.value==1?0:10.w, 40.w, 0),
-                                            child: Text("通知",style: TextStyle(color: logic.tabIndex.value==1?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==1?36.sp:28.sp,fontWeight: logic.tabIndex.value==1?FontWeight.bold:FontWeight.w200),))),
+                                            child: Text("通知",style: TextStyle(color: logic.tabIndex.value==1?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==1?18.sp*3:14.sp*3,fontWeight: logic.tabIndex.value==1?FontWeight.bold:FontWeight.w200),))),
                                     logic.noticeCount.value=="0"?const SizedBox():Align(
                                       alignment: Alignment.topRight,
                                       child: Container(
@@ -149,9 +150,9 @@ class MessagePage extends StatelessWidget {
                                             color: HhColors.mainRedColor,
                                             borderRadius: BorderRadius.all(Radius.circular(20.w))
                                         ),
-                                        width: 36.w + ((logic.noticeCount.value.length-1) * 8.w),
-                                        height: 30.w,
-                                        child: Center(child: Text(logic.noticeCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 18.sp),)),
+                                        width: 15.w*3 + ((logic.noticeCount.value.length-1) * (3.w*3)),
+                                        height: 15.w*3,
+                                        child: Center(child: Text(logic.noticeCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
                                       ),
                                     ),
                                   ],
@@ -165,7 +166,7 @@ class MessagePage extends StatelessWidget {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Container(
-                        margin: EdgeInsets.only(top: 85.w),
+                        margin: EdgeInsets.only(top: 54.w*3),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -184,8 +185,8 @@ class MessagePage extends StatelessWidget {
                               },
                               child: Image.asset(
                                 "assets/images/common/icon_clear_message.png",
-                                width: 50.w,
-                                height: 50.w,
+                                width: 24.w*3,
+                                height: 24.w*3,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -216,21 +217,21 @@ class MessagePage extends StatelessWidget {
                                       logic.pageStatus.value = true;
                                     },
                                     child: Container(
-                                      margin: EdgeInsets.only(top: 10.w),
-                                      padding: EdgeInsets.fromLTRB(36.w, 38.w, 23.w, 38.w),
+                                      margin: EdgeInsets.only(top: 20.w*3),
+                                      padding: EdgeInsets.fromLTRB(22.w*3, 25.w*3, 15.w*3, 24.w*3),
                                       decoration: BoxDecoration(
                                           color: HhColors.whiteColor,
-                                          borderRadius: BorderRadius.circular(26.w)
+                                          borderRadius: BorderRadius.circular(16.w*3)
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text('管理消息', style: TextStyle(color: HhColors.blackColor,fontSize: 26.w,fontWeight: FontWeight.w200),),
-                                          SizedBox(width: 30.w,),
+                                          Text('管理消息', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                          SizedBox(width: 20.w*3,),
                                           Image.asset(
                                             "assets/images/common/ic_setting.png",
-                                            width: 30.w,
-                                            height: 30.w,
+                                            width: 18.w*3,
+                                            height: 18.w*3,
                                             fit: BoxFit.fill,
                                           ),
                                         ],
@@ -240,8 +241,8 @@ class MessagePage extends StatelessWidget {
                                 },
                                 child: Image.asset(
                                   "assets/images/common/icon_more_message.png",
-                                  width: 50.w,
-                                  height: 50.w,
+                                  width: 24.w*3,
+                                  height: 24.w*3,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -265,13 +266,13 @@ class MessagePage extends StatelessWidget {
     DateTime dateTime = DateTime.now();
     String today = CommonUtils().parseLongTimeYearDay("${dateTime.millisecondsSinceEpoch}");
     return Container(
-      margin: EdgeInsets.only(top: 160.w),
+      margin: EdgeInsets.only(top: 88.w*3),
       child: Column(
         children: [
           ///筛选
           Container(
             width: 1.sw,
-            height: 90.w,
+            height: 44.w*3,
             color: HhColors.whiteColor,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -279,10 +280,10 @@ class MessagePage extends StatelessWidget {
                 children: [
                   SizedBox(width: 20.w,),
                   Container(
-                    width: 280.w,
-                      padding:EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                    width: 114.w*3,
+                      padding:EdgeInsets.fromLTRB(7.w*3, 0, 8.w*3, 0),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.w),
+                          borderRadius: BorderRadius.circular(8.w*3),
                           border: Border.all(width: 0.5.w,color: HhColors.gray9TextColor)
                       ),
                       child: Row(
@@ -290,14 +291,14 @@ class MessagePage extends StatelessWidget {
                         children: [
                           Image.asset(
                             "assets/images/common/icon_search.png",
-                            width: 30.w,
-                            height: 30.w,
+                            width: 14.w*3,
+                            height: 14.w*3,
                             fit: BoxFit.fill,
                           ),
                           // Text('请输入设备名称',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.sp),),
                           Expanded(
                             child: SizedBox(
-                              height: 40.w,
+                              height: 30.w*3,
                               child: TextField(
                                 // maxLines: 1,
                                 maxLength: 8,
@@ -319,11 +320,11 @@ class MessagePage extends StatelessWidget {
                                   counterText: '',
                                   hintText: '请输入设备名称',
                                   hintStyle: TextStyle(
-                                      color: HhColors.gray9TextColor, fontSize: 23.sp),
+                                      color: HhColors.gray9TextColor, fontSize: 12.sp*3),
                                   floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
                                 ),
                                 style:
-                                TextStyle(color: HhColors.gray9TextColor, fontSize: 23.sp),
+                                TextStyle(color: HhColors.gray9TextColor, fontSize: 12.sp*3),
                               ),
                             ),
                           ),
@@ -337,16 +338,17 @@ class MessagePage extends StatelessWidget {
                       logic.isChooseSpace.value = !logic.isChooseSpace.value;
                     },
                     child: Container(
-                        margin: EdgeInsets.only(left: 40.w),
-                        padding:EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                      height: 30.w*3,
+                        margin: EdgeInsets.only(left: 24.w*3),
+                        padding:EdgeInsets.fromLTRB(12.w*3, 0, 12.w*3, 0),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.w),
+                            borderRadius: BorderRadius.circular(8.w*3),
                             border: Border.all(width: logic.isChooseSpace.value?1.5.w:0.5.w,color: logic.isChooseSpace.value?HhColors.mainBlueColor:HhColors.gray9TextColor)
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('${logic.spaceList[logic.spaceSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseSpace.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 23.sp),),
+                            Text('${logic.spaceList[logic.spaceSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseSpace.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
                             Image.asset(
                               "assets/images/common/icon_down_status.png",
                               width: 20.w,
@@ -363,15 +365,16 @@ class MessagePage extends StatelessWidget {
                       logic.isChooseType.value = !logic.isChooseType.value;
                     },
                     child: Container(
-                        margin: EdgeInsets.only(left: 40.w),
-                        padding:EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                        height: 30.w*3,
+                        margin: EdgeInsets.only(left: 24.w*3),
+                        padding:EdgeInsets.fromLTRB(12.w*3, 0, 12.w*3, 0),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.w),
+                            borderRadius: BorderRadius.circular(8.w*3),
                             border: Border.all(width: logic.isChooseType.value?1.5.w:0.5.w,color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.gray9TextColor)
                         ),child: Row(
                       mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('${logic.typeList[logic.typeSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 23.sp),),
+                            Text('${logic.typeList[logic.typeSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
                             Image.asset(
                               "assets/images/common/icon_down_status.png",
                               width: 20.w,
@@ -391,21 +394,22 @@ class MessagePage extends StatelessWidget {
                       }
                     },
                     child: Container(
-                        margin: EdgeInsets.only(left: 40.w),
-                        padding:EdgeInsets.fromLTRB(15.w, 10.w, 15.w, 10.w),
+                        height: 30.w*3,
+                        margin: EdgeInsets.only(left: 24.w*3),
+                        padding:EdgeInsets.fromLTRB(7.w*3, 0, 8.w*3, 0),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.w),
+                            borderRadius: BorderRadius.circular(8.w*3),
                             border: Border.all(width: logic.isChooseDate.value?1.5.w:0.5.w,color: logic.isChooseDate.value?HhColors.mainBlueColor:HhColors.gray9TextColor)
                         ),child: Row(
                       mainAxisSize: MainAxisSize.min,
                           children: [
                             Image.asset(
                               logic.isChooseDate.value?"assets/images/common/icon_message_date_yes.png":"assets/images/common/icon_date_message.png",
-                              width: 32.w,
-                              height: 32.w,
+                              width: 14.w*3,
+                              height: 14.w*3,
                               fit: BoxFit.fill,
                             ),
-                            Text('${logic.dateStr}',style: TextStyle(color: logic.isChooseDate.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 21.sp),),
+                            Text('${logic.dateStr}',style: TextStyle(color: logic.isChooseDate.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
                           ],
                         )),
                   ),
@@ -425,7 +429,7 @@ class MessagePage extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: 100.w,
+                    height: 50.w*3,
                     width: 1.sw,
                     color: HhColors.whiteColor,
                   ),
@@ -434,16 +438,16 @@ class MessagePage extends StatelessWidget {
                     scaleFactor: 1.2,
                     child: Container(
                       width: 1.sw,
-                      height: 80.w,
-                      margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                      height: 44.w*3,
+                      margin: EdgeInsets.fromLTRB(14.w*3, 10.w, 14.w*3, 10.w),
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                          borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                       child: Center(
                         child: Text(
                           "确定",
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp),
+                          style: TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3),
                         ),
                       ),
                     ),
@@ -461,6 +465,7 @@ class MessagePage extends StatelessWidget {
           //类型
           logic.isChooseType.value?Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Wrap(
                 children: buildTypeListView(),
@@ -468,7 +473,7 @@ class MessagePage extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: 100.w,
+                    height: 50.w*3,
                     width: 1.sw,
                     color: HhColors.whiteColor,
                   ),
@@ -477,16 +482,16 @@ class MessagePage extends StatelessWidget {
                     scaleFactor: 1.2,
                     child: Container(
                       width: 1.sw,
-                      height: 80.w,
-                      margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                      height: 44.w*3,
+                      margin: EdgeInsets.fromLTRB(14.w*3, 10.w, 14.w*3, 10.w),
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                          borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                       child: Center(
                         child: Text(
                           "确定",
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp),
+                          style: TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3),
                         ),
                       ),
                     ),
@@ -517,7 +522,7 @@ class MessagePage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 pagingController: logic.deviceController,
                 builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message.png',info: '暂无消息',mid: 30.w,
+                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message.png',info: '暂无消息',mid: 20.w,
                     height: 0.36.sw,
                     width: 0.44.sw,),
                   itemBuilder: (context, item, index) {
@@ -533,13 +538,13 @@ class MessagePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         item["showDate"]==1?Container(
-                          margin: EdgeInsets.fromLTRB(22.w, 20.w, 20.w, 0),
+                          margin: EdgeInsets.fromLTRB(14.w*3, 20.w, 14.w*3, 0),
                           child: Row(
                             children: [
                               Text(
                                 today == CommonUtils().parseLongTimeYearDay('${item['createTime']}')?'今天':CommonUtils().parseLongTimeDay('${item['createTime']}'),
                                 style: TextStyle(
-                                    color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                    color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                               ),
                               SizedBox(width: 5.w,),
                               Expanded(
@@ -576,66 +581,66 @@ class MessagePage extends StatelessWidget {
                           child: Row(
                             children: [
                               logic.editLeft.value?Container(
-                                padding: EdgeInsets.fromLTRB(20.w, 20.w, 0, 20.w),
+                                padding: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 0, 14.w*3),
                                 child: Image.asset(
                                   item["selected"] == 1?"assets/images/common/yes.png":"assets/images/common/no.png",
-                                  width: 36.w,
-                                  height: 36.w,
+                                  width: 14.w*3,
+                                  height: 14.w*3,
                                   fit: BoxFit.fill,
                                 ),
                               ):const SizedBox(),
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
-                                  padding: EdgeInsets.all(20.w),
+                                  margin: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 14.w*3, 0),
+                                  padding: EdgeInsets.fromLTRB(8.w*3, 12.w*3, 10.w*3, 12.w*3),
                                   clipBehavior: Clip.hardEdge,
                                   decoration: BoxDecoration(
                                       color: HhColors.whiteColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(10.w))
+                                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))
                                   ),
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        width: 200.w,
-                                        height: 130.w,
+                                        width: 113.w*3,
+                                        height: 70.w*3,
                                         child: Stack(
                                           children: [
                                             Container(
                                               clipBehavior: Clip.hardEdge,
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(12.w),
+                                                borderRadius: BorderRadius.circular(8.w*3),
                                               ),
                                               child: item['alarmType']=='openCap'||item['alarmType']=='openSensor'||item['alarmType']=='tilt'?Image.asset(
                                                 "assets/images/common/icon_message_back.png",
-                                                width: 200.w,
-                                                height: 130.w,
+                                                width: 113.w*3,
+                                                height: 70.w*3,
                                                 fit: BoxFit.fill,
                                               ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
                                                 return Image.asset(
                                                   "assets/images/common/test_video.jpg",
-                                                  width: 200.w,
-                                                  height: 130.w,
+                                                  width: 113.w*3,
+                                                  height: 70.w*3,
                                                   fit: BoxFit.fill,
                                                 );
                                               },
-                                                width: 200.w,
-                                                height: 130.w,
+                                                width: 113.w*3,
+                                                height: 70.w*3,
                                                 fit: BoxFit.fill,),
                                             ),
                                             item['alarmType']=='tilt'?Align(
                                               alignment:Alignment.center,
                                               child: Image.asset(
                                                 "assets/images/common/icon_message_y.png",
-                                                width: 50.w,
-                                                height: 50.w,
+                                                width: 30.w*3,
+                                                height: 30.w*3,
                                                 fit: BoxFit.fill,
                                               ),
                                             ):item['alarmType']=='openCap'||item['alarmType']=='openSensor'?Align(
                                               alignment:Alignment.center,
                                               child: Image.asset(
                                                 "assets/images/common/icon_message_open.png",
-                                                width: 50.w,
-                                                height: 50.w,
+                                                width: 30.w*3,
+                                                height: 30.w*3,
                                                 fit: BoxFit.fill,
                                               ),
                                             ):const SizedBox(),
@@ -644,16 +649,16 @@ class MessagePage extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: SizedBox(
-                                          height: 130.w,
+                                          height: 70.w*3,
                                           child: Stack(
                                             children: [
                                               item['status'] == true?const SizedBox():Container(
-                                                height: 10.w,
-                                                width: 10.w,
-                                                margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                                                height: 6.w*3,
+                                                width: 6.w*3,
+                                                margin: EdgeInsets.fromLTRB(0, 5.w, 0, 0),
                                                 decoration: BoxDecoration(
                                                     color: HhColors.backRedInColor,
-                                                    borderRadius: BorderRadius.all(Radius.circular(5.w))
+                                                    borderRadius: BorderRadius.all(Radius.circular(3.w*3))
                                                 ),
                                               ),
                                               Container(
@@ -661,11 +666,11 @@ class MessagePage extends StatelessWidget {
                                                 child: Text(
                                                   parseLeftType("${item['alarmType']}"),
                                                   style: TextStyle(
-                                                      color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                                      color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                                                margin: EdgeInsets.fromLTRB(30.w, 26.w*3, 0, 0),
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -675,7 +680,7 @@ class MessagePage extends StatelessWidget {
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          color: HhColors.textColor, fontSize: 22.sp),
+                                                          color: HhColors.textColor, fontSize: 14.sp*3),
                                                     ),
                                                     SizedBox(height: 5.w,),
                                                     Text(
@@ -683,7 +688,7 @@ class MessagePage extends StatelessWidget {
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          color: HhColors.textColor, fontSize: 22.sp),
+                                                          color: HhColors.textColor, fontSize: 13.sp*3),
                                                     ),
                                                   ],
                                                 ),
@@ -695,7 +700,7 @@ class MessagePage extends StatelessWidget {
                                                   child: Text(
                                                     CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
                                                     style: TextStyle(
-                                                        color: HhColors.textColor, fontSize: 22.sp),
+                                                        color: HhColors.textColor, fontSize: 12.sp*3),
                                                   ),
                                                 ),
                                               ),
@@ -719,21 +724,21 @@ class MessagePage extends StatelessWidget {
           ),
           ///编辑操作面板
           logic.editLeft.value?Container(
-            height: 100.w,
+            height: 50.w*3,
             width: 1.sw,
             color: HhColors.whiteColor,
             child: Row(
               children: [
-                SizedBox(width: 20.w,),
+                SizedBox(width: 21.w*3,),
                 Text(
                   '已选：',
                   style: TextStyle(
-                      color: HhColors.gray6TextColor, fontSize: 22.sp),
+                      color: HhColors.gray6TextColor, fontSize: 14.sp*3),
                 ),
                 Text(
                   '${logic.chooseListLeftNumber.value}条',
                   style: TextStyle(
-                      color: HhColors.gray6TextColor, fontSize: 22.sp),
+                      color: HhColors.gray6TextColor, fontSize: 14.sp*3),
                 ),
                 Expanded(
                   child: Row(
@@ -753,16 +758,16 @@ class MessagePage extends StatelessWidget {
                           padding:EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
                           decoration: BoxDecoration(
                             color: HhColors.mainBlueColor,
-                            borderRadius: BorderRadius.circular(12.w)
+                            borderRadius: BorderRadius.circular(8.w*3)
                           ),
                           child: Text(
                             '全部已读',
                             style: TextStyle(
-                                color: HhColors.whiteColor, fontSize: 22.sp),
+                                color: HhColors.whiteColor, fontSize: 14.sp*3),
                           ),
                         ),
                       ),
-                      SizedBox(width: 15.w,),
+                      SizedBox(width: 9.w*3,),
                       BouncingWidget(
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.0,
@@ -785,17 +790,17 @@ class MessagePage extends StatelessWidget {
                           padding:EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
                           decoration: BoxDecoration(
                             color: HhColors.whiteColor,
-                            border: Border.all(color: HhColors.mainBlueColor,width: 0.5.w),
-                            borderRadius: BorderRadius.circular(12.w)
+                            border: Border.all(color: HhColors.mainBlueColor,width: 2.w),
+                            borderRadius: BorderRadius.circular(8.w*3)
                           ),
                           child: Text(
                             '全部删除',
                             style: TextStyle(
-                                color: HhColors.mainBlueColor, fontSize: 22.sp),
+                                color: HhColors.mainBlueColor, fontSize: 14.sp*3),
                           ),
                         ),
                       ),
-                      SizedBox(width: 15.w,),
+                      SizedBox(width: 14.w*3,),
                     ],
                   ),
                 ),
@@ -813,7 +818,7 @@ class MessagePage extends StatelessWidget {
         ///通知列表
         Expanded(
           child: Container(
-            margin: EdgeInsets.only(top: 160.w),
+            margin: EdgeInsets.only(top: 88.w*3),
             child: EasyRefresh(
               onRefresh: (){
                 logic.pageNumRight = 1;
@@ -854,32 +859,32 @@ class MessagePage extends StatelessWidget {
                       child: Row(
                         children: [
                           logic.editRight.value?Container(
-                            padding: EdgeInsets.fromLTRB(20.w, 20.w, 0, 20.w),
+                            padding: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 0, 14.w*3),
                             child: Image.asset(
                               item["selected"] == 1?"assets/images/common/yes.png":"assets/images/common/no.png",
-                              width: 36.w,
-                              height: 36.w,
+                              width: 14.w*3,
+                              height: 14.w*3,
                               fit: BoxFit.fill,
                             ),
                           ):const SizedBox(),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                              margin: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 14.w*3, 0),
                               padding: EdgeInsets.all(20.w),
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
                                   color: HhColors.whiteColor,
-                                  borderRadius: BorderRadius.all(Radius.circular(10.w))
+                                  borderRadius: BorderRadius.all(Radius.circular(8.w*3))
                               ),
                               child: Stack(
                                 children: [
                                   item['status']==true?const SizedBox():Container(
-                                    height: 10.w,
-                                    width: 10.w,
-                                    margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                                    height: 6.w*3,
+                                    width: 6.w*3,
+                                    margin: EdgeInsets.fromLTRB(0, 7.w*3, 0, 0),
                                     decoration: BoxDecoration(
                                         color: HhColors.backRedInColor,
-                                        borderRadius: BorderRadius.all(Radius.circular(5.w))
+                                        borderRadius: BorderRadius.all(Radius.circular(3.w*3))
                                     ),
                                   ),
                                   Container(
@@ -887,11 +892,11 @@ class MessagePage extends StatelessWidget {
                                     child: Text(
                                       parseRightType("${item['messageType']}"),
                                       style: TextStyle(
-                                          color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                                          color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.fromLTRB(30.w, 50.w, 0, 0),
+                                    margin: EdgeInsets.fromLTRB(30.w, 26.w*3, 0, 0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -899,13 +904,13 @@ class MessagePage extends StatelessWidget {
                                         Text(
                                           "时间:${CommonUtils().parseLongTime('${item['createTime']}')}",
                                           style: TextStyle(
-                                              color: HhColors.textColor, fontSize: 22.sp),
+                                              color: HhColors.textColor, fontSize: 13.sp*3),
                                         ),
                                         SizedBox(height: 8.w,),
                                         Text(
                                           '${item['content']}',
                                           style: TextStyle(
-                                              color: HhColors.textColor, fontSize: 22.sp),
+                                              color: HhColors.textColor, fontSize: 14.sp*3),
                                         ),
                                       ],
                                     ),
@@ -925,21 +930,21 @@ class MessagePage extends StatelessWidget {
         ),
         ///编辑操作面板
         logic.editRight.value?Container(
-          height: 100.w,
+          height: 50.w*3,
           width: 1.sw,
           color: HhColors.whiteColor,
           child: Row(
             children: [
-              SizedBox(width: 20.w,),
+              SizedBox(width: 21.w*3,),
               Text(
                 '已选：',
                 style: TextStyle(
-                    color: HhColors.gray6TextColor, fontSize: 22.sp),
+                    color: HhColors.gray6TextColor, fontSize: 14.sp*3),
               ),
               Text(
                 '${logic.chooseListRightNumber.value}条',
                 style: TextStyle(
-                    color: HhColors.gray6TextColor, fontSize: 22.sp),
+                    color: HhColors.gray6TextColor, fontSize: 14.sp*3),
               ),
               Expanded(
                 child: Row(
@@ -959,16 +964,16 @@ class MessagePage extends StatelessWidget {
                         padding:EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
                         decoration: BoxDecoration(
                             color: HhColors.mainBlueColor,
-                            borderRadius: BorderRadius.circular(12.w)
+                            borderRadius: BorderRadius.circular(8.w*3)
                         ),
                         child: Text(
                           '全部已读',
                           style: TextStyle(
-                              color: HhColors.whiteColor, fontSize: 22.sp),
+                              color: HhColors.whiteColor, fontSize: 14.sp*3),
                         ),
                       ),
                     ),
-                    SizedBox(width: 15.w,),
+                    SizedBox(width: 9.w*3,),
                     BouncingWidget(
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.0,
@@ -990,17 +995,17 @@ class MessagePage extends StatelessWidget {
                         padding:EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
                         decoration: BoxDecoration(
                             color: HhColors.whiteColor,
-                            border: Border.all(color: HhColors.mainBlueColor,width: 0.5.w),
-                            borderRadius: BorderRadius.circular(12.w)
+                            border: Border.all(color: HhColors.mainBlueColor,width: 2.w),
+                            borderRadius: BorderRadius.circular(8.w*3)
                         ),
                         child: Text(
                           '全部删除',
                           style: TextStyle(
-                              color: HhColors.mainBlueColor, fontSize: 22.sp),
+                              color: HhColors.mainBlueColor, fontSize: 14.sp*3),
                         ),
                       ),
                     ),
-                    SizedBox(width: 15.w,),
+                    SizedBox(width: 14.w*3,),
                   ],
                 ),
               ),
@@ -1132,7 +1137,7 @@ class MessagePage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${type["name"]}',style: TextStyle(color: logic.spaceSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 23.sp),),
+                Container(constraints: BoxConstraints(maxWidth: 0.9.sw),child: Text('${type["name"]}',style: TextStyle(color: logic.spaceSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3,overflow: TextOverflow.ellipsis),)),
                 SizedBox(width: 10.w,),
                 logic.spaceSelectIndex.value == i?Image.asset(
                   "assets/images/common/icon_yes.png",
@@ -1163,7 +1168,7 @@ class MessagePage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${type["name"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 23.sp),),
+                Text('${type["name"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),),
                 SizedBox(width: 10.w,),
                 logic.typeSelectIndex.value == i?Image.asset(
                   "assets/images/common/icon_yes.png",
@@ -1196,7 +1201,7 @@ class MessagePage extends StatelessWidget {
             Stack(
               children: [
                 Container(margin: EdgeInsets.only(top: 15.w),
-                    child: Center(child: Text('选择日期',style: TextStyle(color: HhColors.blackColor,fontSize: 26.sp),))),
+                    child: Center(child: Text('选择日期',style: TextStyle(color: HhColors.blackColor,fontSize: 14.sp*3),))),
                 Align(
                   alignment: Alignment.topRight,
                   child: BouncingWidget(
@@ -1208,10 +1213,11 @@ class MessagePage extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(20.w, 20.w, 30.w, 20.w),
+                      margin: EdgeInsets.only(right: 10.w),
                       child: Image.asset(
                         "assets/images/common/ic_x.png",
-                        width: 30.w,
-                        height: 30.w,
+                        width: 15.w*3,
+                        height: 15.w*3,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -1233,7 +1239,7 @@ class MessagePage extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(50.w, 20.w, 20.w, 20.w),
-                      child: Text('重置',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 23.sp),),
+                      child: Text('重置',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),),
                     ),
                   ),
                 ),
@@ -1269,16 +1275,16 @@ class MessagePage extends StatelessWidget {
               scaleFactor: 1.2,
               child: Container(
                 width: 1.sw,
-                height: 80.w,
-                margin: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                height: 44.w*3,
+                margin: EdgeInsets.fromLTRB(14.w*3, 10.w, 14.w*3, 10.w),
                 decoration: BoxDecoration(
                     color: HhColors.mainBlueColor,
-                    borderRadius: BorderRadius.all(Radius.circular(50.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(24.w*3))),
                 child: Center(
                   child: Text(
                     "确定",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp),
+                    style: TextStyle(color: HhColors.whiteColor, fontSize: 14.sp*3),
                   ),
                 ),
               ),
