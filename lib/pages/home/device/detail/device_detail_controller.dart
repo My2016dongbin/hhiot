@@ -5,7 +5,6 @@ import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -129,8 +128,6 @@ class DeviceDetailController extends GetxController {
 
   Future<void> stopRecord() async {
     recordController.stop();
-    /*List<RawFrame>? exportGif = await recordController.exporter.exportFrames();
-    convertRawFramesToMP4(exportGif!);*/
     List<int>? exportGif = await recordController.exporter.exportGif();
 
     HhLog.d("stopRecord ");
@@ -143,31 +140,6 @@ class DeviceDetailController extends GetxController {
     HhLog.d("stopRecord $a");
     EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至“$filePath”'));
   }
-
-  Future<void> convertRawFramesToMP4(List<RawFrame> frames) async {
-    final FlutterFFmpeg _ffmpeg = FlutterFFmpeg();
-    final Directory? dir = await getDownloadsDirectory();
-    String framesDir = '${dir!.path}/frames';
-    Directory(framesDir).createSync();
-
-    // 保存每个 RawFrame
-    for (int i = 0; i < frames.length; i++) {
-      File('${framesDir}/frame_$i.png').writeAsBytesSync(frames[i].image as List<int>);
-    }
-
-    // 合成视频
-    String outputPath = '${dir.path}/output.mp4';
-    String command = '-r 30 -i $framesDir/frame_%d.png -c:v libx264 -pix_fmt yuv420p $outputPath';
-
-    int rc = await _ffmpeg.execute(command);
-    if (rc == 0) {
-      print('Video created successfully at $outputPath');
-      EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至“$outputPath”'));
-    } else {
-      print('Error creating video');
-    }
-  }
-
 
   void fetchPageDevice(int pageKey) {
     List<Device> newItems = [
