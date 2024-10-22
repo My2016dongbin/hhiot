@@ -110,15 +110,43 @@ class DeviceDetailPage extends StatelessWidget {
                       SizedBox(
                         width: 12.w * 3,
                       ),
-                      Expanded(
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 0.5.sw),
                         child: Text(
                           logic.name.value,
                           style: TextStyle(
                               color: HhColors.whiteColor,
                               fontSize: 16.sp * 3,
+                              overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.w500),
                         ),
-                      )
+                      ),
+                      SizedBox(width: 5.w*3,),
+                      logic.videoTag.value?Container(
+                        padding: EdgeInsets.fromLTRB(6.w*3, 2.w*3, 10.w*3, 2.w*3),
+                        decoration: BoxDecoration(
+                          color:HhColors.mainRedColor,
+                          borderRadius: BorderRadius.circular(11.w*3),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/common/luxiang.png",
+                              width: 12.w * 3,
+                              height: 12.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                            SizedBox(width: 2.w*3,),
+                            Text(
+                              "${CommonUtils().parseZero(logic.videoMinute.value)}:${CommonUtils().parseZero(logic.videoSecond.value)}",
+                              style: TextStyle(
+                                  color: HhColors.whiteColor,
+                                  fontSize: 13.sp * 3,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                      ):const SizedBox(),
                     ],
                   ),
                 ),
@@ -137,7 +165,7 @@ class DeviceDetailPage extends StatelessWidget {
                     showEditDeviceDialog(logic.item);
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 53.w * 3, 14.w * 3, 0),
+                    margin: EdgeInsets.fromLTRB(0, 57.w * 3, 14.w * 3, 0),
                     child: Image.asset(
                       "assets/images/common/icon_video_set.png",
                       width: 24.w * 3,
