@@ -63,7 +63,7 @@ class PersonalPasswordPage extends StatelessWidget {
               child: Image.asset(
                 "assets/images/common/back_white.png",
                 height: 14.w*3,
-                width: 10.w*3,
+                width: 8.w*3,
                 fit: BoxFit.fill,
               ),
             ),
@@ -101,7 +101,7 @@ class PersonalPasswordPage extends StatelessWidget {
                                 color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           style:
-                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
+                          TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
                           onChanged: (s){
                             logic.passwordStatus.value = s.isNotEmpty;
                           },
@@ -165,7 +165,7 @@ class PersonalPasswordPage extends StatelessWidget {
                                 color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                           ),
                           style:
-                          TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
+                          TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
                           onChanged: (s){
                             logic.password2Status.value = s.isNotEmpty;
                           },

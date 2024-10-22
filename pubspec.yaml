@@ -72,6 +72,7 @@ dependencies:
   bouncing_widget: ^2.0.0
   draggable_widget: ^2.0.0
 
+  flutter_switch: ^0.3.2
   screen_recorder: ^0.3.0 #屏幕控件录制
   screenshot: ^2.5.0 #屏幕截图
   flutter_datetime_picker_plus: ^2.2.0

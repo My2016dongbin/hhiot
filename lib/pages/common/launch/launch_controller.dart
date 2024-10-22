@@ -55,7 +55,9 @@ class LaunchController extends GetxController {
 
       CommonData.endpoint = prefs.getString(SPKeys().endpoint);
       Future.delayed(const Duration(seconds: 2), () {
-        Get.off(() => HomePage(), binding: HomeBinding());
+        Get.off(() => HomePage(), binding: HomeBinding(),
+            transition: Transition.fadeIn,
+            duration: const Duration(milliseconds: 1000));
       });
     } else {
       EventBusUtil.getInstance()

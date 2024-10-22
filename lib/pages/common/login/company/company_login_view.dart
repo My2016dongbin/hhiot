@@ -58,19 +58,19 @@ class CompanyLoginPage extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.1.sw, 0.16.sh, 0, 0),
+              margin: EdgeInsets.fromLTRB(36.w*3, 135.h*3, 0, 0),
               child: Text(
                 '欢迎登录浩海万联',
                 style: TextStyle(
                     color: HhColors.blackColor,
-                    fontSize: 40.sp,
+                    fontSize: 20.sp*3,
                     fontWeight: FontWeight.bold),
               ),
             ),
           ),
           Container(
             margin:
-                EdgeInsets.fromLTRB(0.1.sw, 0.16.sh + 66.w + 30.w, 0.1.sw, 0),
+                EdgeInsets.fromLTRB(36.w*3, 200.h*3, 36.w*3, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -98,12 +98,12 @@ class CompanyLoginPage extends StatelessWidget {
                               '手机号',
                           hintStyle: TextStyle(
                               color: HhColors.grayCCTextColor,
-                              fontSize: 28.sp,
+                              fontSize: 16.sp*3,
                               fontWeight: FontWeight.w200),
                         ),
                         style: TextStyle(
                             color: HhColors.textBlackColor,
-                            fontSize: 32.sp,
+                            fontSize: 16.sp*3,
                             fontWeight: FontWeight.bold),
                         onChanged: (s) {
                           logic.accountStatus.value = s.isNotEmpty;
@@ -122,8 +122,8 @@ class CompanyLoginPage extends StatelessWidget {
                                 padding: EdgeInsets.all(5.w),
                                 child: Image.asset(
                                   'assets/images/common/ic_close.png',
-                                  height: 30.w,
-                                  width: 30.w,
+                                  height: 16.w*3,
+                                  width: 16.w*3,
                                   fit: BoxFit.fill,
                                 )),
                           )
@@ -161,12 +161,12 @@ class CompanyLoginPage extends StatelessWidget {
                                 hintText: '请输入密码',
                                 hintStyle: TextStyle(
                                     color: HhColors.grayCCTextColor,
-                                    fontSize: 28.sp,
+                                    fontSize: 16.sp*3,
                                     fontWeight: FontWeight.w200),
                               ),
                               style: TextStyle(
                                   color: HhColors.textBlackColor,
-                                  fontSize: 30.sp,
+                                  fontSize: 16.sp*3,
                                   fontWeight: FontWeight.w300),
                               onChanged: (s) {
                                 logic.passwordStatus.value = s.isNotEmpty;
@@ -185,14 +185,14 @@ class CompanyLoginPage extends StatelessWidget {
                                       padding: EdgeInsets.all(5.w),
                                       child: Image.asset(
                                         'assets/images/common/ic_close.png',
-                                        height: 30.w,
-                                        width: 30.w,
+                                        height: 16.w*3,
+                                        width: 16.w*3,
                                         fit: BoxFit.fill,
                                       )),
                                 )
                               : const SizedBox(),
                           SizedBox(
-                            width: 10.w,
+                            width: 7.w*3,
                           ),
                           BouncingWidget(
                             duration: const Duration(milliseconds: 100),
@@ -207,8 +207,8 @@ class CompanyLoginPage extends StatelessWidget {
                                   logic.passwordShowStatus.value
                                       ? 'assets/images/common/icon_bi.png'
                                       : 'assets/images/common/icon_zheng.png',
-                                  height: 40.w,
-                                  width: 40.w,
+                                  height: 16.w*3,
+                                  width: 16.w*3,
                                   fit: BoxFit.fill,
                                 )),
                           )
@@ -221,7 +221,7 @@ class CompanyLoginPage extends StatelessWidget {
                         height: 0.5.w,
                       ),
                 SizedBox(
-                  height: 40.w,
+                  height: 22.h*3,
                 ),
 
                 ///协议
@@ -239,11 +239,12 @@ class CompanyLoginPage extends StatelessWidget {
                             logic.confirmStatus.value
                                 ? 'assets/images/common/yes.png'
                                 : 'assets/images/common/no.png',
-                            height: 28.w,
-                            width: 28.w,
+                            height: 12.w*3,
+                            width: 12.w*3,
                             fit: BoxFit.fill,
                           )),
                     ),
+                    SizedBox(width: 2.w*3,),
                     BouncingWidget(
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.2,
@@ -254,7 +255,7 @@ class CompanyLoginPage extends StatelessWidget {
                         '我已阅读并同意',
                         style: TextStyle(
                             color: HhColors.grayBBTextColor,
-                            fontSize: 21.sp,
+                            fontSize: 12.sp*3,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -268,7 +269,7 @@ class CompanyLoginPage extends StatelessWidget {
                         '《浩海万联平台隐私政策》',
                         style: TextStyle(
                             color: HhColors.backBlueOutColor,
-                            fontSize: 21.sp,
+                            fontSize: 12.sp*3,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -295,18 +296,18 @@ class CompanyLoginPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
-                    margin: EdgeInsets.fromLTRB(0, 32.w, 0, 20.w),
+                    height: 48.w*3,
+                    margin: EdgeInsets.fromLTRB(0, 16.w*3, 0, 0),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Center(
                       child: Text(
                         logic.pageStatus.value ? "获取验证码" : "登录",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: HhColors.whiteColor,
-                            fontSize: 28.sp,
+                            fontSize: 16.sp*3,
                             fontWeight: FontWeight.w200),
                       ),
                     ),
@@ -350,10 +351,10 @@ class CompanyLoginPage extends StatelessWidget {
                     Get.to(()=>CompanyForgetPage(),binding: CompanyForgetBinding());
                   },
                   child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 5.w, 0, 0),
+                      margin: EdgeInsets.fromLTRB(0, 20.w*3, 0, 0),
                       padding: EdgeInsets.all(5.w),
                       color: HhColors.trans,
-                      child: Text('忘记密码',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 26.sp,),)
+                      child: Text('忘记密码',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3,),)
                   ),
                 ),
                 SizedBox(height: 30.w,),
@@ -385,119 +386,120 @@ class CompanyLoginPage extends StatelessWidget {
     showCupertinoDialog(
         context: logic.context,
         builder: (context) => Center(
-              child: Container(
-                width: 1.sw,
-                height: 335.w,
-                margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
-                child: Stack(
-                  children: [
-                    Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 40.w, 0, 0),
-                            child: Text(
-                              '欢迎使用浩海通行证！',
+          child: Container(
+            width: 315.w*3,
+            height: 162.h*3,
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
+            child: Stack(
+              children: [
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 30.h*3, 0, 0),
+                        child: Text(
+                          '欢迎使用浩海通行证！',
+                          style: TextStyle(
+                              color: HhColors.textBlackColor,
+                              fontSize: 16.sp*3,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.bold),
+                        ))),
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(40.w, 69.h*3, 40.w, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '请您阅读并同意',
                               style: TextStyle(
-                                  color: HhColors.textBlackColor,
-                                  fontSize: 32.sp,
                                   decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.bold),
-                            ))),
-                    Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                            margin: EdgeInsets.fromLTRB(40.w, 135.w, 40.w, 0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  '请您阅读并同意',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.none,
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 26.sp),
-                                ),
-                                BouncingWidget(
-                                  duration: const Duration(milliseconds: 100),
-                                  scaleFactor: 1.2,
-                                  onPressed: () {
-                                    Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
-                                  },
-                                  child: Text(
-                                    '《浩海万联平台隐私政策》',
-                                    style: TextStyle(
-                                        decoration: TextDecoration.none,
-                                        color: HhColors.mainBlueColor,
-                                        fontSize: 26.sp),
-                                  ),
-                                ),
-                              ],
-                            ))),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 10.w, 20.w, 0),
-                            padding: EdgeInsets.all(20.w),
-                            child: Image.asset(
-                              'assets/images/common/ic_x.png',
-                              height: 32.w,
-                              width: 32.w,
-                              fit: BoxFit.fill,
-                            )),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: () {
-                          logic.confirmStatus.value = true;
-                          Navigator.pop(context);
-                          //继续
-                          if (logic.pageStatus.value) {
-                            ///验证码点击
-                            codeClick();
-                          } else {
-                            ///登录点击
-                            loginClick();
-                          }
-                        },
-                        child: Container(
-                          width: 1.sw,
-                          height: 90.w,
-                          margin: EdgeInsets.fromLTRB(40.w, 0, 40.w, 30.w),
-                          decoration: BoxDecoration(
-                              color: HhColors.mainBlueColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16.w))),
-                          child: Center(
-                            child: Text(
-                              "同意并继续",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: HhColors.whiteColor,
-                                  fontSize: 28.sp,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.w200),
+                                  color: HhColors.grayAATextColor,
+                                  fontSize: 13.sp*3,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          ),
+                            BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: () {
+                                Get.to(WebViewPage(title: '隐私协议', url: 'http://117.132.5.139:18034/admin-file/iot-test/public/2024/9/24/haohai_iot_privacy_agreement.html',));
+                              },
+                              child: Text(
+                                '《浩海万联平台隐私政策》',
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    color: HhColors.mainBlueColor,
+                                    fontSize: 13.sp*3,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ))),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 15.h*3, 23.w*3, 0),
+                        padding: EdgeInsets.all(5.w),
+                        child: Image.asset(
+                          'assets/images/common/ic_x.png',
+                          height: 15.w*3,
+                          width: 15.w*3,
+                          fit: BoxFit.fill,
+                        )),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      logic.confirmStatus.value = true;
+                      Navigator.pop(context);
+                      //继续
+                      if (logic.pageStatus.value) {
+                        ///验证码点击
+                        codeClick();
+                      } else {
+                        ///登录点击
+                        loginClick();
+                      }
+                    },
+                    child: Container(
+                      width: 275.w*3,
+                      height: 44.h*3,
+                      margin: EdgeInsets.only(bottom:13.h*3),
+                      decoration: BoxDecoration(
+                          color: HhColors.backBlueOutColor,
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(8.w*3))),
+                      child: Center(
+                        child: Text(
+                          "同意并继续",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: HhColors.whiteColor,
+                              fontSize: 16.sp*3,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w200),
                         ),
                       ),
                     ),
+                  ),
+                ),
                   ],
                 ),
               ),
-            ));
+            ),barrierDismissible: true);
   }
 
   void loginClick() {

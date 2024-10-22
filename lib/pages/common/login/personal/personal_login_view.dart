@@ -107,7 +107,7 @@ class PersonalLoginPage extends StatelessWidget {
                                       color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                                 ),
                                 style:
-                                TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                                TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                                 onChanged: (s){
                                   logic.accountStatus.value = s.isNotEmpty;
                                 },
@@ -162,7 +162,7 @@ class PersonalLoginPage extends StatelessWidget {
                                       color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                                 ),
                                 style:
-                                TextStyle(color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
+                                TextStyle(color: HhColors.whiteColor, fontSize: 15.sp*3,fontWeight: FontWeight.w300),
                                 onChanged: (s){
                                   logic.passwordStatus.value = s.isNotEmpty;
                                 },
@@ -378,8 +378,8 @@ class PersonalLoginPage extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
                   child: Image.asset(
                     'assets/images/common/back_white.png',
-                    height: 16.w*3,
-                    width: 10.w*3,
+                    height: 14.w*3,
+                    width: 8.w*3,
                     fit: BoxFit.fill,
                   )),
             ),

@@ -69,7 +69,7 @@ class UsPage extends StatelessWidget {
               child: Image.asset(
                 "assets/images/common/back.png",
                 height: 14.w*3,
-                width: 9.w*3,
+                width: 8.w*3,
                 fit: BoxFit.fill,
               ),
             ),

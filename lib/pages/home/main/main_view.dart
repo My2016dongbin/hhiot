@@ -1019,18 +1019,18 @@ class MainPage extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                     child: Image.asset(
-                      "assets/images/common/test_video.jpg",
+                      item['status']==1?"assets/images/common/test_video.jpg":"assets/images/common/test_video.png",
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
-                item['status']==1?const SizedBox():Container(
+                /*item['status']==1?const SizedBox():Container(
                   height: 90.w*3,
                   width: 0.5.sw,
                   decoration: BoxDecoration(
                       color: HhColors.grayEDBackColor.withAlpha(160),
                       borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
-                ),
+                ),*/
                 item['status']==1?const SizedBox():Align(
                   alignment: Alignment.center,
                   child: InkWell(
@@ -1438,7 +1438,7 @@ class MainPage extends StatelessWidget {
                     ),
                     SizedBox(height: 4.w*3),
                     Text('分享',style: TextStyle(color: item["shareMark"]==2?HhColors.grayCCTextColor:HhColors.textBlackColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,),),
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -1463,7 +1463,7 @@ class MainPage extends StatelessWidget {
                     ),
                     SizedBox(height: 10.w,),
                     Text('修改',style: TextStyle(color: HhColors.textBlackColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,),),
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),
@@ -1495,7 +1495,7 @@ class MainPage extends StatelessWidget {
                     ),
                     SizedBox(height: 4.w*3,),
                     Text('删除',style: TextStyle(color: HhColors.mainRedColor,fontSize: 14.sp*3,
-                      decoration: TextDecoration.none,),),
+                      decoration: TextDecoration.none,fontWeight: FontWeight.w500),),
                   ],
                 ),
               ),

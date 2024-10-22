@@ -3,22 +3,15 @@ import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
-import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/common_data.dart';
-import 'package:iot/pages/common/location/location_controller.dart';
-import 'package:iot/pages/common/socket/socket_page/socket_controller.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
-import 'package:iot/utils/HhLog.dart';
-import 'package:iot/utils/switch/lite_rolling_switch.dart';
-import 'package:web_socket_channel/io.dart';
 
 class LiGanDetailPage extends StatelessWidget {
   final logic = Get.find<LiGanDetailController>();
@@ -530,34 +523,46 @@ class LiGanDetailPage extends StatelessWidget {
                                   height: 1.w,
                                   color: HhColors.backColor,
                                 ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '提示音',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 15.sp * 3,
-                                              fontWeight: FontWeight.w400),
+                                InkWell(
+                                onTap: (){
+                                  showChoosePersonDialog();
+                                },
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            '提示音',
+                                            style: TextStyle(
+                                                color: HhColors.blackColor,
+                                                fontSize: 15.sp * 3,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '${logic.config["audioHumanName"]}',
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              color: HhColors.gray9TextColor,
-                                              fontSize: 15.sp * 3,
-                                              fontWeight: FontWeight.w400),
+                                        Expanded(
+                                          child: Text(
+                                            '${logic.config["audioHumanName"]}',
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                                color: HhColors.gray9TextColor,
+                                                fontSize: 15.sp * 3,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 5.w * 3,
+                                        ),
+                                        Image.asset(
+                                            "assets/images/common/icon_down_status.png",
+                                            height: 13.w * 3,
+                                            width: 13.w * 3),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -726,34 +731,46 @@ class LiGanDetailPage extends StatelessWidget {
                                   height: 1.w,
                                   color: HhColors.backColor,
                                 ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '提示音',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 15.sp * 3,
-                                              fontWeight: FontWeight.w400),
+                                InkWell(
+                                  onTap: (){
+                                    showChooseCarDialog();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            '提示音',
+                                            style: TextStyle(
+                                                color: HhColors.blackColor,
+                                                fontSize: 15.sp * 3,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '${logic.config["audioCarName"]}',
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              color: HhColors.gray9TextColor,
-                                              fontSize: 15.sp * 3,
-                                              fontWeight: FontWeight.w400),
+                                        Expanded(
+                                          child: Text(
+                                            '${logic.config["audioCarName"]}',
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                                color: HhColors.gray9TextColor,
+                                                fontSize: 15.sp * 3,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 5.w * 3,
+                                        ),
+                                        Image.asset(
+                                            "assets/images/common/icon_down_status.png",
+                                            height: 13.w * 3,
+                                            width: 13.w * 3),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -922,34 +939,46 @@ class LiGanDetailPage extends StatelessWidget {
                                   height: 1.w,
                                   color: HhColors.backColor,
                                 ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(
-                                      16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '提示音',
-                                          style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 15.sp * 3,
-                                              fontWeight: FontWeight.w400),
+                                InkWell(
+                                  onTap: (){
+                                    showChooseOpenDialog();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            '提示音',
+                                            style: TextStyle(
+                                                color: HhColors.blackColor,
+                                                fontSize: 15.sp * 3,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '${logic.config["audioOpenName"]}',
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                              color: HhColors.gray9TextColor,
-                                              fontSize: 15.sp * 3,
-                                              fontWeight: FontWeight.w400),
+                                        Expanded(
+                                          child: Text(
+                                            '${logic.config["audioOpenName"]}',
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+                                                color: HhColors.gray9TextColor,
+                                                fontSize: 15.sp * 3,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 5.w * 3,
+                                        ),
+                                        Image.asset(
+                                            "assets/images/common/icon_down_status.png",
+                                            height: 13.w * 3,
+                                            width: 13.w * 3),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -1382,57 +1411,26 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                value: logic.close.value,
-                                                onChanged: (s) {
-                                                  logic.close.value = s;
-                                                },
-                                                activeColor:
-                                                HhColors.mainBlueColor,
-                                                inactiveThumbColor:
-                                                HhColors.mainBlueColor,
-                                                inactiveTrackColor:
-                                                HhColors.whiteColor,
-                                                focusColor:
-                                                HhColors.mainBlueColor,
-                                                trackOutlineColor:
-                                                MaterialStateProperty
-                                                    .resolveWith<Color?>(
-                                                        (Set<MaterialState>
-                                                    states) {
-                                                      return HhColors.mainBlueColor;
-                                                    }),
-                                              )*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.close.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.close.value = state;
-                                                  },
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                      const Expanded(
+                                        child: SizedBox()
                                       ),
+                                      Align(
+                                          alignment: Alignment.centerRight,
+                                          child: FlutterSwitch(
+                                            width: 100.w,
+                                            height: 55.w,
+                                            activeColor:
+                                            HhColors.mainBlueColor,
+                                            valueFontSize: 25.w,
+                                            toggleSize: 45.w,
+                                            value: logic.close.value,
+                                            borderRadius: 30.w,
+                                            padding: 8.w,
+                                            onToggle: (val) {
+                                              logic.close.value = val;
+                                            },
+                                          )
+                                      )
                                     ],
                                   ),
                                 ),
@@ -1598,65 +1596,27 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                value: logic.warnGANG1.value,
-                                                onChanged: (s) {
-                                                  logic.warnGANG1.value = s;
-                                                  logic.warnSet("gCam1",
-                                                      s ? "ON" : "OFF");
-                                                },
-                                                activeColor:
-                                                    HhColors.mainBlueColor,
-                                                inactiveThumbColor:
-                                                    HhColors.mainBlueColor,
-                                                inactiveTrackColor:
-                                                    HhColors.whiteColor,
-                                                focusColor:
-                                                    HhColors.mainBlueColor,
-                                                trackOutlineColor:
-                                                    MaterialStateProperty
-                                                        .resolveWith<Color?>(
-                                                            (Set<MaterialState>
-                                                                states) {
-                                                  */ /*if (states.contains(
-                                            MaterialState.disabled)) {
-                                          return HhColors.mainBlueColor;
-                                        }*/ /*
-                                                  return HhColors.mainBlueColor;
-                                                }),
-                                              )*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.warnGANG1.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.warnGANG1.value =
-                                                        state;
-                                                    logic.warnSet("gCam1",
-                                                        state ? "ON" : "OFF");
-                                                  },
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                      const Expanded(
+                                          child: SizedBox()
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: FlutterSwitch(
+                                          width: 100.w,
+                                          height: 55.w,
+                                          activeColor:
+                                          HhColors.mainBlueColor,
+                                          valueFontSize: 25.w,
+                                          toggleSize: 45.w,
+                                          value: logic.warnGANG1.value,
+                                          borderRadius: 30.w,
+                                          padding: 8.w,
+                                          onToggle: (val) {
+                                            logic.warnGANG1.value = val;
+                                            logic.warnSet("gCam1",
+                                                val ? "ON" : "OFF");
+                                          },
+                                        )
                                       ),
                                     ],
                                   ),
@@ -1678,65 +1638,26 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                  value: logic.warnGANG2.value,
-                                                  onChanged: (s) {
-                                                    logic.warnGANG2.value = s;
-                                                    logic.warnSet("gCam2",
-                                                        s ? "ON" : "OFF");
-                                                  },
-                                                  activeColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveThumbColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveTrackColor:
-                                                      HhColors.whiteColor,
-                                                  focusColor:
-                                                      HhColors.mainBlueColor,
-                                                  trackOutlineColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<
-                                                              Color?>((Set<
-                                                                  MaterialState>
-                                                              states) {
-                                                    */ /*if (states.contains(
-                                            MaterialState.disabled)) {
-                                          return HhColors.mainBlueColor;
-                                        }*/ /*
-                                                    return HhColors
-                                                        .mainBlueColor;
-                                                  }))*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.warnGANG2.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.warnGANG2.value =
-                                                        state;
-                                                    logic.warnSet("gCam2",
-                                                        state ? "ON" : "OFF");
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                      const Expanded(
+                                          child: SizedBox()
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: FlutterSwitch(
+                                          width: 100.w,
+                                          height: 55.w,
+                                          activeColor:
+                                              HhColors.mainBlueColor,
+                                          valueFontSize: 25.w,
+                                          toggleSize: 45.w,
+                                          value: logic.warnGANG2.value,
+                                          borderRadius: 30.w,
+                                          padding: 8.w,
+                                          onToggle: (val) {
+                                            logic.warnGANG2.value = val;
+                                            logic.warnSet("gCam2",
+                                                val ? "ON" : "OFF");
+                                          },
                                         ),
                                       ),
                                     ],
@@ -1759,66 +1680,27 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                  value: logic.warnGANG3.value,
-                                                  onChanged: (s) {
-                                                    logic.warnGANG3.value = s;
-                                                    logic.warnSet("gCam3",
-                                                        s ? "ON" : "OFF");
-                                                  },
-                                                  activeColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveThumbColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveTrackColor:
-                                                      HhColors.whiteColor,
-                                                  focusColor:
-                                                      HhColors.mainBlueColor,
-                                                  trackOutlineColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<
-                                                              Color?>((Set<
-                                                                  MaterialState>
-                                                              states) {
-                                                    */ /*if (states.contains(
-                                            MaterialState.disabled)) {
-                                          return HhColors.mainBlueColor;
-                                        }*/ /*
-                                                    return HhColors
-                                                        .mainBlueColor;
-                                                  }))*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.warnGANG3.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.warnGANG3.value =
-                                                        state;
-                                                    logic.warnSet("gCam3",
-                                                        state ? "ON" : "OFF");
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      const Expanded(
+                                          child: SizedBox()
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: FlutterSwitch(
+                                          width: 100.w,
+                                          height: 55.w,
+                                          activeColor:
+                                          HhColors.mainBlueColor,
+                                          valueFontSize: 25.w,
+                                          toggleSize: 45.w,
+                                          value: logic.warnGANG3.value,
+                                          borderRadius: 30.w,
+                                          padding: 8.w,
+                                          onToggle: (val) {
+                                            logic.warnGANG3.value = val;
+                                            logic.warnSet("gCam3",
+                                                val ? "ON" : "OFF");
+                                          },
+                                        )
                                       ),
                                     ],
                                   ),
@@ -1840,66 +1722,27 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                  value: logic.warnBALL.value,
-                                                  onChanged: (s) {
-                                                    logic.warnBALL.value = s;
-                                                    logic.warnSet("sCam1",
-                                                        s ? "ON" : "OFF");
-                                                  },
-                                                  activeColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveThumbColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveTrackColor:
-                                                      HhColors.whiteColor,
-                                                  focusColor:
-                                                      HhColors.mainBlueColor,
-                                                  trackOutlineColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<
-                                                              Color?>((Set<
-                                                                  MaterialState>
-                                                              states) {
-                                                    */ /*if (states.contains(
-                                            MaterialState.disabled)) {
-                                          return HhColors.mainBlueColor;
-                                        }*/ /*
-                                                    return HhColors
-                                                        .mainBlueColor;
-                                                  }))*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.warnBALL.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.warnBALL.value =
-                                                        state;
-                                                    logic.warnSet("sCam1",
-                                                        state ? "ON" : "OFF");
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      const Expanded(
+                                          child: SizedBox()
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: FlutterSwitch(
+                                          width: 100.w,
+                                          height: 55.w,
+                                          activeColor:
+                                          HhColors.mainBlueColor,
+                                          valueFontSize: 25.w,
+                                          toggleSize: 45.w,
+                                          value: logic.warnBALL.value,
+                                          borderRadius: 30.w,
+                                          padding: 8.w,
+                                          onToggle: (val) {
+                                            logic.warnBALL.value = val;
+                                            logic.warnSet("sCam1",
+                                                val ? "ON" : "OFF");
+                                          },
+                                        )
                                       ),
                                     ],
                                   ),
@@ -1921,66 +1764,27 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                  value: logic.warnSENSOR.value,
-                                                  onChanged: (s) {
-                                                    logic.warnSENSOR.value = s;
-                                                    logic.warnSet("sensor",
-                                                        s ? "ON" : "OFF");
-                                                  },
-                                                  activeColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveThumbColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveTrackColor:
-                                                      HhColors.whiteColor,
-                                                  focusColor:
-                                                      HhColors.mainBlueColor,
-                                                  trackOutlineColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<
-                                                              Color?>((Set<
-                                                                  MaterialState>
-                                                              states) {
-                                                    */ /*if (states.contains(
-                                            MaterialState.disabled)) {
-                                          return HhColors.mainBlueColor;
-                                        }*/ /*
-                                                    return HhColors
-                                                        .mainBlueColor;
-                                                  }))*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.warnSENSOR.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.warnSENSOR.value =
-                                                        state;
-                                                    logic.warnSet("sensor",
-                                                        state ? "ON" : "OFF");
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      const Expanded(
+                                          child: SizedBox()
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: FlutterSwitch(
+                                          width: 100.w,
+                                          height: 55.w,
+                                          activeColor:
+                                          HhColors.mainBlueColor,
+                                          valueFontSize: 25.w,
+                                          toggleSize: 45.w,
+                                          value: logic.warnSENSOR.value,
+                                          borderRadius: 30.w,
+                                          padding: 8.w,
+                                          onToggle: (val) {
+                                            logic.warnSENSOR.value = val;
+                                            logic.warnSet("sensor",
+                                                val ? "ON" : "OFF");
+                                          },
+                                        )
                                       ),
                                     ],
                                   ),
@@ -2002,66 +1806,27 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: /*Switch(
-                                                  value: logic.warnOPEN.value,
-                                                  onChanged: (s) {
-                                                    logic.warnOPEN.value = s;
-                                                    logic.warnSet("cap",
-                                                        s ? "ON" : "OFF");
-                                                  },
-                                                  activeColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveThumbColor:
-                                                      HhColors.mainBlueColor,
-                                                  inactiveTrackColor:
-                                                      HhColors.whiteColor,
-                                                  focusColor:
-                                                      HhColors.mainBlueColor,
-                                                  trackOutlineColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<
-                                                              Color?>((Set<
-                                                                  MaterialState>
-                                                              states) {
-                                                    */ /*if (states.contains(
-                                            MaterialState.disabled)) {
-                                          return HhColors.mainBlueColor;
-                                        }*/ /*
-                                                    return HhColors
-                                                        .mainBlueColor;
-                                                  }))*/
-                                                  SizedBox(
-                                                height: 50.w,
-                                                width: 90.w,
-                                                child: LiteRollingSwitch(
-                                                  value: logic.warnOPEN.value,
-                                                  textOn: '',
-                                                  textOff: '',
-                                                  colorOff: HhColors
-                                                      .titleColor_99
-                                                      .withAlpha(200),
-                                                  colorOn: HhColors
-                                                      .mainBlueColor
-                                                      .withAlpha(200),
-                                                  animationDuration:
-                                                      const Duration(
-                                                          milliseconds: 600),
-                                                  onChanged: (bool state) {
-                                                    logic.warnOPEN.value =
-                                                        state;
-                                                    logic.warnSet("cap",
-                                                        state ? "ON" : "OFF");
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      const Expanded(
+                                          child: SizedBox()
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: FlutterSwitch(
+                                          width: 100.w,
+                                          height: 55.w,
+                                          activeColor:
+                                          HhColors.mainBlueColor,
+                                          valueFontSize: 25.w,
+                                          toggleSize: 45.w,
+                                          value: logic.warnOPEN.value,
+                                          borderRadius: 30.w,
+                                          padding: 8.w,
+                                          onToggle: (val) {
+                                            logic.warnOPEN.value = val;
+                                            logic.warnSet("cap",
+                                                val ? "ON" : "OFF");
+                                          },
+                                        )
                                       ),
                                     ],
                                   ),
@@ -2119,39 +1884,19 @@ class LiGanDetailPage extends StatelessWidget {
                                       SizedBox(
                                         width: 20.w,
                                       ),
-                                      /*Switch(
+                                      FlutterSwitch(
+                                        width: 100.w,
+                                        height: 55.w,
+                                        activeColor:
+                                        HhColors.mainBlueColor,
+                                        valueFontSize: 25.w,
+                                        toggleSize: 45.w,
                                         value: logic.energyAction.value,
-                                        onChanged: (s) {
-                                          logic.energyAction.value = s;
+                                        borderRadius: 30.w,
+                                        padding: 8.w,
+                                        onToggle: (val) {
+                                          logic.energyAction.value = val;
                                         },
-                                        activeColor: HhColors.mainBlueColor,
-                                        inactiveThumbColor:
-                                            HhColors.mainBlueColor,
-                                        inactiveTrackColor: HhColors.whiteColor,
-                                        focusColor: HhColors.mainBlueColor,
-                                        trackOutlineColor: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
-                                          return HhColors.mainBlueColor;
-                                        }),
-                                      )*/
-                                      SizedBox(
-                                        height: 50.w,
-                                        width: 90.w,
-                                        child: LiteRollingSwitch(
-                                          value: logic.energyAction.value,
-                                          textOn: '',
-                                          textOff: '',
-                                          colorOff: HhColors.titleColor_99
-                                              .withAlpha(200),
-                                          colorOn: HhColors.mainBlueColor
-                                              .withAlpha(200),
-                                          animationDuration:
-                                              const Duration(milliseconds: 600),
-                                          onChanged: (bool state) {
-                                            logic.energyAction.value = state;
-                                          },
-                                        ),
                                       ),
                                       Expanded(
                                         child: TextField(
@@ -2206,39 +1951,19 @@ class LiGanDetailPage extends StatelessWidget {
                                       SizedBox(
                                         width: 20.w,
                                       ),
-                                      /*Switch(
+                                      FlutterSwitch(
+                                        width: 100.w,
+                                        height: 55.w,
+                                        activeColor:
+                                        HhColors.mainBlueColor,
+                                        valueFontSize: 25.w,
+                                        toggleSize: 45.w,
                                         value: logic.weatherAction.value,
-                                        onChanged: (s) {
-                                          logic.weatherAction.value = s;
+                                        borderRadius: 30.w,
+                                        padding: 8.w,
+                                        onToggle: (val) {
+                                          logic.weatherAction.value = val;
                                         },
-                                        activeColor: HhColors.mainBlueColor,
-                                        inactiveThumbColor:
-                                            HhColors.mainBlueColor,
-                                        inactiveTrackColor: HhColors.whiteColor,
-                                        focusColor: HhColors.mainBlueColor,
-                                        trackOutlineColor: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
-                                          return HhColors.mainBlueColor;
-                                        }),
-                                      )*/
-                                      SizedBox(
-                                        height: 50.w,
-                                        width: 90.w,
-                                        child: LiteRollingSwitch(
-                                          value: logic.weatherAction.value,
-                                          textOn: '',
-                                          textOff: '',
-                                          colorOff: HhColors.titleColor_99
-                                              .withAlpha(200),
-                                          colorOn: HhColors.mainBlueColor
-                                              .withAlpha(200),
-                                          animationDuration:
-                                              const Duration(milliseconds: 600),
-                                          onChanged: (bool state) {
-                                            logic.weatherAction.value = state;
-                                          },
-                                        ),
                                       ),
                                       Expanded(
                                         child: TextField(
@@ -2293,39 +2018,19 @@ class LiGanDetailPage extends StatelessWidget {
                                       SizedBox(
                                         width: 20.w,
                                       ),
-                                      /*Switch(
+                                      FlutterSwitch(
+                                        width: 100.w,
+                                        height: 55.w,
+                                        activeColor:
+                                        HhColors.mainBlueColor,
+                                        valueFontSize: 25.w,
+                                        toggleSize: 45.w,
                                         value: logic.soilAction.value,
-                                        onChanged: (s) {
-                                          logic.soilAction.value = s;
+                                        borderRadius: 30.w,
+                                        padding: 8.w,
+                                        onToggle: (val) {
+                                          logic.soilAction.value = val;
                                         },
-                                        activeColor: HhColors.mainBlueColor,
-                                        inactiveThumbColor:
-                                            HhColors.mainBlueColor,
-                                        inactiveTrackColor: HhColors.whiteColor,
-                                        focusColor: HhColors.mainBlueColor,
-                                        trackOutlineColor: MaterialStateProperty
-                                            .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
-                                          return HhColors.mainBlueColor;
-                                        }),
-                                      )*/
-                                      SizedBox(
-                                        height: 50.w,
-                                        width: 90.w,
-                                        child: LiteRollingSwitch(
-                                          value: logic.soilAction.value,
-                                          textOn: '',
-                                          textOff: '',
-                                          colorOff: HhColors.titleColor_99
-                                              .withAlpha(200),
-                                          colorOn: HhColors.mainBlueColor
-                                              .withAlpha(200),
-                                          animationDuration:
-                                              const Duration(milliseconds: 600),
-                                          onChanged: (bool state) {
-                                            logic.soilAction.value = state;
-                                          },
-                                        ),
                                       ),
                                       Expanded(
                                         child: TextField(
@@ -3118,6 +2823,348 @@ class LiGanDetailPage extends StatelessWidget {
       ));
     }
 
+    return list;
+  }
+
+
+  void showChoosePersonDialog() {
+    showModalBottomSheet(context: logic.context, builder: (a){
+      return Container(
+        width: 1.sw,
+        decoration: BoxDecoration(
+            color: HhColors.trans,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Container(
+                width: 1.sw,
+                margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 15.w*3,),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: buildDialogPerson(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(height: 8.w*3,color: HhColors.grayEFEFBackColor,),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 1.2,
+              child: Container(
+                width: 1.sw,
+                height: 50.w*3,
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(0.w*3))),
+                child: Center(
+                  child: Text(
+                    "取消",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ),
+      );
+    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+  }
+  void showChooseCarDialog() {
+    showModalBottomSheet(context: logic.context, builder: (a){
+      return Container(
+        width: 1.sw,
+        decoration: BoxDecoration(
+            color: HhColors.trans,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Container(
+                width: 1.sw,
+                margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 15.w*3,),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: buildDialogCar(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(height: 8.w*3,color: HhColors.grayEFEFBackColor,),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 1.2,
+              child: Container(
+                width: 1.sw,
+                height: 50.w*3,
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(0.w*3))),
+                child: Center(
+                  child: Text(
+                    "取消",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ),
+      );
+    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+  }
+  void showChooseOpenDialog() {
+    showModalBottomSheet(context: logic.context, builder: (a){
+      return Container(
+        width: 1.sw,
+        decoration: BoxDecoration(
+            color: HhColors.trans,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Container(
+                width: 1.sw,
+                margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 15.w*3,),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: buildDialogOpen(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(height: 8.w*3,color: HhColors.grayEFEFBackColor,),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 1.2,
+              child: Container(
+                width: 1.sw,
+                height: 50.w*3,
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(0.w*3))),
+                child: Center(
+                  child: Text(
+                    "取消",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ),
+      );
+    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+  }
+
+  buildDialogPerson() {
+    List<Widget> list = [];
+    for(int i = 0;i < logic.voiceBottomList.length;i++){
+      dynamic model = logic.voiceBottomList[i];
+      list.add(
+          InkWell(
+            onTap: (){
+              logic.config["audioHumanName"] = "${model['name']}";
+              logic.testStatus.value = false;
+              logic.testStatus.value = true;
+              Get.back();
+            },
+            child: Container(
+              width: 1.sw,
+              height:45.w*3,
+              margin: EdgeInsets.fromLTRB(13.w*3, 5.w*3, 13.w*3, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 200.w*3),
+                          child: Text(
+                            "${model['name']}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: HhColors.blackColor,
+                                fontSize: 15.sp*3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
+                    color: HhColors.grayLineColor,
+                    height:2.w,
+                    width:1.sw
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
+    }
+    return list;
+  }
+  buildDialogCar() {
+    List<Widget> list = [];
+    for(int i = 0;i < logic.voiceBottomList.length;i++){
+      dynamic model = logic.voiceBottomList[i];
+      list.add(
+          InkWell(
+            onTap: (){
+              logic.config["audioCarName"] = "${model['name']}";
+              logic.testStatus.value = false;
+              logic.testStatus.value = true;
+              Get.back();
+            },
+            child: Container(
+              width: 1.sw,
+              height:45.w*3,
+              margin: EdgeInsets.fromLTRB(13.w*3, 5.w*3, 13.w*3, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 200.w*3),
+                          child: Text(
+                            "${model['name']}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: HhColors.blackColor,
+                                fontSize: 15.sp*3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
+                    color: HhColors.grayLineColor,
+                    height:2.w,
+                    width:1.sw
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
+    }
+    return list;
+  }
+  buildDialogOpen() {
+    List<Widget> list = [];
+    for(int i = 0;i < logic.voiceBottomList.length;i++){
+      dynamic model = logic.voiceBottomList[i];
+      list.add(
+          InkWell(
+            onTap: (){
+              logic.config["audioOpenName"] = "${model['name']}";
+              logic.testStatus.value = false;
+              logic.testStatus.value = true;
+              Get.back();
+            },
+            child: Container(
+              width: 1.sw,
+              height:45.w*3,
+              margin: EdgeInsets.fromLTRB(13.w*3, 5.w*3, 13.w*3, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 200.w*3),
+                          child: Text(
+                            "${model['name']}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: HhColors.blackColor,
+                                fontSize: 15.sp*3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
+                    color: HhColors.grayLineColor,
+                    height:2.w,
+                    width:1.sw
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
+    }
     return list;
   }
 }

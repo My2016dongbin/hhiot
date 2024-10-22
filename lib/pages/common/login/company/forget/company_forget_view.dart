@@ -47,8 +47,8 @@ class CompanyForgetPage extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.08.sw, 0.15.sh, 0, 0),
-              child: Text('忘记密码',style: TextStyle(color: HhColors.textBlackColor,fontSize: 36.sp,fontWeight: FontWeight.bold),)
+                margin: EdgeInsets.fromLTRB(36.w*3, 135.h*3, 36.w*3, 0),
+              child: Text('忘记密码',style: TextStyle(color: HhColors.textBlackColor,fontSize: 20.sp*3,fontWeight: FontWeight.bold),)
             ),
           ),
           InkWell(
@@ -56,19 +56,19 @@ class CompanyForgetPage extends StatelessWidget {
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.fromLTRB(0.06.sw, 90.w, 0, 0),
+              margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
               padding: EdgeInsets.all(10.w),
               color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back.png",
-                width: 18.w,
-                height: 30.w,
+                height: 14.w*3,
+                width: 8.w*3,
                 fit: BoxFit.fill,
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(0.08.sw, 0.16.sh+66.w + 40.w, 0.08.sw, 0),
+            margin: EdgeInsets.fromLTRB(36.w*3, 212.h*3, 36.w*3, 0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -93,12 +93,12 @@ class CompanyForgetPage extends StatelessWidget {
                           '请输入手机号码',
                           hintStyle: TextStyle(
                               color: HhColors.grayCCTextColor,
-                              fontSize: 28.sp,
+                              fontSize: 16.sp*3,
                               fontWeight: FontWeight.w200),
                         ),
                         style: TextStyle(
                             color: HhColors.textBlackColor,
-                            fontSize: 32.sp,
+                            fontSize: 16.sp*3,
                             fontWeight: FontWeight.bold),
                         onChanged: (s) {
                           logic.accountStatus.value = s.isNotEmpty;
@@ -117,8 +117,8 @@ class CompanyForgetPage extends StatelessWidget {
                           padding: EdgeInsets.all(5.w),
                           child: Image.asset(
                             'assets/images/common/ic_close.png',
-                            height: 30.w,
-                            width: 30.w,
+                            height: 16.w*3,
+                            width: 16.w*3,
                             fit: BoxFit.fill,
                           )),
                     )
@@ -129,7 +129,7 @@ class CompanyForgetPage extends StatelessWidget {
                   color: HhColors.grayCCTextColor,
                   height: 0.5.w,
                 ),
-                SizedBox(height: 36.w,),
+                SizedBox(height: 30.w*3,),
                 ///获取验证码
                 BouncingWidget(
                   duration: const Duration(milliseconds: 100),
@@ -153,16 +153,16 @@ class CompanyForgetPage extends StatelessWidget {
                   },
                   child: Container(
                     width: 1.sw,
-                    height: 90.w,
+                    height: 48.w*3,
                     margin: EdgeInsets.fromLTRB(0, 26.w, 0, 20.w),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                     child: Center(
                       child: Text(
                         "获取验证码",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: HhColors.whiteColor, fontSize: 28.sp,fontWeight: FontWeight.w200),
+                        style: TextStyle(color: HhColors.whiteColor, fontSize: 16.sp*3,fontWeight: FontWeight.w200),
                       ),
                     ),
                   ),

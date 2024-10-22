@@ -70,7 +70,7 @@ class DevicePage extends StatelessWidget {
                   child: Image.asset(
                     "assets/images/common/back.png",
                     height: 14.w*3,
-                    width: 9.w*3,
+                    width: 8.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -184,7 +184,7 @@ class DevicePage extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(5.w))
                         ),
                         child: Image.asset(
-                          item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
+                          item['productName']=='浩海一体机'?"assets/images/common/icon_c.png":"assets/images/common/icon_d.png",
                           width: 52.w*3,
                           height: 52.w*3,
                           fit: BoxFit.fill,
@@ -217,7 +217,7 @@ class DevicePage extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(10.w, 0, 20.w, 0),
+                            margin: EdgeInsets.fromLTRB(10.w, 0, 10.w, 0),
                             padding: EdgeInsets.fromLTRB(6.w*3,2.w*3,6.w*3,2.w*3),
                             decoration: BoxDecoration(
                                 color: item['status']==1?HhColors.transBlueColors:HhColors.transRedColors,

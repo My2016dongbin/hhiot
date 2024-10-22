@@ -443,7 +443,7 @@ class MyPage extends StatelessWidget {
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
                                           fontSize: 15.sp*3,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),
@@ -503,7 +503,7 @@ class MyPage extends StatelessWidget {
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
                                           fontSize: 15.sp*3,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),
@@ -564,7 +564,7 @@ class MyPage extends StatelessWidget {
                                       style: TextStyle(
                                           color: HhColors.textBlackColor,
                                           fontSize: 15.sp*3,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),

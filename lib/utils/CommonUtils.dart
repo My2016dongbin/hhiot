@@ -763,9 +763,13 @@ class CommonUtils{
 
   toLogin(){
     if(CommonData.personal){
-      Get.offAll(() => PersonalLoginPage(), binding: PersonalLoginBinding());
+      Get.offAll(() => PersonalLoginPage(), binding: PersonalLoginBinding(),
+          transition: Transition.fadeIn,
+          duration: const Duration(milliseconds: 1000));
     }else{
-      Get.offAll(() => CompanyLoginPage(), binding: CompanyLoginBinding());
+      Get.offAll(() => CompanyLoginPage(), binding: CompanyLoginBinding(),
+          transition: Transition.fadeIn,
+          duration: const Duration(milliseconds: 1000));
     }
   }
 }

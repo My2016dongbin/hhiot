@@ -69,7 +69,7 @@ class SpaceManagePage extends StatelessWidget {
                   child: Image.asset(
                     "assets/images/common/back.png",
                     height: 14.w*3,
-                    width: 9.w*3,
+                    width: 8.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -328,7 +328,7 @@ class SpaceManagePage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(14.w*3, 15.w*3, 14.w*3, 25.w),
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(16.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -377,8 +377,8 @@ class SpaceManagePage extends StatelessWidget {
 
   buildDialogSpace(dynamic item) {
     List<Widget> list = [];
-    for(int i = 0;i < logic.spaceList.length;i++){
-      dynamic model = logic.spaceList[i];
+    for(int i = 0;i < logic.spaceListMax.length;i++){
+      dynamic model = logic.spaceListMax[i];
       if(model['id'] != item['id']){
         list.add(
             Container(

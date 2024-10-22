@@ -67,7 +67,7 @@ class SearchPage extends StatelessWidget {
                   child: Image.asset(
                     "assets/images/common/back.png",
                     height: 14.w*3,
-                    width: 9.w*3,
+                    width: 8.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -76,7 +76,7 @@ class SearchPage extends StatelessWidget {
                 child: Container(
                   height: 32.h*3,
                   margin: EdgeInsets.fromLTRB(12.w*3, 0, 10.w, 0),
-                  padding: EdgeInsets.fromLTRB(12.w*3, 7.w*3, 12.w*3, 7.w*3),
+                  padding: EdgeInsets.fromLTRB(12.w*3, 0, 12.w*3, 0),
                   decoration: BoxDecoration(
                       color: HhColors.grayEEBackColor,
                       borderRadius: BorderRadius.all(Radius.circular(50.w))),
@@ -85,14 +85,11 @@ class SearchPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        margin:EdgeInsets.only(top: 2.w),
-                        child: Image.asset(
-                          "assets/images/common/icon_search.png",
-                          width: 18.w*3,
-                          height: 18.w*3,
-                          fit: BoxFit.fill,
-                        ),
+                      Image.asset(
+                        "assets/images/common/icon_search.png",
+                        width: 18.w*3,
+                        height: 18.w*3,
+                        fit: BoxFit.fill,
                       ),
                       SizedBox(
                         width: 3.w*3,

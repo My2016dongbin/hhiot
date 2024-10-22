@@ -16,6 +16,7 @@ class SpaceManageController extends GetxController {
   late int pageSize = 20;
   late BuildContext context;
   late List<dynamic> spaceList = [];
+  late List<dynamic> spaceListMax = [];
   StreamSubscription ?spaceListSubscription;
 
   @override
@@ -53,9 +54,12 @@ class SpaceManageController extends GetxController {
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
     var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
-    HhLog.d("getSpaceList -- $result");
+    HhLog.d("getSpaceList -- $pageKey,$result");
     if(result["code"]==0 && result["data"]!=null){
       spaceList = result["data"]["list"];
+      if(spaceList.isNotEmpty){
+        spaceListMax = spaceList;
+      }
 
       if(pageKey == 1){
         pagingController.itemList = [];

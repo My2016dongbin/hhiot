@@ -79,7 +79,7 @@ class SettingPage extends StatelessWidget {
             child: Image.asset(
               "assets/images/common/back.png",
               height: 14.w*3,
-              width: 9.w*3,
+              width: 8.w*3,
               fit: BoxFit.fill,
             ),
           ),
@@ -123,7 +123,7 @@ class SettingPage extends StatelessWidget {
                                   style: TextStyle(
                                       color: HhColors.textBlackColor,
                                       fontSize: 15.sp*3,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -213,7 +213,7 @@ class SettingPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
                                         fontSize: 15.sp*3,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ),
@@ -269,7 +269,7 @@ class SettingPage extends StatelessWidget {
                                   style: TextStyle(
                                       color: HhColors.textBlackColor,
                                       fontSize: 15.sp*3,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -325,7 +325,7 @@ class SettingPage extends StatelessWidget {
                                         style: TextStyle(
                                             color: HhColors.textBlackColor,
                                             fontSize: 15.sp*3,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                   ),
@@ -397,7 +397,7 @@ class SettingPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
                                         fontSize: 15.sp*3,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ),
@@ -521,7 +521,7 @@ class SettingPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
                                         fontSize: 15.sp*3,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ),
@@ -738,7 +738,7 @@ class SettingPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
                                         fontSize: 14.sp*3,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ),
@@ -802,7 +802,7 @@ class SettingPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: HhColors.textBlackColor,
                                         fontSize: 15.sp*3,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ),

@@ -65,6 +65,13 @@ class MessagePage extends StatelessWidget {
                       scaleFactor: 1.2,
                       onPressed: (){
                         logicHome.index.value = 0;
+                        if(logic.tabIndex.value==0){
+                          logic.editLeft.value = false;
+                        }else{
+                          logic.editRight.value = false;
+                        }
+                        logic.pageStatus.value = false;
+                        logic.pageStatus.value = true;
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(22.w*3, 58.h*3, 0, 0),
@@ -278,9 +285,9 @@ class MessagePage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  SizedBox(width: 20.w,),
+                  SizedBox(width: 14.w*3,),
                   Container(
-                    width: 114.w*3,
+                    width: 118.w*3,
                       padding:EdgeInsets.fromLTRB(7.w*3, 0, 8.w*3, 0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.w*3),
@@ -413,7 +420,7 @@ class MessagePage extends StatelessWidget {
                           ],
                         )),
                   ),
-                  SizedBox(width: 20.w,),
+                  SizedBox(width: 14.w*3,),
                 ],
               ),
             ),
@@ -680,7 +687,7 @@ class MessagePage extends StatelessWidget {
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          color: HhColors.textColor, fontSize: 14.sp*3),
+                                                          color: HhColors.gray9TextColor, fontSize: 14.sp*3),
                                                     ),
                                                     SizedBox(height: 5.w,),
                                                     Text(
@@ -688,7 +695,7 @@ class MessagePage extends StatelessWidget {
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          color: HhColors.textColor, fontSize: 13.sp*3),
+                                                          color: HhColors.gray9TextColor, fontSize: 13.sp*3),
                                                     ),
                                                   ],
                                                 ),

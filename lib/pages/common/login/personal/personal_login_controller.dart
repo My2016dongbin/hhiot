@@ -229,7 +229,9 @@ class PersonalLoginController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: '登录成功',type: 1));
 
       Future.delayed(const Duration(seconds: 1), () {
-        Get.offAll(() => HomePage(), binding: HomeBinding());
+        Get.offAll(() => HomePage(), binding: HomeBinding(),
+            transition: Transition.fadeIn,
+            duration: const Duration(milliseconds: 1000));
       });
     } else {
       EventBusUtil.getInstance()
