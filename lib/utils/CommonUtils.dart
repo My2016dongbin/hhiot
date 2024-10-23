@@ -28,6 +28,11 @@ class CommonUtils{
 
     return gradientColors;
   }
+  List<Color> gradientColors3(){
+    List<Color> gradientColors = [HhColors.backTransColor1,HhColors.backTransColor1a, HhColors.backTransColor1b, HhColors.backTransColor1b];
+
+    return gradientColors;
+  }
   String parseMessageType(String s){
     String type = "设备报警";
     if(s == 'deviceAlarm'){

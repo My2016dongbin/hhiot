@@ -66,8 +66,8 @@ class SearchPage extends StatelessWidget {
                   color: HhColors.trans,
                   child: Image.asset(
                     "assets/images/common/back.png",
-                    height: 14.w*3,
-                    width: 8.w*3,
+                    height: 17.w*3,
+                    width: 10.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -152,7 +152,7 @@ class SearchPage extends StatelessWidget {
             child: SingleChildScrollView(
               key: const Key("out"),
               child: (logic.deviceList.isEmpty&&logic.spaceList.isEmpty&&logic.messageList.isEmpty)?SizedBox(
-                child: Center(child: CommonUtils().noneWidget(image: 'assets/images/common/icon_no_message_search.png',info: '没有找到匹配的结果',height: 0.4.sw,width:0.5.sw,top: 0.4.sw),),
+                child: Center(child: CommonUtils().noneWidget(image: 'assets/images/common/icon_no_message_search.png',info: '没有找到匹配的结果',height: 136.w*3,width:176.w*3,top: 0.4.sw,mid: 6.w*3),),
               ):Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

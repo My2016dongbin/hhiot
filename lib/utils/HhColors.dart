@@ -4,6 +4,8 @@ class HhColors {
   static const themeBackColor = Color(0xFFF5F7F7);//主题背景颜色
   static const backTransColor = Color(0x66786F68);//透明灰色背景色
   static const backTransColor1 = Color(0xFFDEEAF9);//主页背景渐变色
+  static const backTransColor1a = Color(0xFFDFEDF9);//主页背景渐变色
+  static const backTransColor1b = Color(0xFFEFF4F7);//主页背景渐变色
   static const backTransColor2 = Color(0xFFF0F0FF);//主页背景渐变色
   static const backTransColor21 = Color(0xFFF4F4ED);//主页背景渐变色
   static const backTransColor22 = Color(0xFFFFFFFF);//主页背景渐变色

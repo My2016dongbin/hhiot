@@ -55,11 +55,15 @@ class MyPage extends StatelessWidget {
       children: [
         ///背景-渐变色
         Container(
+          color: HhColors.themeBackColor,
+        ),
+        Container(
+          height: 240.w*3,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: CommonUtils().gradientColors2()),
+                colors: CommonUtils().gradientColors3()),
           ),
         ),
 

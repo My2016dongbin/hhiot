@@ -33,7 +33,7 @@ class MessagePage extends StatelessWidget {
     return OverlayTooltipScaffold(
       overlayColor: Colors.red.withOpacity(.4),
       tooltipAnimationCurve: Curves.linear,
-      tooltipAnimationDuration: const Duration(milliseconds: 1000),
+      tooltipAnimationDuration: const Duration(milliseconds: 0),
       controller: logic.tipController,
       preferredOverlay: GestureDetector(
         onTap: () {
@@ -60,11 +60,11 @@ class MessagePage extends StatelessWidget {
                       width: 1.sw,
                       color: HhColors.whiteColor,
                     ),
-                    BouncingWidget(
+                    (logic.editLeft.value||logic.editRight.value)?BouncingWidget(
                       duration: const Duration(milliseconds: 100),
                       scaleFactor: 1.2,
                       onPressed: (){
-                        logicHome.index.value = 0;
+                        //logicHome.index.value = 0;
                         if(logic.tabIndex.value==0){
                           logic.editLeft.value = false;
                         }else{
@@ -74,17 +74,17 @@ class MessagePage extends StatelessWidget {
                         logic.pageStatus.value = true;
                       },
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(22.w*3, 58.h*3, 0, 0),
+                        margin: EdgeInsets.fromLTRB(12.w*3, 58.h*3, 0, 0),
                         padding: EdgeInsets.all(10.w),
                         color: HhColors.whiteColor,
                         child: Image.asset(
-                          "assets/images/common/back.png",
-                          width: 9.w*3,
-                          height: 14.w*3,
+                          "assets/images/common/ic_x.png",
+                          height: 17.w*3,
+                          width: 17.w*3,
                           fit: BoxFit.fill,
                         ),
                       ),
-                    ),
+                    ):const SizedBox(),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Container(
@@ -92,7 +92,7 @@ class MessagePage extends StatelessWidget {
                         margin: EdgeInsets.only(top: 51.h*3),
                         child: Row(
                           children: [
-                            SizedBox(width: 59.w*3,),
+                            (logic.editLeft.value||logic.editRight.value)?SizedBox(width: 59.w*3,):SizedBox(width: 10.w*3,),
                             BouncingWidget(
                               duration: const Duration(milliseconds: 100),
                               scaleFactor: 1.0,

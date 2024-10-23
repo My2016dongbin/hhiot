@@ -62,7 +62,11 @@ class MainController extends GetxController {
   late BuildContext context;
   final LocationFlutterPlugin _myLocPlugin = LocationFlutterPlugin();
   late WebViewController webController = WebViewController()
-    ..setBackgroundColor(HhColors.trans);
+    ..setBackgroundColor(HhColors.trans)..runJavaScript("document.documentElement.style.overflow = 'hidden';");
+  /*onPageFinished: (String url) {
+          _controller.runJavascript(
+              "document.documentElement.style.overflow = 'hidden';");
+        },*/
   late bool _suc;
   late List<dynamic> newItems = [];
   late Rx<bool> secondStatus = true.obs;
@@ -265,8 +269,10 @@ class MainController extends GetxController {
           String weatherUrl = CommonUtils().getHeFengIcon(
               (now['text'] == "晴" ? "FFF68F" : "F5CD5B"), now['icon'], "80");
           HhLog.d("weatherUrl = $weatherUrl");
+          webController.setJavaScriptMode(JavaScriptMode.unrestricted);
           webController.loadRequest(Uri.parse(weatherUrl));
           webController.enableZoom(false);
+          webController.runJavaScript("document.documentElement.style.overflow = 'hidden';");
           webController.setBackgroundColor(HhColors.trans);
           iconStatus.value = false;
           iconStatus.value = true;

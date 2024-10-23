@@ -50,7 +50,7 @@ class MainPage extends StatelessWidget {
     return OverlayTooltipScaffold(
       overlayColor: Colors.red.withOpacity(.4),
       tooltipAnimationCurve: Curves.linear,
-      tooltipAnimationDuration: const Duration(milliseconds: 1000),
+      tooltipAnimationDuration: const Duration(milliseconds: 0),
       controller: logic.tipController,
       preferredOverlay: GestureDetector(
         onTap: () {

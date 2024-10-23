@@ -378,8 +378,8 @@ class PersonalLoginPage extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
                   child: Image.asset(
                     'assets/images/common/back_white.png',
-                    height: 14.w*3,
-                    width: 8.w*3,
+                    height: 17.w*3,
+                    width: 10.w*3,
                     fit: BoxFit.fill,
                   )),
             ),
