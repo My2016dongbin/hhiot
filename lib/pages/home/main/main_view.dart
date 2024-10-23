@@ -213,12 +213,12 @@ class MainPage extends StatelessWidget {
                                               fontSize: 14.sp*3,fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      "${item['spaceName']}"=='null'?const SizedBox():Align(
+                                      "${item['location']}"=='null'?const SizedBox():Align(
                                         alignment: Alignment.topLeft,
                                         child: Container(
                                           margin: EdgeInsets.only(top: 10.w),
                                           child: Text(
-                                            "${item['spaceName']}",
+                                            "${item['location']}",
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
                                                 fontSize: 12.sp*3),
