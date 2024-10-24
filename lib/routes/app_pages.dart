@@ -24,7 +24,8 @@ class AppPages {
         page: page,
         binding: binding,
         preventDuplicates: preventDuplicates,
-        transition: Transition.cupertino,
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 1000),
         popGesture: true,
       );
 

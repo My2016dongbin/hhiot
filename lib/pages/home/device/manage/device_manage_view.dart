@@ -121,6 +121,12 @@ class DeviceManagePage extends StatelessWidget {
           pagingController: logic.deviceController,
           padding: EdgeInsets.zero,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
+            firstPageProgressIndicatorBuilder: (c){
+              return Container();
+            }, // 关闭首次加载动画
+            newPageProgressIndicatorBuilder:  (c){
+              return Container();
+            },   // 关闭新页加载动画
             noItemsFoundIndicatorBuilder: (context) =>Column(
               children: [
                 const Expanded(child: SizedBox()),

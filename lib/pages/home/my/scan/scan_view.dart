@@ -217,7 +217,6 @@ class ScanPage extends StatelessWidget {
     if (pickedFile != null) {
       // 使用 QRCodeTools 从图片中读取二维码
       final result = await QrCodeToolsPlugin.decodeFrom(pickedFile.path);
-      EventBusUtil.getInstance().fire(HhToast(title: '$result'));
 
       String? barcodeScanRes = '';
       try{

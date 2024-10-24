@@ -50,10 +50,12 @@ class SpaceManageController extends GetxController {
   }
 
   Future<void> getSpaceList(int pageKey) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
     var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("getSpaceList -- $pageKey,$result");
     if(result["code"]==0 && result["data"]!=null){
       spaceList = result["data"]["list"];

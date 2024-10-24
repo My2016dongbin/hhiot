@@ -152,6 +152,12 @@ class SpaceManagePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           pagingController: logic.pagingController,
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
+            firstPageProgressIndicatorBuilder: (c){
+              return Container();
+            }, // 关闭首次加载动画
+            newPageProgressIndicatorBuilder:  (c){
+              return Container();
+            },   // 关闭新页加载动画
             noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(
               image: 'assets/images/common/no_message.png',
               info: '暂无消息',
