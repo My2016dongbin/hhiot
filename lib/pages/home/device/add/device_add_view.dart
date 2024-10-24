@@ -9,12 +9,14 @@ import 'package:iot/pages/common/location/search/saerch_controller.dart';
 import 'package:iot/pages/common/location/search/search_binding.dart';
 import 'package:iot/pages/common/location/search/search_view.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
+import 'package:iot/pages/home/my/scan/scan_binding.dart';
+import 'package:iot/pages/home/my/scan/scan_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
 import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+// import 'package:qrscan/qrscan.dart' as scanner;
 
 class DeviceAddPage extends StatelessWidget {
   final logic = Get.find<DeviceAddController>();
@@ -22,6 +24,7 @@ class DeviceAddPage extends StatelessWidget {
 
   DeviceAddPage({super.key,required String snCode}){
     logic.snCode = snCode;
+    logic.snController!.text = logic.snCode;
   }
 
   @override
@@ -82,12 +85,13 @@ class DeviceAddPage extends StatelessWidget {
                     duration: const Duration(milliseconds: 100),
                     scaleFactor: 1.2,
                     onPressed: () async {
-                      String? barcodeScanRes = await scanner.scan();
+                      /*String? barcodeScanRes = await scanner.scan();
                       if(barcodeScanRes!.isNotEmpty){
                         logic.testStatus.value = false;
                         logic.testStatus.value = true;
                         logic.snController!.text = barcodeScanRes;
-                      }
+                      }*/
+                      Get.to(() => ScanPage(), binding: ScanBinding());
                     },
                     child: Container(
                       margin: EdgeInsets.fromLTRB(0, 59.h*3, 23.w*3, 0),

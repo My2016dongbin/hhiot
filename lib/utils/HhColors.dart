@@ -62,6 +62,7 @@ class HhColors {
   static const whiteColorTrans2 = Color(0xFFF2F6FE); //主题颜色
   static const whiteColor = Colors.white;
   static const blackColor = Color(0xFF333333);
+  static const black2Color = Color(0xFF232420);
   static const blackRealColor = Colors.black;
   static const backBlueInColor = Color(0xFFE1E9F7);
   static const backRedInColor = Color(0xFFFF5C5C);
@@ -89,6 +90,7 @@ class HhColors {
   static const transTips = Color(0x66999999);
 
   static const backColorF5 = Color(0xFFf5f5f5);
+  static const backColorScan = Color(0xFF494949);
   static const backColorF0 = Color(0xFFf0f0f0);
   static const backColorTab = Color(0xFF9CC3FC);
 

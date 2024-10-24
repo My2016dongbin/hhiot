@@ -58,7 +58,9 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   toggle_switch: ^2.3.0
   flutter_styled_toast: ^2.2.1
-  qrscan: ^0.3.3
+  #  qrscan: ^0.3.3
+  qr_code_scanner: ^1.0.1
+  qr_code_tools: ^0.1.0
   web_socket_channel: ^2.4.0
 #  flutter_barcode_scanner: ^2.0.0
 #  ai_barcode_scanner: ^3.4.3

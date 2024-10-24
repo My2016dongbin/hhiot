@@ -17,6 +17,8 @@ import 'package:iot/pages/home/my/help/help_binding.dart';
 import 'package:iot/pages/home/my/help/help_view.dart';
 import 'package:iot/pages/home/my/network/network_binding.dart';
 import 'package:iot/pages/home/my/network/network_view.dart';
+import 'package:iot/pages/home/my/scan/scan_binding.dart';
+import 'package:iot/pages/home/my/scan/scan_view.dart';
 import 'package:iot/pages/home/my/setting/setting_binding.dart';
 import 'package:iot/pages/home/my/setting/setting_view.dart';
 import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
@@ -27,7 +29,7 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import '../../../utils/HhColors.dart';
 import 'my_controller.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+// import 'package:qrscan/qrscan.dart' as scanner;
 
 class MyPage extends StatelessWidget {
   final logic = Get.find<MyController>();
@@ -84,7 +86,7 @@ class MyPage extends StatelessWidget {
             duration: const Duration(milliseconds: 100),
             scaleFactor: 1.2,
             onPressed: () async {
-              String? barcodeScanRes = await scanner.scan();
+              /*String? barcodeScanRes = await scanner.scan();
               HhLog.d("barCode $barcodeScanRes");
               if(barcodeScanRes!.isNotEmpty){
                 try{
@@ -98,7 +100,9 @@ class MyPage extends StatelessWidget {
                 }catch(e){
                   Get.to(()=>DeviceAddPage(snCode: barcodeScanRes,),binding: DeviceAddBinding());
                 }
-              }
+              }*/
+
+              Get.to(() => ScanPage(), binding: ScanBinding());
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 53.w*3, 14.w*3, 0),

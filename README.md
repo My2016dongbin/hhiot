@@ -38,7 +38,7 @@ decoration: InputDecoration(
                             child: Image.asset(
                               "assets/images/common/back.png",
                               height: 17.w*3,
-                                                  width: 10.w*3,
+                              width: 10.w*3,
                               fit: BoxFit.fill,
                             ),
                           ),

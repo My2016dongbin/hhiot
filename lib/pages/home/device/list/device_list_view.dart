@@ -73,8 +73,8 @@ class DeviceListPage extends StatelessWidget {
                       children: [
                         Image.asset(
                           "assets/images/common/back.png",
-                          width: 12.w,
-                          height: 20.w,
+                          height: 17.w*3,
+                          width: 10.w*3,
                           fit: BoxFit.fill,
                         ),
                       ],

@@ -598,7 +598,7 @@ class MessagePage extends StatelessWidget {
                               ):const SizedBox(),
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 14.w*3, 0),
+                                  margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
                                   padding: EdgeInsets.fromLTRB(8.w*3, 12.w*3, 10.w*3, 12.w*3),
                                   clipBehavior: Clip.hardEdge,
                                   decoration: BoxDecoration(
@@ -876,7 +876,7 @@ class MessagePage extends StatelessWidget {
                           ):const SizedBox(),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 14.w*3, 0),
+                              margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
                               padding: EdgeInsets.all(20.w),
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(

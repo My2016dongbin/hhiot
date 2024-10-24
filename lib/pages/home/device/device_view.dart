@@ -59,7 +59,7 @@ class DevicePage extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
+              /*InkWell(
                 onTap: () {
                   Get.back();
                 },
@@ -74,7 +74,7 @@ class DevicePage extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 ),
-              ),
+              ),*/
               Align(
                 alignment: Alignment.topRight,
                 child: InkWell(
@@ -131,18 +131,19 @@ class DevicePage extends StatelessWidget {
           builderDelegate: PagedChildBuilderDelegate<dynamic>(
             noItemsFoundIndicatorBuilder: (context) =>Column(
               children: [
-                SizedBox(height:0.4.sw,),
+                const Expanded(child: SizedBox()),
                 Image.asset('assets/images/common/no_message.png',fit: BoxFit.fill,
                   height: 0.32.sw,
                   width: 0.6.sw,),
                 SizedBox(height: 100.w,),
+                const Expanded(child: SizedBox()),
                 BouncingWidget(
                   duration: const Duration(milliseconds: 100),
                   scaleFactor: 1.2,
                   child: Container(
                     width: 1.sw,
                     height: 44.w*3,
-                    margin: EdgeInsets.fromLTRB(60.w, 20.w, 60.w, 50.w),
+                    margin: EdgeInsets.fromLTRB(36.w*3, 20.w, 36.w*3, 25.w*3),
                     decoration: BoxDecoration(
                         color: HhColors.mainBlueColor,
                         borderRadius: BorderRadius.all(Radius.circular(24.w*3))),

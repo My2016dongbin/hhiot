@@ -187,19 +187,17 @@ class SharePage extends StatelessWidget {
                              ],
                            ),
                          ),
-                         Row(
-                           children: [
-                             Container(
-                               margin: EdgeInsets.fromLTRB(20.w*3, 16.w*3, 20.w*3, 0),
-                               child: Text(
-                                 '请输入被分享人的用户名/手机号',
-                                 style: TextStyle(
-                                     color: HhColors.blackColor,
-                                     fontSize: 15.sp*3,
-                                     fontWeight: FontWeight.w500),
-                               ),
-                             ),
-                           ],
+                         Container(
+                           width: 1.sw,
+                           margin: EdgeInsets.fromLTRB(20.w*3, 16.w*3, 20.w*3, 0),
+                           child: Text(
+                             '请输入被分享人的用户名/手机号',
+                             textAlign: TextAlign.start,
+                             style: TextStyle(
+                                 color: HhColors.blackColor,
+                                 fontSize: 15.sp*3,
+                                 fontWeight: FontWeight.w500),
+                           ),
                          ),
                          Container(
                            height: 50.w*3,

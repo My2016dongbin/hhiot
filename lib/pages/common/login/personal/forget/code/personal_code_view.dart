@@ -60,8 +60,8 @@ class PersonalCodePage extends StatelessWidget {
                           color: HhColors.trans,
                           child: Image.asset(
                             "assets/images/common/back_white.png",
-                            height: 14.h*3,
-                            width: 8.w*3,
+                            height: 17.w*3,
+                            width: 10.w*3,
                             fit: BoxFit.fill,
                           )),
                     )),

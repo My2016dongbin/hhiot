@@ -925,6 +925,12 @@ class MainPage extends StatelessWidget {
                     pagingController: logic.pagingController,
                     padding: EdgeInsets.zero,
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                      firstPageProgressIndicatorBuilder: (c){
+                        return Container();
+                      }, // 关闭首次加载动画
+                      newPageProgressIndicatorBuilder:  (c){
+                        return Container();
+                      },   // 关闭新页加载动画
                       itemBuilder: (context, item, index) =>
                           gridItemView(context, item, index),
                       noItemsFoundIndicatorBuilder:  (context) =>

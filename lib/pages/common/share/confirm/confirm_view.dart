@@ -56,8 +56,8 @@ class ConfirmPage extends StatelessWidget {
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
-              width: 18.w,
-              height: 30.w,
+              height: 17.w*3,
+              width: 10.w*3,
               fit: BoxFit.fill,
             ),
           ),

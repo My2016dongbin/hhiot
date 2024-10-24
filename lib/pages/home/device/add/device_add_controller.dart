@@ -156,12 +156,13 @@ class DeviceAddController extends GetxController {
     });
     HhLog.d("createDevice -- $result");
     if(result["code"]==0 && result["data"]!=null){
-      addingStatus.value = 1;
-      addingStep.value = 3;
-      EventBusUtil.getInstance().fire(SpaceList());
-      EventBusUtil.getInstance().fire(DeviceList());
-      EventBusUtil.getInstance().fire(HhToast(title: '添加成功',type: 1));
-      // Get.back();
+      Future.delayed(const Duration(seconds: 2),(){
+        addingStatus.value = 1;
+        addingStep.value = 3;
+        EventBusUtil.getInstance().fire(SpaceList());
+        EventBusUtil.getInstance().fire(DeviceList());
+        EventBusUtil.getInstance().fire(HhToast(title: '添加成功',type: 1));
+      });
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
       addingStatus.value = 2;
@@ -200,7 +201,7 @@ class DeviceAddController extends GetxController {
     if(addingStep.value > 1){
       return;
     }
-    Future.delayed(const Duration(seconds: 2),(){
+    Future.delayed(const Duration(seconds: 1),(){
       addingStep.value++;
       futureStep();
     });
