@@ -622,17 +622,22 @@ class MessagePage extends StatelessWidget {
                                                 width: 113.w*3,
                                                 height: 70.w*3,
                                                 fit: BoxFit.fill,
-                                              ):Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
-                                                return Image.asset(
-                                                  "assets/images/common/test_video.jpg",
+                                              ):InkWell(
+                                                onTap: (){
+                                                  CommonUtils().showPictureDialog(context, url:"${CommonData.endpoint}${item['alarmImageUrl']}");
+                                                },
+                                                child: Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                                                  return Image.asset(
+                                                    "assets/images/common/test_video.jpg",
+                                                    width: 113.w*3,
+                                                    height: 70.w*3,
+                                                    fit: BoxFit.fill,
+                                                  );
+                                                },
                                                   width: 113.w*3,
                                                   height: 70.w*3,
-                                                  fit: BoxFit.fill,
-                                                );
-                                              },
-                                                width: 113.w*3,
-                                                height: 70.w*3,
-                                                fit: BoxFit.fill,),
+                                                  fit: BoxFit.fill,),
+                                              ),
                                             ),
                                             item['alarmType']=='tilt'?Align(
                                               alignment:Alignment.center,

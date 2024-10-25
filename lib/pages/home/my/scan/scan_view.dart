@@ -158,7 +158,7 @@ class ScanPage extends StatelessWidget {
                         duration: const Duration(milliseconds: 100),
                         scaleFactor: 1.2,
                         onPressed: () {
-                          Get.off(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
+                          Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
                         },
                         child: Container(
                           margin: EdgeInsets.fromLTRB(40.w*3, 24.w*3, 40.w*3, 38.w*3),
@@ -259,10 +259,10 @@ class ScanPage extends StatelessWidget {
           //String requestUrl = RequestUtils.base + model["shareUrl"];
           // logic.getShareDetail(requestUrl);
         }else{
-          Get.off(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
+          Get.to(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
         }
       }catch(e){
-        Get.off(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
+        Get.to(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
       }
     }
   }

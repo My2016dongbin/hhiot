@@ -87,6 +87,7 @@ class HhColors {
   static const trans_99 = Color(0x22999999);
   static const trans_77 = Color(0x55888888);
   static const trans_66 = Color(0x55222222);
+  static const trans_88 = Color(0x55888888);
   static const transTips = Color(0x66999999);
 
   static const backColorF5 = Color(0xFFf5f5f5);

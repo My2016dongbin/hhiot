@@ -536,14 +536,14 @@ class DeviceDetailPage extends StatelessWidget {
                             }
                           },
                           child: Container(
-                            margin: EdgeInsets.only(left: 13.w * 3),
+                            margin: EdgeInsets.only(left: 0.w * 3),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Image.asset(
                                   "assets/images/common/ic_video.png",
-                                  width: 58.w * 3,
-                                  height: 58.w * 3,
+                                  width: 70.w * 3,
+                                  height: 70.w * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Text(
@@ -571,8 +571,8 @@ class DeviceDetailPage extends StatelessWidget {
                               children: [
                                 Image.asset(
                                   "assets/images/common/ic_picture.png",
-                                  width: 58.w * 3,
-                                  height: 58.w * 3,
+                                  width: 70.w * 3,
+                                  height: 70.w * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Text(
@@ -623,8 +623,8 @@ class DeviceDetailPage extends StatelessWidget {
                                   logic.recordTag.value
                                       ? "assets/images/common/ic_yy_ing.png"
                                       : "assets/images/common/ic_yy.png",
-                                  width: 58.w * 3,
-                                  height: 58.w * 3,
+                                  width: 70.w * 3,
+                                  height: 70.w * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Text(
@@ -656,8 +656,8 @@ class DeviceDetailPage extends StatelessWidget {
                               children: [
                                 Image.asset(
                                   "assets/images/common/icon_setting_video.png",
-                                  width: 58.w * 3,
-                                  height: 58.w * 3,
+                                  width: 70.w * 3,
+                                  height: 70.w * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Text(

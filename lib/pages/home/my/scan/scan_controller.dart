@@ -53,10 +53,10 @@ class ScanController extends GetxController {
           //String requestUrl = RequestUtils.base + model["shareUrl"];
           // logic.getShareDetail(requestUrl);
         }else{
-          Get.off(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
+          Get.to(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
         }
       }catch(e){
-        Get.off(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
+        Get.to(()=>DeviceAddPage(snCode: barcodeScanRes!,),binding: DeviceAddBinding());
       }
     });
   }
@@ -67,7 +67,7 @@ class ScanController extends GetxController {
       scanHeight = 0;
     }
     scanHeightRx.value = scanHeight;
-    Future.delayed(const Duration(milliseconds: 50),(){
+    Future.delayed(const Duration(milliseconds: 30),(){
       runScanTimer();
     });
   }
