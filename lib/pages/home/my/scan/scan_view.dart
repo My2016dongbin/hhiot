@@ -102,6 +102,39 @@ class ScanPage extends StatelessWidget {
                         width: 294.w*3,
                         margin: EdgeInsets.only(top: logic.scanHeightRx.value),
                       ),
+                      Image.asset(
+                        "assets/images/common/scan_top_left.png",
+                        width: 14.w*3,
+                        height: 14.w*3,
+                        fit: BoxFit.fill,
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Image.asset(
+                          "assets/images/common/scan_top_right.png",
+                          width: 14.w*3,
+                          height: 14.w*3,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Image.asset(
+                          "assets/images/common/scan_bottom_left.png",
+                          width: 14.w*3,
+                          height: 14.w*3,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Image.asset(
+                          "assets/images/common/scan_bottom_right.png",
+                          width: 14.w*3,
+                          height: 14.w*3,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ],
                   ),
                 ),
