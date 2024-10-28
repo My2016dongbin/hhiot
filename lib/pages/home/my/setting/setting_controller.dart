@@ -41,9 +41,12 @@ class SettingController extends GetxController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     nickname!.value = prefs.getString(SPKeys().nickname)!;
     account!.value = prefs.getString(SPKeys().username)!;
-    tenantTitle!.value = prefs.getString(SPKeys().tenantTitle)!;
+    if(!CommonData.personal){
+      tenantTitle!.value = prefs.getString(SPKeys().tenantTitle)!;
+    }
+    HhLog.d("tenantTitle ");
     mobile!.value = prefs.getString(SPKeys().mobile)!;
-    email!.value = prefs.getString(SPKeys().email)!;
+    // email!.value = prefs.getString(SPKeys().email)!;
     avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
 
     infoSubscription =
@@ -54,6 +57,7 @@ class SettingController extends GetxController {
           mobile!.value = prefs.getString(SPKeys().mobile)!;
           email!.value = prefs.getString(SPKeys().email)!;
           avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
+          HhLog.d("avatar ${avatar!.value}");
         });
 
     super.onInit();
@@ -119,7 +123,7 @@ class SettingController extends GetxController {
   Future<void> getCacheSize() async {
     final tempDir = await getTemporaryDirectory();
     cache.value = await Utils.getTotalSizeOfFilesInDir(tempDir);
-    HhLog.d("cache ${cache.value/10000}");
+    HhLog.d("cache ${cache.value/1000000}");
   }
   Future<void> clearCache() async {
     try {

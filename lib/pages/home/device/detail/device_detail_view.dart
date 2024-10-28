@@ -328,352 +328,355 @@ class DeviceDetailPage extends StatelessWidget {
 
   livePage() {
     final size = MediaQuery.of(logic.context).size;
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 1.sw,
-          height: 1.sw,
-          child: Stack(
-            children: [
-              logic.liveStatus.value
-                  ? Align(
-                      alignment: Alignment.topLeft,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: buildCameraTabs(),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-
-              ///控制背景阴影
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: 220.w * 3,
-                  height: 220.w * 3,
-                  // margin: EdgeInsets.only(bottom: 15.w),
-                  decoration: BoxDecoration(
-                      color: HhColors.videoControlShadowColor,
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(110.w * 3))),
-                ),
-              ),
-
-              ///控制拖动按钮
-              Align(
-                  alignment: logic.animateAlign,
-                  child: GestureDetector(
-                    onPanUpdate: (details) {
-                      logic.animateAlign += Alignment(
-                        details.delta.dx / (size.width / 2),
-                        details.delta.dy / (size.height / 2),
-                      );
-                      logic.testStatus.value = false;
-                      logic.testStatus.value = true;
-
-                      String msg = '';
-                      double offset = 20;
-                      double x = details.delta.dx;
-                      double y = details.delta.dy;
-                      int time = DateTime.now().millisecondsSinceEpoch;
-                      if (time - logic.controlTime > 1000) {
-                        HhLog.d(
-                            "move ${details.delta.dx} , ${details.delta.dy}");
-                        logic.controlTime = time;
-                        if (x > 0 && y < 0) {
-                          msg = "右上";
-                          logic.commandLast = logic.command;
-                          logic.command = "RIGHT_UP";
-                        }
-                        if (x > 0 && y == 0) {
-                          msg = "右";
-                          logic.commandLast = logic.command;
-                          logic.command = "RIGHT";
-                        }
-                        if (x > 0 && y > 0) {
-                          msg = "右下";
-                          logic.commandLast = logic.command;
-                          logic.command = "RIGHT_DOWN";
-                        }
-                        if (x == 0 && y > 0) {
-                          msg = "下";
-                          logic.commandLast = logic.command;
-                          logic.command = "DOWN";
-                        }
-                        if (x < 0 && y > 0) {
-                          msg = "左下";
-                          logic.commandLast = logic.command;
-                          logic.command = "LEFT_DOWN";
-                        }
-                        if (x < 0 && y == 0) {
-                          msg = "左";
-                          logic.commandLast = logic.command;
-                          logic.command = "LEFT";
-                        }
-                        if (x < 0 && y < 0) {
-                          msg = "左上";
-                          logic.commandLast = logic.command;
-                          logic.command = "LEFT_UP";
-                        }
-                        if (x == 0 && y < 0) {
-                          msg = "上";
-                          logic.commandLast = logic.command;
-                          logic.command = "UP";
-                        }
-                        // EventBusUtil.getInstance().fire(HhToast(title: msg));
-                        logic.controlPost(0);
-                      }
-                    },
-                    onPanEnd: (details) {
-                      logic.animateAlign = Alignment.center;
-                      logic.testStatus.value = false;
-                      logic.testStatus.value = true;
-                      // EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
-                      logic.controlPost(1);
-                    },
-                    child: SizedBox(
-                      width: 240.w * 3,
-                      height: 240.w * 3,
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            "assets/images/common/video_board.png",
-                            width: 240.w * 3,
-                            height: 240.w * 3,
-                            fit: BoxFit.fill,
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 20.w * 3, 0, 0),
-                              child: Image.asset(
-                                "assets/images/common/top.png",
-                                width: 25.w * 3,
-                                height: 25.w * 3,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w * 3),
-                              child: Image.asset(
-                                "assets/images/common/bottom.png",
-                                width: 25.w * 3,
-                                height: 25.w * 3,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(25.w * 3, 0, 0, 0),
-                              child: Image.asset(
-                                "assets/images/common/left.png",
-                                width: 25.w * 3,
-                                height: 25.w * 3,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 23.w * 3, 0),
-                              child: Image.asset(
-                                "assets/images/common/right.png",
-                                width: 25.w * 3,
-                                height: 25.w * 3,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                              child: Text(
-                                "切换角度",
-                                style: TextStyle(
-                                    color: HhColors.gray6TextColor,
-                                    fontSize: 14.sp * 3),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            margin: EdgeInsets.only(bottom: 20.w),
-            child: SingleChildScrollView(
+        logic.liveStatus.value
+            ? SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  logic.functionItem.value.contains('录像')
-                      ? BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: () {
-                            logic.videoTag.value = !logic.videoTag.value;
-                            if (logic.videoTag.value) {
-                              //开启录像
-                              logic.startRecord();
-                            } else {
-                              //关闭录像
-                              logic.stopRecord();
-                            }
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 0.w * 3),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  "assets/images/common/ic_video.png",
-                                  width: 70.w * 3,
-                                  height: 70.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                                Text(
-                                  logic.videoTag.value ? '正在录像' : '录像',
-                                  style: TextStyle(
-                                      color: HhColors.blackTextColor,
-                                      fontSize: 14.sp * 3),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
-                  logic.functionItem.value.contains('截图')
-                      ? BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: () {
-                            logic.saveImageToGallery();
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 13.w * 3),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  "assets/images/common/ic_picture.png",
-                                  width: 70.w * 3,
-                                  height: 70.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                                Text(
-                                  '拍照',
-                                  style: TextStyle(
-                                      color: HhColors.blackTextColor,
-                                      fontSize: 14.sp * 3),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
-                  logic.functionItem.value.contains('对讲')
-                      ? BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: () {
-                            logic.recordTag.value = !logic.recordTag.value;
-                            if (logic.recordTag.value) {
-                              //开始
-                              logic.chatStatus();
-                            } else {
-                              //结束
-                              logic.manager.stopRecording();
-                              logic.chatClose();
-                            }
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 13.w * 3),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                /*logic.recordTag.value?Container(
-                              width: 230.w,
-                              height: 80.w,
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                color: HhColors.whiteColor,
-                                borderRadius: BorderRadius.circular(20.w)
-                              ),
-                              child:  PolygonWaveform(
-                                samples: [1,2,3,444,9999,66,89,6,4,999999,13120],
-                                height: 230.w,
-                                width: 80.w,
-                              )):const SizedBox(),*/
-                                Image.asset(
-                                  logic.recordTag.value
-                                      ? "assets/images/common/ic_yy_ing.png"
-                                      : "assets/images/common/ic_yy.png",
-                                  width: 70.w * 3,
-                                  height: 70.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                                Text(
-                                  logic.recordTag.value ? '正在对讲' : '对讲',
-                                  style: TextStyle(
-                                      color: logic.recordTag.value
-                                          ? HhColors.mainBlueColor
-                                          : HhColors.blackTextColor,
-                                      fontSize: 14.sp * 3),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
-                  logic.functionItem.value.contains('设置')
-                      ? BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: () {
-                            Get.to(
-                                () => LiGanDetailPage(logic.deviceNo, logic.id),
-                                binding: LiGanDetailBinding());
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 13.w * 3),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  "assets/images/common/icon_setting_video.png",
-                                  width: 70.w * 3,
-                                  height: 70.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                                Text(
-                                  '设置',
-                                  style: TextStyle(
-                                      color: HhColors.blackTextColor,
-                                      fontSize: 14.sp * 3),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
+                children: buildCameraTabs(),
               ),
-            ),
+            )
+            : const SizedBox(),
+        Expanded(
+          child: Stack(
+            children: [
+              SizedBox(
+                width: 1.sw,
+                height: 0.9.sw,
+                child: Stack(
+                  children: [
+                    ///控制背景阴影
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 220.w * 3,
+                        height: 220.w * 3,
+                        // margin: EdgeInsets.only(top: 60.w*3),
+                        decoration: BoxDecoration(
+                            color: HhColors.videoControlShadowColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(110.w * 3))),
+                      ),
+                    ),
+                    ///控制拖动按钮
+                    Align(
+                        alignment: logic.animateAlign,
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            logic.animateAlign += Alignment(
+                              details.delta.dx / (size.width / 2),
+                              details.delta.dy / (size.height / 2),
+                            );
+                            logic.testStatus.value = false;
+                            logic.testStatus.value = true;
+
+                            String msg = '';
+                            double offset = 20;
+                            double x = details.delta.dx;
+                            double y = details.delta.dy;
+                            int time = DateTime.now().millisecondsSinceEpoch;
+                            if (time - logic.controlTime > 1000) {
+                              HhLog.d(
+                                  "move ${details.delta.dx} , ${details.delta.dy}");
+                              logic.controlTime = time;
+                              if (x > 0 && y < 0) {
+                                msg = "右上";
+                                logic.commandLast = logic.command;
+                                logic.command = "RIGHT_UP";
+                              }
+                              if (x > 0 && y == 0) {
+                                msg = "右";
+                                logic.commandLast = logic.command;
+                                logic.command = "RIGHT";
+                              }
+                              if (x > 0 && y > 0) {
+                                msg = "右下";
+                                logic.commandLast = logic.command;
+                                logic.command = "RIGHT_DOWN";
+                              }
+                              if (x == 0 && y > 0) {
+                                msg = "下";
+                                logic.commandLast = logic.command;
+                                logic.command = "DOWN";
+                              }
+                              if (x < 0 && y > 0) {
+                                msg = "左下";
+                                logic.commandLast = logic.command;
+                                logic.command = "LEFT_DOWN";
+                              }
+                              if (x < 0 && y == 0) {
+                                msg = "左";
+                                logic.commandLast = logic.command;
+                                logic.command = "LEFT";
+                              }
+                              if (x < 0 && y < 0) {
+                                msg = "左上";
+                                logic.commandLast = logic.command;
+                                logic.command = "LEFT_UP";
+                              }
+                              if (x == 0 && y < 0) {
+                                msg = "上";
+                                logic.commandLast = logic.command;
+                                logic.command = "UP";
+                              }
+                              // EventBusUtil.getInstance().fire(HhToast(title: msg));
+                              logic.controlPost(0);
+                            }
+                          },
+                          onPanEnd: (details) {
+                            logic.animateAlign = Alignment.center;
+                            logic.testStatus.value = false;
+                            logic.testStatus.value = true;
+                            // EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
+                            logic.controlPost(1);
+                          },
+                          child: Container(
+                            width: 260.w * 3,
+                            height: 260.w * 3,
+                            // margin: EdgeInsets.only(top: 60.w*3),
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/video_board.png",
+                                  width: 260.w * 3,
+                                  height: 260.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(0, 20.w * 3, 0, 0),
+                                    child: Image.asset(
+                                      "assets/images/common/top.png",
+                                      width: 25.w * 3,
+                                      height: 25.w * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w * 3),
+                                    child: Image.asset(
+                                      "assets/images/common/bottom.png",
+                                      width: 25.w * 3,
+                                      height: 25.w * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(25.w * 3, 0, 0, 0),
+                                    child: Image.asset(
+                                      "assets/images/common/left.png",
+                                      width: 25.w * 3,
+                                      height: 25.w * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 23.w * 3, 0),
+                                    child: Image.asset(
+                                      "assets/images/common/right.png",
+                                      width: 25.w * 3,
+                                      height: 25.w * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                                    child: Text(
+                                      "切换角度",
+                                      style: TextStyle(
+                                          color: HhColors.gray6TextColor,
+                                          fontSize: 14.sp * 3),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 20.w*3),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        logic.functionItem.value.contains('录像')
+                            ? BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  logic.videoTag.value = !logic.videoTag.value;
+                                  if (logic.videoTag.value) {
+                                    //开启录像
+                                    logic.startRecord();
+                                  } else {
+                                    //关闭录像
+                                    logic.stopRecord();
+                                  }
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 0.w * 3),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        logic.videoTag.value ? "assets/images/common/ic_video_yes.png":"assets/images/common/ic_video.png",
+                                        width: 76.w * 3,
+                                        height: 76.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Text(
+                                        logic.videoTag.value ? '正在录像' : '录像',
+                                        style: TextStyle(
+                                            color: HhColors.blackTextColor,
+                                            fontSize: 14.sp * 3),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        logic.functionItem.value.contains('截图')
+                            ? BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  logic.saveImageToGallery();
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 13.w * 3),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/common/ic_picture.png",
+                                        width: 76.w * 3,
+                                        height: 76.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Text(
+                                        '拍照',
+                                        style: TextStyle(
+                                            color: HhColors.blackTextColor,
+                                            fontSize: 14.sp * 3),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        logic.functionItem.value.contains('对讲')
+                            ? BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  logic.recordTag.value = !logic.recordTag.value;
+                                  if (logic.recordTag.value) {
+                                    //开始
+                                    logic.chatStatus();
+                                  } else {
+                                    //结束
+                                    logic.manager.stopRecording();
+                                    logic.chatClose();
+                                  }
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 13.w * 3),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      /*logic.recordTag.value?Container(
+                                    width: 230.w,
+                                    height: 80.w,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      color: HhColors.whiteColor,
+                                      borderRadius: BorderRadius.circular(20.w)
+                                    ),
+                                    child:  PolygonWaveform(
+                                      samples: [1,2,3,444,9999,66,89,6,4,999999,13120],
+                                      height: 230.w,
+                                      width: 80.w,
+                                    )):const SizedBox(),*/
+                                      Image.asset(
+                                        logic.recordTag.value
+                                            ? "assets/images/common/ic_yy_ing.png"
+                                            : "assets/images/common/ic_yy.png",
+                                        width: 76.w * 3,
+                                        height: 76.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Text(
+                                        logic.recordTag.value ? '正在对讲' : '对讲',
+                                        style: TextStyle(
+                                            color: logic.recordTag.value
+                                                ? HhColors.mainBlueColor
+                                                : HhColors.blackTextColor,
+                                            fontSize: 14.sp * 3),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        logic.functionItem.value.contains('设置')
+                            ? BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  Get.to(
+                                      () => LiGanDetailPage(logic.deviceNo, logic.id),
+                                      binding: LiGanDetailBinding());
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 13.w * 3),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/common/icon_setting_video.png",
+                                        width: 76.w * 3,
+                                        height: 76.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Text(
+                                        '设置',
+                                        style: TextStyle(
+                                            color: HhColors.blackTextColor,
+                                            fontSize: 14.sp * 3),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
