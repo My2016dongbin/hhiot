@@ -54,6 +54,9 @@ class DeviceAddController extends GetxController {
     toastSubscription = EventBusUtil.getInstance()
         .on<HhToast>()
         .listen((event) {
+      if(event.title.isEmpty || event.title == "null"){
+        return;
+      }
           if(event.title.contains('服务器')){
             addingStatus.value = 2;
           }

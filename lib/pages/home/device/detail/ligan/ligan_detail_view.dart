@@ -525,6 +525,10 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                 onTap: (){
+                                  if(logic.voiceBottomList.isEmpty){
+                                    EventBusUtil.getInstance().fire(HhToast(title: '没有可用提示音'));
+                                    return;
+                                  }
                                   showChoosePersonDialog();
                                 },
                                   child: Container(
@@ -543,7 +547,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            '${logic.config["audioHumanName"]}',
+                                            CommonUtils().parseNull('${logic.config["audioHumanName"]}', ''),
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
@@ -733,6 +737,10 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: (){
+                                    if(logic.voiceBottomList.isEmpty){
+                                      EventBusUtil.getInstance().fire(HhToast(title: '没有可用提示音'));
+                                      return;
+                                    }
                                     showChooseCarDialog();
                                   },
                                   child: Container(
@@ -751,7 +759,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            '${logic.config["audioCarName"]}',
+                                            CommonUtils().parseNull('${logic.config["audioCarName"]}',''),
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
@@ -941,6 +949,10 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: (){
+                                    if(logic.voiceBottomList.isEmpty){
+                                      EventBusUtil.getInstance().fire(HhToast(title: '没有可用提示音'));
+                                      return;
+                                    }
                                     showChooseOpenDialog();
                                   },
                                   child: Container(
@@ -959,7 +971,7 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            '${logic.config["audioOpenName"]}',
+                                            CommonUtils().parseNull('${logic.config["audioOpenName"]}',''),
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,

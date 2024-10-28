@@ -62,6 +62,7 @@ class MainController extends GetxController {
   PagingController(firstPageKey: 1);
   final PagingController<int, dynamic> deviceController =
   PagingController(firstPageKey: 0);
+  late String textId = '';
   late int pageNum = 1;
   late int pageSize = 20;
   late BuildContext context;
@@ -209,6 +210,34 @@ class MainController extends GetxController {
             BMFCoordinate(double.parse('${model["latitude"]}'),double.parse('${model["longitude"]}')), false,
           );
           controller?.setZoomTo(17);
+
+          try{
+            controller?.removeOverlay(textId);
+          }catch(e){
+            //
+          }
+          //添加标题框
+          /// text经纬度信息
+          BMFCoordinate position = BMFCoordinate(double.parse('${model["latitude"]}'),double.parse('${model["longitude"]}'));
+
+          /// 构造text
+          BMFText bmfText = BMFText(
+              text: '${model["name"]}',
+              position: position,
+              bgColor: HhColors.whiteColor,
+              fontColor: HhColors.blackColor,
+              fontSize: 40,
+              typeFace: BMFTypeFace( familyName: BMFFamilyName.sMonospace,
+                  textStype: BMFTextStyle.BOLD_ITALIC),
+              alignY: BMFVerticalAlign.ALIGN_TOP,
+              alignX: BMFHorizontalAlign.ALIGN_CENTER_HORIZONTAL,
+              alignment: BMFTextAlignment.center,
+              rotate: 0);
+          textId = bmfText.id;
+
+          /// 添加text
+          controller?.addText(bmfText);
+
           searchDown.value = false;
 
           videoStatus.value = true;
@@ -452,8 +481,8 @@ class MainController extends GetxController {
             customMap: map,
             identifier: "location",
             icon: '${model['status']}' == '1'
-                ? 'assets/images/common/ic_device_online.png'
-                : 'assets/images/common/ic_device_offline.png');
+                ? 'assets/images/common/ic_device_online2.png'
+                : 'assets/images/common/ic_device_offline2.png');
 
         /// 添加Marker
         controller?.addMarker(marker);

@@ -42,6 +42,9 @@ class CompanyLoginController extends GetxController {
 
     showToastSubscription =
         EventBusUtil.getInstance().on<HhToast>().listen((event) {
+          if(event.title.isEmpty || event.title == "null"){
+            return;
+          }
           showToastWidget(
             Container(
               margin: EdgeInsets.fromLTRB(20.w*3, 15.w*3, 20.w*3, 25.w*3),

@@ -320,8 +320,8 @@ class MainPage extends StatelessWidget {
                       children: [
                         Image.asset(
                           "assets/images/common/back.png",
-                          width: 12.w*3,
-                          height: 18.w*3,
+                          height: 17.w*3,
+                          width: 10.w*3,
                           fit: BoxFit.fill,
                         ),
                         SizedBox(width: 14.w*3,),
@@ -1369,7 +1369,7 @@ class MainPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    CommonUtils().parseNameCount("${model['name']}", 4),
+                    CommonUtils().parseNameCount("${model['name']}", 5),
                     style: TextStyle(
                         color: logic.spaceListIndex.value == i?HhColors.blackTextColor:HhColors.gray9TextColor,
                         fontSize: logic.spaceListIndex.value == i?18.sp*3:16.sp*3,

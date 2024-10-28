@@ -40,6 +40,9 @@ class PersonalLoginController extends GetxController {
 
     showToastSubscription =
         EventBusUtil.getInstance().on<HhToast>().listen((event) {
+          if(event.title.isEmpty || event.title == "null"){
+            return;
+          }
 
           showToastWidget(
             Container(

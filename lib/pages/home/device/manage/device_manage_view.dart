@@ -183,7 +183,7 @@ class DeviceManagePage extends StatelessWidget {
                                 borderRadius: BorderRadius.all(Radius.circular(5.w))
                             ),
                             child: Image.asset(
-                              item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
+                              item['productName']=='浩海一体机'?"assets/images/common/icon_c.png":"assets/images/common/icon_d.png",
                               width: 52.w*3,
                               height: 52.w*3,
                               fit: BoxFit.fill,

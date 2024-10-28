@@ -143,6 +143,11 @@ class SearchLocationController extends GetxController {
         searchList = poiList??[];
         locText.value = '';
         locText.value = '已搜索';
+        try{
+          locText.value = searchList[index.value].name!;
+        }catch(e){
+          //
+        }
         /*if(poiList!=null && poiList.isNotEmpty){
           locText.value = CommonUtils().parseNull("${poiList[0].name}", "定位中..");
         }else{

@@ -295,7 +295,7 @@ class DeviceListPage extends StatelessWidget {
                                 borderRadius: BorderRadius.all(Radius.circular(5.w))
                             ),
                             child: Image.asset(
-                              item['productName']=='浩海一体机'?"assets/images/common/icon_camera_space.png":"assets/images/common/ic_gan.png",
+                              item['productName']=='浩海一体机'?"assets/images/common/icon_c.png":"assets/images/common/icon_d.png",
                               width: 80.w,
                               height: 80.w,
                               fit: BoxFit.fill,
