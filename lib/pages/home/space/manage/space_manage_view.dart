@@ -457,7 +457,7 @@ class SpaceManagePage extends StatelessWidget {
                   const Expanded(child: SizedBox()),
                   InkWell(
                     onTap: (){
-                      Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding(),arguments: model);
+                      Get.to(()=>DeviceAddPage(snCode: '${model['deviceNo']}',),binding: DeviceAddBinding(),arguments: model);
                     },
                     child: Container(
                       padding: EdgeInsets.all(10.w),

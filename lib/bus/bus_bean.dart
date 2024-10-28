@@ -16,6 +16,9 @@ class LocText{
 
   LocText({required this.text});
 }
+class CatchRefresh{
+  CatchRefresh();
+}
 class SpaceList{
   SpaceList();
 }

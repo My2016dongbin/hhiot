@@ -143,7 +143,7 @@ class ShareManagePage extends StatelessWidget {
                               maxLines: 2,
                               style: TextStyle(
                                   color: HhColors.grayBBTextColor,
-                                  fontSize: 18.sp*3,
+                                  fontSize: 13.sp*3,
                                   fontWeight: FontWeight.w400),
                             ),
                             SizedBox(

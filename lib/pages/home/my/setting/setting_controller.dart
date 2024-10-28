@@ -131,6 +131,7 @@ class SettingController extends GetxController {
       EventBusUtil.getInstance().fire(HhLoading(show: true));
       await Utils.requestPermission(tempDir);
       EventBusUtil.getInstance().fire(HhLoading(show: false));
+      EventBusUtil.getInstance().fire(CatchRefresh());
       EventBusUtil.getInstance().fire(HhToast(title: '已清除缓存',type: 1));
       getCacheSize();
     } catch (err) {

@@ -141,7 +141,7 @@ class MyAppState extends State<HhApp> {
           }
           //其他设备登录
           if(custom!=null && custom['otherInfomation']['messageType']== "logoutdelete"){
-            // CommonUtils().tokenOut();
+            CommonUtils().tokenOut();
           }
         }catch(e){
           //

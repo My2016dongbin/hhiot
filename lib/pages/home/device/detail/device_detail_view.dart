@@ -874,7 +874,7 @@ class DeviceDetailPage extends StatelessWidget {
                           Get.back();
                           Get.to(
                               () => DeviceAddPage(
-                                    snCode: '',
+                                    snCode: '${item['deviceNo']}',
                                   ),
                               binding: DeviceAddBinding(),
                               arguments: item);

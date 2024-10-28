@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
@@ -18,6 +20,7 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:overlay_tooltip/overlay_tooltip.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -34,8 +37,10 @@ class MainController extends GetxController {
   BMFMapController? controller;
   StreamSubscription? pushTouchSubscription;
   StreamSubscription? spaceListSubscription;
+  StreamSubscription? catchSubscription;
   StreamSubscription? deviceListSubscription;
   StreamSubscription? messageSubscription;
+  final Rx<bool> containStatus = true.obs;
   final Rx<bool> searchStatus = false.obs;
   final Rx<bool> videoStatus = false.obs;
   final Rx<bool> pageMapStatus = false.obs;
@@ -73,9 +78,11 @@ class MainController extends GetxController {
   late List<dynamic> newItems = [];
   late Rx<bool> secondStatus = true.obs;
   final TooltipController tipController = TooltipController();
+  late Directory tempDir;
 
   @override
   Future<void> onInit() async {
+    tempDir = await getApplicationCacheDirectory();
     DateTime dateTime = DateTime.now();
     dateStr.value = CommonUtils().parseLongTimeWithLength("${dateTime.millisecondsSinceEpoch}",16);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -107,6 +114,12 @@ class MainController extends GetxController {
         });
     spaceListSubscription =
         EventBusUtil.getInstance().on<SpaceList>().listen((event) {
+          getSpaceList(1);
+        });
+    catchSubscription =
+        EventBusUtil.getInstance().on<CatchRefresh>().listen((event) {
+          containStatus.value = false;
+          containStatus.value = true;
           getSpaceList(1);
         });
     deviceListSubscription =
@@ -496,6 +509,31 @@ class MainController extends GetxController {
       EventBusUtil.getInstance().fire(DeviceList());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  parseCacheImageView(String deviceNo) {
+    try{
+      // 将图片保存到缓存目录
+      final filePath =
+          '${tempDir.path}/catch_$deviceNo.png';
+      final file = File(filePath);
+
+      FileImage fileImage = FileImage(file);
+      // 同步清除指定文件的缓存
+      fileImage.evict();
+      return Image(image: fileImage,errorBuilder: (c,d,e){
+        return Image.asset(
+          "assets/images/common/test_video.jpg",
+          fit: BoxFit.fill,
+        );
+      }, fit: BoxFit.fill,);
+    }catch(e){
+      //
+      return Image.asset(
+        "assets/images/common/test_video.jpg",
+        fit: BoxFit.fill,
+      );
     }
   }
 }

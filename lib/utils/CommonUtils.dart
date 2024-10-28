@@ -1072,6 +1072,27 @@ class CommonUtils {
           duration: const Duration(milliseconds: 1000));
     }
   }
+
+  parseCache(double size) {
+    if(size < 999){
+      return "${parseDoubleNumber("$size", 1)}bit";
+    }else if(size < 999999){
+      return "${parseDoubleNumber("${size/1000}", 1)}Kb";
+    }else{
+      return "${parseDoubleNumber("${size/1000000}", 1)}M";
+    }
+  }
+  String parseDoubleNumber(String str,int number) {
+    String rt = "0";
+    int index = 0;
+    index = str.indexOf('.');
+    try {
+      rt = str.substring(0, index+1+number);
+    } catch (e) {
+      rt = str;
+    }
+    return rt;
+  }
 }
 
 ///通用Button

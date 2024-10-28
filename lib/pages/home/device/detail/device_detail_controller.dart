@@ -86,6 +86,11 @@ class DeviceDetailController extends GetxController {
       getDeviceInfo();
       getDeviceHistory();
     });
+
+    ///TODO 测试缓存视频流截图
+    /*Future.delayed(const Duration(milliseconds: 5000),(){
+      saveCatchImage();
+    });*/
     super.onInit();
   }
 
@@ -103,6 +108,21 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至“$filePath”'));
     }).catchError((onError) {
       EventBusUtil.getInstance().fire(HhToast(title: '拍照失败请重试'));
+    });
+  }
+
+  saveCatchImage() async {
+    screenshotController.capture().then((value) async {
+      // 将图片保存到缓存目录
+      final tempDir = await getApplicationCacheDirectory();
+      final filePath =
+          '${tempDir.path}/catch_$deviceNo.png';
+      final file = File(filePath);
+      File a = await file.writeAsBytes(value!);
+      HhLog.d("saveCatchImage $a");
+      EventBusUtil.getInstance().fire(CatchRefresh());
+    }).catchError((onError) {
+      // EventBusUtil.getInstance().fire(HhToast(title: '拍照失败请重试'));
     });
   }
 
@@ -237,6 +257,15 @@ class DeviceDetailController extends GetxController {
             FijkOption.formatCategory, "http-detect-range-support", 0);
         player.setOption(FijkOption.codecCategory, "skip_loop_filter", 48);
         player.setOption(FijkOption.codecCategory, "skip_frame", 0);
+        // 添加播放器状态变化监听
+        player.addListener(() {
+          if (player.state == FijkState.started) {
+            // 播放成功开始
+            HhLog.d('Playback started successfully ${player.state}');
+            //截图并保存
+            saveCatchImage();
+          }
+        });
         Future.delayed(const Duration(seconds: 1), () {
           playTag.value = true;
         });

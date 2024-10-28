@@ -749,7 +749,7 @@ class SettingPage extends StatelessWidget {
                                   child: Text(
                                     logic.cache.value == 0
                                         ? "无缓存"
-                                        : "${CommonUtils().parseDouble("${logic.cache.value / 1000000}")}M",
+                                        : "${CommonUtils().parseCache(logic.cache.value)}",
                                     style: TextStyle(
                                         color: HhColors.gray9TextColor,
                                         fontSize: 15.sp*3),

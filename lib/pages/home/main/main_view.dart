@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
@@ -595,7 +597,7 @@ class MainPage extends StatelessWidget {
 
   ///主页-我的空间视图
   containPage() {
-    return Stack(
+    return logic.containStatus.value?Stack(
       children: [
         Container(
           decoration: BoxDecoration(
@@ -995,7 +997,7 @@ class MainPage extends StatelessWidget {
         ),
 
       ],
-    );
+    ):const SizedBox();
   }
 
   ///设备列表视图-网格列表itemView
@@ -1024,8 +1026,8 @@ class MainPage extends StatelessWidget {
                     width: 0.5.sw,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
-                    child: Image.asset(
-                      item['status']==1?"assets/images/common/test_video.jpg":"assets/images/common/test_video.png",
+                    child: item['status']==1?logic.parseCacheImageView('${item['deviceNo']}'):Image.asset(
+                      "assets/images/common/test_video.png",
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -1456,7 +1458,7 @@ class MainPage extends StatelessWidget {
                 scaleFactor: 1.2,
                 onPressed: () {
                   Get.back();
-                  Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding(),arguments: item);
+                  Get.to(()=>DeviceAddPage(snCode: '${item['deviceNo']}',),binding: DeviceAddBinding(),arguments: item);
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
