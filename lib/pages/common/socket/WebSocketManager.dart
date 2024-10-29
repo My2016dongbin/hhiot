@@ -166,6 +166,7 @@ class WebSocketManager {
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
       Future.delayed(const Duration(seconds: 2),(){
         EventBusUtil.getInstance().fire(HhToast(title: '开始对讲'));
+        EventBusUtil.getInstance().fire(Record());
         recordAudio();
       });
     } else {

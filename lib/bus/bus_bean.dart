@@ -34,6 +34,9 @@ class Message{
 class DeviceInfo{
   DeviceInfo();
 }
+class Record{
+  Record();
+}
 class Share{
   dynamic model;
   Share({required this.model});

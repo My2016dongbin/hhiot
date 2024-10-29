@@ -73,12 +73,13 @@ class DeviceAddController extends GetxController {
     if(isEdit.value){
       snController!.text = model['deviceNo']??"";
       nameController!.text = model['name']??"";
+      locText.value = model['location']??"";
 
       if(model['longitude']!=null && model['longitude']!=0 && model['longitude']!=""){
         longitude.value = double.parse(model['longitude']);
         latitude.value = double.parse(model['latitude']);
         HhLog.d("isEdit ${longitude.value},${latitude.value}");
-        locSearched();
+        // locSearched();
       }
     }
     super.onInit();
@@ -180,7 +181,7 @@ class DeviceAddController extends GetxController {
       model['longitude'] = "${longitude.value}";
       model['latitude'] = "${latitude.value}";
       model['location'] = locText.value;
-      HhLog.d("model $model");
+      HhLog.d("model $model ，${locText.value}");
     }catch(e){
       //
     }

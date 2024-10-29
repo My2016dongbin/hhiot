@@ -16,6 +16,7 @@ import 'package:iot/pages/home/space/space_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/utils/HhLog.dart';
 // import 'package:qrscan/qrscan.dart' as scanner;
 
 class DeviceAddPage extends StatelessWidget {
@@ -300,11 +301,12 @@ class DeviceAddPage extends StatelessWidget {
                         return;
                       }
 
+                      HhLog.d('add');
                       if(logic.isEdit.value){
                         logic.model["name"] = logic.nameController!.text;
                         logic.model["spaceId"] = logic.spaceId;
-                        logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:logic.model["latitude"];
-                        logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:logic.model["longitude"];
+                        logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:CommonUtils().parseIsDouble("${logic.model["latitude"]}",logic.latitude.value!);
+                        logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:CommonUtils().parseIsDouble("${logic.model["longitude"]}",logic.longitude.value!);
                         logic.locText.value = logicLocation.choose?logicLocation.locText.value:logic.model["location"];
                         logic.updateDevice();
                       }else{

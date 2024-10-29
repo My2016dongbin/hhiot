@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
 import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
@@ -62,6 +63,7 @@ class MainController extends GetxController {
   PagingController(firstPageKey: 1);
   final PagingController<int, dynamic> deviceController =
   PagingController(firstPageKey: 0);
+  late EasyRefreshController easyController = EasyRefreshController();
   late String textId = '';
   late int pageNum = 1;
   late int pageSize = 20;
@@ -226,7 +228,7 @@ class MainController extends GetxController {
               position: position,
               bgColor: HhColors.whiteColor,
               fontColor: HhColors.blackColor,
-              fontSize: 40,
+              fontSize: 30,
               typeFace: BMFTypeFace( familyName: BMFFamilyName.sMonospace,
                   textStype: BMFTextStyle.BOLD_ITALIC),
               alignY: BMFVerticalAlign.ALIGN_TOP,
@@ -398,6 +400,10 @@ class MainController extends GetxController {
 
       if (pageKey == 1) {
         pagingController.itemList = [];
+      }else{
+        if(newItems.isEmpty){
+          easyController.finishLoad(IndicatorResult.noMore,true);
+        }
       }
       pagingController.appendLastPage(newItems);
     }else{

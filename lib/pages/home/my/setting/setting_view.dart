@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -131,7 +132,7 @@ class SettingPage extends StatelessWidget {
                               alignment: Alignment.centerRight,
                               child: InkWell(
                                 onTap: () {
-                                  getImageFromGallery(1);
+                                  showChooseTypeDialog();
                                 },
                                 child: Container(
                                   clipBehavior: Clip.hardEdge,
@@ -902,5 +903,107 @@ class SettingPage extends StatelessWidget {
 
       logic.fileUpload();
     }
+  }
+
+  Future<void> getImageFromCamera() async {
+    final XFile? photo = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      logic.file = photo;
+      logic.picture.value = false;
+      logic.picture.value = true;
+      logic.fileUpload();
+    }
+  }
+
+
+  void showChooseTypeDialog() {
+    showModalBottomSheet(context: logic.context, builder: (a){
+      return Container(
+        width: 1.sw,
+        decoration: BoxDecoration(
+            color: HhColors.trans,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 0,
+              child: Container(
+                width: 1.sw,
+                height: 50.w*3,
+                margin: EdgeInsets.fromLTRB(0, 20.w*3, 0, 0),
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
+                ),
+                child: Center(
+                  child: Text(
+                    "拍摄",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                getImageFromCamera();
+                Get.back();
+              },
+            ),
+            Container(
+              color: HhColors.grayLineColor,
+              height: 2.w,
+              width: 1.sw,
+            ),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 0,
+              child: Container(
+                width: 1.sw,
+                height: 50.w*3,
+                color: HhColors.whiteColor,
+                child: Center(
+                  child: Text(
+                    "从相册选择",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                getImageFromGallery(1);
+                Get.back();
+              },
+            ),
+            Container(
+              color: HhColors.grayLineColor,
+              height: 2.w,
+              width: 1.sw,
+            ),
+            BouncingWidget(
+              duration: const Duration(milliseconds: 100),
+              scaleFactor: 0,
+              child: Container(
+                width: 1.sw,
+                height: 60.w*3,
+                color: HhColors.whiteColor,
+                padding: EdgeInsets.only(bottom: 10.w*3),
+                child: Center(
+                  child: Text(
+                    "取消",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ],
+        ),
+      );
+    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
   }
 }

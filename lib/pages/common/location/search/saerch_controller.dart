@@ -125,26 +125,30 @@ class SearchLocationController extends GetxController {
         BMFSearchErrorCode errorCode) {
       HhLog.d("逆地理编码search  errorCode = $errorCode, result = ${result.toMap()}");
 
-      try{
-        String s = "";
-        List<BMFPoiInfo> ?p = result.poiList;
-        if(p!=null && p.isNotEmpty){
-          s = CommonUtils().parseNull("${p[0].name}", "定位中..");
-        }else{
-          s = CommonUtils().parseNull("${result.address}", "定位中..");
-        }
-        EventBusUtil.getInstance().fire(LocText(text: s));
-      }catch(e){
-        //
-      }
       locCity.value = result.addressDetail!.city!;
       if(status!=0){
+        try{
+          String s = "";
+          List<BMFPoiInfo> ?p = result.poiList;
+          if(p!=null && p.isNotEmpty){
+            s = CommonUtils().parseNull("${p[0].name}", "定位中..");
+          }else{
+            s = CommonUtils().parseNull("${result.address}", "定位中..");
+          }
+          choose = true;
+          EventBusUtil.getInstance().fire(LocText(text: s));
+        }catch(e){
+          //
+        }
+
         List<BMFPoiInfo> ?poiList = result.poiList;
         searchList = poiList??[];
         locText.value = '';
         locText.value = '已搜索';
         try{
           locText.value = searchList[index.value].name!;
+          latitude.value = searchList[index.value].pt!.latitude;
+          longitude.value = searchList[index.value].pt!.longitude;
         }catch(e){
           //
         }

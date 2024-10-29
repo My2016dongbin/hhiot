@@ -255,7 +255,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       fontSize: 15.sp * 3,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                logic.playing.value == 1
+                                /*logic.playing.value == 1
                                     ? Expanded(
                                         child: Stack(
                                         children: [
@@ -264,6 +264,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             child: InkWell(
                                               onTap: () {
                                                 logic.playing.value = 0;
+                                                logic.stopVoice();
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.fromLTRB(
@@ -304,7 +305,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           ),
                                         ],
                                       ))
-                                    : const SizedBox(),
+                                    : const SizedBox(),*/
                               ],
                             ),
                           ),

@@ -597,6 +597,7 @@ class DeviceDetailPage extends StatelessWidget {
                                     logic.chatStatus();
                                   } else {
                                     //结束
+                                    logic.recordTag2.value = false;
                                     logic.manager.stopRecording();
                                     logic.chatClose();
                                   }
@@ -621,17 +622,17 @@ class DeviceDetailPage extends StatelessWidget {
                                     )):const SizedBox(),*/
                                       Image.asset(
                                         logic.recordTag.value
-                                            ? "assets/images/common/ic_yy_ing.png"
+                                            ? (logic.recordTag2.value?"assets/images/common/ic_yy_close.png":"assets/images/common/ic_yy_ing.png")
                                             : "assets/images/common/ic_yy.png",
                                         width: 76.w * 3,
                                         height: 76.w * 3,
                                         fit: BoxFit.fill,
                                       ),
                                       Text(
-                                        logic.recordTag.value ? '正在对讲' : '对讲',
+                                        logic.recordTag.value ? (logic.recordTag2.value?'挂断':'呼叫中...') : '对讲',
                                         style: TextStyle(
                                             color: logic.recordTag.value
-                                                ? HhColors.mainBlueColor
+                                                ? (logic.recordTag2.value?HhColors.mainRedColor:HhColors.mainBlueColor)
                                                 : HhColors.blackTextColor,
                                             fontSize: 14.sp * 3),
                                       )

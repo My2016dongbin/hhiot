@@ -923,6 +923,9 @@ class MainPage extends StatelessWidget {
                   logic.pageNum++;
                   logic.getDeviceList(logic.pageNum);
                 },
+                controller: logic.easyController,
+                canLoadAfterNoMore: false,
+                canRefreshAfterNoMore: true,
                 child: PagedGridView<int, dynamic>(
                     pagingController: logic.pagingController,
                     padding: EdgeInsets.zero,

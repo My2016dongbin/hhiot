@@ -17,6 +17,7 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tpns_flutter_plugin/tpns_flutter_plugin.dart';
 
 class CommonUtils {
   List<Color> gradientColors() {
@@ -89,6 +90,14 @@ class CommonUtils {
       type = s;
     }
     return type;
+  }
+
+  double parseIsDouble(String s, double def) {
+    try {
+      return double.parse(s);
+    } catch (e) {
+      return def;
+    }
   }
 
   bool validateSpaceName(String spaceName) {
@@ -360,8 +369,7 @@ class CommonUtils {
                         return Container(
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.w*3)
-                          ),
+                              borderRadius: BorderRadius.circular(8.w * 3)),
                           child: Image.asset(
                             "assets/images/common/test_video.jpg",
                             fit: BoxFit.fill,
@@ -372,7 +380,7 @@ class CommonUtils {
                   ),
                 ),
                 Container(
-                  height: 77.h*3,
+                  height: 77.h * 3,
                   width: 1.sw,
                   color: HhColors.whiteColor,
                   padding: EdgeInsets.only(top: 80.h),
@@ -385,7 +393,7 @@ class CommonUtils {
                           style: TextStyle(
                               decoration: TextDecoration.none,
                               color: HhColors.blackTextColor,
-                              fontSize: 18.sp*3,
+                              fontSize: 18.sp * 3,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -398,13 +406,13 @@ class CommonUtils {
                             Get.back();
                           },
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(23.w*3, 0, 0, 0),
+                            margin: EdgeInsets.fromLTRB(23.w * 3, 0, 0, 0),
                             padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
                             color: HhColors.trans,
                             child: Image.asset(
                               "assets/images/common/back.png",
-                              height: 17.w*3,
-                              width: 10.w*3,
+                              height: 17.w * 3,
+                              width: 10.w * 3,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -1060,6 +1068,8 @@ class CommonUtils {
   }
 
   toLogin() {
+    XgFlutterPlugin().cleanAccounts();
+    XgFlutterPlugin().cleanTags();
     if (CommonData.personal) {
       Get.offAll(() => PersonalLoginPage(),
           binding: PersonalLoginBinding(),
@@ -1074,20 +1084,21 @@ class CommonUtils {
   }
 
   parseCache(double size) {
-    if(size < 999){
+    if (size < 999) {
       return "${parseDoubleNumber("$size", 1)}bit";
-    }else if(size < 999999){
-      return "${parseDoubleNumber("${size/1000}", 1)}Kb";
-    }else{
-      return "${parseDoubleNumber("${size/1000000}", 1)}M";
+    } else if (size < 999999) {
+      return "${parseDoubleNumber("${size / 1000}", 1)}Kb";
+    } else {
+      return "${parseDoubleNumber("${size / 1000000}", 1)}M";
     }
   }
-  String parseDoubleNumber(String str,int number) {
+
+  String parseDoubleNumber(String str, int number) {
     String rt = "0";
     int index = 0;
     index = str.indexOf('.');
     try {
-      rt = str.substring(0, index+1+number);
+      rt = str.substring(0, index + 1 + number);
     } catch (e) {
       rt = str;
     }

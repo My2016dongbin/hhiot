@@ -32,6 +32,7 @@ class DeviceDetailController extends GetxController {
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
   final Rx<bool> recordTag = false.obs;
+  final Rx<bool> recordTag2 = false.obs;
   final Rx<bool> videoTag = false.obs;
   final Rx<bool> voiceTag = true.obs;
   final Rx<int> liveIndex = 0.obs;
@@ -65,6 +66,7 @@ class DeviceDetailController extends GetxController {
   final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
   late String? endpoint;
   late StreamSubscription? deviceSubscription;
+  late StreamSubscription? recordSubscription;
   late ScreenshotController screenshotController = ScreenshotController();
   late ScreenRecorderController recordController = ScreenRecorderController(
     pixelRatio: 1,
@@ -85,6 +87,10 @@ class DeviceDetailController extends GetxController {
       getDeviceStream();
       getDeviceInfo();
       getDeviceHistory();
+    });
+    recordSubscription =
+        EventBusUtil.getInstance().on<Record>().listen((event) {
+          recordTag2.value = true;
     });
 
     ///TODO 测试缓存视频流截图
@@ -359,6 +365,7 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
       recordTag.value = false;
+      recordTag2.value = false;
     }
   }
 

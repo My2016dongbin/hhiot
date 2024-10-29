@@ -80,7 +80,7 @@ class LiGanDetailController extends GetxController {
   @override
   Future<void> onInit() async {
     Future.delayed(const Duration(seconds: 1),(){
-      getDeviceInfo();
+      //getDeviceInfo();
       getDeviceConfig();
       getVoiceUse();
       getVersion();
