@@ -125,6 +125,7 @@ class DevicePage extends StatelessWidget {
           logic.pageNum++;
           logic.deviceList(logic.pageNum);
         },
+        controller: logic.easyController,
         child: PagedListView<int, dynamic>(
           pagingController: logic.deviceController,
           padding: EdgeInsets.zero,

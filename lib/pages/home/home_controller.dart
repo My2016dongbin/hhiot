@@ -16,6 +16,7 @@ import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../bus/event_class.dart';
@@ -64,6 +65,26 @@ class HomeController extends GetxController {
 
   scrollToUnreadMessage(index) {
     onScrollToUnreadMessage?.call();
+  }
+
+
+  Future<void> requestNotificationPermission() async {
+    // 检查是否已经获得通知权限
+    var status = await Permission.notification.status;
+    if (status.isDenied) {
+      // 申请权限
+      status = await Permission.notification.request();
+    }
+
+    if (status.isGranted) {
+    } else if (status.isPermanentlyDenied) {
+      openAppSettings(); // 引导用户前往设置开启通知权限
+    }else if (status.isDenied) {
+      EventBusUtil.getInstance().fire(HhToast(title: '请开启通知权限',type: 0));
+      Future.delayed(const Duration(milliseconds: 2000),(){
+        openAppSettings(); // 引导用户前往设置开启通知权限
+      });
+    }
   }
 
   @override
@@ -269,6 +290,10 @@ class HomeController extends GetxController {
       ));
     });
     getLocation();
+    //获取通知权限
+    Future.delayed(const Duration(milliseconds: 2000),(){
+      requestNotificationPermission();
+    });
     super.onInit();
   }
 

@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -18,6 +19,7 @@ class SpaceManageController extends GetxController {
   late List<dynamic> spaceList = [];
   late List<dynamic> spaceListMax = [];
   StreamSubscription ?spaceListSubscription;
+  late EasyRefreshController easyController = EasyRefreshController();
 
   @override
   void onInit() {
@@ -65,6 +67,10 @@ class SpaceManageController extends GetxController {
 
       if(pageKey == 1){
         pagingController.itemList = [];
+      }else{
+        if(spaceList.isEmpty){
+          easyController.finishLoad(IndicatorResult.noMore,true);
+        }
       }
       pagingController.appendLastPage(spaceList);
     }else{

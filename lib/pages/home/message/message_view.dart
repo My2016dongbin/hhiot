@@ -525,6 +525,7 @@ class MessagePage extends StatelessWidget {
                 logic.pageNumLeft++;
                 logic.fetchPageLeft(logic.pageNumLeft);
               },
+              controller: logic.easyControllerLeft,
               child: PagedListView<int, dynamic>(
                 padding: EdgeInsets.zero,
                 pagingController: logic.deviceController,
@@ -841,6 +842,7 @@ class MessagePage extends StatelessWidget {
                 logic.fetchPageRight(logic.pageNumRight);
 
               },
+              controller: logic.easyControllerRight,
               child: PagedListView<int, dynamic>(
                 padding: EdgeInsets.zero,
                 pagingController: logic.warnController,

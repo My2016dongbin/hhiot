@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,7 @@ class ShareManageController extends GetxController {
   late int pageNum = 1;
   late int pageSize = 20;
   late List<dynamic> spaceList = [];
+  late EasyRefreshController easyController = EasyRefreshController();
 
   @override
   void onInit() {
@@ -98,6 +100,10 @@ class ShareManageController extends GetxController {
 
       if(pageKey == 1){
         deviceController.itemList = [];
+      }else{
+        if(newItems.isEmpty){
+          easyController.finishLoad(IndicatorResult.noMore,true);
+        }
       }
       deviceController.appendLastPage(newItems);
     }else{

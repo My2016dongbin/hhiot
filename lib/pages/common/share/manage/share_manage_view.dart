@@ -88,6 +88,7 @@ class ShareManagePage extends StatelessWidget {
           logic.pageNum++;
           logic.shareList(logic.pageNum);
         },
+        controller: logic.easyController,
         child: PagedListView<int, dynamic>(
           padding: EdgeInsets.zero,
           pagingController: logic.deviceController,

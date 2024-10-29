@@ -154,7 +154,7 @@ class MyAppState extends State<HhApp> {
       },
     );
     // 全局设置
-    EasyRefresh.defaultHeaderBuilder = () => const CupertinoHeader();
+    EasyRefresh.defaultHeaderBuilder = () => const CupertinoHeader(triggerOffset: 20);
     EasyRefresh.defaultFooterBuilder = () => const CupertinoFooter();
   }
 

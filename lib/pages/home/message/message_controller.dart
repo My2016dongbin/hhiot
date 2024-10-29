@@ -35,6 +35,8 @@ class MessageController extends GetxController {
   late int pageNumRight = 1;
   late int pageSize = 20;
   late TextEditingController deviceNameController = TextEditingController();
+  late EasyRefreshController easyControllerLeft = EasyRefreshController();
+  late EasyRefreshController easyControllerRight = EasyRefreshController();
   List<String> dateListLeft = [];
   List<String> dateListRight = [];
   final Rx<int> chooseListLeftNumber = 0.obs;
@@ -127,6 +129,10 @@ class MessageController extends GetxController {
         warnController.itemList = [];
         chooseListRight = [];
         chooseListRightNumber.value = 0;
+      }else{
+        if(newItems.isEmpty){
+          easyControllerRight.finishLoad(IndicatorResult.noMore,true);
+        }
       }
       warnController.appendLastPage(newItems);
     } else {
@@ -162,6 +168,10 @@ class MessageController extends GetxController {
         deviceController.itemList = [];
         chooseListLeft = [];
         chooseListLeftNumber.value = 0;
+      }else{
+        if(newItems.isEmpty){
+          easyControllerLeft.finishLoad(IndicatorResult.noMore,true);
+        }
       }
       deviceController.appendLastPage(newItems);
     } else {

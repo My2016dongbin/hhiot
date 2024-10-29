@@ -148,6 +148,7 @@ class SpaceManagePage extends StatelessWidget {
           logic.pageNum++;
           logic.getSpaceList(logic.pageNum);
         },
+        controller: logic.easyController,
         child: PagedListView<int, dynamic>(
           padding: EdgeInsets.zero,
           pagingController: logic.pagingController,
