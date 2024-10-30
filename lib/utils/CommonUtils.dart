@@ -1037,6 +1037,11 @@ class CommonUtils {
 
   tokenDown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id = prefs.getString(SPKeys().id);
+    String? token = prefs.getString(SPKeys().token);
+    XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
+    XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
+    XgFlutterPlugin().deleteTags([id]);
     prefs.remove(SPKeys().token);
     CommonData.tenant = CommonData.tenantDef;
     CommonData.tenantName = CommonData.tenantNameDef;
@@ -1053,6 +1058,11 @@ class CommonUtils {
 
   tokenOut() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id = prefs.getString(SPKeys().id);
+    String? token = prefs.getString(SPKeys().token);
+    XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
+    XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
+    XgFlutterPlugin().deleteTags([id]);
     prefs.remove(SPKeys().token);
     CommonData.tenant = CommonData.tenantDef;
     CommonData.tenantName = CommonData.tenantNameDef;
@@ -1067,9 +1077,7 @@ class CommonUtils {
     }
   }
 
-  toLogin() {
-    XgFlutterPlugin().cleanAccounts();
-    XgFlutterPlugin().cleanTags();
+  toLogin() async {
     if (CommonData.personal) {
       Get.offAll(() => PersonalLoginPage(),
           binding: PersonalLoginBinding(),

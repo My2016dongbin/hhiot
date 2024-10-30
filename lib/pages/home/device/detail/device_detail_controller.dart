@@ -348,6 +348,22 @@ class DeviceDetailController extends GetxController {
   String parseType(type) {
     String s = '人员入侵报警';
 
+    if(type == "openSensor"){
+      s = "传感器开箱报警";
+    }
+    if(type == "openCap"){
+      s = "箱盖开箱报警";
+    }
+    if(type == "tilt"){
+      s = "人员入侵报警";
+    }
+    if(type == "human"){
+      s = "设备倾斜报警";
+    }
+    if(type == "car"){
+      s = "车辆入侵报警";
+    }
+
     return s;
   }
 

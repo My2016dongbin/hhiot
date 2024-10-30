@@ -269,6 +269,7 @@ class CompanyLoginController extends GetxController {
 
       XgFlutterPlugin().setTags(["${result["data"]["id"]}"]);
       XgFlutterPlugin().setAccount("${result["data"]["id"]}",AccountType.UNKNOWN);
+      XgFlutterPlugin().setAccount("${CommonData.token}",AccountType.UNKNOWN);
       EventBusUtil.getInstance().fire(HhToast(title: '登录成功',type: 1));
 
       Future.delayed(const Duration(seconds: 1), () {

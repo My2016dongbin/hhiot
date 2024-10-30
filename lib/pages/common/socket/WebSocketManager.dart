@@ -30,6 +30,7 @@ class WebSocketManager {
       StreamController<String>();
   late int index = 0;
   late List<Uint8List> streamList = [];
+  final FlutterSoundPlayer _player = FlutterSoundPlayer();
 
   StreamSubscription? mRecordingDataSubscription;
   FlutterSoundRecorder? mRecorder = FlutterSoundRecorder();
@@ -52,15 +53,20 @@ class WebSocketManager {
       _channel = WebSocketChannel.connect(Uri.parse(_serverUrl));
       print('建立连接');
       _isConnected = true;
+      ///打开音频播放器
+      await _player.openPlayer();
       _channel.stream.listen(
         (data) {
           _isConnected = true;
-          print('已连接$data');
-
-          playStream(data);
-          // parseStream(data);//处理音频流
-
-          _onMessageReceived(data); // 其他消息转发出去
+          // print('已连接$data');
+          if("$data".startsWith('[')){
+            // print('已连接 Stream');
+            playStream(data);
+            // parseStream(data);//处理音频流
+          }else{
+            // print('已连接 message');
+            _onMessageReceived(data); // 其他消息转发出去
+          }
         },
         onError: (error) {
           // 处理连接错误
@@ -167,7 +173,7 @@ class WebSocketManager {
       Future.delayed(const Duration(seconds: 2),(){
         EventBusUtil.getInstance().fire(HhToast(title: '开始对讲'));
         EventBusUtil.getInstance().fire(Record());
-        recordAudio();
+        recordAudio();//TODO
       });
     } else {
       EventBusUtil.getInstance()
@@ -289,7 +295,7 @@ class WebSocketManager {
 
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration(
-      avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
+      avAudioSessionCategory: AVAudioSessionCategory.record,
       avAudioSessionCategoryOptions:
       AVAudioSessionCategoryOptions.allowBluetooth |
       AVAudioSessionCategoryOptions.defaultToSpeaker,
@@ -314,7 +320,9 @@ class WebSocketManager {
     mRecordingDataSubscription =
         recordingDataController.stream.listen((buffer) {
           HhLog.d("_recordAudio 8- ");//${buffer.data}");
-          sendStream(buffer.data);
+          if(_isConnected){
+            sendStream(buffer.data);
+          }
         });
     await mRecorder!.startRecorder(
       toStream: recordingDataController.sink,
@@ -374,18 +382,19 @@ class WebSocketManager {
 
   Future<void> playStream(data) async {
     try {
-      Uint8List soundBytes = data;
+      Uint8List soundBytes = Uint8List.fromList(data);
       // HhLog.d("Uint8List $soundBytes");
-
-      await flutterSound.thePlayer.startPlayer(
+      print("playStream$data");
+      _player.startPlayer(
           fromDataBuffer: soundBytes,
           codec: Codec.pcm16,
-          numChannels: 1,
-          sampleRate: 16000,
-          whenFinished: () {
-            //next
-          });
-      playAudio();
+          // numChannels: 1,
+          // sampleRate: 16000,
+          // whenFinished: () {
+          //   //next
+          // }
+          );
+      // playAudio();
     } catch (e) {
       HhLog.e(e.toString());
     }

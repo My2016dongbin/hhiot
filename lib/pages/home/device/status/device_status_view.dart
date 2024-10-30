@@ -133,8 +133,13 @@ class DeviceStatusPage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        logicAdd.addingStep>0?"assets/images/common/yes.png":"assets/images/common/ic_loading.png",
+                      logicAdd.addingStep>0?Image.asset(
+                        "assets/images/common/yes.png",
+                        width: 14.w*3,
+                        height: 14.w*3,
+                        fit: BoxFit.fill,
+                      ):Image.asset(
+                        "assets/images/common/loading.gif",
                         width: 14.w*3,
                         height: 14.w*3,
                         fit: BoxFit.fill,
@@ -158,8 +163,13 @@ class DeviceStatusPage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        logicAdd.addingStep>1?"assets/images/common/yes.png":"assets/images/common/ic_loading.png",
+                      logicAdd.addingStep>1?Image.asset(
+                        "assets/images/common/yes.png",
+                        width: 14.w*3,
+                        height: 14.w*3,
+                        fit: BoxFit.fill,
+                      ):Image.asset(
+                        "assets/images/common/loading.gif",
                         width: 14.w*3,
                         height: 14.w*3,
                         fit: BoxFit.fill,
@@ -183,8 +193,13 @@ class DeviceStatusPage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        logicAdd.addingStep>2?"assets/images/common/yes.png":"assets/images/common/ic_loading.png",
+                      logicAdd.addingStep>2?Image.asset(
+                        "assets/images/common/yes.png",
+                        width: 14.w*3,
+                        height: 14.w*3,
+                        fit: BoxFit.fill,
+                      ):Image.asset(
+                        "assets/images/common/loading.gif",
                         width: 14.w*3,
                         height: 14.w*3,
                         fit: BoxFit.fill,

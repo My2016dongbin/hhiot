@@ -10,6 +10,8 @@ import 'package:iot/pages/home/my/setting/by_us/us_binding.dart';
 import 'package:iot/pages/home/my/setting/by_us/us_view.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_view.dart';
+import 'package:iot/pages/home/my/setting/password/new/new_password_binding.dart';
+import 'package:iot/pages/home/my/setting/password/new/new_password_view.dart';
 import 'package:iot/pages/home/my/setting/password/password_binding.dart';
 import 'package:iot/pages/home/my/setting/password/password_view.dart';
 import 'package:iot/pages/home/my/setting/phone/phone_binding.dart';
@@ -19,6 +21,7 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tpns_flutter_plugin/tpns_flutter_plugin.dart';
 
 class SettingPage extends StatelessWidget {
   final logic = Get.find<SettingController>();
@@ -505,11 +508,11 @@ class SettingPage extends StatelessWidget {
                         child: InkWell(
                           onTap: () {
                             Get.to(
-                                () => PasswordPage(
+                                () => NewPasswordPage(
                                       keys: 'password',
                                       titles: '修改密码',
                                     ),
-                                binding: PasswordBinding());
+                                binding: NewPasswordBinding());
                           },
                           child: Stack(
                             children: [
@@ -855,8 +858,14 @@ class SettingPage extends StatelessWidget {
                       Get.back();
                     }, () async {
                       Get.back();
+                      logic.loginOut();
                       final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
+                      String? id = prefs.getString(SPKeys().id);
+                      String? token = prefs.getString(SPKeys().token);
+                      XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
+                      XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
+                      XgFlutterPlugin().deleteTags([id]);
                       prefs.remove(SPKeys().token);
                       CommonData.tenant = CommonData.tenantDef;
                       CommonData.tenantName = CommonData.tenantNameDef;

@@ -9,6 +9,7 @@ import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
+import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
@@ -144,5 +145,17 @@ class SettingController extends GetxController {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version.value = packageInfo.version;
     HhLog.d('getVersion ${version.value}');
+  }
+
+  Future<void> loginOut() async {
+    var result = await HhHttp().request(RequestUtils.logout,method: DioMethod.post);
+    HhLog.d("loginOut $result");
+    if(result["code"]==0 && result["data"]!=null){
+      try{
+        //
+      }catch(e){
+        HhLog.e(e.toString());
+      }
+    }
   }
 }

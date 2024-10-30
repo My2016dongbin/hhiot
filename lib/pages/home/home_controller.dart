@@ -177,8 +177,8 @@ class HomeController extends GetxController {
                   },
                   child: Image.asset(
                     "assets/images/common/ic_x.png",
-                    width: 10.w*3,
-                    height: 10.w*3,
+                    width: 12.w*3,
+                    height: 12.w*3,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -209,7 +209,7 @@ class HomeController extends GetxController {
                       ),
                       SizedBox(height: 12.w*3,),
                       Image.asset(
-                        "assets/images/common/icon_camera_space.png",
+                        "assets/images/common/icon_share_camera.png",
                         width: 110.w*3,
                         height: 110.w*3,
                         fit: BoxFit.fill,
@@ -238,7 +238,7 @@ class HomeController extends GetxController {
                                 decoration: BoxDecoration(
                                     color: HhColors.whiteColor,
                                     borderRadius: BorderRadius.all(Radius.circular(8.w*3)),
-                                  border: Border.all(color: HhColors.grayEEBackColor,width: 1.w)
+                                  border: Border.all(color: HhColors.grayE6BackColor,width: 2.w)
                                 ),
                                 child: Center(
                                   child: Text(

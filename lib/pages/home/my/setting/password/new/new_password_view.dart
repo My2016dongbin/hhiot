@@ -7,15 +7,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/home/my/setting/password/new/new_password_controller.dart';
 import 'package:iot/pages/home/my/setting/password/password_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
-class PasswordPage extends StatelessWidget {
-  final logic = Get.find<PasswordController>();
+class NewPasswordPage extends StatelessWidget {
+  final logic = Get.find<NewPasswordController>();
 
-  PasswordPage({super.key,required String keys,required String titles}){
+  NewPasswordPage({super.key,required String keys,required String titles}){
     logic.keys = keys;
     logic.titles.value = titles;
   }
@@ -109,18 +110,17 @@ class PasswordPage extends StatelessWidget {
                             child: TextField(
                               textAlign: TextAlign.left,
                               maxLines: 1,
-                              maxLength: 30,
+                              maxLength: 11,
                               cursorColor: HhColors.titleColor_99,
                               controller: logic.passwordController,
-                              keyboardType: TextInputType.visiblePassword,
-                              obscureText: !logic.passwordShowStatus.value,
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.fromLTRB(15.w*3, 15.w*3, 15.w*3, 15.w*3),
                                 border: const OutlineInputBorder(
                                     borderSide: BorderSide.none
                                 ),
                                 counterText: '',
-                                hintText: '请输入旧密码',
+                                hintText: '手机号',
                                 hintStyle: TextStyle(
                                     color: HhColors.gray9TextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                               ),
@@ -130,37 +130,6 @@ class PasswordPage extends StatelessWidget {
                                 logic.passwordStatus.value = s.isNotEmpty;
                               },
                             ),
-                          ),
-                          logic.passwordStatus.value? BouncingWidget(
-                            duration: const Duration(milliseconds: 100),
-                            scaleFactor: 1.2,
-                            onPressed: (){
-                              logic.passwordController!.clear();
-                              logic.passwordStatus.value = false;
-                            },
-                            child: Container(
-                                padding: EdgeInsets.all(5.w),
-                                child: Image.asset('assets/images/common/ic_close.png',height:16.w*3,width: 16.w*3,fit: BoxFit.fill,)
-                            ),
-                          ):const SizedBox(),
-                          SizedBox(width: 20.w,),
-                          BouncingWidget(
-                            duration: const Duration(milliseconds: 100),
-                            scaleFactor: 1.2,
-                            onPressed: () {
-                              logic.passwordShowStatus.value =
-                              !logic.passwordShowStatus.value;
-                            },
-                            child: Container(
-                                padding: EdgeInsets.all(5.w),
-                                child: Image.asset(
-                                  logic.passwordShowStatus.value
-                                      ? 'assets/images/common/icon_bi.png'
-                                      : 'assets/images/common/icon_zheng.png',
-                                  height: 16.w*3,
-                                  width: 16.w*3,
-                                  fit: BoxFit.fill,
-                                )),
                           ),
                           SizedBox(width: 15.w*3,),
                         ],
@@ -175,18 +144,17 @@ class PasswordPage extends StatelessWidget {
                             child: TextField(
                               textAlign: TextAlign.left,
                               maxLines: 1,
-                              maxLength: 30,
+                              maxLength: 6,
                               cursorColor: HhColors.titleColor_99,
                               controller: logic.passwordNew1Controller,
-                              keyboardType: TextInputType.visiblePassword,
-                              obscureText: !logic.passwordShowNew1Status.value,
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(15.w*3),
                                 border: const OutlineInputBorder(
                                     borderSide: BorderSide.none
                                 ),
                                 counterText: '',
-                                hintText: '请输入新密码',
+                                hintText: '验证码',
                                 hintStyle: TextStyle(
                                     color: HhColors.gray9TextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                               ),
@@ -214,19 +182,32 @@ class PasswordPage extends StatelessWidget {
                             duration: const Duration(milliseconds: 100),
                             scaleFactor: 1.2,
                             onPressed: () {
-                              logic.passwordShowNew1Status.value =
-                              !logic.passwordShowNew1Status.value;
+                              //隐藏输入法
+                              FocusScope.of(logic.context).requestFocus(FocusNode());
+                              if(logic.passwordController!.text.length<11){
+                                EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的手机号'));
+                                return;
+                              }
+                              if(logic.time.value!=0){
+                                return;
+                              }
+                              Future.delayed(const Duration(milliseconds: 500),(){
+                                logic.sendCode();
+                              });
                             },
                             child: Container(
-                                padding: EdgeInsets.all(5.w),
-                                child: Image.asset(
-                                  logic.passwordShowNew1Status.value
-                                      ? 'assets/images/common/icon_bi.png'
-                                      : 'assets/images/common/icon_zheng.png',
-                                  height: 16.w*3,
-                                  width: 16.w*3,
-                                  fit: BoxFit.fill,
-                                )),
+                              margin: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                              padding: EdgeInsets.fromLTRB(20.w, 10.w, 20.w, 10.w),
+                              child: Center(
+                                child: Text(
+                                  logic.time.value==0?'获取验证码':"${logic.time.value}s后重新发送",
+                                  style: TextStyle(
+                                      color: HhColors.backBlueOutColor,
+                                      fontSize: 15.sp*3,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(width: 15.w*3,),
                         ],
@@ -252,7 +233,7 @@ class PasswordPage extends StatelessWidget {
                                     borderSide: BorderSide.none
                                 ),
                                 counterText: '',
-                                hintText: '请再次输入新密码',
+                                hintText: '请输入新密码',
                                 hintStyle: TextStyle(
                                     color: HhColors.gray9TextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                               ),
@@ -308,29 +289,26 @@ class PasswordPage extends StatelessWidget {
                     //隐藏输入法
                     FocusScope.of(logic.context).requestFocus(FocusNode());
                     if(logic.passwordController!.text.isEmpty){
-                      EventBusUtil.getInstance().fire(HhToast(title: '请输入旧密码'));
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入手机号'));
+                      return;
+                    }
+                    if(logic.passwordController!.text != logic.mobile.value){
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的安全手机号'));
                       return;
                     }
                     if(logic.passwordNew1Controller!.text.isEmpty){
-                      EventBusUtil.getInstance().fire(HhToast(title: '请输入新密码'));
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入验证码'));
                       return;
                     }
                     if(logic.passwordNew2Controller!.text.isEmpty){
-                      EventBusUtil.getInstance().fire(HhToast(title: '请再次输入新密码'));
+                      EventBusUtil.getInstance().fire(HhToast(title: '请输入新密码'));
                       return;
                     }
-                    if(!CommonUtils().validatePassword(logic.passwordNew1Controller!.text)){
+                    if(!CommonUtils().validatePassword(logic.passwordNew2Controller!.text)){
                       EventBusUtil.getInstance().fire(HhToast(title: '密码必须为8-16位由字母、数字、特殊字符两种以上组成'));
                       return;
                     }
-                    if(logic.passwordNew1Controller!.text != logic.passwordNew2Controller!.text){
-                      EventBusUtil.getInstance().fire(HhToast(title: '新密码输入不一致'));
-                      return;
-                    }
-                    Future.delayed(const Duration(milliseconds: 500),(){
-                      logic.values = logic.passwordController!.text;
-                      logic.userEdit();
-                    });
+                    logic.judgeCode();
                   },
                   child: Container(
                     width: 1.sw,
