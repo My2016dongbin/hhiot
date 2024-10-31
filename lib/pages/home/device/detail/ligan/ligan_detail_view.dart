@@ -2844,6 +2844,7 @@ class LiGanDetailPage extends StatelessWidget {
     showModalBottomSheet(context: logic.context, builder: (a){
       return Container(
         width: 1.sw,
+        height: 0.36.sh,
         decoration: BoxDecoration(
             color: HhColors.trans,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
@@ -2905,6 +2906,7 @@ class LiGanDetailPage extends StatelessWidget {
     showModalBottomSheet(context: logic.context, builder: (a){
       return Container(
         width: 1.sw,
+        height: 0.36.sh,
         decoration: BoxDecoration(
             color: HhColors.trans,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
@@ -2966,6 +2968,7 @@ class LiGanDetailPage extends StatelessWidget {
     showModalBottomSheet(context: logic.context, builder: (a){
       return Container(
         width: 1.sw,
+        height: 0.36.sh,
         decoration: BoxDecoration(
             color: HhColors.trans,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))

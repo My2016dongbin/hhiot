@@ -109,7 +109,7 @@ class PhonePage extends StatelessWidget {
                                       borderSide: BorderSide.none
                                   ),
                                   counterText: '',
-                                  hintText: '请输入手机号',
+                                  hintText: '请输入新的手机号码',
                                   hintStyle: TextStyle(
                                       color: HhColors.grayCCTextColor, fontSize: 15.sp*3,fontWeight: FontWeight.w200),
                                 ),

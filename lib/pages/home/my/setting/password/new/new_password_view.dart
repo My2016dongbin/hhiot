@@ -188,6 +188,10 @@ class NewPasswordPage extends StatelessWidget {
                                 EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的手机号'));
                                 return;
                               }
+                              if(logic.passwordController!.text != logic.mobile.value){
+                                EventBusUtil.getInstance().fire(HhToast(title: '请输入正确的安全手机号'));
+                                return;
+                              }
                               if(logic.time.value!=0){
                                 return;
                               }
