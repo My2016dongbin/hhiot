@@ -75,7 +75,7 @@ class MyController extends GetxController {
   Future<void> deviceList() async {
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
-    map['pageSize'] = '100';
+    map['pageSize'] = '-1';
     map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList $result");

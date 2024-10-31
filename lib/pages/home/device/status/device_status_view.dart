@@ -10,6 +10,8 @@ import 'package:iot/pages/home/device/add/device_add_controller.dart';
 import 'package:iot/pages/home/device/list/device_list_binding.dart';
 import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/device/status/device_status_controller.dart';
+import 'package:iot/pages/home/home_binding.dart';
+import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 
@@ -235,7 +237,7 @@ class DeviceStatusPage extends StatelessWidget {
                   onPressed: (){
                     // Get.to(()=>DeviceListPage(),binding: DeviceListBinding());
                     if(logicAdd.addingStatus.value == 1){
-                      Get.back();
+                      Get.offAll(() => HomePage(), binding: HomeBinding());
                     }
                     Get.back();
                   },
