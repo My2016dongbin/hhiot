@@ -8,6 +8,6 @@ class SpaceBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => SpaceController());
-    Get.lazyPut(() => LocationController());
+    // Get.lazyPut(() => LocationController());
   }
 }

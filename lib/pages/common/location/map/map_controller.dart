@@ -19,50 +19,39 @@ class MapController extends GetxController {
   late BuildContext context;
   final Rx<bool> testStatus = true.obs;
   final Rx<bool> pageStatus = false.obs;
+  final Rx<bool> mapStatus = true.obs;
   final Rx<double> longitude = 0.0.obs;
   final Rx<double> latitude = 0.0.obs;
-  BMFMapController ?controller;
+  // BMFMapController ?controller;
 
   @override
   Future<void> onInit() async {
+    // runToast();
     super.onInit();
   }
 
   void onBMFMapCreated(BMFMapController controller_) {
-    controller = controller_;
-    // controller?.setMapOnClickedMapBlankCallback(callback: (BMFCoordinate coordinate) {
-    //   controller?.cleanAllMarkers();
-    //
-    //   latitude.value = coordinate.latitude;
-    //   longitude.value = coordinate.longitude;
-    //
-    //   /// 创建BMFMarker
-    //   BMFMarker marker = BMFMarker(
-    //       position: BMFCoordinate(coordinate.latitude,coordinate.longitude),
-    //       enabled: false,
-    //       visible: true,
-    //       identifier: "location",
-    //       icon: 'assets/images/common/ic_device_online.png');
-    //
-    //   /// 添加Marker
-    //   controller?.addMarker(marker);
-    // });
+    // controller = controller_;
   }
 
-  Future<void> userEdit() async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true, title: '正在保存..'));
-    var tenantResult = await HhHttp().request(
-      RequestUtils.userEdit,
-      method: DioMethod.put,
-      data: {}
-    );
-    HhLog.d("userEdit -- $tenantResult");
-    if (tenantResult["code"] == 0 && tenantResult["data"] != null) {
+  @override
+  void dispose() {
+    // controller!
+    mapStatus.value = false;
+    super.dispose();
+  }
 
-    } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(tenantResult["msg"])));
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
-    }
+  @override
+  void onClose() {
+    // 在这里释放资源
+    print("DetailController 被释放");
+    super.onClose();
+  }
+
+  void runToast() {
+    EventBusUtil.getInstance().fire(HhToast(title: 'map'));
+    Future.delayed(const Duration(milliseconds: 2000),(){
+      runToast();
+    });
   }
 }

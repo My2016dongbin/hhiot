@@ -7,6 +7,8 @@ import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/home/device/status/device_status_binding.dart';
 import 'package:iot/pages/home/device/status/device_status_view.dart';
+import 'package:iot/pages/home/home_binding.dart';
+import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
@@ -194,7 +196,8 @@ class DeviceAddController extends GetxController {
       EventBusUtil.getInstance().fire(DeviceList());
       EventBusUtil.getInstance().fire(SpaceList());
       EventBusUtil.getInstance().fire(DeviceInfo());
-      Get.back();
+      // Get.back();
+      Get.offAll(() => HomePage(), binding: HomeBinding());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
       addingStatus.value = 2;

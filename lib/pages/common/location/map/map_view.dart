@@ -75,37 +75,11 @@ class MapPage extends StatelessWidget {
             ),
           ),
         ),
-        /*Align(
-          alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: (){
-              if(logic.longitude.value == 0.0){
-                EventBusUtil.getInstance().fire(HhToast(title: '请选择定位'));
-                return;
-              }
-              Get.back();
-            },
-            child: Container(
-              margin: EdgeInsets.fromLTRB(0, 90.w, 36.w, 0),
-              padding: EdgeInsets.fromLTRB(23.w, 8.w, 23.w, 10.w),
-              decoration: BoxDecoration(
-                color: HhColors.mainBlueColor,
-                borderRadius: BorderRadius.all(Radius.circular(8.w),),
-              ),
-              child: Text(
-                '确定',
-                style: TextStyle(
-                    color: HhColors.whiteColor,
-                    fontSize: 26.sp,),
-              ),
-            ),
-          ),
-        ),*/
-        Container(
+        logic.mapStatus.value?Container(
           margin: EdgeInsets.only(top: 160.w),
           child: BMFMapWidget(
             onBMFMapCreated: (controller) {
-              logic.onBMFMapCreated(controller);
+              // logic.onBMFMapCreated(controller);
             },
             mapOptions: BMFMapOptions(
                 center: BMFCoordinate(CommonData.latitude ?? 36.30865,
@@ -115,7 +89,7 @@ class MapPage extends StatelessWidget {
                 mapPadding:
                 BMFEdgeInsets(left: 30.w, top: 0, right: 30.w, bottom: 0)),
           ),
-        ),
+        ):const SizedBox(),
 
       ],
     );

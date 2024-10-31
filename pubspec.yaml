@@ -89,9 +89,9 @@ dependencies:
   fijkplayer: ^0.11.0
   shared_preferences: ^2.2.3
   flutter_bmflocation: ^3.3.0
-  flutter_baidu_mapapi_map: ^3.7.0
-  flutter_baidu_mapapi_search: ^3.7.0
-  flutter_baidu_mapapi_utils: ^3.7.0
+  flutter_baidu_mapapi_map: ^3.8.1
+  flutter_baidu_mapapi_search: ^3.8.1
+  flutter_baidu_mapapi_utils: ^3.8.1
   pinput: ^4.0.0
   tpns_flutter_plugin:
     git:

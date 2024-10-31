@@ -13,7 +13,7 @@ import 'space_controller.dart';
 
 class SpacePage extends StatelessWidget {
   final logic = Get.find<SpaceController>();
-  final logicLocation = Get.find<LocationController>();
+  // final logicLocation = Get.find<LocationController>();
 
   SpacePage({super.key});
 
