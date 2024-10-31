@@ -28,9 +28,9 @@ class WebSocketManager {
   final Duration _reconnectInterval = const Duration(seconds: 5); //重新连接间隔时间
   final StreamController<String> _messageController =
       StreamController<String>();
-  late int index = 0;
-  late List<Uint8List> streamList = [];
   final FlutterSoundPlayer _player = FlutterSoundPlayer();
+  final List<int> _audioBuffer = [];
+  bool _isPlaying = false;
 
   StreamSubscription? mRecordingDataSubscription;
   FlutterSoundRecorder? mRecorder = FlutterSoundRecorder();
@@ -48,7 +48,6 @@ class WebSocketManager {
 
   //建立连接
   void _startConnection() async {
-    clearStream();
     try {
       _channel = WebSocketChannel.connect(Uri.parse(_serverUrl));
       print('建立连接');
@@ -61,8 +60,8 @@ class WebSocketManager {
           // print('已连接$data');
           if("$data".startsWith('[')){
             // print('已连接 Stream');
-            playStream(data);
-            // parseStream(data);//处理音频流
+            // playStream(data);
+            addAudioData(data);
           }else{
             // print('已连接 message');
             _onMessageReceived(data); // 其他消息转发出去
@@ -85,7 +84,7 @@ class WebSocketManager {
 
   //断开连接
   void disconnect() {
-    // clearStream();
+    stopAudio();
     print('断开连接');
     _isConnected = false;
     _isManuallyDisconnected = true;
@@ -95,12 +94,6 @@ class WebSocketManager {
 
     // flutterSound.thePlayer.stopPlayer();
     // flutterSound.thePlayer.closePlayer();
-  }
-
-  //清除流
-  void clearStream(){
-    index = 0;
-    streamList = [];
   }
 
   //开始心跳
@@ -216,53 +209,6 @@ class WebSocketManager {
   }
 
   FlutterSound flutterSound = FlutterSound();
-
-  Future<void> parseStream(data) async {
-    try {
-      Uint8List soundBytes = data;
-      // HhLog.d("Uint8List $soundBytes");
-
-      streamList.add(soundBytes);
-/*
-      // 初始化音频会话
-      final audioSession = await AudioSession.instance;
-      await audioSession.configure(const AudioSessionConfiguration.speech());
-      // await flutterSound.thePlayer.openAudioSession();
-      flutterSound.thePlayer.openPlayer();
-
-      // 将Uint8List数据加载到播放器
-      await flutterSound.thePlayer
-          .setSubscriptionDuration(const Duration(milliseconds: 0));*/
-      playAudio();
-    } catch (e) {
-      HhLog.e(e.toString());
-    }
-  }
-
-  Future<void> playAudio() async {
-    // HhLog.d("playAudio ${streamList[index]}");
-    try {
-
-      await flutterSound.thePlayer.startPlayer(
-          fromDataBuffer: streamList[index],
-          codec: Codec.pcm16,
-          numChannels: 1,
-          sampleRate: 16000,
-          whenFinished: () {
-            //next
-            index++;
-            if(streamList.length > index){
-              playAudio();
-            }else{
-              /*flutterSound.thePlayer.stopPlayer();
-              flutterSound.thePlayer.closePlayer();*/
-            }
-          });
-
-    } catch (e) {
-      HhLog.e(e.toString());
-    }
-  }
 
   Future<void> recordAudio() async {
     HhLog.d("_recordAudio 0");
@@ -394,9 +340,46 @@ class WebSocketManager {
           //   //next
           // }
           );
-      // playAudio();
     } catch (e) {
       HhLog.e(e.toString());
     }
+  }
+
+  Future<void> playAudio() async {
+    if (_audioBuffer.isEmpty) return;
+
+    // 将 List<int> 转换为 Uint8List
+    Uint8List audioBytes = Uint8List.fromList(_audioBuffer);
+
+    // 播放音频数据
+    await _player.startPlayer(
+      fromDataBuffer: audioBytes,
+      codec: Codec.pcm16, // 根据你的音频格式选择合适的 codec
+      whenFinished: () {
+        _isPlaying = false;
+      },
+    );
+
+    _isPlaying = true;
+  }
+
+  void addAudioData(List<int> audioData) {
+    _audioBuffer.addAll(audioData);
+
+    // 如果未播放，开始播放
+    if (!_isPlaying) {
+      playAudio();
+    }
+  }
+
+  void stopAudio() async {
+    await _player.stopPlayer();
+    _isPlaying = false;
+    _audioBuffer.clear(); // 清空缓冲区
+  }
+
+  @override
+  void dispose() {
+    _player.closePlayer();
   }
 }
