@@ -487,14 +487,15 @@ class DeviceAddPage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Text(
-                          logic.isEdit.value?(logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
-                          style: TextStyle(
-                            color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
-                            fontSize: 15.sp*3,fontWeight: FontWeight.bold),
-                        ),
-                        const Expanded(
-                          child: SizedBox(),
+                        Expanded(
+                          child: Text(
+                            logic.isEdit.value?(logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
+                            maxLines: 1,
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
+                              fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Image.asset(
                           "assets/images/common/icon_blue_loc.png",

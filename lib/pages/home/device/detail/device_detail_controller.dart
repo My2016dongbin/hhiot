@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
@@ -104,15 +105,26 @@ class DeviceDetailController extends GetxController {
     HhLog.d("saveImageToGallery ");
     screenshotController.capture().then((value) async {
       HhLog.d("saveImageToGallery ");
-      // 将图片保存到相册
+      /*// 将图片保存到相册
       final tempDir = await getDownloadsDirectory();
       final filePath =
           '${tempDir!.path}/image_${DateTime.now().millisecondsSinceEpoch}.png';
       final file = File(filePath);
       File a = await file.writeAsBytes(value!);
       HhLog.d("saveImageToGallery $a");
-      EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至“$filePath”'));
+      EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至“$filePath”'));*/
+
+      // 保存图片到相册
+      final result = await ImageGallerySaver.saveImage(value!, quality: 100);
+      if (result != null && result['isSuccess']) {
+        EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至相册'));
+      } else {
+        EventBusUtil.getInstance().fire(HhToast(title: '保存图片失败'));
+      }
+
+
     }).catchError((onError) {
+      HhLog.d("onError$onError");
       EventBusUtil.getInstance().fire(HhToast(title: '拍照失败请重试'));
     });
   }
@@ -157,14 +169,28 @@ class DeviceDetailController extends GetxController {
     List<int>? exportGif = await recordController.exporter.exportGif();
 
     HhLog.d("stopRecord ");
-    // 将图片保存到相册
+    /*// 将图片保存到相册
     final tempDir = await getDownloadsDirectory();
     final filePath =
         '${tempDir!.path}/video_${DateTime.now().millisecondsSinceEpoch}.gif';
     final file = File(filePath);
     File a = await file.writeAsBytes(exportGif!);
     HhLog.d("stopRecord $a");
-    EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至“$filePath”'));
+    EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至“$filePath”'));*/
+
+    // 保存图片到相册
+    Uint8List audioBytes = Uint8List.fromList(exportGif!);
+    // final result = await ImageGallerySaver.saveImage(audioBytes, quality: 100);
+    final tempDir = await getDownloadsDirectory();
+    final filePath = '${tempDir!.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4';
+    final file = File(filePath);
+    File a = await file.writeAsBytes(exportGif);
+    final result = await ImageGallerySaver.saveFile(filePath);
+    if (result != null && result['isSuccess']) {
+      EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至相册'));
+    } else {
+      EventBusUtil.getInstance().fire(HhToast(title: '保存录像失败'));
+    }
   }
 
   void fetchPageDevice(int pageKey) {
