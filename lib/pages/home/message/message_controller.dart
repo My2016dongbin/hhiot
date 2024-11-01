@@ -31,16 +31,22 @@ class MessageController extends GetxController {
       PagingController(firstPageKey: 1);
   final PagingController<int, dynamic> warnController =
       PagingController(firstPageKey: 1);
+  final PagingController<int, dynamic> callController =
+      PagingController(firstPageKey: 1);
   late int pageNumLeft = 1;
   late int pageNumRight = 1;
+  late int pageNumCall = 1;
   late int pageSize = 20;
   late TextEditingController deviceNameController = TextEditingController();
   late EasyRefreshController easyControllerLeft = EasyRefreshController();
   late EasyRefreshController easyControllerRight = EasyRefreshController();
+  late EasyRefreshController easyControllerCall = EasyRefreshController();
   List<String> dateListLeft = [];
   List<String> dateListRight = [];
+  List<String> dateListCall = [];
   final Rx<int> chooseListLeftNumber = 0.obs;
   final Rx<int> chooseListRightNumber = 0.obs;
+  final Rx<int> chooseListCallNumber = 0.obs;
   final Rx<bool> spaceListStatus = true.obs;
   List<dynamic> spaceList = [{
     "name":"空间",
@@ -48,8 +54,10 @@ class MessageController extends GetxController {
   }];
   List<num> chooseListLeft = [];
   List<num> chooseListRight = [];
+  List<num> chooseListCall = [];
   final Rx<bool> editLeft = false.obs;
   final Rx<bool> editRight = false.obs;
+  final Rx<bool> editCall = false.obs;
   final Rx<bool> isChooseSpace = false.obs;
   final Rx<bool> isChooseType = false.obs;
   final Rx<bool> isChooseDate = false.obs;
@@ -89,6 +97,7 @@ class MessageController extends GetxController {
   void onInit() {
     fetchPageLeft(1);
     fetchPageRight(1);
+    fetchPageCall(1);
     getSpaceList();
     spaceListSubscription = EventBusUtil.getInstance()
         .on<SpaceList>()
@@ -100,8 +109,10 @@ class MessageController extends GetxController {
         .listen((event) {
       pageNumLeft = 1;
       pageNumRight = 1;
+      pageNumCall = 1;
       fetchPageLeft(1);
       fetchPageRight(1);
+      fetchPageCall(1);
       getWarnCount();
       getNoticeCount();
     });
@@ -135,6 +146,39 @@ class MessageController extends GetxController {
         }
       }
       warnController.appendLastPage(newItems);
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  Future<void> fetchPageCall(int pageKey) async {
+    Map<String, dynamic> map = {};
+    map['pageNo'] = pageKey;
+    map['pageSize'] = pageSize;
+    var result = await HhHttp()
+        .request(RequestUtils.messageCall, method: DioMethod.get, params: map);
+    // HhLog.d("fetchPageRight --  ${RequestUtils.message}");
+    // HhLog.d("fetchPageRight --  $map");
+    // HhLog.d("fetchPageRight --  ${CommonData.token}");
+    HhLog.d("fetchPageCall --  $pageKey , $result");
+    if (result["code"] == 0 && result["data"] != null) {
+      List<dynamic> newItems = result["data"]["list"]??[];
+      /*int number = result["data"]["total"];
+      noticeCount.value = number>99?"99+":"$number";
+      noticeCountInt.value = number;*/
+      getNoticeCount();
+
+      if (pageKey == 1) {
+        callController.itemList = [];
+        chooseListCall = [];
+        chooseListCallNumber.value = 0;
+      }else{
+        if(newItems.isEmpty){
+          easyControllerCall.finishLoad(IndicatorResult.noMore,true);
+        }
+      }
+      callController.appendLastPage(newItems);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
@@ -246,6 +290,26 @@ class MessageController extends GetxController {
       // EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
+  Future<void> readCall() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['ids'] = chooseListCall;
+    var result = await HhHttp()
+        .request(RequestUtils.rightRead, method: DioMethod.post, params: map);
+    HhLog.d("readCall --  ${chooseListCall.toString()} , $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if (result["code"] == 0 && result["data"] == true) {
+      EventBusUtil.getInstance().fire(HhToast(title: "操作成功",type: 0));
+      editCall.value = false;
+      pageStatus.value = false;
+      pageStatus.value = true;
+      pageNumCall = 1;
+      fetchPageCall(1);
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
   Future<void> readRight() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
@@ -283,6 +347,26 @@ class MessageController extends GetxController {
       dateListLeft = [];
       pageNumLeft = 1;
       fetchPageLeft(1);
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+  Future<void> deleteCall() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['ids'] = chooseListCall;
+    var result = await HhHttp()
+        .request(RequestUtils.rightDelete, method: DioMethod.delete, params: map);
+    HhLog.d("deleteCall --  ${chooseListCall.toString()} , $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if (result["code"] == 0 && result["data"] == true) {
+      EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 0));
+      editCall.value = false;
+      pageStatus.value = false;
+      pageStatus.value = true;
+      pageNumCall = 1;
+      fetchPageCall(1);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));

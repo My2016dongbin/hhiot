@@ -23,6 +23,7 @@ class RequestUtils{
   static const spaceCreate = '$base/admin-api/mid/space/create';//添加空间
   static const spaceUpdate = '$base/admin-api/mid/space/update';//更新空间
   static const message = '$base/admin-api/system/message-log/page';//主页-消息-通知信息查询
+  static const messageCall = '$base/admin-api/mid/pole-device-call-log/page';//主页-消息-通话信息查询
   static const messageAlarm = '$base/admin-api/mid/device-alarm-info/page';//主页-消息-报警信息查询
   static const spaceInfo = '$base/admin-api/mid/space/get';//主页-空间-空间信息
   static const deviceInfo = '$base/admin-api/mid/device-base/get';//设备详情

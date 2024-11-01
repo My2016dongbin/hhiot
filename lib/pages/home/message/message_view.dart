@@ -166,11 +166,49 @@ class MessagePage extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(width: 10.w,),
+                            BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.0,
+                              onPressed: (){
+                                logic.tabIndex.value = 2;
+                                resetEdit();
+                                logic.dateListLeft = [];
+                                logic.pageNumLeft = 1;
+                                logic.fetchPageLeft(1);
+                              },
+                              child: Container(
+                                width: 55.w*3,
+                                padding: EdgeInsets.fromLTRB(0, 10.w, 0, 10.w),
+                                color: HhColors.trans,
+                                child: Stack(
+                                  children: [
+                                    Align(alignment: Alignment.topRight,
+                                        child: Container(
+                                            color: HhColors.trans,
+                                            margin: EdgeInsets.fromLTRB(0, logic.tabIndex.value==2?0:10.w, 40.w, 0),
+                                            child: Text("通话",style: TextStyle(color: logic.tabIndex.value==2?HhColors.blackColor:HhColors.gray9TextColor,fontSize: logic.tabIndex.value==2?18.sp*3:14.sp*3,fontWeight: logic.tabIndex.value==2?FontWeight.bold:FontWeight.w200),))),
+                                    /*logic.noticeCount.value=="0"?const SizedBox():Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: HhColors.mainRedColor,
+                                            borderRadius: BorderRadius.all(Radius.circular(20.w))
+                                        ),
+                                        width: 15.w*3 + ((logic.noticeCount.value.length-1) * (3.w*3)),
+                                        height: 15.w*3,
+                                        child: Center(child: Text(logic.noticeCount.value,style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
+                                      ),
+                                    ),*/
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    Align(
+                    logic.tabIndex.value==2?const SizedBox():Align(
                       alignment: Alignment.topCenter,
                       child: Container(
                         margin: EdgeInsets.only(top: 54.w*3),
@@ -260,7 +298,7 @@ class MessagePage extends StatelessWidget {
                       ),
                     ),
 
-                    logic.pageStatus.value ? (logic.tabIndex.value==0 ? leftMessage() : rightMessage()):const SizedBox(),
+                    logic.pageStatus.value ? (logic.tabIndex.value==0 ? leftMessage() : (logic.tabIndex.value==1 ? rightMessage() : callMessage())):const SizedBox(),
                   ],
                 ),
               ),
@@ -1106,6 +1144,288 @@ class MessagePage extends StatelessWidget {
       );*/
   }
 
+  callMessage() {
+    return Column(
+      children: [
+        ///通话列表
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(top: 88.w*3),
+            child: EasyRefresh(
+              onRefresh: (){
+                logic.pageNumCall = 1;
+                logic.fetchPageCall(1);
+              },
+              onLoad: (){
+                logic.pageNumCall++;
+                logic.fetchPageCall(logic.pageNumCall);
+
+              },
+              controller: logic.easyControllerCall,
+              child: PagedListView<int, dynamic>(
+                padding: EdgeInsets.zero,
+                pagingController: logic.callController,
+                builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                  noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/icon_no_message.png',info: '暂无消息',mid: 50.w,
+                    height: 0.32.sw,
+                    width: 0.4.sw,),
+                  itemBuilder: (context, item, index) {
+                    return InkWell(
+                      onTap: (){
+                        /*if(logic.editCall.value){
+                          item["selected"] == 1?item["selected"]=0:item["selected"]=1;
+                          logic.pageStatus.value = false;
+                          logic.pageStatus.value = true;
+                          if(item["selected"] == 1){
+                            if(!logic.chooseListCall.contains(item["id"])){
+                              logic.chooseListCall.add(item["id"]);
+                            }
+                          }else{
+                            if(logic.chooseListCall.contains(item["id"])){
+                              logic.chooseListCall.remove(item["id"]);
+                            }
+                          }
+                          logic.chooseListCallNumber.value = logic.chooseListCall.length;
+                          HhLog.d("list call -- ${logic.chooseListCall}");
+                        }*/
+                        showCallDialog(item);
+                      },
+                      child: Row(
+                        children: [
+                          logic.editCall.value?Container(
+                            padding: EdgeInsets.fromLTRB(14.w*3, 14.w*3, 0, 14.w*3),
+                            child: Image.asset(
+                              item["selected"] == 1?"assets/images/common/yes.png":"assets/images/common/no.png",
+                              width: 14.w*3,
+                              height: 14.w*3,
+                              fit: BoxFit.fill,
+                            ),
+                          ):const SizedBox(),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 0),
+                              padding: EdgeInsets.all(20.w),
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                  color: HhColors.whiteColor,
+                                  borderRadius: BorderRadius.all(Radius.circular(8.w*3))
+                              ),
+                              child: Stack(
+                                children: [
+                                  /*item['status']==true?const SizedBox():Container(
+                                    height: 6.w*3,
+                                    width: 6.w*3,
+                                    margin: EdgeInsets.fromLTRB(0, 7.w*3, 0, 0),
+                                    decoration: BoxDecoration(
+                                        color: HhColors.backRedInColor,
+                                        borderRadius: BorderRadius.all(Radius.circular(3.w*3))
+                                    ),
+                                  ),*/
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
+                                    child: Text(
+                                      "${parseCall("${item['callStatus']}")}【${item['deviceNo']}】",
+                                      style: TextStyle(
+                                          color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(30.w, 26.w*3, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "时间:${CommonUtils().parseLongTime('${item['callTime']}')}",
+                                          style: TextStyle(
+                                              color: HhColors.textColor, fontSize: 13.sp*3),
+                                        ),
+                                        SizedBox(height: 8.w,),
+                                        Text(
+                                          '通话时长${item['callMarket']}秒',
+                                          style: TextStyle(
+                                              color: HhColors.textColor, fontSize: 14.sp*3),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+        ///编辑操作面板
+        logic.editCall.value?Container(
+          height: 50.w*3,
+          width: 1.sw,
+          color: HhColors.whiteColor,
+          child: Row(
+            children: [
+              SizedBox(width: 21.w*3,),
+              Text(
+                '已选：',
+                style: TextStyle(
+                    color: HhColors.gray6TextColor, fontSize: 14.sp*3),
+              ),
+              Text(
+                '${logic.chooseListCallNumber.value}条',
+                style: TextStyle(
+                    color: HhColors.gray6TextColor, fontSize: 14.sp*3),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.0,
+                      onPressed: (){
+                        if(logic.chooseListCallNumber.value == 0){
+                          EventBusUtil.getInstance().fire(HhToast(title: "请至少选择一条数据"));
+                          return;
+                        }
+                        logic.readCall();
+                      },
+                      child: Container(
+                        padding:EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                        decoration: BoxDecoration(
+                            color: HhColors.mainBlueColor,
+                            borderRadius: BorderRadius.circular(8.w*3)
+                        ),
+                        child: Text(
+                          '全部已读',
+                          style: TextStyle(
+                              color: HhColors.whiteColor, fontSize: 14.sp*3),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 9.w*3,),
+                    BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.0,
+                      onPressed: (){
+                        if(logic.chooseListCallNumber.value == 0){
+                          EventBusUtil.getInstance().fire(HhToast(title: "请至少选择一条数据"));
+                          return;
+                        }
+                        CommonUtils().showDeleteDialog(logic.context, "确定要删除所选消息记录？", (){
+                          Get.back();
+                        }, (){
+                          logic.deleteCall();
+                          Get.back();
+                        },(){
+                          Get.back();
+                        },leftStr: "取消",rightStr: "删除");
+                      },
+                      child: Container(
+                        padding:EdgeInsets.fromLTRB(30.w, 15.w, 30.w, 15.w),
+                        decoration: BoxDecoration(
+                            color: HhColors.whiteColor,
+                            border: Border.all(color: HhColors.mainBlueColor,width: 2.w),
+                            borderRadius: BorderRadius.circular(8.w*3)
+                        ),
+                        child: Text(
+                          '全部删除',
+                          style: TextStyle(
+                              color: HhColors.mainBlueColor, fontSize: 14.sp*3),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 14.w*3,),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ):const SizedBox(),
+      ],
+    );
+
+      /*Container(
+        margin: EdgeInsets.only(top: 160.w),
+        child: EasyRefresh(
+          controller: logic.rightRefreshController,
+          onRefresh: (){
+            logic.pageNumRight = 1;
+            logic.fetchPageRight(1);
+          },
+          onLoad: (){
+            logic.pageNumRight++;
+            logic.fetchPageRight(logic.pageNumRight);
+            logic.rightRefreshController.finishLoad();
+
+          },
+          child: PagedListView<int, dynamic>(
+            padding: EdgeInsets.zero,
+            pagingController: logic.warnController,
+            builderDelegate: PagedChildBuilderDelegate<dynamic>(
+              noItemsFoundIndicatorBuilder: (context) => CommonUtils().noneWidget(image:'assets/images/common/no_message.png',info: '暂无消息',mid: 50.w,
+                height: 0.32.sw,
+                width: 0.6.sw,),
+              itemBuilder: (context, item, index) => Container(
+                margin: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 0),
+                padding: EdgeInsets.all(20.w),
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                    color: HhColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10.w))
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 10.w,
+                      width: 10.w,
+                      margin: EdgeInsets.fromLTRB(5, 15.w, 0, 0),
+                      decoration: BoxDecoration(
+                          color: HhColors.backRedInColor,
+                          borderRadius: BorderRadius.all(Radius.circular(5.w))
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30.w, 0, 0, 0),
+                      child: Text(
+                        "${item['messageType']}",
+                        style: TextStyle(
+                            color: HhColors.textBlackColor, fontSize: 26.sp,fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30.w, 40.w, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "时间:${item['id']}",
+                            style: TextStyle(
+                                color: HhColors.textColor, fontSize: 22.sp),
+                          ),
+                          SizedBox(height: 8.w,),
+                          Text(
+                            '${item['content']}',
+                            style: TextStyle(
+                                color: HhColors.textColor, fontSize: 22.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );*/
+  }
+
   void resetEdit() {
     logic.editLeft.value = false;
     logic.editRight.value = false;
@@ -1319,5 +1639,111 @@ class MessagePage extends StatelessWidget {
         ),
       );
     },isDismissible: false,enableDrag: false);
+  }
+
+  String parseCall(item) {
+    if(item == "-1"){
+      return '呼叫';
+    }
+    if(item == "0"){
+      return '呼入';
+    }
+    return '';
+  }
+
+  void showCallDialog(item) {
+    showCupertinoDialog(
+        context: logic.context,
+        builder: (BuildContext context) {
+          return Center(
+            child: Container(
+              height: 160.w*3,
+              width: 1.sw,
+              margin: EdgeInsets.fromLTRB(14.w * 3, 0, 14.w * 3, 0),
+              decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(12.w * 3)),
+              ),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.fromLTRB(0, 15.h*3, 18.w*3, 0),
+                          padding: EdgeInsets.all(5.w),
+                          child: Image.asset(
+                            'assets/images/common/ic_x.png',
+                            height: 15.w*3,
+                            width: 15.w*3,
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: BouncingWidget(
+                      duration: const Duration(milliseconds: 100),
+                      scaleFactor: 1.2,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.fromLTRB(15.w, 15.h*3, 15.w*3, 0),
+                          padding: EdgeInsets.all(5.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Text(
+                                  parseCall(item['callStatus']),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: HhColors.blackColor, fontSize: 18.sp*3,fontWeight:FontWeight.w600,decoration: TextDecoration.none),
+                                ),
+                              ),
+                              SizedBox(height: 10.w,),
+                              Center(
+                                child: Text(
+                                  "设备名称:${item['name']}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3,fontWeight:FontWeight.w500,decoration: TextDecoration.none),
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  "设备编码:${item['deviceNo']}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3,fontWeight:FontWeight.w500,decoration: TextDecoration.none),
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  "通话时长:${item['callMarket']}秒",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3,fontWeight:FontWeight.w500,decoration: TextDecoration.none),
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  "呼叫时间:${CommonUtils().parseLongTime('${item['callTime']}')}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3,fontWeight:FontWeight.w500,decoration: TextDecoration.none),
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        barrierDismissible: true);
   }
 }
