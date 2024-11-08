@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'dart:math';
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,43 @@ class CommonUtils {
     ];
 
     return gradientColors;
+  }
+
+  ///百度转高德
+  Map<String, double> bdToGd(double bdLng, double bdLat) {
+    const xPi = pi * 3000.0 / 180.0;
+    var x = bdLng - 0.0065;
+    var y = bdLat - 0.006;
+    var z = sqrt(x * x + y * y) - 0.00002 * sin(y * xPi);
+    var theta = atan2(y, x) - 0.000003 * cos(x * xPi);
+    var ggLng = z * cos(theta);
+    var ggLat = z * sin(theta);
+
+    //保留小数点后六位
+    Map<String, double> data = {
+      'longitude': parseDoubleNumberToDouble(ggLng.toString(), 6),
+      'latitude': parseDoubleNumberToDouble(ggLat.toString(), 6)
+    };
+    return data;
+  }
+
+  ///高德转百度
+  Map<String, double> gdToBd(double ggLon, double ggLat) {
+    const xPi = pi * 3000.0 / 180.0;
+    double x = ggLon;
+    double y = ggLat;
+    double z = sqrt(x * x + y * y) - 0.00002 * sin(y * xPi);
+    double theta = atan2(y, x) - 0.000003 * cos(x * xPi);
+    double bdLon = z * cos(theta) + 0.0065;
+    double bdLat = z * sin(theta) + 0.006;
+
+    //保留小数点后六位
+    Map<String, double> data = {
+      'longitude': parseDoubleNumberToDouble(bdLon.toString(), 6),
+      'latitude': parseDoubleNumberToDouble(bdLat.toString(), 6)
+    };
+
+    return data;
   }
 
   String parseMessageType(String s) {
@@ -1111,6 +1149,17 @@ class CommonUtils {
       rt = str;
     }
     return rt;
+  }
+  double parseDoubleNumberToDouble(String str, int number) {
+    String rt = "0";
+    int index = 0;
+    index = str.indexOf('.');
+    try {
+      rt = str.substring(0, index + 1 + number);
+    } catch (e) {
+      rt = str;
+    }
+    return double.parse(rt);
   }
 }
 

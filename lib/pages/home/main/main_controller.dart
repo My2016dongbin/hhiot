@@ -208,8 +208,9 @@ class MainController extends GetxController {
       for (int i = 0; i < newItems.length; i++) {
         if(newItems[i]["deviceNo"] == marker.customMap!["deviceNo"]){
           model = newItems[i];
+          dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
           controller?.setCenterCoordinate(
-            BMFCoordinate(double.parse('${model["latitude"]}'),double.parse('${model["longitude"]}')), false,
+            BMFCoordinate(mapLatLng["latitude"],mapLatLng["longitude"]), false,
           );
           controller?.setZoomTo(17);
 
@@ -220,7 +221,7 @@ class MainController extends GetxController {
           }
           //添加标题框
           /// text经纬度信息
-          BMFCoordinate position = BMFCoordinate(double.parse('${model["latitude"]}'),double.parse('${model["longitude"]}'));
+          BMFCoordinate position = BMFCoordinate(mapLatLng["latitude"],mapLatLng["longitude"]);
 
           /// 构造text
           BMFText bmfText = BMFText(
@@ -478,9 +479,10 @@ class MainController extends GetxController {
 
         Map<String, dynamic> map = {};
         map["deviceNo"] = "${model['deviceNo']}";
+
+        dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
         BMFMarker marker = BMFMarker(
-            position: BMFCoordinate(double.parse('${model['latitude']}'),
-                double.parse('${model['longitude']}')),
+            position: BMFCoordinate(mapLatLng['latitude'], mapLatLng['longitude']),
             enabled: true,
             visible: true,
             title: "${model['name']}",

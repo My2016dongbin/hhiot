@@ -78,6 +78,10 @@ class DeviceAddController extends GetxController {
       locText.value = model['location']??"";
 
       if(model['longitude']!=null && model['longitude']!=0 && model['longitude']!=""){
+        dynamic map = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
+        model['longitude'] = "${map['longitude']}";
+        model['latitude'] = "${map['latitude']}";
+
         longitude.value = double.parse(model['longitude']);
         latitude.value = double.parse(model['latitude']);
         HhLog.d("isEdit ${longitude.value},${latitude.value}");
@@ -152,15 +156,18 @@ class DeviceAddController extends GetxController {
     addingStatus.value = 0;
     addingStep.value = 0;
     futureStep();
-    var result = await HhHttp().request(RequestUtils.deviceCreate,method: DioMethod.post,data: {
+    dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
+    dynamic data = {
       "deviceNo":snController!.text,
-      "name":nameController!.text==''?null:nameController!.text,
-      "spaceId":spaceId,
-      "longitude":"${longitude.value}",
-      "latitude":"${latitude.value}",
-      "location":locText.value,
-    });
-    HhLog.d("createDevice -- $result");
+    "name":nameController!.text==''?null:nameController!.text,
+    "spaceId":spaceId,
+    "longitude":"${map['longitude']}",
+    "latitude":"${map['latitude']}",
+    "location":locText.value,
+    };
+    var result = await HhHttp().request(RequestUtils.deviceCreate,method: DioMethod.post,data: data);
+    HhLog.d("createDevice data -- $data");
+    HhLog.d("createDevice result -- $result");
     if(result["code"]==0 && result["data"]!=null){
       Future.delayed(const Duration(seconds: 2),(){
         addingStatus.value = 1;
@@ -180,8 +187,9 @@ class DeviceAddController extends GetxController {
       HhLog.d("newItems[index.value] ${newItems[index.value]}");
       model['spaceName'] = newItems[index.value]['name'];
       model['spaceId'] = newItems[index.value]['id'];
-      model['longitude'] = "${longitude.value}";
-      model['latitude'] = "${latitude.value}";
+      dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
+      model['longitude'] = "${map['longitude']}";
+      model['latitude'] = "${map['latitude']}";
       model['location'] = locText.value;
       HhLog.d("model $model ，${locText.value}");
     }catch(e){
@@ -190,7 +198,8 @@ class DeviceAddController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     var result = await HhHttp().request(RequestUtils.deviceUpdate,method: DioMethod.put,data: model);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
-    HhLog.d("updateDevice -- $result");
+    HhLog.d("updateDevice model -- $model");
+    HhLog.d("updateDevice result -- $result");
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: '修改设备成功',type: 0));
       EventBusUtil.getInstance().fire(DeviceList());
