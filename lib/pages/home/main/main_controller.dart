@@ -247,10 +247,25 @@ class MainController extends GetxController {
           videoStatus.value = true;
         }
       }
+
+      userMarker();
     });
 
     //获取设备检索列表
     deviceSearch();
+  }
+
+  void userMarker() {
+    /// 创建BMFMarker
+    BMFMarker point = BMFMarker(
+        position: BMFCoordinate(CommonData.latitude!,CommonData.longitude!),
+        enabled: false,
+        visible: true,
+        identifier: "location",
+        icon: 'assets/images/common/icon_point.png');
+
+    /// 添加Marker
+    controller?.addMarker(point);
   }
 
   void onSearchClick() {
@@ -500,6 +515,7 @@ class MainController extends GetxController {
         continue;
       }
     }
+    userMarker();
   }
 
   Future<void> locSearch() async {

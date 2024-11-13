@@ -62,7 +62,9 @@ class SearchLocationPage extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            EventBusUtil.getInstance().fire(LocText(text: logic.locText.value));
+            if(logic.locText.value.isNotEmpty){
+              EventBusUtil.getInstance().fire(LocText(text: logic.locText.value));
+            }
             Get.back();
           },
           child: Container(

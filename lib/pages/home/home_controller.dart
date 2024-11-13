@@ -468,10 +468,33 @@ class HomeController extends GetxController {
   }
 
   Future<void> getVersion() async {
-    showVersionDialog();
+    Map<String, dynamic> map = {};
+    map['pageNo'] = '1';
+    map['pageSize'] = '100';
+    map['flag'] = 'user';
+    var result = await HhHttp()
+        .request(RequestUtils.version, method: DioMethod.get, params: map);
+    HhLog.d("getVersion -- $map");
+    HhLog.d("getVersion -- $result");
+    if (result["code"] == 0 && result["data"] != null) {
+      List<dynamic> list = result["data"]["list"];
+      if(list.isNotEmpty){
+        for(int m = 0;m < list.length;m++){
+          dynamic update = list[m];
+          HhLog.d("getVersion -- $update");
+          if(update["status"]=="true" && (int.parse(buildNumber.value)<int.parse("${update["version"]}"))){
+            showVersionDialog(update);
+            return;
+          }
+        }
+      }
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 
-  void showVersionDialog() {
+  void showVersionDialog(dynamic update) {
     versionStatus.value = 0;
     showCupertinoDialog(
         context: context,
@@ -492,7 +515,7 @@ class HomeController extends GetxController {
                     child: Stack(
                       children: [
                         Image.asset('assets/images/common/icon_up_top.png'),
-                        Align(
+                        "${update["isForce"]}"=="true"?const SizedBox():Align(
                           alignment: Alignment.topRight,
                           child: BouncingWidget(
                             duration: const Duration(milliseconds: 100),
@@ -501,12 +524,12 @@ class HomeController extends GetxController {
                               Get.back();
                             },
                             child: Container(
-                              margin:
-                                  EdgeInsets.fromLTRB(0, 16.w * 3, 16.w * 3, 0),
+                              margin: EdgeInsets.fromLTRB(0, 16.w * 3, 16.w * 3, 0),
+                              padding: EdgeInsets.all(20.w),
                               child: Image.asset(
                                 "assets/images/common/icon_up_x.png",
-                                width: 36.w,
-                                height: 36.w,
+                                width: 40.w,
+                                height: 40.w,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -531,7 +554,7 @@ class HomeController extends GetxController {
                           child: Container(
                             margin: EdgeInsets.fromLTRB(0, 138.w * 3, 0, 0),
                             child: Text(
-                              "V1.01",
+                              "V${update["versionName"]}",
                               style: TextStyle(
                                   letterSpacing: -3.w,
                                   decoration: TextDecoration.none,
@@ -572,7 +595,7 @@ class HomeController extends GetxController {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "1.新增视频手势操作，可用手势操作上下左右，双指放大，单指按压自动对焦。\n2.修改bug，体验优化。\n3.全新体验。",
+                                                "${update["versionDescription"]}".replaceAll("\\n", "\n"),
                                                 style: TextStyle(
                                                     decoration:
                                                         TextDecoration.none,
@@ -664,6 +687,8 @@ class HomeController extends GetxController {
                                   if(await Permission.requestInstallPackages.isGranted){
                                     versionStatus.value = 1;
                                     downloadStep.value = 0;
+                                    downloadUrl = "${CommonData.endpoint}${update["apkUrl"]}";
+                                    HhLog.d("downloadUrl $downloadUrl");
                                     downloadDir();
                                   }else{
                                     EventBusUtil.getInstance().fire(HhToast(title: '请先开启安装权限，开启后请重新打开应用'));
