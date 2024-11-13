@@ -144,6 +144,7 @@ class MainController extends GetxController {
     getUnRead();
     //获取空间列表
     getSpaceList(1);
+    EventBusUtil.getInstance().fire(Version());
     super.onInit();
   }
 

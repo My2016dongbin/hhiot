@@ -35,6 +35,7 @@ class HhColors {
   static const grayEFBackColor = Color(0x99EFEFEF);//灰色背景颜色
   static const blackTextColor = Color(0xFF333333);//黑色字体颜色
   static const mainBlueColor = Color(0xFF4E88FD);//主蓝色字体颜色
+  static const mainBlueColorUn = Color(0xFFE5F1FF);//主蓝色字体颜色
   static const mainBlueColorTrans = Color(0x883477FF);//主蓝色字体颜色
   static const mainGrayColorTrans = Color(0x44999999);
   static const mainGrayColor = Color(0x55000000);

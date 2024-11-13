@@ -918,6 +918,7 @@ class MainPage extends StatelessWidget {
                   DateTime dateTime = DateTime.now();
                   logic.dateStr.value = CommonUtils().parseLongTimeWithLength("${dateTime.millisecondsSinceEpoch}",16);
                   logic.getWeather();
+                  EventBusUtil.getInstance().fire(Version());
                 },
                 onLoad: (){
                   logic.pageNum++;

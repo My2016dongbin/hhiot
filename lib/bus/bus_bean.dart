@@ -19,6 +19,13 @@ class LocText{
 class CatchRefresh{
   CatchRefresh();
 }
+class Version{
+  Version();
+}
+class DownProgress{
+  int progress;
+  DownProgress({required this.progress});
+}
 class SpaceList{
   SpaceList();
 }

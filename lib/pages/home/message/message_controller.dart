@@ -113,8 +113,6 @@ class MessageController extends GetxController {
       fetchPageLeft(1);
       fetchPageRight(1);
       fetchPageCall(1);
-      getWarnCount();
-      getNoticeCount();
     });
     super.onInit();
   }
@@ -167,7 +165,6 @@ class MessageController extends GetxController {
       /*int number = result["data"]["total"];
       noticeCount.value = number>99?"99+":"$number";
       noticeCountInt.value = number;*/
-      getNoticeCount();
 
       if (pageKey == 1) {
         callController.itemList = [];
@@ -265,7 +262,6 @@ class MessageController extends GetxController {
       pageStatus.value = true;
       pageNumRight = 1;
       fetchPageRight(1);
-      getNoticeCount();
     } else {
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(resultR["msg"])));
     }
@@ -285,7 +281,6 @@ class MessageController extends GetxController {
       dateListLeft = [];
       pageNumLeft = 1;
       fetchPageLeft(1);
-      getWarnCount();
     } else {
       // EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
