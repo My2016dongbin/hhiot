@@ -40,6 +40,10 @@ class DeviceDetailController extends GetxController {
   final Rx<int> videoMinute = 0.obs;
   final Rx<int> videoSecond = 0.obs;
   final Rx<bool> liveStatus = true.obs;
+  final Rx<bool> upStatus = false.obs;
+  final Rx<bool> downStatus = false.obs;
+  final Rx<bool> leftStatus = false.obs;
+  final Rx<bool> rightStatus = false.obs;
   final PagingController<int, dynamic> deviceController =
       PagingController(firstPageKey: 0);
   late int pageNum = 1;

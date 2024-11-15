@@ -109,11 +109,13 @@ class DeviceDetailPage extends StatelessWidget {
                   if(details.delta.dy > 0){
                     HhLog.d("滑动控制 下");
                     logic.command = "DOWN";
+                    logic.downStatus.value = true;
                     logic.controlPost(0);
                   }
                   if(details.delta.dy < 0){
                     HhLog.d("滑动控制 上");
                     logic.command = "UP";
+                    logic.upStatus.value = true;
                     logic.controlPost(0);
                   }
                 },
@@ -121,6 +123,10 @@ class DeviceDetailPage extends StatelessWidget {
                   //终止滑动控制
                   HhLog.d("滑动控制 终止");
                   Future.delayed(const Duration(milliseconds: 500),(){
+                    logic.upStatus.value = false;
+                    logic.downStatus.value = false;
+                    logic.leftStatus.value = false;
+                    logic.rightStatus.value = false;
                     logic.controlPost(1);
                   });
                 },
@@ -129,11 +135,13 @@ class DeviceDetailPage extends StatelessWidget {
                   if(details.delta.dx > 0){
                     HhLog.d("滑动控制 右");
                     logic.command = "RIGHT";
+                    logic.rightStatus.value = true;
                     logic.controlPost(0);
                   }
                   if(details.delta.dx < 0){
                     HhLog.d("滑动控制 左");
                     logic.command = "LEFT";
+                    logic.leftStatus.value = true;
                     logic.controlPost(0);
                   }
                 },
@@ -141,6 +149,10 @@ class DeviceDetailPage extends StatelessWidget {
                   //终止滑动控制
                   HhLog.d("滑动控制 终止");
                   Future.delayed(const Duration(milliseconds: 500),(){
+                    logic.upStatus.value = false;
+                    logic.downStatus.value = false;
+                    logic.leftStatus.value = false;
+                    logic.rightStatus.value = false;
                     logic.controlPost(1);
                   });
                 },
@@ -192,6 +204,54 @@ class DeviceDetailPage extends StatelessWidget {
                                     fit: BoxFit.fill,
                                   ),
                                 ],
+                              ),
+                            ),
+                          ):const SizedBox(),
+                          logic.upStatus.value?Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 30.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_up.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ):const SizedBox(),
+                          logic.downStatus.value?Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 20.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_down.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ):const SizedBox(),
+                          logic.leftStatus.value?Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_left.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ):const SizedBox(),
+                          logic.rightStatus.value?Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 20.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_right.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ):const SizedBox(),
