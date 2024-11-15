@@ -38,6 +38,11 @@ class UserInfo{
 class Message{
   Message();
 }
+class Move{
+  int action;
+  String code;
+  Move({required this.action,required this.code,});
+}
 class DeviceInfo{
   DeviceInfo();
 }

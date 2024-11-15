@@ -19,6 +19,7 @@ import 'package:iot/pages/home/device/detail/call/call_binding.dart';
 import 'package:iot/pages/home/device/detail/call/call_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
+import 'package:iot/pages/home/device/detail/fijkpanel.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
@@ -104,7 +105,7 @@ class DeviceDetailPage extends StatelessWidget {
                   logic.fix.value = false;
                 });
               },
-                onVerticalDragUpdate: (details) {
+                /*onVerticalDragUpdate: (details) {
                   // 上下滑动控制 <0:上  >0:下
                   if(details.delta.dy > 0){
                     HhLog.d("滑动控制 下");
@@ -155,7 +156,7 @@ class DeviceDetailPage extends StatelessWidget {
                     logic.rightStatus.value = false;
                     logic.controlPost(1);
                   });
-                },
+                },*/
                     child: SizedBox(
                       width: double.infinity,
                       height: 254.w * 3,
@@ -176,9 +177,7 @@ class DeviceDetailPage extends StatelessWidget {
                                       player: logic.player,
                                       color: HhColors.blackColor,
                                       fit: FijkFit.fill,
-                                  /*panelBuilder: (p,d,c,s,r){
-                                        return buildCustomPanel();
-                                  },*/
+                                  panelBuilder: hhFijkPanelBuilder,
                                   ),
                                 ),
                               ),
@@ -207,6 +206,7 @@ class DeviceDetailPage extends StatelessWidget {
                               ),
                             ),
                           ):const SizedBox(),
+                          /*
                           logic.upStatus.value?Align(
                             alignment: Alignment.topCenter,
                             child: Container(
@@ -254,7 +254,7 @@ class DeviceDetailPage extends StatelessWidget {
                                 fit: BoxFit.fill,
                               ),
                             ),
-                          ):const SizedBox(),
+                          ):const SizedBox(),*/
                         ],
                       ),
                     ),

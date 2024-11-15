@@ -72,6 +72,7 @@ class DeviceDetailController extends GetxController {
   late Alignment animateAlign = Alignment.center;
   final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
   late String? endpoint;
+  late StreamSubscription? moveSubscription;
   late StreamSubscription? deviceSubscription;
   late StreamSubscription? recordSubscription;
   late ScreenshotController screenshotController = ScreenshotController();
@@ -88,6 +89,13 @@ class DeviceDetailController extends GetxController {
       getDeviceStream();
       getDeviceInfo();
       getDeviceHistory();
+    });
+    moveSubscription =
+        EventBusUtil.getInstance().on<Move>().listen((event) {
+          if(event.code.isNotEmpty){
+            command = event.code;
+          }
+          controlPost(event.action);
     });
     deviceSubscription =
         EventBusUtil.getInstance().on<DeviceInfo>().listen((event) {
