@@ -76,7 +76,7 @@ class MyController extends GetxController {
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '-1';
-    map['activeStatus'] = '-1';
+    // map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList $result");
     if(result["code"]==0 && result["data"]!=null){

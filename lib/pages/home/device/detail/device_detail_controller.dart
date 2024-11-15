@@ -57,6 +57,8 @@ class DeviceDetailController extends GetxController {
   late String nickname = '';
   late Rx<String> productName = ''.obs;
   late Rx<String> functionItem = ''.obs;
+  late Rx<bool> isPlaying = false.obs;
+  late Rx<bool> fix = false.obs;
   FijkPlayer player = FijkPlayer();
   late WebSocketManager manager;
 
@@ -182,7 +184,7 @@ class DeviceDetailController extends GetxController {
     Uint8List audioBytes = Uint8List.fromList(exportGif!);
     // final result = await ImageGallerySaver.saveImage(audioBytes, quality: 100);
     final tempDir = await getDownloadsDirectory();
-    final filePath = '${tempDir!.path}/video_${DateTime.now().millisecondsSinceEpoch}.mp4';
+    final filePath = '${tempDir!.path}/video_${DateTime.now().millisecondsSinceEpoch}.gif';
     final file = File(filePath);
     File a = await file.writeAsBytes(exportGif);
     final result = await ImageGallerySaver.saveFile(filePath);
@@ -509,6 +511,7 @@ class DeviceDetailController extends GetxController {
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
+
 
   Future<void> initData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -1150,6 +1150,27 @@ class CommonUtils {
     }
     return rt;
   }
+  String parseMinuteUpload(String str) {
+    int a = 0;
+    try {
+      a = int.parse(str);
+      a = parseDoubleToInt("${a/60}");
+    } catch (e) {
+      a = 0;
+    }
+    return "$a";
+  }
+  int parseDoubleToInt(String str) {
+    int rt = 0;
+    int index = 0;
+    index = str.indexOf('.');
+    try {
+      rt = int.parse(str.substring(0, index));
+    } catch (e) {
+      rt = 0;
+    }
+    return rt;
+  }
   double parseDoubleNumberToDouble(String str, int number) {
     String rt = "0";
     int index = 0;

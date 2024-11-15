@@ -38,6 +38,7 @@ class LiGanDetailController extends GetxController {
   final Rx<int> fireLevel = 0.obs;//防火等级
   final Rx<int> circle = 0.obs;//枪球联动 0关 1开
   final Rx<int> version = 0.obs;//固件版本号
+  final Rx<String> versionStr = ''.obs;//固件版本号
   final Rx<int> playing = 0.obs;//播放1 停止0
   final Rx<int> voiceHuman = 3.obs;//音量
   final Rx<int> voiceCar = 3.obs;//音量
@@ -118,6 +119,9 @@ class LiGanDetailController extends GetxController {
     HhLog.d("getVersion -- $result");
     if(result["code"]==0 && result["data"]!=null){
       versionList = result["data"]["list"];
+      if(versionList.isNotEmpty){
+        versionStr.value = versionList[0]['version'];
+      }
       versionStatus.value = false;
       versionStatus.value = true;
     }else{
@@ -202,9 +206,9 @@ class LiGanDetailController extends GetxController {
       energyAction.value = config["energyAction"] == "ON";
       weatherAction.value = config["weatherAction"] == "ON";
       soilAction.value = config["soilAction"] == "ON";
-      energyDelay.value = '${config["energyDelay"]}';
-      weatherDelay.value = '${config["weatherDelay"]}';
-      soilDelay.value = '${config["soilDelay"]}';
+      energyDelay.value = CommonUtils().parseMinuteUpload('${config["energyDelay"]}');
+      weatherDelay.value = CommonUtils().parseMinuteUpload('${config["weatherDelay"]}');
+      soilDelay.value = CommonUtils().parseMinuteUpload('${config["soilDelay"]}');
       time1Controller!.text = energyDelay.value;
       time2Controller!.text = weatherDelay.value;
       time3Controller!.text = soilDelay.value;

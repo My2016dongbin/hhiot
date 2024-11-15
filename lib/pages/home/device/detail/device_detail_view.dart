@@ -37,6 +37,34 @@ class DeviceDetailPage extends StatelessWidget {
     logic.shareMark = shareMark;
   }
 
+  Widget buildCustomPanel() {
+    return Stack(
+      children: [
+        // 在面板底部添加一个播放/暂停按钮
+        Positioned(
+          bottom: 50,
+          left: 1.sw / 2 - 30, // 居中按钮
+          child: IconButton(
+            icon: Icon(
+              logic.isPlaying.value ? Icons.pause : Icons.play_arrow,
+              color: Colors.white,
+              size: 40,
+            ),
+            onPressed: () {
+              if (logic.isPlaying.value) {
+                logic.player.pause();
+              } else {
+                logic.player.start();
+              }
+              logic.isPlaying.value = !logic.isPlaying.value;
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     logic.context = context;
@@ -70,24 +98,107 @@ class DeviceDetailPage extends StatelessWidget {
                 color: HhColors.blackColor,
               ),
               logic.playTag.value
-                  ? Container(
-                      margin: EdgeInsets.only(top: 0.w * 3),
-                      child: ScreenRecorder(
-                        width: 1.sw,
-                        height: 254.w * 3,
-                        background: Colors.white,
-                        controller: logic.recordController,
-                        child: Screenshot(
-                          controller: logic.screenshotController,
-                          child: FijkView(
-                              width: 1.sw,
-                              height: 254.w * 3,
-                              player: logic.player,
-                              color: HhColors.blackColor,
-                              fit: FijkFit.fill),
-                        ),
+                  ? GestureDetector(onLongPress: (){
+                logic.fix.value = true;
+                Future.delayed(const Duration(milliseconds: 2000),(){
+                  logic.fix.value = false;
+                });
+              },
+                onVerticalDragUpdate: (details) {
+                  // 上下滑动控制 <0:上  >0:下
+                  if(details.delta.dy > 0){
+                    HhLog.d("滑动控制 下");
+                    logic.command = "DOWN";
+                    logic.controlPost(0);
+                  }
+                  if(details.delta.dy < 0){
+                    HhLog.d("滑动控制 上");
+                    logic.command = "UP";
+                    logic.controlPost(0);
+                  }
+                },
+                onVerticalDragEnd: (details){
+                  //终止滑动控制
+                  HhLog.d("滑动控制 终止");
+                  Future.delayed(const Duration(milliseconds: 500),(){
+                    logic.controlPost(1);
+                  });
+                },
+                onHorizontalDragUpdate: (details) {
+                  // 左右滑动控制 <0:左  >0:右
+                  if(details.delta.dx > 0){
+                    HhLog.d("滑动控制 右");
+                    logic.command = "RIGHT";
+                    logic.controlPost(0);
+                  }
+                  if(details.delta.dx < 0){
+                    HhLog.d("滑动控制 左");
+                    logic.command = "LEFT";
+                    logic.controlPost(0);
+                  }
+                },
+                onHorizontalDragEnd: (details){
+                  //终止滑动控制
+                  HhLog.d("滑动控制 终止");
+                  Future.delayed(const Duration(milliseconds: 500),(){
+                    logic.controlPost(1);
+                  });
+                },
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 254.w * 3,
+                      child: Stack(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(top: 0.w * 3),
+                              child: ScreenRecorder(
+                                width: double.infinity,
+                                height: 254.w * 3,
+                                background: Colors.white,
+                                controller: logic.recordController,
+                                child: Screenshot(
+                                  controller: logic.screenshotController,
+                                  child: FijkView(
+                                      width: double.infinity,
+                                      height: 254.w * 3,
+                                      player: logic.player,
+                                      color: HhColors.blackColor,
+                                      fit: FijkFit.fill,
+                                  /*panelBuilder: (p,d,c,s,r){
+                                        return buildCustomPanel();
+                                  },*/
+                                  ),
+                                ),
+                              ),
+                            ),
+                          logic.fix.value?Center(
+                            child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(4.w*3, 0.w*3, 4.w*3, 1.w*3),
+                                      decoration: BoxDecoration(
+                                        color: HhColors.mainGreenColor,
+                                        borderRadius: BorderRadius.circular(2.w*3)
+                                      ),
+                                      child: Text('自动对焦',style: TextStyle(color: HhColors.whiteColor,fontSize: 12.sp*3),)
+                                  ),
+                                  SizedBox(height: 19.w*3,),
+                                  Image.asset(
+                                    "assets/images/common/icon_fix.png",
+                                    width: 56.w*3,
+                                    height: 56.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ):const SizedBox(),
+                        ],
                       ),
-                    )
+                    ),
+                  )
                   : const SizedBox(),
 
               ///title
@@ -342,173 +453,249 @@ class DeviceDetailPage extends StatelessWidget {
         Expanded(
           child: Stack(
             children: [
-              SizedBox(
-                width: 1.sw,
-                height: 0.9.sw,
-                child: Stack(
-                  children: [
-                    ///控制背景阴影
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 220.w * 3,
-                        height: 220.w * 3,
-                        // margin: EdgeInsets.only(top: 60.w*3),
-                        decoration: BoxDecoration(
-                            color: HhColors.videoControlShadowColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(110.w * 3))),
+              Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  width: 270.w*3,
+                  height: 270.w*3,
+                  child: Stack(
+                    children: [
+                      ///控制背景阴影
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 215.w * 3,
+                          height: 215.w * 3,
+                          // margin: EdgeInsets.only(top: 60.w*3),
+                          decoration: BoxDecoration(
+                              color: HhColors.videoControlShadowColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(110.w * 3))),
+                        ),
                       ),
-                    ),
-                    ///控制拖动按钮
-                    Align(
-                        alignment: logic.animateAlign,
-                        child: GestureDetector(
-                          onPanUpdate: (details) {
-                            logic.animateAlign += Alignment(
-                              details.delta.dx / (size.width / 2),
-                              details.delta.dy / (size.height / 2),
-                            );
-                            logic.testStatus.value = false;
-                            logic.testStatus.value = true;
+                      ///控制拖动按钮
+                      Align(
+                          alignment: logic.animateAlign,
+                          child: GestureDetector(
+                            onPanUpdate: (details) {
+                              logic.animateAlign += Alignment(
+                                details.delta.dx / (size.width / 2),
+                                details.delta.dy / (size.height / 2),
+                              );
+                              logic.testStatus.value = false;
+                              logic.testStatus.value = true;
 
-                            String msg = '';
-                            double offset = 20;
-                            double x = details.delta.dx;
-                            double y = details.delta.dy;
-                            int time = DateTime.now().millisecondsSinceEpoch;
-                            if (time - logic.controlTime > 1000) {
-                              HhLog.d(
-                                  "move ${details.delta.dx} , ${details.delta.dy}");
-                              logic.controlTime = time;
-                              if (x > 0 && y < 0) {
-                                msg = "右上";
-                                logic.commandLast = logic.command;
-                                logic.command = "RIGHT_UP";
+                              String msg = '';
+                              double offset = 20;
+                              double x = details.delta.dx;
+                              double y = details.delta.dy;
+                              int time = DateTime.now().millisecondsSinceEpoch;
+                              if (time - logic.controlTime > 1000) {
+                                HhLog.d(
+                                    "move ${details.delta.dx} , ${details.delta.dy}");
+                                logic.controlTime = time;
+                                if (x > 0 && y < 0) {
+                                  msg = "右上";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "RIGHT_UP";
+                                }
+                                if (x > 0 && y == 0) {
+                                  msg = "右";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "RIGHT";
+                                }
+                                if (x > 0 && y > 0) {
+                                  msg = "右下";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "RIGHT_DOWN";
+                                }
+                                if (x == 0 && y > 0) {
+                                  msg = "下";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "DOWN";
+                                }
+                                if (x < 0 && y > 0) {
+                                  msg = "左下";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "LEFT_DOWN";
+                                }
+                                if (x < 0 && y == 0) {
+                                  msg = "左";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "LEFT";
+                                }
+                                if (x < 0 && y < 0) {
+                                  msg = "左上";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "LEFT_UP";
+                                }
+                                if (x == 0 && y < 0) {
+                                  msg = "上";
+                                  logic.commandLast = logic.command;
+                                  logic.command = "UP";
+                                }
+                                // EventBusUtil.getInstance().fire(HhToast(title: msg));
+                                logic.controlPost(0);
                               }
-                              if (x > 0 && y == 0) {
-                                msg = "右";
-                                logic.commandLast = logic.command;
-                                logic.command = "RIGHT";
-                              }
-                              if (x > 0 && y > 0) {
-                                msg = "右下";
-                                logic.commandLast = logic.command;
-                                logic.command = "RIGHT_DOWN";
-                              }
-                              if (x == 0 && y > 0) {
-                                msg = "下";
-                                logic.commandLast = logic.command;
-                                logic.command = "DOWN";
-                              }
-                              if (x < 0 && y > 0) {
-                                msg = "左下";
-                                logic.commandLast = logic.command;
-                                logic.command = "LEFT_DOWN";
-                              }
-                              if (x < 0 && y == 0) {
-                                msg = "左";
-                                logic.commandLast = logic.command;
-                                logic.command = "LEFT";
-                              }
-                              if (x < 0 && y < 0) {
-                                msg = "左上";
-                                logic.commandLast = logic.command;
-                                logic.command = "LEFT_UP";
-                              }
-                              if (x == 0 && y < 0) {
-                                msg = "上";
-                                logic.commandLast = logic.command;
-                                logic.command = "UP";
-                              }
-                              // EventBusUtil.getInstance().fire(HhToast(title: msg));
-                              logic.controlPost(0);
-                            }
+                            },
+                            onPanEnd: (details) {
+                              logic.animateAlign = Alignment.center;
+                              logic.testStatus.value = false;
+                              logic.testStatus.value = true;
+                              // EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
+                              logic.controlPost(1);
+                            },
+                            child: Container(
+                              width: 240.w * 3,
+                              height: 240.w * 3,
+                              // margin: EdgeInsets.only(top: 60.w*3),
+                              child: Stack(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/common/video_board.png",
+                                    width: 240.w * 3,
+                                    height: 240.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(0, 20.w * 3, 0, 0),
+                                      child: Image.asset(
+                                        "assets/images/common/top.png",
+                                        width: 25.w * 3,
+                                        height: 25.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w * 3),
+                                      child: Image.asset(
+                                        "assets/images/common/bottom.png",
+                                        width: 25.w * 3,
+                                        height: 25.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(25.w * 3, 0, 0, 0),
+                                      child: Image.asset(
+                                        "assets/images/common/left.png",
+                                        width: 25.w * 3,
+                                        height: 25.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(0, 0, 23.w * 3, 0),
+                                      child: Image.asset(
+                                        "assets/images/common/right.png",
+                                        width: 25.w * 3,
+                                        height: 25.w * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                                      child: Text(
+                                        "切换角度",
+                                        style: TextStyle(
+                                            color: HhColors.gray6TextColor,
+                                            fontSize: 14.sp * 3),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 126.w*3),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTapDown: (a){
+                            logic.command = "ZOOM_OUT";
+                            logic.controlPost(0);
                           },
-                          onPanEnd: (details) {
-                            logic.animateAlign = Alignment.center;
-                            logic.testStatus.value = false;
-                            logic.testStatus.value = true;
-                            // EventBusUtil.getInstance().fire(HhToast(title: 'STOP'));
+                          onTapUp: (a){
+                            logic.command = "ZOOM_OUT";
                             logic.controlPost(1);
                           },
                           child: Container(
-                            width: 260.w * 3,
-                            height: 260.w * 3,
-                            // margin: EdgeInsets.only(top: 60.w*3),
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  "assets/images/common/video_board.png",
-                                  width: 260.w * 3,
-                                  height: 260.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(0, 20.w * 3, 0, 0),
-                                    child: Image.asset(
-                                      "assets/images/common/top.png",
-                                      width: 25.w * 3,
-                                      height: 25.w * 3,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w * 3),
-                                    child: Image.asset(
-                                      "assets/images/common/bottom.png",
-                                      width: 25.w * 3,
-                                      height: 25.w * 3,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(25.w * 3, 0, 0, 0),
-                                    child: Image.asset(
-                                      "assets/images/common/left.png",
-                                      width: 25.w * 3,
-                                      height: 25.w * 3,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 23.w * 3, 0),
-                                    child: Image.asset(
-                                      "assets/images/common/right.png",
-                                      width: 25.w * 3,
-                                      height: 25.w * 3,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
-                                    child: Text(
-                                      "切换角度",
-                                      style: TextStyle(
-                                          color: HhColors.gray6TextColor,
-                                          fontSize: 14.sp * 3),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            width: 44.w*3,
+                            height: 44.w*3,
+                            decoration: BoxDecoration(
+                              color: HhColors.whiteColor,
+                              borderRadius: BorderRadius.circular(8.w*3)
+                            ),
+                            child: Center(
+                              child: Text('—',style: TextStyle(
+                                color: HhColors.mainBlueColor,
+                                fontSize: 17.sp*3
+                              ),),
                             ),
                           ),
-                        )),
-                  ],
+                        ),
+                        SizedBox(
+                          width: 90.w*3,
+                          height: 44.w*3,
+                          child: Center(
+                            child: Text('焦距',style: TextStyle(
+                                color: HhColors.blackColor,
+                                fontSize: 15.sp*3
+                            ),),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTapDown: (a){
+                            logic.command = "ZOOM_IN";
+                            logic.controlPost(0);
+                          },
+                          onTapUp: (a){
+                            logic.command = "ZOOM_IN";
+                            logic.controlPost(1);
+                          },
+                          child: Container(
+                            width: 44.w*3,
+                            height: 44.w*3,
+                            decoration: BoxDecoration(
+                              color: HhColors.whiteColor,
+                              borderRadius: BorderRadius.circular(8.w*3)
+                            ),
+                            child: Center(
+                              child: Text('+',style: TextStyle(
+                                color: HhColors.mainBlueColor,
+                                fontSize: 20.sp*3
+                              ),),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Align(

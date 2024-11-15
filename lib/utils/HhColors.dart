@@ -107,6 +107,7 @@ class HhColors {
   static const titleColorAa = Color(0xFFaaaaaa);
   static const titleColorRed = Color(0xFFFF0000);
   static const titleColorGreen = Color(0xFF32CD32);
+  static const mainGreenColor = Color(0xFF6DD400);
   static const backgroundColorGreen = Color(0xFF17a2b8);
   static const lineColor = Color(0xFFEC883A);
   static const mainTabLine = Color(0xFFb3b3b3);

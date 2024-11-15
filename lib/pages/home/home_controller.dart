@@ -471,7 +471,7 @@ class HomeController extends GetxController {
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '100';
-    map['flag'] = 'user';
+    map['flag'] = CommonData.personal?'user':'company';
     var result = await HhHttp()
         .request(RequestUtils.version, method: DioMethod.get, params: map);
     HhLog.d("getVersion -- $map");

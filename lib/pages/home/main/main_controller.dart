@@ -403,7 +403,7 @@ class MainController extends GetxController {
     }
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
-    map['activeStatus'] = '-1';
+    // map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("deviceList --- $pageKey , $result");
@@ -434,7 +434,7 @@ class MainController extends GetxController {
     map['name'] = searchController!.text;
     map['pageNo'] = '1';
     map['pageSize'] = '100';
-    map['activeStatus'] = '-1';
+    // map['activeStatus'] = '-1';
     try{
       int spaceId = spaceList[spaceListIndex.value]['id'];
       map['spaceId'] = spaceId;

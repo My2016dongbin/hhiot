@@ -64,7 +64,7 @@ class DeviceListController extends GetxController {
     map['spaceId'] = id;
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
-    map['activeStatus'] = '-1';
+    // map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList -- $result");
     if(result["code"]==0 && result["data"]!=null){

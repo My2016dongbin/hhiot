@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,8 +86,8 @@ class LiGanDetailPage extends StatelessWidget {
             color: HhColors.trans,
             child: Image.asset(
               "assets/images/common/back.png",
-              height: 17.w*3,
-              width: 10.w*3,
+              height: 17.w * 3,
+              width: 10.w * 3,
               fit: BoxFit.fill,
             ),
           ),
@@ -525,13 +526,14 @@ class LiGanDetailPage extends StatelessWidget {
                                   color: HhColors.backColor,
                                 ),
                                 InkWell(
-                                onTap: (){
-                                  if(logic.voiceBottomList.isEmpty){
-                                    EventBusUtil.getInstance().fire(HhToast(title: '没有可用提示音'));
-                                    return;
-                                  }
-                                  showChoosePersonDialog();
-                                },
+                                  onTap: () {
+                                    if (logic.voiceBottomList.isEmpty) {
+                                      EventBusUtil.getInstance()
+                                          .fire(HhToast(title: '没有可用提示音'));
+                                      return;
+                                    }
+                                    showChoosePersonDialog();
+                                  },
                                   child: Container(
                                     padding: EdgeInsets.fromLTRB(
                                         16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
@@ -548,7 +550,9 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            CommonUtils().parseNull('${logic.config["audioHumanName"]}', ''),
+                                            CommonUtils().parseNull(
+                                                '${logic.config["audioHumanName"]}',
+                                                ''),
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
@@ -626,12 +630,15 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    DateTime left = DateTime.now();
+                                    DateTime right = DateTime.now();
                                     ///left
                                     DatePicker.showTimePicker(logic.context,
                                         currentTime: DateTime.now(),
                                         locale: LocaleType.zh,
                                         showSecondsColumn: true,
                                         onConfirm: (date) {
+                                          left = date;
                                       logic.personStart.value = CommonUtils()
                                           .parseLongTimeHourMinuteSecond(
                                               "${date.millisecondsSinceEpoch}");
@@ -642,6 +649,11 @@ class LiGanDetailPage extends StatelessWidget {
                                           locale: LocaleType.zh,
                                           showSecondsColumn: true,
                                           onConfirm: (date) {
+                                            right = date;
+                                            if(right.millisecondsSinceEpoch < left.millisecondsSinceEpoch){
+                                              EventBusUtil.getInstance().fire(HhToast(title: '结束时间不能早于开始时间'));
+                                              return;
+                                            }
                                         logic.personEnd.value = CommonUtils()
                                             .parseLongTimeHourMinuteSecond(
                                                 "${date.millisecondsSinceEpoch}");
@@ -698,7 +710,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w * 3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -737,9 +749,10 @@ class LiGanDetailPage extends StatelessWidget {
                                   color: HhColors.backColor,
                                 ),
                                 InkWell(
-                                  onTap: (){
-                                    if(logic.voiceBottomList.isEmpty){
-                                      EventBusUtil.getInstance().fire(HhToast(title: '没有可用提示音'));
+                                  onTap: () {
+                                    if (logic.voiceBottomList.isEmpty) {
+                                      EventBusUtil.getInstance()
+                                          .fire(HhToast(title: '没有可用提示音'));
                                       return;
                                     }
                                     showChooseCarDialog();
@@ -760,7 +773,9 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            CommonUtils().parseNull('${logic.config["audioCarName"]}',''),
+                                            CommonUtils().parseNull(
+                                                '${logic.config["audioCarName"]}',
+                                                ''),
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
@@ -838,12 +853,15 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    DateTime left = DateTime.now();
+                                    DateTime right = DateTime.now();
                                     ///left
                                     DatePicker.showTimePicker(logic.context,
                                         currentTime: DateTime.now(),
                                         locale: LocaleType.zh,
                                         showSecondsColumn: true,
                                         onConfirm: (date) {
+                                          left = date;
                                       logic.carStart.value = CommonUtils()
                                           .parseLongTimeHourMinuteSecond(
                                               "${date.millisecondsSinceEpoch}");
@@ -854,6 +872,11 @@ class LiGanDetailPage extends StatelessWidget {
                                           locale: LocaleType.zh,
                                           showSecondsColumn: true,
                                           onConfirm: (date) {
+                                            right = date;
+                                            if(right.millisecondsSinceEpoch < left.millisecondsSinceEpoch){
+                                              EventBusUtil.getInstance().fire(HhToast(title: '结束时间不能早于开始时间'));
+                                              return;
+                                            }
                                         logic.carEnd.value = CommonUtils()
                                             .parseLongTimeHourMinuteSecond(
                                                 "${date.millisecondsSinceEpoch}");
@@ -910,7 +933,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w * 3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -949,9 +972,10 @@ class LiGanDetailPage extends StatelessWidget {
                                   color: HhColors.backColor,
                                 ),
                                 InkWell(
-                                  onTap: (){
-                                    if(logic.voiceBottomList.isEmpty){
-                                      EventBusUtil.getInstance().fire(HhToast(title: '没有可用提示音'));
+                                  onTap: () {
+                                    if (logic.voiceBottomList.isEmpty) {
+                                      EventBusUtil.getInstance()
+                                          .fire(HhToast(title: '没有可用提示音'));
                                       return;
                                     }
                                     showChooseOpenDialog();
@@ -972,7 +996,9 @@ class LiGanDetailPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            CommonUtils().parseNull('${logic.config["audioOpenName"]}',''),
+                                            CommonUtils().parseNull(
+                                                '${logic.config["audioOpenName"]}',
+                                                ''),
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
                                                 color: HhColors.gray9TextColor,
@@ -1050,12 +1076,15 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    DateTime left = DateTime.now();
+                                    DateTime right = DateTime.now();
                                     ///left
                                     DatePicker.showTimePicker(logic.context,
                                         currentTime: DateTime.now(),
                                         locale: LocaleType.zh,
                                         showSecondsColumn: true,
                                         onConfirm: (date) {
+                                          left = date;
                                       logic.openStart.value = CommonUtils()
                                           .parseLongTimeHourMinuteSecond(
                                               "${date.millisecondsSinceEpoch}");
@@ -1066,6 +1095,11 @@ class LiGanDetailPage extends StatelessWidget {
                                           locale: LocaleType.zh,
                                           showSecondsColumn: true,
                                           onConfirm: (date) {
+                                            right = date;
+                                            if(right.millisecondsSinceEpoch < left.millisecondsSinceEpoch){
+                                              EventBusUtil.getInstance().fire(HhToast(title: '结束时间不能早于开始时间'));
+                                              return;
+                                            }
                                         logic.openEnd.value = CommonUtils()
                                             .parseLongTimeHourMinuteSecond(
                                                 "${date.millisecondsSinceEpoch}");
@@ -1424,16 +1458,13 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                        child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
                                           alignment: Alignment.centerRight,
                                           child: FlutterSwitch(
                                             width: 100.w,
                                             height: 55.w,
-                                            activeColor:
-                                            HhColors.mainBlueColor,
+                                            activeColor: HhColors.mainBlueColor,
                                             valueFontSize: 25.w,
                                             toggleSize: 45.w,
                                             value: logic.close.value,
@@ -1442,8 +1473,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             onToggle: (val) {
                                               logic.close.value = val;
                                             },
-                                          )
-                                      )
+                                          ))
                                     ],
                                   ),
                                 ),
@@ -1453,12 +1483,15 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    DateTime left = DateTime.now();
+                                    DateTime right = DateTime.now();
                                     ///left
                                     DatePicker.showTimePicker(logic.context,
                                         currentTime: DateTime.now(),
                                         locale: LocaleType.zh,
                                         showSecondsColumn: true,
                                         onConfirm: (date) {
+                                      left = date;
                                       logic.closeStart.value = CommonUtils()
                                           .parseLongTimeHourMinuteSecond(
                                               "${date.millisecondsSinceEpoch}");
@@ -1469,6 +1502,11 @@ class LiGanDetailPage extends StatelessWidget {
                                           locale: LocaleType.zh,
                                           showSecondsColumn: true,
                                           onConfirm: (date) {
+                                            right = date;
+                                            if(right.millisecondsSinceEpoch < left.millisecondsSinceEpoch){
+                                              EventBusUtil.getInstance().fire(HhToast(title: '结束时间不能早于开始时间'));
+                                              return;
+                                            }
                                         logic.closeEnd.value = CommonUtils()
                                             .parseLongTimeHourMinuteSecond(
                                                 "${date.millisecondsSinceEpoch}");
@@ -1538,8 +1576,8 @@ class LiGanDetailPage extends StatelessWidget {
                               margin: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
                               decoration: BoxDecoration(
                                   color: HhColors.mainBlueColor,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(16.w))),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(8.w * 3))),
                               child: Center(
                                 child: Text(
                                   "确定",
@@ -1609,28 +1647,24 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                          child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
-                                        alignment: Alignment.centerRight,
-                                        child: FlutterSwitch(
-                                          width: 100.w,
-                                          height: 55.w,
-                                          activeColor:
-                                          HhColors.mainBlueColor,
-                                          valueFontSize: 25.w,
-                                          toggleSize: 45.w,
-                                          value: logic.warnGANG1.value,
-                                          borderRadius: 30.w,
-                                          padding: 8.w,
-                                          onToggle: (val) {
-                                            logic.warnGANG1.value = val;
-                                            logic.warnSet("gCam1",
-                                                val ? "ON" : "OFF");
-                                          },
-                                        )
-                                      ),
+                                          alignment: Alignment.centerRight,
+                                          child: FlutterSwitch(
+                                            width: 100.w,
+                                            height: 55.w,
+                                            activeColor: HhColors.mainBlueColor,
+                                            valueFontSize: 25.w,
+                                            toggleSize: 45.w,
+                                            value: logic.warnGANG1.value,
+                                            borderRadius: 30.w,
+                                            padding: 8.w,
+                                            onToggle: (val) {
+                                              logic.warnGANG1.value = val;
+                                              logic.warnSet(
+                                                  "gCam1", val ? "ON" : "OFF");
+                                            },
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -1651,16 +1685,13 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                          child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: FlutterSwitch(
                                           width: 100.w,
                                           height: 55.w,
-                                          activeColor:
-                                              HhColors.mainBlueColor,
+                                          activeColor: HhColors.mainBlueColor,
                                           valueFontSize: 25.w,
                                           toggleSize: 45.w,
                                           value: logic.warnGANG2.value,
@@ -1668,8 +1699,8 @@ class LiGanDetailPage extends StatelessWidget {
                                           padding: 8.w,
                                           onToggle: (val) {
                                             logic.warnGANG2.value = val;
-                                            logic.warnSet("gCam2",
-                                                val ? "ON" : "OFF");
+                                            logic.warnSet(
+                                                "gCam2", val ? "ON" : "OFF");
                                           },
                                         ),
                                       ),
@@ -1693,28 +1724,24 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                          child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
-                                        alignment: Alignment.centerRight,
-                                        child: FlutterSwitch(
-                                          width: 100.w,
-                                          height: 55.w,
-                                          activeColor:
-                                          HhColors.mainBlueColor,
-                                          valueFontSize: 25.w,
-                                          toggleSize: 45.w,
-                                          value: logic.warnGANG3.value,
-                                          borderRadius: 30.w,
-                                          padding: 8.w,
-                                          onToggle: (val) {
-                                            logic.warnGANG3.value = val;
-                                            logic.warnSet("gCam3",
-                                                val ? "ON" : "OFF");
-                                          },
-                                        )
-                                      ),
+                                          alignment: Alignment.centerRight,
+                                          child: FlutterSwitch(
+                                            width: 100.w,
+                                            height: 55.w,
+                                            activeColor: HhColors.mainBlueColor,
+                                            valueFontSize: 25.w,
+                                            toggleSize: 45.w,
+                                            value: logic.warnGANG3.value,
+                                            borderRadius: 30.w,
+                                            padding: 8.w,
+                                            onToggle: (val) {
+                                              logic.warnGANG3.value = val;
+                                              logic.warnSet(
+                                                  "gCam3", val ? "ON" : "OFF");
+                                            },
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -1735,28 +1762,24 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                          child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
-                                        alignment: Alignment.centerRight,
-                                        child: FlutterSwitch(
-                                          width: 100.w,
-                                          height: 55.w,
-                                          activeColor:
-                                          HhColors.mainBlueColor,
-                                          valueFontSize: 25.w,
-                                          toggleSize: 45.w,
-                                          value: logic.warnBALL.value,
-                                          borderRadius: 30.w,
-                                          padding: 8.w,
-                                          onToggle: (val) {
-                                            logic.warnBALL.value = val;
-                                            logic.warnSet("sCam1",
-                                                val ? "ON" : "OFF");
-                                          },
-                                        )
-                                      ),
+                                          alignment: Alignment.centerRight,
+                                          child: FlutterSwitch(
+                                            width: 100.w,
+                                            height: 55.w,
+                                            activeColor: HhColors.mainBlueColor,
+                                            valueFontSize: 25.w,
+                                            toggleSize: 45.w,
+                                            value: logic.warnBALL.value,
+                                            borderRadius: 30.w,
+                                            padding: 8.w,
+                                            onToggle: (val) {
+                                              logic.warnBALL.value = val;
+                                              logic.warnSet(
+                                                  "sCam1", val ? "ON" : "OFF");
+                                            },
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -1777,28 +1800,24 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                          child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
-                                        alignment: Alignment.centerRight,
-                                        child: FlutterSwitch(
-                                          width: 100.w,
-                                          height: 55.w,
-                                          activeColor:
-                                          HhColors.mainBlueColor,
-                                          valueFontSize: 25.w,
-                                          toggleSize: 45.w,
-                                          value: logic.warnSENSOR.value,
-                                          borderRadius: 30.w,
-                                          padding: 8.w,
-                                          onToggle: (val) {
-                                            logic.warnSENSOR.value = val;
-                                            logic.warnSet("sensor",
-                                                val ? "ON" : "OFF");
-                                          },
-                                        )
-                                      ),
+                                          alignment: Alignment.centerRight,
+                                          child: FlutterSwitch(
+                                            width: 100.w,
+                                            height: 55.w,
+                                            activeColor: HhColors.mainBlueColor,
+                                            valueFontSize: 25.w,
+                                            toggleSize: 45.w,
+                                            value: logic.warnSENSOR.value,
+                                            borderRadius: 30.w,
+                                            padding: 8.w,
+                                            onToggle: (val) {
+                                              logic.warnSENSOR.value = val;
+                                              logic.warnSet(
+                                                  "sensor", val ? "ON" : "OFF");
+                                            },
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -1819,28 +1838,24 @@ class LiGanDetailPage extends StatelessWidget {
                                           fontSize: 15.sp * 3,
                                         ),
                                       ),
-                                      const Expanded(
-                                          child: SizedBox()
-                                      ),
+                                      const Expanded(child: SizedBox()),
                                       Align(
-                                        alignment: Alignment.centerRight,
-                                        child: FlutterSwitch(
-                                          width: 100.w,
-                                          height: 55.w,
-                                          activeColor:
-                                          HhColors.mainBlueColor,
-                                          valueFontSize: 25.w,
-                                          toggleSize: 45.w,
-                                          value: logic.warnOPEN.value,
-                                          borderRadius: 30.w,
-                                          padding: 8.w,
-                                          onToggle: (val) {
-                                            logic.warnOPEN.value = val;
-                                            logic.warnSet("cap",
-                                                val ? "ON" : "OFF");
-                                          },
-                                        )
-                                      ),
+                                          alignment: Alignment.centerRight,
+                                          child: FlutterSwitch(
+                                            width: 100.w,
+                                            height: 55.w,
+                                            activeColor: HhColors.mainBlueColor,
+                                            valueFontSize: 25.w,
+                                            toggleSize: 45.w,
+                                            value: logic.warnOPEN.value,
+                                            borderRadius: 30.w,
+                                            padding: 8.w,
+                                            onToggle: (val) {
+                                              logic.warnOPEN.value = val;
+                                              logic.warnSet(
+                                                  "cap", val ? "ON" : "OFF");
+                                            },
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -1878,7 +1893,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w * 3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1900,8 +1915,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       FlutterSwitch(
                                         width: 100.w,
                                         height: 55.w,
-                                        activeColor:
-                                        HhColors.mainBlueColor,
+                                        activeColor: HhColors.mainBlueColor,
                                         valueFontSize: 25.w,
                                         toggleSize: 45.w,
                                         value: logic.energyAction.value,
@@ -1967,8 +1981,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       FlutterSwitch(
                                         width: 100.w,
                                         height: 55.w,
-                                        activeColor:
-                                        HhColors.mainBlueColor,
+                                        activeColor: HhColors.mainBlueColor,
                                         valueFontSize: 25.w,
                                         toggleSize: 45.w,
                                         value: logic.weatherAction.value,
@@ -2034,8 +2047,7 @@ class LiGanDetailPage extends StatelessWidget {
                                       FlutterSwitch(
                                         width: 100.w,
                                         height: 55.w,
-                                        activeColor:
-                                        HhColors.mainBlueColor,
+                                        activeColor: HhColors.mainBlueColor,
                                         valueFontSize: 25.w,
                                         toggleSize: 45.w,
                                         value: logic.soilAction.value,
@@ -2109,23 +2121,23 @@ class LiGanDetailPage extends StatelessWidget {
                                         "energy",
                                         logic.energyAction.value ? "ON" : "OFF",
                                         energy,
-                                        logic.config["energyOpenTime"]);
+                                        logic.config["energyOpenTime"] ?? "");
                                     logic.warnUploadSet(
                                         "weather",
                                         logic.weatherAction.value
                                             ? "ON"
                                             : "OFF",
                                         weather,
-                                        logic.config["weatherOpenTime"]);
+                                        logic.config["weatherOpenTime"] ?? "");
                                     logic.warnUploadSet(
                                         "soil",
                                         logic.soilAction.value ? "ON" : "OFF",
                                         soil,
-                                        logic.config["soilOpenTime"]);
+                                        logic.config["soilOpenTime"] ?? "");
                                   },
                                   child: Container(
                                     width: 1.sw,
-                                    height: 90.w,
+                                    height: 40.w * 3,
                                     margin: EdgeInsets.fromLTRB(
                                         30.w, 10.w, 30.w, 30.w),
                                     decoration: BoxDecoration(
@@ -2134,7 +2146,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             color: HhColors.gray9TextColor,
                                             width: 0.5.w),
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(16.w))),
+                                            Radius.circular(8.w * 3))),
                                     child: Center(
                                       child: Text(
                                         "确定",
@@ -2369,7 +2381,7 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w*3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -2464,11 +2476,11 @@ class LiGanDetailPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(16.w))),
+                                    BorderRadius.all(Radius.circular(8.w * 3))),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
+                                /*Container(
                                   margin: EdgeInsets.fromLTRB(
                                       16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
                                   child: Row(
@@ -2492,45 +2504,86 @@ class LiGanDetailPage extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                ),
-                                logic.versionStatus.value
+                                ),*/
+                                /*logic.versionStatus.value
                                     ? Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: buildVersionChild(),
                                       )
+                                    : const SizedBox(),*/
+                                logic.versionStatus.value
+                                    ? BouncingWidget(
+                                      duration: const Duration(milliseconds: 100),
+                                      scaleFactor: 0.6,
+                                      onPressed: () {
+                                        showChooseVersionDialog();
+                                      },
+                                      child: SizedBox(
+                                          height: 45.w * 3,
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 15.w*3,),
+                                              Expanded(
+                                                child: Text(
+                                                  logic.versionStr.value,
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    overflow: TextOverflow.ellipsis,
+                                                      color: HhColors.blackColor,
+                                                      fontSize: 15.sp * 3),
+                                                ),
+                                              ),
+                                              SizedBox(width: 15.w*3,),
+                                              Image.asset(
+                                                  "assets/images/common/icon_down_status.png",
+                                                  height: 16.w * 3,
+                                                  width: 16.w * 3),
+                                              SizedBox(width: 15.w*3,),
+                                            ],
+                                          ),
+                                        ),
+                                    )
                                     : const SizedBox(),
-                                BouncingWidget(
-                                  duration: const Duration(milliseconds: 100),
-                                  scaleFactor: 1.2,
-                                  onPressed: () {
-                                    logic.versionUpdate();
-                                  },
-                                  child: Container(
-                                    width: 1.sw,
-                                    height: 90.w,
-                                    margin: EdgeInsets.fromLTRB(
-                                        30.w, 0, 30.w, 20.w),
-                                    decoration: BoxDecoration(
-                                        color: HhColors.whiteColor,
-                                        border: Border.all(
-                                            color: HhColors.gray9TextColor,
-                                            width: 0.5.w),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(16.w))),
-                                    child: Center(
-                                      child: Text(
-                                        "升级",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: HhColors.blackTextColor,
-                                            fontSize: 15.sp * 3,
-                                            decoration: TextDecoration.none,
-                                            fontWeight: FontWeight.w200),
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
+                            ),
+                          ),
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              if(logic.versionStr.value == ''){
+                                EventBusUtil.getInstance().fire(HhToast(title: '请先选择要升级的固件版本号'));
+                                return;
+                              }
+                              CommonUtils().showCommonDialog(logic.context, '确定要进行固件升级吗？', (){
+                                Get.back();
+                              }, (){
+                                Get.back();
+                                logic.versionUpdate();
+                              });
+                            },
+                            child: Container(
+                              width: 1.sw,
+                              height: 40.w * 3,
+                              margin: EdgeInsets.only(top: 20.w),
+                              decoration: BoxDecoration(
+                                  color: HhColors.whiteColor,
+                                  border: Border.all(
+                                      color: HhColors.gray9TextColor,
+                                      width: 0.5.w),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(8.w * 3))),
+                              child: Center(
+                                child: Text(
+                                  "升级",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 15.sp * 3,
+                                      decoration: TextDecoration.none,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                              ),
                             ),
                           ),
                           //设备重启
@@ -2603,6 +2656,131 @@ class LiGanDetailPage extends StatelessWidget {
       Get.back();
       logic.resetDevice();
     });
+  }
+
+  void showChooseVersionDialog() {
+    showModalBottomSheet(
+        context: logic.context,
+        builder: (a) {
+          return Container(
+            width: 1.sw,
+            height: min(100.w*3+logic.versionList.length*45.w*3, 0.36.sh),
+            decoration: BoxDecoration(
+                color: HhColors.trans,
+                borderRadius:
+                BorderRadius.vertical(top: Radius.circular(8.w * 3))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: 1.sw,
+                    margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(8.w * 3))),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 15.w * 3,
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: buildDialogVersion(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 8.w * 3,
+                  color: HhColors.grayEFEFBackColor,
+                ),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    width: 1.sw,
+                    height: 50.w * 3,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(0.w * 3))),
+                    child: Center(
+                      child: Text(
+                        "取消",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor, fontSize: 15.sp * 3),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                )
+              ],
+            ),
+          );
+        },
+        isDismissible: true,
+        enableDrag: false,
+        backgroundColor: HhColors.trans);
+  }
+  buildDialogVersion() {
+    List<Widget> list = [];
+    for (int i = 0; i < logic.versionList.length; i++) {
+      dynamic model = logic.versionList[i];
+      list.add(InkWell(
+        onTap: () {
+          logic.version.value = i;
+          logic.versionStr.value = "${model['version']}";
+          Get.back();
+        },
+        child: Container(
+          width: 1.sw,
+          height: 45.w * 3,
+          margin: EdgeInsets.fromLTRB(13.w * 3, 5.w * 3, 13.w * 3, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 200.w * 3),
+                      child: Text(
+                        "${model['version']}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 15.sp * 3,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                  color: HhColors.grayLineColor,
+                  height: 2.w,
+                  width: 1.sw),
+            ],
+          ),
+        ),
+      ));
+    }
+    return list;
   }
 
   buildVoiceList() {
@@ -2839,347 +3017,380 @@ class LiGanDetailPage extends StatelessWidget {
     return list;
   }
 
-
   void showChoosePersonDialog() {
-    showModalBottomSheet(context: logic.context, builder: (a){
-      return Container(
-        width: 1.sw,
-        height: 0.36.sh,
-        decoration: BoxDecoration(
-            color: HhColors.trans,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Container(
-                width: 1.sw,
-                margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 15.w*3,),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: buildDialogPerson(),
+    showModalBottomSheet(
+        context: logic.context,
+        builder: (a) {
+          return Container(
+            width: 1.sw,
+            height: 0.36.sh,
+            decoration: BoxDecoration(
+                color: HhColors.trans,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(8.w * 3))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: 1.sw,
+                    margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(8.w * 3))),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 15.w * 3,
                         ),
-                      ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: buildDialogPerson(),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Container(height: 8.w*3,color: HhColors.grayEFEFBackColor,),
-            BouncingWidget(
-              duration: const Duration(milliseconds: 100),
-              scaleFactor: 1.2,
-              child: Container(
-                width: 1.sw,
-                height: 50.w*3,
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(0.w*3))),
-                child: Center(
-                  child: Text(
-                    "取消",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
                   ),
                 ),
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            )
-          ],
-        ),
-      );
-    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+                Container(
+                  height: 8.w * 3,
+                  color: HhColors.grayEFEFBackColor,
+                ),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    width: 1.sw,
+                    height: 50.w * 3,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(0.w * 3))),
+                    child: Center(
+                      child: Text(
+                        "取消",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor, fontSize: 15.sp * 3),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                )
+              ],
+            ),
+          );
+        },
+        isDismissible: true,
+        enableDrag: false,
+        backgroundColor: HhColors.trans);
   }
+
   void showChooseCarDialog() {
-    showModalBottomSheet(context: logic.context, builder: (a){
-      return Container(
-        width: 1.sw,
-        height: 0.36.sh,
-        decoration: BoxDecoration(
-            color: HhColors.trans,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Container(
-                width: 1.sw,
-                margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 15.w*3,),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: buildDialogCar(),
+    showModalBottomSheet(
+        context: logic.context,
+        builder: (a) {
+          return Container(
+            width: 1.sw,
+            height: 0.36.sh,
+            decoration: BoxDecoration(
+                color: HhColors.trans,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(8.w * 3))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: 1.sw,
+                    margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(8.w * 3))),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 15.w * 3,
                         ),
-                      ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: buildDialogCar(),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Container(height: 8.w*3,color: HhColors.grayEFEFBackColor,),
-            BouncingWidget(
-              duration: const Duration(milliseconds: 100),
-              scaleFactor: 1.2,
-              child: Container(
-                width: 1.sw,
-                height: 50.w*3,
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(0.w*3))),
-                child: Center(
-                  child: Text(
-                    "取消",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
                   ),
                 ),
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            )
-          ],
-        ),
-      );
-    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+                Container(
+                  height: 8.w * 3,
+                  color: HhColors.grayEFEFBackColor,
+                ),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    width: 1.sw,
+                    height: 50.w * 3,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(0.w * 3))),
+                    child: Center(
+                      child: Text(
+                        "取消",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor, fontSize: 15.sp * 3),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                )
+              ],
+            ),
+          );
+        },
+        isDismissible: true,
+        enableDrag: false,
+        backgroundColor: HhColors.trans);
   }
+
   void showChooseOpenDialog() {
-    showModalBottomSheet(context: logic.context, builder: (a){
-      return Container(
-        width: 1.sw,
-        height: 0.36.sh,
-        decoration: BoxDecoration(
-            color: HhColors.trans,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Container(
-                width: 1.sw,
-                margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 15.w*3,),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: buildDialogOpen(),
+    showModalBottomSheet(
+        context: logic.context,
+        builder: (a) {
+          return Container(
+            width: 1.sw,
+            height: 0.36.sh,
+            decoration: BoxDecoration(
+                color: HhColors.trans,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(8.w * 3))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: 1.sw,
+                    margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(8.w * 3))),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 15.w * 3,
                         ),
-                      ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: buildDialogOpen(),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Container(height: 8.w*3,color: HhColors.grayEFEFBackColor,),
-            BouncingWidget(
-              duration: const Duration(milliseconds: 100),
-              scaleFactor: 1.2,
-              child: Container(
-                width: 1.sw,
-                height: 50.w*3,
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(0.w*3))),
-                child: Center(
-                  child: Text(
-                    "取消",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
                   ),
                 ),
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            )
-          ],
-        ),
-      );
-    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+                Container(
+                  height: 8.w * 3,
+                  color: HhColors.grayEFEFBackColor,
+                ),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    width: 1.sw,
+                    height: 50.w * 3,
+                    decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(0.w * 3))),
+                    child: Center(
+                      child: Text(
+                        "取消",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor, fontSize: 15.sp * 3),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                )
+              ],
+            ),
+          );
+        },
+        isDismissible: true,
+        enableDrag: false,
+        backgroundColor: HhColors.trans);
   }
 
   buildDialogPerson() {
     List<Widget> list = [];
-    for(int i = 0;i < logic.voiceBottomList.length;i++){
+    for (int i = 0; i < logic.voiceBottomList.length; i++) {
       dynamic model = logic.voiceBottomList[i];
-      list.add(
-          InkWell(
-            onTap: (){
-              logic.config["audioHumanName"] = "${model['name']}";
-              logic.testStatus.value = false;
-              logic.testStatus.value = true;
-              Get.back();
-            },
-            child: Container(
-              width: 1.sw,
-              height:45.w*3,
-              margin: EdgeInsets.fromLTRB(13.w*3, 5.w*3, 13.w*3, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 200.w*3),
-                          child: Text(
-                            "${model['name']}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: HhColors.blackColor,
-                                fontSize: 15.sp*3,
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
+      list.add(InkWell(
+        onTap: () {
+          logic.config["audioHumanName"] = "${model['name']}";
+          logic.testStatus.value = false;
+          logic.testStatus.value = true;
+          Get.back();
+        },
+        child: Container(
+          width: 1.sw,
+          height: 45.w * 3,
+          margin: EdgeInsets.fromLTRB(13.w * 3, 5.w * 3, 13.w * 3, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 200.w * 3),
+                      child: Text(
+                        "${model['name']}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 15.sp * 3,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
-                    color: HhColors.grayLineColor,
-                    height:2.w,
-                    width:1.sw
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
-      );
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                  color: HhColors.grayLineColor,
+                  height: 2.w,
+                  width: 1.sw),
+            ],
+          ),
+        ),
+      ));
     }
     return list;
   }
+
   buildDialogCar() {
     List<Widget> list = [];
-    for(int i = 0;i < logic.voiceBottomList.length;i++){
+    for (int i = 0; i < logic.voiceBottomList.length; i++) {
       dynamic model = logic.voiceBottomList[i];
-      list.add(
-          InkWell(
-            onTap: (){
-              logic.config["audioCarName"] = "${model['name']}";
-              logic.testStatus.value = false;
-              logic.testStatus.value = true;
-              Get.back();
-            },
-            child: Container(
-              width: 1.sw,
-              height:45.w*3,
-              margin: EdgeInsets.fromLTRB(13.w*3, 5.w*3, 13.w*3, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 200.w*3),
-                          child: Text(
-                            "${model['name']}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: HhColors.blackColor,
-                                fontSize: 15.sp*3,
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
+      list.add(InkWell(
+        onTap: () {
+          logic.config["audioCarName"] = "${model['name']}";
+          logic.testStatus.value = false;
+          logic.testStatus.value = true;
+          Get.back();
+        },
+        child: Container(
+          width: 1.sw,
+          height: 45.w * 3,
+          margin: EdgeInsets.fromLTRB(13.w * 3, 5.w * 3, 13.w * 3, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 200.w * 3),
+                      child: Text(
+                        "${model['name']}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 15.sp * 3,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
-                    color: HhColors.grayLineColor,
-                    height:2.w,
-                    width:1.sw
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
-      );
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                  color: HhColors.grayLineColor,
+                  height: 2.w,
+                  width: 1.sw),
+            ],
+          ),
+        ),
+      ));
     }
     return list;
   }
+
   buildDialogOpen() {
     List<Widget> list = [];
-    for(int i = 0;i < logic.voiceBottomList.length;i++){
+    for (int i = 0; i < logic.voiceBottomList.length; i++) {
       dynamic model = logic.voiceBottomList[i];
-      list.add(
-          InkWell(
-            onTap: (){
-              logic.config["audioOpenName"] = "${model['name']}";
-              logic.testStatus.value = false;
-              logic.testStatus.value = true;
-              Get.back();
-            },
-            child: Container(
-              width: 1.sw,
-              height:45.w*3,
-              margin: EdgeInsets.fromLTRB(13.w*3, 5.w*3, 13.w*3, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 200.w*3),
-                          child: Text(
-                            "${model['name']}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: HhColors.blackColor,
-                                fontSize: 15.sp*3,
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
+      list.add(InkWell(
+        onTap: () {
+          logic.config["audioOpenName"] = "${model['name']}";
+          logic.testStatus.value = false;
+          logic.testStatus.value = true;
+          Get.back();
+        },
+        child: Container(
+          width: 1.sw,
+          height: 45.w * 3,
+          margin: EdgeInsets.fromLTRB(13.w * 3, 5.w * 3, 13.w * 3, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 200.w * 3),
+                      child: Text(
+                        "${model['name']}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: HhColors.blackColor,
+                            fontSize: 15.sp * 3,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 15.w*3, 0, 0),
-                    color: HhColors.grayLineColor,
-                    height:2.w,
-                    width:1.sw
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
-      );
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 15.w * 3, 0, 0),
+                  color: HhColors.grayLineColor,
+                  height: 2.w,
+                  width: 1.sw),
+            ],
+          ),
+        ),
+      ));
     }
     return list;
   }

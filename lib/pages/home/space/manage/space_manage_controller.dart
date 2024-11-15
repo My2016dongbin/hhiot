@@ -102,7 +102,7 @@ class SpaceManageController extends GetxController {
     map['spaceId'] = item['id'];
     map['pageNo'] = '1';
     map['pageSize'] = '100';
-    map['activeStatus'] = '-1';
+    // map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("deviceList ---   $result");
