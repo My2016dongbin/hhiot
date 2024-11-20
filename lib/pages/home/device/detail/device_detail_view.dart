@@ -26,6 +26,7 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:screen_recorder/screen_recorder.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -157,12 +158,16 @@ class DeviceDetailPage extends StatelessWidget {
                     logic.controlPost(1);
                   });
                 },*/
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 254.w * 3,
-                      child: Stack(
-                        children: [
-                          Container(
+                    child: InteractiveViewer(
+                        panEnabled: false, // 是否允许拖动
+                        minScale: 1.0,
+                        maxScale: 3.0,
+                      child:SizedBox(
+                        width: double.infinity,
+                        height: 254.w * 3,
+                        child: Stack(
+                          children: [
+                            Container(
                               margin: EdgeInsets.only(top: 0.w * 3),
                               child: ScreenRecorder(
                                 width: double.infinity,
@@ -172,91 +177,92 @@ class DeviceDetailPage extends StatelessWidget {
                                 child: Screenshot(
                                   controller: logic.screenshotController,
                                   child: FijkView(
-                                      width: double.infinity,
-                                      height: 254.w * 3,
-                                      player: logic.player,
-                                      color: HhColors.blackColor,
-                                      fit: FijkFit.fill,
-                                  panelBuilder: hhFijkPanelBuilder,
+                                    width: double.infinity,
+                                    height: 254.w * 3,
+                                    player: logic.player,
+                                    color: HhColors.blackColor,
+                                    fit: FijkFit.fill,
+                                    panelBuilder: hhFijkPanelBuilder,
                                   ),
                                 ),
                               ),
                             ),
-                          logic.fix.value?Center(
-                            child: Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.fromLTRB(4.w*3, 0.w*3, 4.w*3, 1.w*3),
-                                      decoration: BoxDecoration(
-                                        color: HhColors.mainGreenColor,
-                                        borderRadius: BorderRadius.circular(2.w*3)
-                                      ),
-                                      child: Text('自动对焦',style: TextStyle(color: HhColors.whiteColor,fontSize: 12.sp*3),)
-                                  ),
-                                  SizedBox(height: 19.w*3,),
-                                  Image.asset(
-                                    "assets/images/common/icon_fix.png",
-                                    width: 56.w*3,
-                                    height: 56.w * 3,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ],
+                            logic.fix.value?Center(
+                              child: Container(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.fromLTRB(4.w*3, 0.w*3, 4.w*3, 1.w*3),
+                                        decoration: BoxDecoration(
+                                            color: HhColors.mainGreenColor,
+                                            borderRadius: BorderRadius.circular(2.w*3)
+                                        ),
+                                        child: Text('自动对焦',style: TextStyle(color: HhColors.whiteColor,fontSize: 12.sp*3),)
+                                    ),
+                                    SizedBox(height: 19.w*3,),
+                                    Image.asset(
+                                      "assets/images/common/icon_fix.png",
+                                      width: 56.w*3,
+                                      height: 56.w * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ):const SizedBox(),
-                          /*
-                          logic.upStatus.value?Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              margin: EdgeInsets.only(top: 30.w*3),
-                              child: Image.asset(
-                                "assets/images/common/move_up.png",
-                                width: 30.w*3,
-                                height: 30.w * 3,
-                                fit: BoxFit.fill,
+                            ):const SizedBox(),
+                            /*
+                            logic.upStatus.value?Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 30.w*3),
+                                child: Image.asset(
+                                  "assets/images/common/move_up.png",
+                                  width: 30.w*3,
+                                  height: 30.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                          ):const SizedBox(),
-                          logic.downStatus.value?Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 20.w*3),
-                              child: Image.asset(
-                                "assets/images/common/move_down.png",
-                                width: 30.w*3,
-                                height: 30.w * 3,
-                                fit: BoxFit.fill,
+                            ):const SizedBox(),
+                            logic.downStatus.value?Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 20.w*3),
+                                child: Image.asset(
+                                  "assets/images/common/move_down.png",
+                                  width: 30.w*3,
+                                  height: 30.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                          ):const SizedBox(),
-                          logic.leftStatus.value?Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              margin: EdgeInsets.only(left: 20.w*3),
-                              child: Image.asset(
-                                "assets/images/common/move_left.png",
-                                width: 30.w*3,
-                                height: 30.w * 3,
-                                fit: BoxFit.fill,
+                            ):const SizedBox(),
+                            logic.leftStatus.value?Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 20.w*3),
+                                child: Image.asset(
+                                  "assets/images/common/move_left.png",
+                                  width: 30.w*3,
+                                  height: 30.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                          ):const SizedBox(),
-                          logic.rightStatus.value?Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              margin: EdgeInsets.only(right: 20.w*3),
-                              child: Image.asset(
-                                "assets/images/common/move_right.png",
-                                width: 30.w*3,
-                                height: 30.w * 3,
-                                fit: BoxFit.fill,
+                            ):const SizedBox(),
+                            logic.rightStatus.value?Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                margin: EdgeInsets.only(right: 20.w*3),
+                                child: Image.asset(
+                                  "assets/images/common/move_right.png",
+                                  width: 30.w*3,
+                                  height: 30.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                          ):const SizedBox(),*/
-                        ],
-                      ),
+                            ):const SizedBox(),*/
+                          ],
+                        ),
+                      )
                     ),
                   )
                   : const SizedBox(),
@@ -697,10 +703,17 @@ class DeviceDetailPage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTapDown: (a){
+                            logic.fixLeft.value = true;
                             logic.command = "ZOOM_OUT";
                             logic.controlPost(0);
                           },
                           onTapUp: (a){
+                            logic.fixLeft.value = false;
+                            logic.command = "ZOOM_OUT";
+                            logic.controlPost(1);
+                          },
+                          onTapCancel: (){
+                            logic.fixLeft.value = false;
                             logic.command = "ZOOM_OUT";
                             logic.controlPost(1);
                           },
@@ -713,7 +726,7 @@ class DeviceDetailPage extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text('—',style: TextStyle(
-                                color: HhColors.mainBlueColor,
+                                  color: logic.fixLeft.value?HhColors.mainBlueColor:HhColors.gray6TextColor,
                                 fontSize: 17.sp*3
                               ),),
                             ),
@@ -731,13 +744,20 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTapDown: (a){
+                            logic.fixRight.value = true;
                             logic.command = "ZOOM_IN";
                             logic.controlPost(0);
                           },
                           onTapUp: (a){
+                            logic.fixRight.value = false;
                             logic.command = "ZOOM_IN";
                             logic.controlPost(1);
                           },
+    onTapCancel: (){
+      logic.fixRight.value = false;
+      logic.command = "ZOOM_IN";
+      logic.controlPost(1);
+    },
                           child: Container(
                             width: 44.w*3,
                             height: 44.w*3,
@@ -747,7 +767,7 @@ class DeviceDetailPage extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text('+',style: TextStyle(
-                                color: HhColors.mainBlueColor,
+                                color: logic.fixRight.value?HhColors.mainBlueColor:HhColors.gray6TextColor,
                                 fontSize: 20.sp*3
                               ),),
                             ),

@@ -317,10 +317,14 @@ class DeviceAddPage extends StatelessWidget {
                         if(logic.isEdit.value){
                           logic.model["name"] = logic.nameController!.text;
                           logic.model["spaceId"] = logic.spaceId;
-                          logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:CommonUtils().parseIsDouble("${logic.model["latitude"]}",logic.latitude.value!);
-                          logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:CommonUtils().parseIsDouble("${logic.model["longitude"]}",logic.longitude.value!);
-                          logic.locText.value = logicLocation.choose?logicLocation.locText.value:logic.model["location"];
-                          logic.updateDevice();
+                          if((!logicLocation.choose) && (logic.model["location"]==null || "${logic.model["location"]}".isEmpty)){
+                            logic.updateDevice(false);
+                          }else{
+                            logic.updateDevice(true);
+                            logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:CommonUtils().parseIsDouble("${logic.model["latitude"]}",0);
+                            logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:CommonUtils().parseIsDouble("${logic.model["longitude"]}",0);
+                            logic.locText.value = logicLocation.choose?logicLocation.locText.value:logic.model["location"];
+                          }
                         }else{
                           if(logicLocation.locText.value == '' || logicLocation.locText.value == '已搜索'){
                             EventBusUtil.getInstance().fire(HhToast(title: '请选择设备定位'));
@@ -489,7 +493,7 @@ class DeviceAddPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            logic.isEdit.value?(logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
+                            logic.isEdit.value?(logic.locText.value.isEmpty?'点击选择设备定位':logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
                             maxLines: 1,
                             style: TextStyle(
                               overflow: TextOverflow.ellipsis,

@@ -182,15 +182,17 @@ class DeviceAddController extends GetxController {
     }
   }
 
-  Future<void> updateDevice() async {
+  Future<void> updateDevice(bool hasLocation) async {
     try{
       HhLog.d("newItems[index.value] ${newItems[index.value]}");
       model['spaceName'] = newItems[index.value]['name'];
       model['spaceId'] = newItems[index.value]['id'];
-      dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
-      model['longitude'] = "${map['longitude']}";
-      model['latitude'] = "${map['latitude']}";
-      model['location'] = locText.value;
+      if(hasLocation){
+        dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
+        model['longitude'] = "${map['longitude']}";
+        model['latitude'] = "${map['latitude']}";
+        model['location'] = locText.value;
+      }
       HhLog.d("model $model ，${locText.value}");
     }catch(e){
       //

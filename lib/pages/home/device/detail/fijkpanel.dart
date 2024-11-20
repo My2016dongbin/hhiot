@@ -109,6 +109,13 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
   bool leftStatus = false;
   bool rightStatus = false;
 
+  double _scale = 1.0;
+  double _previousScale = 1.0;
+  double _dx = 0.0;  // 平移偏移量 X
+  double _dy = 0.0;  // 平移偏移量 Y
+
+  bool _isScaling = false;  // 用于区分是否正在缩放
+
   @override
   void initState() {
     super.initState();
@@ -309,7 +316,9 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
     return Positioned.fromRect(
       rect: rect,
       child: GestureDetector(
-        onVerticalDragUpdate: (details) {
+        onVerticalDragUpdate: _isScaling
+            ? null // 如果正在缩放，则不处理水平拖动
+            : (details) {
           // 上下滑动控制 <0:上  >0:下
           if(details.delta.dy > 0){
             HhLog.d("滑动控制 下");
@@ -332,7 +341,9 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
             });
           }
         },
-        onVerticalDragEnd: (details){
+        onVerticalDragEnd: _isScaling
+            ? null // 如果正在缩放，则不处理水平拖动
+            : (details){
           //终止滑动控制
           HhLog.d("滑动控制 终止");
           Future.delayed(const Duration(milliseconds: 500),(){
@@ -345,7 +356,9 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
             });
           });
         },
-        onHorizontalDragUpdate: (details) {
+        onHorizontalDragUpdate: _isScaling
+            ? null // 如果正在缩放，则不处理水平拖动
+            : (details) {
           // 左右滑动控制 <0:左  >0:右
           if(details.delta.dx > 0){
             HhLog.d("滑动控制 右");
@@ -368,7 +381,9 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
             });
           }
         },
-        onHorizontalDragEnd: (details){
+        onHorizontalDragEnd: _isScaling
+            ? null // 如果正在缩放，则不处理水平拖动
+            : (details){
           //终止滑动控制
           HhLog.d("滑动控制 终止");
           Future.delayed(const Duration(milliseconds: 500),(){
@@ -381,6 +396,21 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
             });
           });
         },
+        /*onScaleStart: (ScaleStartDetails details) {
+          _isScaling = true; // 开始缩放
+        },
+        onScaleUpdate: (ScaleUpdateDetails details) {
+          setState(() {
+            // 处理缩放
+            _scale = _previousScale * details.scale;
+            _dx = details.focalPoint.dx; // 获取焦点X坐标
+            _dy = details.focalPoint.dy; // 获取焦点Y坐标
+          });
+        },
+        onScaleEnd: (ScaleEndDetails details) {
+          _previousScale = _scale; // 保存当前缩放比例
+          _isScaling = false; // 停止缩放
+        },*/
         onTap: _cancelAndRestartTimer,
         child: AbsorbPointer(
           absorbing: _hideStuff,

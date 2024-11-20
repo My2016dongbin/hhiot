@@ -515,13 +515,20 @@ class HomeController extends GetxController {
                     child: Stack(
                       children: [
                         Image.asset('assets/images/common/icon_up_top.png'),
-                        "${update["isForce"]}"=="true"?const SizedBox():Align(
+                        /*"${update["isForce"]}"=="true"?const SizedBox():*/Align(
                           alignment: Alignment.topRight,
                           child: BouncingWidget(
                             duration: const Duration(milliseconds: 100),
                             scaleFactor: 1.2,
                             onPressed: () {
-                              Get.back();
+                              if("${update["isForce"]}"=="true"){
+                                EventBusUtil.getInstance().fire(HhToast(title: '请更新版本后使用'));
+                                Future.delayed(const Duration(milliseconds: 1600),(){
+                                  SystemNavigator.pop();
+                                });
+                              }else{
+                                Get.back();
+                              }
                             },
                             child: Container(
                               margin: EdgeInsets.fromLTRB(0, 16.w * 3, 16.w * 3, 0),

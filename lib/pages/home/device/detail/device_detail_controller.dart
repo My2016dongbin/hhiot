@@ -57,6 +57,8 @@ class DeviceDetailController extends GetxController {
   late String channelNumber;
   late String commandLast;
   late String command = "";
+  late Rx<bool> fixLeft = false.obs;
+  late Rx<bool> fixRight = false.obs;
   late int controlTime = 0;
   late String nickname = '';
   late Rx<String> productName = ''.obs;
