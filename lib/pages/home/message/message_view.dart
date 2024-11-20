@@ -419,7 +419,7 @@ class MessagePage extends StatelessWidget {
                         ),child: Row(
                       mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('${logic.typeList[logic.typeSelectIndex.value]["name"]}',style: TextStyle(color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
+                            Text('${logic.typeList[logic.typeSelectIndex.value]["label"]}',style: TextStyle(color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
                             Image.asset(
                               "assets/images/common/icon_down_status.png",
                               width: 20.w,
@@ -468,9 +468,11 @@ class MessagePage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 5.w*3,),
               Wrap(
                 children: logic.spaceListStatus.value?buildSpaceListView():const SizedBox(),
               ),
+              SizedBox(height: 5.w*3,),
               Stack(
                 children: [
                   Container(
@@ -504,7 +506,7 @@ class MessagePage extends StatelessWidget {
                     },
                   )
                 ],
-              )
+              ),
             ],
           ):const SizedBox(),
           //类型
@@ -512,9 +514,11 @@ class MessagePage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 5.w*3,),
               Wrap(
                 children: buildTypeListView(),
               ),
+              SizedBox(height: 5.w*3,),
               Stack(
                 children: [
                   Container(
@@ -1435,24 +1439,18 @@ class MessagePage extends StatelessWidget {
     if(s == "deviceAlarm"){
       return "设备报警通知";
     }
+    if(s == "deviceShare"){
+      return "设备分享通知";
+    }
     return "通知";
   }
 
   String parseLeftType(String s) {
-    if(s == "openCap"){
-      return "箱盖开箱报警";
-    }
-    if(s == "human"){
-      return "人员入侵报警";
-    }
-    if(s == "car"){
-      return "车辆入侵报警";
-    }
-    if(s == "openSensor"){
-      return "传感器开箱报警";
-    }
-    if(s == "tilt"){
-      return "设备倾斜报警";
+    for(int i = 0;i < logic.typeList.length;i++){
+      dynamic model = logic.typeList[i];
+      if(model["value"] == s){
+        return model["label"];
+      }
     }
     return "报警";
   }
@@ -1467,7 +1465,8 @@ class MessagePage extends StatelessWidget {
             logic.spaceSelectIndex.value = i;
           },
           child: Container(
-            padding: EdgeInsets.fromLTRB(20.w, 15.w, 20.w, 15.w),
+            width: 0.45.sw,
+            padding: EdgeInsets.fromLTRB(14.w*3, 15.w, 14.w*3, 15.w),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -1498,11 +1497,12 @@ class MessagePage extends StatelessWidget {
             logic.typeSelectIndex.value = i;
           },
           child: Container(
-            padding: EdgeInsets.fromLTRB(20.w, 15.w, 20.w, 15.w),
+            width: 0.45.sw,
+            padding: EdgeInsets.fromLTRB(14.w*3, 15.w, 14.w*3, 15.w),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${type["name"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),),
+                Text('${type["label"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),),
                 SizedBox(width: 10.w,),
                 logic.typeSelectIndex.value == i?Image.asset(
                   "assets/images/common/icon_yes.png",

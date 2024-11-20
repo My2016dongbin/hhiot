@@ -39,6 +39,7 @@ class RequestUtils{
   static const deviceUpdate = '$base/admin-api/mid/device-base/update';//设备修改
   static const deviceDelete = '$base/admin-api/mid/device-base/delete';//设备删除
   static const deviceList = '$base/admin-api/mid/device-base/page';//设备查询
+  static const alarmType = '$base/admin-api/system/dict-data/page';//告警类型查询
   static const userEdit = '$base/admin-api/system/user/profile/update';//修改个人信息
   static const mainSearch = '$base/admin-api/mid/space/getListByKeyWord';//主页查询空间设备及消息
   static const fileUpload = '$base/admin-api/infra/file/upload';//文件上传

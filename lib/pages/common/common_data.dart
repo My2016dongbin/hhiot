@@ -17,4 +17,5 @@ class CommonData{
   static String ?sessionId;
   static String ?endpoint;
   static String info = "";
+  static int versionTime = 0;
 }

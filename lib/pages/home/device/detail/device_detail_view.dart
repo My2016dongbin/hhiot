@@ -66,7 +66,6 @@ class DeviceDetailPage extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     logic.context = context;
@@ -100,13 +99,14 @@ class DeviceDetailPage extends StatelessWidget {
                 color: HhColors.blackColor,
               ),
               logic.playTag.value
-                  ? GestureDetector(onLongPress: (){
-                logic.fix.value = true;
-                Future.delayed(const Duration(milliseconds: 2000),(){
-                  logic.fix.value = false;
-                });
-              },
-                /*onVerticalDragUpdate: (details) {
+                  ? GestureDetector(
+                      onLongPress: () {
+                        logic.fix.value = true;
+                        Future.delayed(const Duration(milliseconds: 2000), () {
+                          logic.fix.value = false;
+                        });
+                      },
+                      /*onVerticalDragUpdate: (details) {
                   // 上下滑动控制 <0:上  >0:下
                   if(details.delta.dy > 0){
                     HhLog.d("滑动控制 下");
@@ -158,60 +158,75 @@ class DeviceDetailPage extends StatelessWidget {
                     logic.controlPost(1);
                   });
                 },*/
-                    child: InteractiveViewer(
-                        panEnabled: false, // 是否允许拖动
-                        minScale: 1.0,
-                        maxScale: 3.0,
-                      child:SizedBox(
-                        width: double.infinity,
-                        height: 254.w * 3,
-                        child: Stack(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 0.w * 3),
-                              child: ScreenRecorder(
-                                width: double.infinity,
-                                height: 254.w * 3,
-                                background: Colors.white,
-                                controller: logic.recordController,
-                                child: Screenshot(
-                                  controller: logic.screenshotController,
-                                  child: FijkView(
+                      child: InteractiveViewer(
+                          panEnabled: false, // 是否允许拖动
+                          minScale: 1.0,
+                          maxScale: 3.0,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 254.w * 3,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 0.w * 3),
+                                  child: ScreenRecorder(
                                     width: double.infinity,
                                     height: 254.w * 3,
-                                    player: logic.player,
-                                    color: HhColors.blackColor,
-                                    fit: FijkFit.fill,
-                                    panelBuilder: hhFijkPanelBuilder,
+                                    background: Colors.white,
+                                    controller: logic.recordController,
+                                    child: Screenshot(
+                                      controller: logic.screenshotController,
+                                      child: FijkView(
+                                        width: double.infinity,
+                                        height: 254.w * 3,
+                                        player: logic.player,
+                                        color: HhColors.blackColor,
+                                        fit: FijkFit.fill,
+                                        panelBuilder: hhFijkPanelBuilder,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            logic.fix.value?Center(
-                              child: Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                        padding: EdgeInsets.fromLTRB(4.w*3, 0.w*3, 4.w*3, 1.w*3),
-                                        decoration: BoxDecoration(
-                                            color: HhColors.mainGreenColor,
-                                            borderRadius: BorderRadius.circular(2.w*3)
+                                logic.fix.value
+                                    ? Center(
+                                        child: Container(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      4.w * 3,
+                                                      0.w * 3,
+                                                      4.w * 3,
+                                                      1.w * 3),
+                                                  decoration: BoxDecoration(
+                                                      color: HhColors
+                                                          .mainGreenColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2.w * 3)),
+                                                  child: Text(
+                                                    '自动对焦',
+                                                    style: TextStyle(
+                                                        color:
+                                                            HhColors.whiteColor,
+                                                        fontSize: 12.sp * 3),
+                                                  )),
+                                              SizedBox(
+                                                height: 19.w * 3,
+                                              ),
+                                              Image.asset(
+                                                "assets/images/common/icon_fix.png",
+                                                width: 56.w * 3,
+                                                height: 56.w * 3,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        child: Text('自动对焦',style: TextStyle(color: HhColors.whiteColor,fontSize: 12.sp*3),)
-                                    ),
-                                    SizedBox(height: 19.w*3,),
-                                    Image.asset(
-                                      "assets/images/common/icon_fix.png",
-                                      width: 56.w*3,
-                                      height: 56.w * 3,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ):const SizedBox(),
-                            /*
+                                      )
+                                    : const SizedBox(),
+                                /*
                             logic.upStatus.value?Align(
                               alignment: Alignment.topCenter,
                               child: Container(
@@ -260,11 +275,10 @@ class DeviceDetailPage extends StatelessWidget {
                                 ),
                               ),
                             ):const SizedBox(),*/
-                          ],
-                        ),
-                      )
-                    ),
-                  )
+                              ],
+                            ),
+                          )),
+                    )
                   : const SizedBox(),
 
               ///title
@@ -280,8 +294,8 @@ class DeviceDetailPage extends StatelessWidget {
                     children: [
                       Image.asset(
                         "assets/images/common/back_white.png",
-                        height: 17.w*3,
-                        width: 10.w*3,
+                        height: 17.w * 3,
+                        width: 10.w * 3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
@@ -298,32 +312,39 @@ class DeviceDetailPage extends StatelessWidget {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      SizedBox(width: 5.w*3,),
-                      logic.videoTag.value?Container(
-                        padding: EdgeInsets.fromLTRB(6.w*3, 2.w*3, 10.w*3, 2.w*3),
-                        decoration: BoxDecoration(
-                          color:HhColors.mainRedColor,
-                          borderRadius: BorderRadius.circular(11.w*3),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/common/luxiang.png",
-                              width: 12.w * 3,
-                              height: 12.w * 3,
-                              fit: BoxFit.fill,
-                            ),
-                            SizedBox(width: 2.w*3,),
-                            Text(
-                              "${CommonUtils().parseZero(logic.videoMinute.value)}:${CommonUtils().parseZero(logic.videoSecond.value)}",
-                              style: TextStyle(
-                                  color: HhColors.whiteColor,
-                                  fontSize: 13.sp * 3,
-                                  fontWeight: FontWeight.w500),
+                      SizedBox(
+                        width: 5.w * 3,
+                      ),
+                      logic.videoTag.value
+                          ? Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  6.w * 3, 2.w * 3, 10.w * 3, 2.w * 3),
+                              decoration: BoxDecoration(
+                                color: HhColors.mainRedColor,
+                                borderRadius: BorderRadius.circular(11.w * 3),
+                              ),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/common/luxiang.png",
+                                    width: 12.w * 3,
+                                    height: 12.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  SizedBox(
+                                    width: 2.w * 3,
+                                  ),
+                                  Text(
+                                    "${CommonUtils().parseZero(logic.videoMinute.value)}:${CommonUtils().parseZero(logic.videoSecond.value)}",
+                                    style: TextStyle(
+                                        color: HhColors.whiteColor,
+                                        fontSize: 13.sp * 3,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
                             )
-                          ],
-                        ),
-                      ):const SizedBox(),
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -510,11 +531,11 @@ class DeviceDetailPage extends StatelessWidget {
       children: [
         logic.liveStatus.value
             ? SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: buildCameraTabs(),
-              ),
-            )
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: buildCameraTabs(),
+                ),
+              )
             : const SizedBox(),
         Expanded(
           child: Stack(
@@ -522,8 +543,8 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: SizedBox(
-                  width: 270.w*3,
-                  height: 270.w*3,
+                  width: 270.w * 3,
+                  height: 270.w * 3,
                   child: Stack(
                     children: [
                       ///控制背景阴影
@@ -539,6 +560,7 @@ class DeviceDetailPage extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(110.w * 3))),
                         ),
                       ),
+
                       ///控制拖动按钮
                       Align(
                           alignment: logic.animateAlign,
@@ -626,7 +648,8 @@ class DeviceDetailPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.topCenter,
                                     child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 20.w * 3, 0, 0),
+                                      margin: EdgeInsets.fromLTRB(
+                                          0, 20.w * 3, 0, 0),
                                       child: Image.asset(
                                         "assets/images/common/top.png",
                                         width: 25.w * 3,
@@ -638,7 +661,8 @@ class DeviceDetailPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30.w * 3),
+                                      margin: EdgeInsets.fromLTRB(
+                                          0, 0, 0, 30.w * 3),
                                       child: Image.asset(
                                         "assets/images/common/bottom.png",
                                         width: 25.w * 3,
@@ -650,7 +674,8 @@ class DeviceDetailPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Container(
-                                      margin: EdgeInsets.fromLTRB(25.w * 3, 0, 0, 0),
+                                      margin: EdgeInsets.fromLTRB(
+                                          25.w * 3, 0, 0, 0),
                                       child: Image.asset(
                                         "assets/images/common/left.png",
                                         width: 25.w * 3,
@@ -662,7 +687,8 @@ class DeviceDetailPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 0, 23.w * 3, 0),
+                                      margin: EdgeInsets.fromLTRB(
+                                          0, 0, 23.w * 3, 0),
                                       child: Image.asset(
                                         "assets/images/common/right.png",
                                         width: 25.w * 3,
@@ -674,7 +700,8 @@ class DeviceDetailPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                                      margin:
+                                          EdgeInsets.fromLTRB(0, 0, 0, 10.w),
                                       child: Text(
                                         "切换角度",
                                         style: TextStyle(
@@ -694,7 +721,7 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 126.w*3),
+                  margin: EdgeInsets.only(bottom: 126.w * 3),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -702,74 +729,82 @@ class DeviceDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTapDown: (a){
+                          onTapDown: (a) {
                             logic.fixLeft.value = true;
                             logic.command = "ZOOM_OUT";
                             logic.controlPost(0);
                           },
-                          onTapUp: (a){
+                          onTapUp: (a) {
                             logic.fixLeft.value = false;
                             logic.command = "ZOOM_OUT";
                             logic.controlPost(1);
                           },
-                          onTapCancel: (){
+                          onTapCancel: () {
                             logic.fixLeft.value = false;
                             logic.command = "ZOOM_OUT";
                             logic.controlPost(1);
                           },
                           child: Container(
-                            width: 44.w*3,
-                            height: 44.w*3,
+                            width: 44.w * 3,
+                            height: 44.w * 3,
                             decoration: BoxDecoration(
-                              color: HhColors.whiteColor,
-                              borderRadius: BorderRadius.circular(8.w*3)
-                            ),
+                                color: HhColors.whiteColor,
+                                borderRadius: BorderRadius.circular(8.w * 3)),
                             child: Center(
-                              child: Text('—',style: TextStyle(
-                                  color: logic.fixLeft.value?HhColors.mainBlueColor:HhColors.gray6TextColor,
-                                fontSize: 17.sp*3
-                              ),),
+                              child: Text(
+                                '—',
+                                style: TextStyle(
+                                    color: logic.fixLeft.value
+                                        ? HhColors.mainBlueColor
+                                        : HhColors.gray6TextColor,
+                                    fontSize: 17.sp * 3),
+                              ),
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: 90.w*3,
-                          height: 44.w*3,
+                          width: 90.w * 3,
+                          height: 44.w * 3,
                           child: Center(
-                            child: Text('焦距',style: TextStyle(
-                                color: HhColors.blackColor,
-                                fontSize: 15.sp*3
-                            ),),
+                            child: Text(
+                              '焦距',
+                              style: TextStyle(
+                                  color: HhColors.blackColor,
+                                  fontSize: 15.sp * 3),
+                            ),
                           ),
                         ),
                         GestureDetector(
-                          onTapDown: (a){
+                          onTapDown: (a) {
                             logic.fixRight.value = true;
                             logic.command = "ZOOM_IN";
                             logic.controlPost(0);
                           },
-                          onTapUp: (a){
+                          onTapUp: (a) {
                             logic.fixRight.value = false;
                             logic.command = "ZOOM_IN";
                             logic.controlPost(1);
                           },
-    onTapCancel: (){
-      logic.fixRight.value = false;
-      logic.command = "ZOOM_IN";
-      logic.controlPost(1);
-    },
+                          onTapCancel: () {
+                            logic.fixRight.value = false;
+                            logic.command = "ZOOM_IN";
+                            logic.controlPost(1);
+                          },
                           child: Container(
-                            width: 44.w*3,
-                            height: 44.w*3,
+                            width: 44.w * 3,
+                            height: 44.w * 3,
                             decoration: BoxDecoration(
-                              color: HhColors.whiteColor,
-                              borderRadius: BorderRadius.circular(8.w*3)
-                            ),
+                                color: HhColors.whiteColor,
+                                borderRadius: BorderRadius.circular(8.w * 3)),
                             child: Center(
-                              child: Text('+',style: TextStyle(
-                                color: logic.fixRight.value?HhColors.mainBlueColor:HhColors.gray6TextColor,
-                                fontSize: 20.sp*3
-                              ),),
+                              child: Text(
+                                '+',
+                                style: TextStyle(
+                                    color: logic.fixRight.value
+                                        ? HhColors.mainBlueColor
+                                        : HhColors.gray6TextColor,
+                                    fontSize: 20.sp * 3),
+                              ),
                             ),
                           ),
                         ),
@@ -781,7 +816,7 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 20.w*3),
+                  margin: EdgeInsets.only(bottom: 20.w * 3),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -808,7 +843,9 @@ class DeviceDetailPage extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Image.asset(
-                                        logic.videoTag.value ? "assets/images/common/ic_video_yes.png":"assets/images/common/ic_video.png",
+                                        logic.videoTag.value
+                                            ? "assets/images/common/ic_video_yes.png"
+                                            : "assets/images/common/ic_video.png",
                                         width: 76.w * 3,
                                         height: 76.w * 3,
                                         fit: BoxFit.fill,
@@ -858,7 +895,8 @@ class DeviceDetailPage extends StatelessWidget {
                                 duration: const Duration(milliseconds: 100),
                                 scaleFactor: 1.2,
                                 onPressed: () {
-                                  logic.recordTag.value = !logic.recordTag.value;
+                                  logic.recordTag.value =
+                                      !logic.recordTag.value;
                                   if (logic.recordTag.value) {
                                     //开始
                                     logic.chatStatus();
@@ -889,17 +927,25 @@ class DeviceDetailPage extends StatelessWidget {
                                     )):const SizedBox(),*/
                                       Image.asset(
                                         logic.recordTag.value
-                                            ? (logic.recordTag2.value?"assets/images/common/ic_yy_close.png":"assets/images/common/ic_yy_ing.png")
+                                            ? (logic.recordTag2.value
+                                                ? "assets/images/common/ic_yy_close.png"
+                                                : "assets/images/common/ic_yy_ing.png")
                                             : "assets/images/common/ic_yy.png",
                                         width: 76.w * 3,
                                         height: 76.w * 3,
                                         fit: BoxFit.fill,
                                       ),
                                       Text(
-                                        logic.recordTag.value ? (logic.recordTag2.value?'挂断':'呼叫中...') : '对讲',
+                                        logic.recordTag.value
+                                            ? (logic.recordTag2.value
+                                                ? '挂断'
+                                                : '呼叫中...')
+                                            : '对讲',
                                         style: TextStyle(
                                             color: logic.recordTag.value
-                                                ? (logic.recordTag2.value?HhColors.mainRedColor:HhColors.mainBlueColor)
+                                                ? (logic.recordTag2.value
+                                                    ? HhColors.mainRedColor
+                                                    : HhColors.mainBlueColor)
                                                 : HhColors.blackTextColor,
                                             fontSize: 14.sp * 3),
                                       )
@@ -914,7 +960,8 @@ class DeviceDetailPage extends StatelessWidget {
                                 scaleFactor: 1.2,
                                 onPressed: () {
                                   Get.to(
-                                      () => LiGanDetailPage(logic.deviceNo, logic.id),
+                                      () => LiGanDetailPage(
+                                          logic.deviceNo, logic.id),
                                       binding: LiGanDetailBinding());
                                 },
                                 child: Container(

@@ -66,30 +66,10 @@ class MessageController extends GetxController {
   final Rx<int> spaceSelectIndex = 0.obs;
   StreamSubscription ?spaceListSubscription;
   StreamSubscription ?messageSubscription;
-  final List<dynamic> typeList = [
+  late List<dynamic> typeList = [
     {
-      "name":"类型",
-      "type":null,
-    },
-    {
-      "name":"传感器开箱报警",
-      "type":"openSensor",
-    },
-    {
-      "name":"箱盖开箱报警",
-      "type":"openCap",
-    },
-    {
-      "name":"人员入侵报警",
-      "type":"human",
-    },
-    {
-      "name":"设备倾斜报警",
-      "type":"tilt",
-    },
-    {
-      "name":"车辆入侵报警",
-      "type":"car",
+      "label":"类型",
+      "value":null,
     },
   ];
 
@@ -99,6 +79,7 @@ class MessageController extends GetxController {
     fetchPageRight(1);
     fetchPageCall(1);
     getSpaceList();
+    getWarnType();
     spaceListSubscription = EventBusUtil.getInstance()
         .on<SpaceList>()
         .listen((event) {
@@ -190,7 +171,7 @@ class MessageController extends GetxController {
     if(spaceList!=null && spaceList.isNotEmpty && spaceList[spaceSelectIndex.value]!=null){
       map['spaceId'] = spaceList[spaceSelectIndex.value]["id"];
     }
-    map['alarmType'] = typeList[typeSelectIndex.value]["type"];//openSensor 传感器开箱报警；openCap 箱盖开箱报警；human 人员入侵报警；tilt 设备倾斜报警；car 车辆入侵报警
+    map['alarmType'] = typeList[typeSelectIndex.value]["value"];//openSensor 传感器开箱报警；openCap 箱盖开箱报警；human 人员入侵报警；tilt 设备倾斜报警；car 车辆入侵报警
     if(dateStr.value!="日期"){
       map['createTime'] = "${start.toIso8601String().substring(0,10)} 00:00:00,${end.toIso8601String().substring(0,10)} 23:59:59";
     }
@@ -431,6 +412,25 @@ class MessageController extends GetxController {
       int number = result["data"]??0;
       warnCount.value = number>99?"99+":"$number";
       warnCountInt.value = number;
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+  Future<void> getWarnType() async {
+    Map<String, dynamic> map = {};
+    map['pageNo'] = 1;
+    map['pageSize'] = -1;
+    map['label'] = "";
+    map['dictType'] = "alarm_type";
+    var result = await HhHttp()
+        .request(RequestUtils.alarmType, method: DioMethod.get,params: map);
+    HhLog.d("getWarnType --  $result");
+    if (result["code"] == 0) {
+      dynamic data = result["data"];
+      if(data!=null){
+        typeList.addAll(data["list"]);
+      }
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
