@@ -315,206 +315,211 @@ class _DefaultFijkPanelState extends State<_DefaultFijkPanel> {
         min(widget.viewSize.height, widget.texturePos.bottom));
     return Positioned.fromRect(
       rect: rect,
-      child: GestureDetector(
-        onVerticalDragUpdate: _isScaling
-            ? null // 如果正在缩放，则不处理水平拖动
-            : (details) {
-          // 上下滑动控制 <0:上  >0:下
-          if(details.delta.dy > 0){
-            HhLog.d("滑动控制 下");
-            EventBusUtil.getInstance().fire(Move(action: 0, code: "DOWN"));
-            setState(() {
-              downStatus = true;
-              upStatus = false;
-              leftStatus = false;
-              rightStatus = false;
+      child: InteractiveViewer(
+        panEnabled: false, // 是否允许拖动
+        minScale: 1.0,
+        maxScale: 3.0,
+        child: GestureDetector(
+          onVerticalDragUpdate: _isScaling
+              ? null // 如果正在缩放，则不处理水平拖动
+              : (details) {
+            // 上下滑动控制 <0:上  >0:下
+            if(details.delta.dy > 0){
+              HhLog.d("滑动控制 下");
+              EventBusUtil.getInstance().fire(Move(action: 0, code: "DOWN"));
+              setState(() {
+                downStatus = true;
+                upStatus = false;
+                leftStatus = false;
+                rightStatus = false;
+              });
+            }
+            if(details.delta.dy < 0){
+              HhLog.d("滑动控制 上");
+              EventBusUtil.getInstance().fire(Move(action: 0, code: "UP"));
+              setState(() {
+                upStatus = true;
+                downStatus = false;
+                leftStatus = false;
+                rightStatus = false;
+              });
+            }
+          },
+          onVerticalDragEnd: _isScaling
+              ? null // 如果正在缩放，则不处理水平拖动
+              : (details){
+            //终止滑动控制
+            HhLog.d("滑动控制 终止");
+            Future.delayed(const Duration(milliseconds: 500),(){
+              EventBusUtil.getInstance().fire(Move(action: 1, code: ""));
+              setState(() {
+                upStatus = false;
+                downStatus = false;
+                leftStatus = false;
+                rightStatus = false;
+              });
             });
-          }
-          if(details.delta.dy < 0){
-            HhLog.d("滑动控制 上");
-            EventBusUtil.getInstance().fire(Move(action: 0, code: "UP"));
-            setState(() {
-              upStatus = true;
-              downStatus = false;
-              leftStatus = false;
-              rightStatus = false;
+          },
+          onHorizontalDragUpdate: _isScaling
+              ? null // 如果正在缩放，则不处理水平拖动
+              : (details) {
+            // 左右滑动控制 <0:左  >0:右
+            if(details.delta.dx > 0){
+              HhLog.d("滑动控制 右");
+              EventBusUtil.getInstance().fire(Move(action: 0, code: "RIGHT"));
+              setState(() {
+                rightStatus = true;
+                upStatus = false;
+                downStatus = false;
+                leftStatus = false;
+              });
+            }
+            if(details.delta.dx < 0){
+              HhLog.d("滑动控制 左");
+              EventBusUtil.getInstance().fire(Move(action: 0, code: "LEFT"));
+              setState(() {
+                leftStatus = true;
+                upStatus = false;
+                downStatus = false;
+                rightStatus = false;
+              });
+            }
+          },
+          onHorizontalDragEnd: _isScaling
+              ? null // 如果正在缩放，则不处理水平拖动
+              : (details){
+            //终止滑动控制
+            HhLog.d("滑动控制 终止");
+            Future.delayed(const Duration(milliseconds: 500),(){
+              EventBusUtil.getInstance().fire(Move(action: 1, code: ""));
+              setState(() {
+                upStatus = false;
+                downStatus = false;
+                leftStatus = false;
+                rightStatus = false;
+              });
             });
-          }
-        },
-        onVerticalDragEnd: _isScaling
-            ? null // 如果正在缩放，则不处理水平拖动
-            : (details){
-          //终止滑动控制
-          HhLog.d("滑动控制 终止");
-          Future.delayed(const Duration(milliseconds: 500),(){
-            EventBusUtil.getInstance().fire(Move(action: 1, code: ""));
+          },
+          /*onScaleStart: (ScaleStartDetails details) {
+            _isScaling = true; // 开始缩放
+          },
+          onScaleUpdate: (ScaleUpdateDetails details) {
             setState(() {
-              upStatus = false;
-              downStatus = false;
-              leftStatus = false;
-              rightStatus = false;
+              // 处理缩放
+              _scale = _previousScale * details.scale;
+              _dx = details.focalPoint.dx; // 获取焦点X坐标
+              _dy = details.focalPoint.dy; // 获取焦点Y坐标
             });
-          });
-        },
-        onHorizontalDragUpdate: _isScaling
-            ? null // 如果正在缩放，则不处理水平拖动
-            : (details) {
-          // 左右滑动控制 <0:左  >0:右
-          if(details.delta.dx > 0){
-            HhLog.d("滑动控制 右");
-            EventBusUtil.getInstance().fire(Move(action: 0, code: "RIGHT"));
-            setState(() {
-              rightStatus = true;
-              upStatus = false;
-              downStatus = false;
-              leftStatus = false;
-            });
-          }
-          if(details.delta.dx < 0){
-            HhLog.d("滑动控制 左");
-            EventBusUtil.getInstance().fire(Move(action: 0, code: "LEFT"));
-            setState(() {
-              leftStatus = true;
-              upStatus = false;
-              downStatus = false;
-              rightStatus = false;
-            });
-          }
-        },
-        onHorizontalDragEnd: _isScaling
-            ? null // 如果正在缩放，则不处理水平拖动
-            : (details){
-          //终止滑动控制
-          HhLog.d("滑动控制 终止");
-          Future.delayed(const Duration(milliseconds: 500),(){
-            EventBusUtil.getInstance().fire(Move(action: 1, code: ""));
-            setState(() {
-              upStatus = false;
-              downStatus = false;
-              leftStatus = false;
-              rightStatus = false;
-            });
-          });
-        },
-        /*onScaleStart: (ScaleStartDetails details) {
-          _isScaling = true; // 开始缩放
-        },
-        onScaleUpdate: (ScaleUpdateDetails details) {
-          setState(() {
-            // 处理缩放
-            _scale = _previousScale * details.scale;
-            _dx = details.focalPoint.dx; // 获取焦点X坐标
-            _dy = details.focalPoint.dy; // 获取焦点Y坐标
-          });
-        },
-        onScaleEnd: (ScaleEndDetails details) {
-          _previousScale = _scale; // 保存当前缩放比例
-          _isScaling = false; // 停止缩放
-        },*/
-        onTap: _cancelAndRestartTimer,
-        child: AbsorbPointer(
-          absorbing: _hideStuff,
-          child: Column(
-            children: <Widget>[
-              Container(height: barHeight),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    _cancelAndRestartTimer();
-                  },
-                  child: Container(
-                    color: Colors.transparent,
-                    height: double.infinity,
-                    width: double.infinity,
-                    child: Stack(
-                      children: [
-                        Center(
-                            child: _exception != null
-                                ? Text(
-                              _exception!,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                              ),
-                            )
-                                : (_prepared ||
-                                player.state == FijkState.initialized)
-                                ? AnimatedOpacity(
-                                opacity: _hideStuff ? 0.0 : 0.7,
-                                duration: Duration(milliseconds: 400),
-                                child: IconButton(
-                                    iconSize: barHeight * 2,
-                                    icon: Icon(
-                                        _playing
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
-                                        color: Colors.white),
-                                    padding: EdgeInsets.only(
-                                        left: 10.0, right: 10.0),
-                                    onPressed: _playOrPause))
-                                : SizedBox(
-                              width: barHeight * 1.5,
-                              height: barHeight * 1.5,
-                              child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation(
-                                      Colors.white)),
-                            )),
+          },
+          onScaleEnd: (ScaleEndDetails details) {
+            _previousScale = _scale; // 保存当前缩放比例
+            _isScaling = false; // 停止缩放
+          },*/
+          onTap: _cancelAndRestartTimer,
+          child: AbsorbPointer(
+            absorbing: _hideStuff,
+            child: Column(
+              children: <Widget>[
+                Container(height: barHeight),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      _cancelAndRestartTimer();
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Center(
+                              child: _exception != null
+                                  ? Text(
+                                _exception!,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                ),
+                              )
+                                  : (_prepared ||
+                                  player.state == FijkState.initialized)
+                                  ? AnimatedOpacity(
+                                  opacity: _hideStuff ? 0.0 : 0.7,
+                                  duration: Duration(milliseconds: 400),
+                                  child: IconButton(
+                                      iconSize: barHeight * 2,
+                                      icon: Icon(
+                                          _playing
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          color: Colors.white),
+                                      padding: EdgeInsets.only(
+                                          left: 10.0, right: 10.0),
+                                      onPressed: _playOrPause))
+                                  : SizedBox(
+                                width: barHeight * 1.5,
+                                height: barHeight * 1.5,
+                                child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation(
+                                        Colors.white)),
+                              )),
 
-                        upStatus?Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 2.w*3),
-                            child: Image.asset(
-                              "assets/images/common/move_up.png",
-                              width: 30.w*3,
-                              height: 30.w * 3,
-                              fit: BoxFit.fill,
+                          upStatus?Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 2.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_up.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                        ):const SizedBox(),
-                        downStatus?Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 2.w*3),
-                            child: Image.asset(
-                              "assets/images/common/move_down.png",
-                              width: 30.w*3,
-                              height: 30.w * 3,
-                              fit: BoxFit.fill,
+                          ):const SizedBox(),
+                          downStatus?Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 2.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_down.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                        ):const SizedBox(),
-                        leftStatus?Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 20.w*3),
-                            child: Image.asset(
-                              "assets/images/common/move_left.png",
-                              width: 30.w*3,
-                              height: 30.w * 3,
-                              fit: BoxFit.fill,
+                          ):const SizedBox(),
+                          leftStatus?Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_left.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                        ):const SizedBox(),
-                        rightStatus?Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            margin: EdgeInsets.only(right: 20.w*3),
-                            child: Image.asset(
-                              "assets/images/common/move_right.png",
-                              width: 30.w*3,
-                              height: 30.w * 3,
-                              fit: BoxFit.fill,
+                          ):const SizedBox(),
+                          rightStatus?Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 20.w*3),
+                              child: Image.asset(
+                                "assets/images/common/move_right.png",
+                                width: 30.w*3,
+                                height: 30.w * 3,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                        ):const SizedBox(),
-                      ],
+                          ):const SizedBox(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              _buildBottomBar(context),
-            ],
+                _buildBottomBar(context),
+              ],
+            ),
           ),
         ),
       ),
