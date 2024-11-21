@@ -320,10 +320,10 @@ class DeviceAddPage extends StatelessWidget {
                           if((!logicLocation.choose) && (logic.model["location"]==null || "${logic.model["location"]}".isEmpty)){
                             logic.updateDevice(false);
                           }else{
-                            logic.updateDevice(true);
                             logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:CommonUtils().parseIsDouble("${logic.model["latitude"]}",0);
                             logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:CommonUtils().parseIsDouble("${logic.model["longitude"]}",0);
                             logic.locText.value = logicLocation.choose?logicLocation.locText.value:logic.model["location"];
+                            logic.updateDevice(true);
                           }
                         }else{
                           if(logicLocation.locText.value == '' || logicLocation.locText.value == '已搜索'){

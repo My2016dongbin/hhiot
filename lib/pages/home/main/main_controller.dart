@@ -576,7 +576,15 @@ class MainController extends GetxController {
       FileImage fileImage = FileImage(file);
       // 同步清除指定文件的缓存
       fileImage.evict();
+      if(fileImage.file.lengthSync() < 20000){
+        //处理白屏问题
+        return Image.asset(
+          "assets/images/common/test_video.jpg",
+          fit: BoxFit.fill,
+        );
+      }
       return Image(image: fileImage,errorBuilder: (c,d,e){
+        HhLog.d("parseCacheImageView error $deviceNo");
         return Image.asset(
           "assets/images/common/test_video.jpg",
           fit: BoxFit.fill,

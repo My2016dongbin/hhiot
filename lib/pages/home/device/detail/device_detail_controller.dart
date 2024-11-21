@@ -102,7 +102,7 @@ class DeviceDetailController extends GetxController {
     moveSubscription =
         EventBusUtil.getInstance().on<Move>().listen((event) {
           int time = DateTime.now().millisecondsSinceEpoch;
-          if (time - controlTime > 1000) {
+          if (time - controlTime > 1000 || event.action==1) {
             controlTime = time;
             if(event.code.isNotEmpty){
               command = event.code;

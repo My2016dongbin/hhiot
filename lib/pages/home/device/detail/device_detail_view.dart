@@ -158,126 +158,132 @@ class DeviceDetailPage extends StatelessWidget {
                     logic.controlPost(1);
                   });
                 },*/
-                      child: InteractiveViewer(
-                          panEnabled: false, // 是否允许拖动
-                          minScale: 1.0,
-                          maxScale: 3.0,
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 254.w * 3,
-                            child: Stack(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 0.w * 3),
-                                  child: ScreenRecorder(
+                      /*onScaleStart: (ScaleStartDetails details) {
+
+                      },
+                      onScaleUpdate: (ScaleUpdateDetails details) {
+                        EventBusUtil.getInstance().fire(HhToast(title: "${details.scale}"));
+                      },
+                      onScaleEnd: (ScaleEndDetails details) {
+
+                      },*/
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 254.w * 3,
+                        child: Stack(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 0.w * 3),
+                              child: ScreenRecorder(
+                                width: double.infinity,
+                                height: 254.w * 3,
+                                background: Colors.white,
+                                controller: logic.recordController,
+                                child: Screenshot(
+                                  controller: logic.screenshotController,
+                                  child: FijkView(
                                     width: double.infinity,
                                     height: 254.w * 3,
-                                    background: Colors.white,
-                                    controller: logic.recordController,
-                                    child: Screenshot(
-                                      controller: logic.screenshotController,
-                                      child: FijkView(
-                                        width: double.infinity,
-                                        height: 254.w * 3,
-                                        player: logic.player,
-                                        color: HhColors.blackColor,
-                                        fit: FijkFit.fill,
-                                        panelBuilder: hhFijkPanelBuilder,
-                                      ),
-                                    ),
+                                    player: logic.player,
+                                    color: HhColors.blackColor,
+                                    fit: FijkFit.fill,
+                                    fsFit: FijkFit.ar16_9,
+                                    panelBuilder: hhFijkPanelBuilder,
                                   ),
                                 ),
-                                logic.fix.value
-                                    ? Center(
-                                        child: Container(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      4.w * 3,
-                                                      0.w * 3,
-                                                      4.w * 3,
-                                                      1.w * 3),
-                                                  decoration: BoxDecoration(
-                                                      color: HhColors
-                                                          .mainGreenColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              2.w * 3)),
-                                                  child: Text(
-                                                    '自动对焦',
-                                                    style: TextStyle(
-                                                        color:
-                                                            HhColors.whiteColor,
-                                                        fontSize: 12.sp * 3),
-                                                  )),
-                                              SizedBox(
-                                                height: 19.w * 3,
-                                              ),
-                                              Image.asset(
-                                                "assets/images/common/icon_fix.png",
-                                                width: 56.w * 3,
-                                                height: 56.w * 3,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                                /*
-                            logic.upStatus.value?Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                margin: EdgeInsets.only(top: 30.w*3),
-                                child: Image.asset(
-                                  "assets/images/common/move_up.png",
-                                  width: 30.w*3,
-                                  height: 30.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
                               ),
-                            ):const SizedBox(),
-                            logic.downStatus.value?Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 20.w*3),
-                                child: Image.asset(
-                                  "assets/images/common/move_down.png",
-                                  width: 30.w*3,
-                                  height: 30.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ):const SizedBox(),
-                            logic.leftStatus.value?Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin: EdgeInsets.only(left: 20.w*3),
-                                child: Image.asset(
-                                  "assets/images/common/move_left.png",
-                                  width: 30.w*3,
-                                  height: 30.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ):const SizedBox(),
-                            logic.rightStatus.value?Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                margin: EdgeInsets.only(right: 20.w*3),
-                                child: Image.asset(
-                                  "assets/images/common/move_right.png",
-                                  width: 30.w*3,
-                                  height: 30.w * 3,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ):const SizedBox(),*/
-                              ],
                             ),
-                          )),
+                            logic.fix.value
+                                ? Center(
+                                    child: Container(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  4.w * 3,
+                                                  0.w * 3,
+                                                  4.w * 3,
+                                                  1.w * 3),
+                                              decoration: BoxDecoration(
+                                                  color: HhColors
+                                                      .mainGreenColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          2.w * 3)),
+                                              child: Text(
+                                                '自动对焦',
+                                                style: TextStyle(
+                                                    color:
+                                                        HhColors.whiteColor,
+                                                    fontSize: 12.sp * 3),
+                                              )),
+                                          SizedBox(
+                                            height: 19.w * 3,
+                                          ),
+                                          Image.asset(
+                                            "assets/images/common/icon_fix.png",
+                                            width: 56.w * 3,
+                                            height: 56.w * 3,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            /*
+                        logic.upStatus.value?Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 30.w*3),
+                            child: Image.asset(
+                              "assets/images/common/move_up.png",
+                              width: 30.w*3,
+                              height: 30.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ):const SizedBox(),
+                        logic.downStatus.value?Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 20.w*3),
+                            child: Image.asset(
+                              "assets/images/common/move_down.png",
+                              width: 30.w*3,
+                              height: 30.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ):const SizedBox(),
+                        logic.leftStatus.value?Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.only(left: 20.w*3),
+                            child: Image.asset(
+                              "assets/images/common/move_left.png",
+                              width: 30.w*3,
+                              height: 30.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ):const SizedBox(),
+                        logic.rightStatus.value?Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 20.w*3),
+                            child: Image.asset(
+                              "assets/images/common/move_right.png",
+                              width: 30.w*3,
+                              height: 30.w * 3,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ):const SizedBox(),*/
+                          ],
+                        ),
+                      ),
                     )
                   : const SizedBox(),
 
