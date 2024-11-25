@@ -37,6 +37,9 @@ class DeviceDetailController extends GetxController {
   final Rx<bool> videoTag = false.obs;
   final Rx<bool> voiceTag = true.obs;
   final Rx<int> liveIndex = 0.obs;
+  final Rx<double> scale = 1.0.obs;
+  final Rx<double> dx = 0.0.obs;
+  final Rx<double> dy = 0.0.obs;
   final Rx<int> videoMinute = 0.obs;
   final Rx<int> videoSecond = 0.obs;
   final Rx<bool> liveStatus = true.obs;
@@ -69,14 +72,16 @@ class DeviceDetailController extends GetxController {
   late WebSocketManager manager;
 
   late List<dynamic> liveList = [];
-  late Animation<Alignment> animation;
   late AnimationController animationController;
+  late Animation<Offset> animation;
   late Alignment animateAlign = Alignment.center;
   final Rx<Alignment> dragAlignment = Rx<Alignment>(Alignment.center);
   late String? endpoint;
   late StreamSubscription? moveSubscription;
+  late StreamSubscription? scaleSubscription;
   late StreamSubscription? deviceSubscription;
   late StreamSubscription? recordSubscription;
+  late TransformationController transformationController = TransformationController();
   late ScreenshotController screenshotController = ScreenshotController();
   late ScreenRecorderController recordController = ScreenRecorderController(
     pixelRatio: 1,
@@ -109,6 +114,13 @@ class DeviceDetailController extends GetxController {
             }
             controlPost(event.action);
           }
+    });
+    scaleSubscription =
+        EventBusUtil.getInstance().on<Scale>().listen((event) {
+          HhLog.d("Scale ${event.scale},${event.dx},${event.dy}");
+          scale.value = event.scale;
+          dx.value = event.dx;
+          dy.value = event.dy;
     });
     deviceSubscription =
         EventBusUtil.getInstance().on<DeviceInfo>().listen((event) {

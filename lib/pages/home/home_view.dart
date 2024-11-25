@@ -5,6 +5,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 
 import '../../cell/bottom_bar.dart';
@@ -25,6 +26,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logic.context = context;
+    CommonData.context = context;
     // 在这里设置状态栏字体为深色
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏背景色

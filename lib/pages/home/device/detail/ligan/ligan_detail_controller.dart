@@ -45,6 +45,7 @@ class LiGanDetailController extends GetxController {
   final Rx<int> voiceCap = 3.obs;//音量
   final Rx<int> speed = 6.obs;//滑动速度
   final Rx<bool> close = false.obs;//息屏开关
+  final Rx<int> closeTab = 0.obs;//息屏开关 1常开0常闭2触发
   final Rx<int> direction = 0.obs;//滑动方向 0向上  1向下
   final Rx<String> name = ''.obs;
   final Rx<String> ledContent = ''.obs;
@@ -149,7 +150,7 @@ class LiGanDetailController extends GetxController {
     dynamic data = {
       "deviceNo": deviceNo,
       "cmdType": "ledSetSwitch",
-      "switchType": close.value?1:0,
+      "switchType": closeTab.value,
       "time": ledTime.value,
     };
     var result = await HhHttp().request(RequestUtils.deviceConfigScreenTop,method: DioMethod.post,data: data);

@@ -45,3 +45,9 @@ decoration: InputDecoration(
                             ),
                           ),
                         ),
+
+
+                        InteractiveViewer(
+                                                panEnabled: true, // 是否允许拖动
+                                                minScale: 1.0,
+                                                maxScale: 10.0,

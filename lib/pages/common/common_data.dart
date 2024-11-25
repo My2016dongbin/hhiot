@@ -1,4 +1,5 @@
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:iot/utils/HhColors.dart';
 
 class CommonData{
@@ -6,7 +7,7 @@ class CommonData{
   static double ?latitude;
   static double ?longitude;
   static String ?token;
-  static bool personal = true;///false企业 true个人
+  static bool personal = false;///false企业 true个人
   static String ?tenantName = personal?'haohai':null;
   static String ?tenant = personal?'1':null;
   static String ?tenantTitle = '';
@@ -18,4 +19,5 @@ class CommonData{
   static String ?endpoint;
   static String info = "";
   static int versionTime = 0;
+  static BuildContext? context;
 }

@@ -43,6 +43,12 @@ class Move{
   String code;
   Move({required this.action,required this.code,});
 }
+class Scale{
+  double scale;
+  double dx;
+  double dy;
+  Scale({required this.scale,required this.dx,required this.dy});
+}
 class DeviceInfo{
   DeviceInfo();
 }

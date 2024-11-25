@@ -55,7 +55,8 @@ class HomeController extends GetxController {
   final Rx<int> totalSize = 65.obs;
   final Rx<int> currentSize = 0.obs;
   late Dio dio = Dio();
-  late String downloadUrl = 'http://192.168.1.88:9000/resource/fireRebuild-2.1.1.apk';
+  late String downloadUrl =
+      'http://192.168.1.88:9000/resource/fireRebuild-2.1.1.apk';
   late String savePath = '';
 
   switchTab(index) {
@@ -109,17 +110,18 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
-    try{
+    try {
       versionSubscription!.cancel();
       showToastSubscription.cancel();
       progressSubscription!.cancel();
       downloadProgressSubscription!.cancel();
       showLoadingSubscription.cancel();
       showShareReceiveSubscription.cancel();
-    }catch(e){
+    } catch (e) {
       //
     }
   }
+
   @override
   void onInit() {
     localVersion();
@@ -187,7 +189,11 @@ class HomeController extends GetxController {
     });
     versionSubscription =
         EventBusUtil.getInstance().on<Version>().listen((event) {
-          getVersion();
+      int now = DateTime.now().millisecondsSinceEpoch;
+      if (now - CommonData.time > 1000) {
+        CommonData.time = now;
+        getVersion();
+      }
     });
     progressSubscription =
         EventBusUtil.getInstance().on<DownProgress>().listen((event) {
@@ -484,18 +490,21 @@ class HomeController extends GetxController {
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '100';
-    map['flag'] = CommonData.personal?'user':'company';
+    map['flag'] = CommonData.personal ? 'user' : 'company';
     var result = await HhHttp()
         .request(RequestUtils.version, method: DioMethod.get, params: map);
-    HhLog.d("getVersion -- $map");
+    HhLog.d("getVersion -- map $map");
     HhLog.d("getVersion -- $result");
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> list = result["data"]["list"];
-      if(list.isNotEmpty){
-        for(int m = 0;m < list.length;m++){
+      if (list.isNotEmpty) {
+        for (int m = 0; m < list.length; m++) {
           dynamic update = list[m];
-          HhLog.d("getVersion -- $update , ${update["status"]=="true"} , ${(int.parse(buildNumber.value)<int.parse("${update["version"]}"))}");
-          if(update["status"]=="true" && (int.parse(buildNumber.value)<int.parse("${update["version"]}"))){
+          HhLog.d(
+              "getVersion -- $update , ${update["status"] == "true"} , ${(int.parse(buildNumber.value) < int.parse("${update["version"]}"))}");
+          if (update["status"] == "true" &&
+              (int.parse(buildNumber.value) <
+                  int.parse("${update["version"]}"))) {
             HhLog.d("getVersion -- ----");
             showVersionDialog(update);
             return;
@@ -510,213 +519,225 @@ class HomeController extends GetxController {
 
   void showVersionDialog(dynamic update) {
     versionStatus.value = 0;
-    try{
+    try {
       showCupertinoDialog(
-          context: context,
+          context: CommonData.context!,
           builder: (context) => WillPopScope(
-            onWillPop: () async {
-              // 阻止返回键关闭对话框
-              return false;
-            },
-            child: Center(
-              child: Obx(
+                onWillPop: () async {
+                  // 阻止返回键关闭对话框
+                  return false;
+                },
+                child: Center(
+                  child: Obx(
                     () => Container(
-                  width: 281.w * 3,
-                  height: 320.w * 3,
-                  decoration: BoxDecoration(
-                      color: HhColors.whiteColor,
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(8.w * 3))),
-                  child: Stack(
-                    children: [
-                      Image.asset('assets/images/common/icon_up_top.png'),
-                      /*"${update["isForce"]}"=="true"?const SizedBox():*/Align(
-                        alignment: Alignment.topRight,
-                        child: BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: () {
-                            if("${update["isForce"]}"=="true"){
-                              EventBusUtil.getInstance().fire(HhToast(title: '请更新版本后使用'));
-                              Future.delayed(const Duration(milliseconds: 1600),(){
-                                SystemNavigator.pop();
-                              });
-                            }else{
-                              Get.back();
-                            }
-                          },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 16.w * 3, 16.w * 3, 0),
-                            padding: EdgeInsets.all(20.w),
-                            child: Image.asset(
-                              "assets/images/common/icon_up_x.png",
-                              width: 40.w,
-                              height: 40.w,
-                              fit: BoxFit.fill,
+                      width: 281.w * 3,
+                      height: 320.w * 3,
+                      decoration: BoxDecoration(
+                          color: HhColors.whiteColor,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(8.w * 3))),
+                      child: Stack(
+                        children: [
+                          Image.asset('assets/images/common/icon_up_top.png'),
+                          /*"${update["isForce"]}"=="true"?const SizedBox():*/
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 1.2,
+                              onPressed: () {
+                                if ("${update["isForce"]}" == "true") {
+                                  EventBusUtil.getInstance()
+                                      .fire(HhToast(title: '请更新版本后使用'));
+                                  Future.delayed(
+                                      const Duration(milliseconds: 1600), () {
+                                    SystemNavigator.pop();
+                                  });
+                                } else {
+                                  Get.back();
+                                }
+                              },
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    0, 16.w * 3, 16.w * 3, 0),
+                                padding: EdgeInsets.all(20.w),
+                                child: Image.asset(
+                                  "assets/images/common/icon_up_x.png",
+                                  width: 40.w,
+                                  height: 40.w,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(0, 113.w * 3, 0, 0),
-                          child: Text(
-                            "发现新版本",
-                            style: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: HhColors.blackColor,
-                                fontSize: 16.sp * 3,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(0, 138.w * 3, 0, 0),
-                          child: Text(
-                            "V${update["versionName"]}",
-                            style: TextStyle(
-                                letterSpacing: -3.w,
-                                decoration: TextDecoration.none,
-                                color: HhColors.gray9TextColor,
-                                fontSize: 14.sp * 3,
-                                fontWeight: FontWeight.w300),
-                          ),
-                        ),
-                      ),
-                      versionStatus.value == 0
-                          ? Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          margin:
-                          EdgeInsets.fromLTRB(0, 162.w * 3, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "更新内容:",
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 113.w * 3, 0, 0),
+                              child: Text(
+                                "发现新版本",
                                 style: TextStyle(
                                     decoration: TextDecoration.none,
                                     color: HhColors.blackColor,
-                                    fontSize: 14.sp * 3,
+                                    fontSize: 16.sp * 3,
                                     fontWeight: FontWeight.w600),
                               ),
-                              SizedBox(
-                                height: 5.w * 3,
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 138.w * 3, 0, 0),
+                              child: Text(
+                                "V${update["versionName"]}",
+                                style: TextStyle(
+                                    letterSpacing: -3.w,
+                                    decoration: TextDecoration.none,
+                                    color: HhColors.gray9TextColor,
+                                    fontSize: 14.sp * 3,
+                                    fontWeight: FontWeight.w300),
                               ),
-                              SizedBox(
-                                width: 243.w * 3,
-                                height: 63.w * 3,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${update["versionDescription"]}".replaceAll("\\n", "\n"),
-                                        style: TextStyle(
-                                            decoration:
-                                            TextDecoration.none,
-                                            color: HhColors.blackColor,
-                                            fontSize: 13.sp * 3,
-                                            fontWeight:
-                                            FontWeight.w300),
-                                      ),
-                                    ],
+                            ),
+                          ),
+                          versionStatus.value == 0
+                              ? Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.fromLTRB(0, 162.w * 3, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "更新内容:",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              color: HhColors.blackColor,
+                                              fontSize: 14.sp * 3,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        SizedBox(
+                                          height: 5.w * 3,
+                                        ),
+                                        SizedBox(
+                                          width: 243.w * 3,
+                                          height: 63.w * 3,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "${update["versionDescription"]}"
+                                                      .replaceAll("\\n", "\n"),
+                                                  style: TextStyle(
+                                                      decoration:
+                                                          TextDecoration.none,
+                                                      color:
+                                                          HhColors.blackColor,
+                                                      fontSize: 13.sp * 3,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        15.w * 3, 182.w * 3, 15.w * 3, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "更新中...",
+                                          style: TextStyle(
+                                              decoration: TextDecoration.none,
+                                              color: HhColors.blackColor,
+                                              fontSize: 14.sp * 3,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 5.w * 3,
+                                        ),
+                                        StepProgressIndicator(
+                                          totalSteps: 100,
+                                          currentStep: downloadStep.value,
+                                          size: 12,
+                                          padding: 0,
+                                          selectedColor: HhColors.mainBlueColor,
+                                          unselectedColor:
+                                              HhColors.mainBlueColorUn,
+                                          roundedEdges:
+                                              Radius.circular(10.w * 3),
+                                          selectedGradientColor:
+                                              const LinearGradient(
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                            colors: [
+                                              HhColors.mainBlueColor,
+                                              HhColors.mainBlueColor
+                                            ],
+                                          ),
+                                          unselectedGradientColor:
+                                              const LinearGradient(
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight,
+                                            colors: [
+                                              HhColors.mainBlueColorUn,
+                                              HhColors.mainBlueColorUn
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5.w * 3,
+                                        ),
+                                        Text(
+                                            "${CommonUtils().parseCache(currentSize.value * 1.0)}/${CommonUtils().parseCache(totalSize.value * 1.0)}",
+                                            style: TextStyle(
+                                                letterSpacing: -1.w,
+                                                decoration: TextDecoration.none,
+                                                color: HhColors.gray9TextColor,
+                                                fontSize: 14.sp * 3,
+                                                fontWeight: FontWeight.w300))
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                          : Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(
-                              15.w * 3, 182.w * 3, 15.w * 3, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "更新中...",
-                                style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    color: HhColors.blackColor,
-                                    fontSize: 14.sp * 3,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                height: 5.w * 3,
-                              ),
-                              StepProgressIndicator(
-                                totalSteps: 100,
-                                currentStep: downloadStep.value,
-                                size: 12,
-                                padding: 0,
-                                selectedColor: HhColors.mainBlueColor,
-                                unselectedColor:
-                                HhColors.mainBlueColorUn,
-                                roundedEdges: Radius.circular(10.w * 3),
-                                selectedGradientColor:
-                                const LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    HhColors.mainBlueColor,
-                                    HhColors.mainBlueColor
-                                  ],
-                                ),
-                                unselectedGradientColor:
-                                const LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                    HhColors.mainBlueColorUn,
-                                    HhColors.mainBlueColorUn
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5.w * 3,
-                              ),
-                              Text(
-                                  "${CommonUtils().parseCache(currentSize.value*1.0)}/${CommonUtils().parseCache(totalSize.value*1.0)}",
-                                  style: TextStyle(
-                                      letterSpacing: -1.w,
-                                      decoration: TextDecoration.none,
-                                      color: HhColors.gray9TextColor,
-                                      fontSize: 14.sp * 3,
-                                      fontWeight: FontWeight.w300))
-                            ],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 0.1,
-                          onPressed: () async {
-                            if (versionStatus.value == 0) {
-                              ///立即更新
-                              //请求安装未知应用权限 (Android 8.0及以上)
-                              if (Platform.isAndroid) {
-                                if(await Permission.requestInstallPackages.isGranted){
-                                  versionStatus.value = 1;
-                                  downloadStep.value = 0;
-                                  downloadUrl = "${CommonData.endpoint}${update["apkUrl"]}";
-                                  HhLog.d("downloadUrl $downloadUrl");
-                                  downloadDir();
-                                }else{
-                                  EventBusUtil.getInstance().fire(HhToast(title: '请先开启安装权限，开启后请重新打开应用'));
-                                  Future.delayed(const Duration(milliseconds: 1600),() async {
-                                    /*var installStatus = await Permission.requestInstallPackages.request();*/
-                                    /*if (installStatus.isGranted) {
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: BouncingWidget(
+                              duration: const Duration(milliseconds: 100),
+                              scaleFactor: 0.1,
+                              onPressed: () async {
+                                if (versionStatus.value == 0) {
+                                  ///立即更新
+                                  //请求安装未知应用权限 (Android 8.0及以上)
+                                  if (Platform.isAndroid) {
+                                    if (await Permission
+                                        .requestInstallPackages.isGranted) {
+                                      versionStatus.value = 1;
+                                      downloadStep.value = 0;
+                                      downloadUrl =
+                                          "${CommonData.endpoint}${update["apkUrl"]}";
+                                      HhLog.d("downloadUrl $downloadUrl");
+                                      downloadDir();
+                                    } else {
+                                      EventBusUtil.getInstance().fire(HhToast(
+                                          title: '请先开启安装权限，开启后请重新打开应用'));
+                                      Future.delayed(
+                                          const Duration(milliseconds: 1600),
+                                          () async {
+                                        /*var installStatus = await Permission.requestInstallPackages.request();*/
+                                        /*if (installStatus.isGranted) {
                                         versionStatus.value = 1;
                                         downloadStep.value = 0;
                                         downloadDir();
@@ -724,52 +745,59 @@ class HomeController extends GetxController {
                                         //未开启权限
                                       }*/
 
-                                    // Get.offAll(() => HomePage(), binding: HomeBinding());
-                                    try{
-                                      await Permission.requestInstallPackages.request();
-                                    }catch(e){
-                                      //
+                                        // Get.offAll(() => HomePage(), binding: HomeBinding());
+                                        try {
+                                          await Permission
+                                              .requestInstallPackages
+                                              .request();
+                                        } catch (e) {
+                                          //
+                                        }
+                                      });
                                     }
-                                  });
+                                  }
+                                } else {
+                                  ///确定
+                                  if (currentSize.value == totalSize.value) {
+                                    uploadAPK();
+                                  }
                                 }
-                              }
-                            } else {
-                              ///确定
-                              if(currentSize.value == totalSize.value){
-                                uploadAPK();
-                              }
-                            }
-                          },
-                          child: Container(
-                            width: 248.w * 3,
-                            height: 44.w * 3,
-                            margin: EdgeInsets.fromLTRB(0, 260.w * 3, 0, 0),
-                            decoration: BoxDecoration(
-                                color: (versionStatus.value == 0||currentSize.value == totalSize.value)?HhColors.mainBlueColor:HhColors.mainBlueColorUn,
-                                borderRadius: BorderRadius.circular(8.w * 3)),
-                            child: Center(
-                              child: Text(
-                                versionStatus.value == 0 ? "立即更新" : "确定",
-                                style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    color: HhColors.whiteColor,
-                                    fontSize: 16.sp * 3,
-                                    fontWeight: FontWeight.w300),
+                              },
+                              child: Container(
+                                width: 248.w * 3,
+                                height: 44.w * 3,
+                                margin: EdgeInsets.fromLTRB(0, 260.w * 3, 0, 0),
+                                decoration: BoxDecoration(
+                                    color: (versionStatus.value == 0 ||
+                                            currentSize.value ==
+                                                totalSize.value)
+                                        ? HhColors.mainBlueColor
+                                        : HhColors.mainBlueColorUn,
+                                    borderRadius:
+                                        BorderRadius.circular(8.w * 3)),
+                                child: Center(
+                                  child: Text(
+                                    versionStatus.value == 0 ? "立即更新" : "确定",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.none,
+                                        color: HhColors.whiteColor,
+                                        fontSize: 16.sp * 3,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
           useRootNavigator: true,
           barrierDismissible: false);
-    }catch(e){
-      // HhLog.e("getVersion error  $e");
+    } catch (e) {
+      HhLog.e("getVersion error  $e");
     }
   }
 
@@ -788,7 +816,8 @@ class HomeController extends GetxController {
             // 计算下载进度
             currentSize.value = received;
             totalSize.value = total;
-            downloadStep.value = int.parse(((received / total) * 100).toStringAsFixed(0));
+            downloadStep.value =
+                int.parse(((received / total) * 100).toStringAsFixed(0));
           }
         },
       );
@@ -807,6 +836,7 @@ class HomeController extends GetxController {
   }
 
   uploadAPK() async {
-    await OpenFile.open(savePath,type: "application/vnd.android.package-archive");
+    await OpenFile.open(savePath,
+        type: "application/vnd.android.package-archive");
   }
 }

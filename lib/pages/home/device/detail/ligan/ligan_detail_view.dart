@@ -1162,7 +1162,7 @@ class LiGanDetailPage extends StatelessWidget {
                             },
                             child: Container(
                               width: 1.sw,
-                              height: 44.w * 3,
+                              height: 40.w * 3,
                               margin:
                                   EdgeInsets.fromLTRB(0, 10.w * 3, 0, 10.w * 3),
                               decoration: BoxDecoration(
@@ -1304,8 +1304,8 @@ class LiGanDetailPage extends StatelessWidget {
                                                   logic.direction.value == 0
                                                       ? "assets/images/common/yes2.png"
                                                       : "assets/images/common/no.png",
-                                                  height: 32.w,
-                                                  width: 32.w),
+                                                  height: 16.w*3,
+                                                  width: 16.w*3),
                                             ),
                                             SizedBox(
                                               width: 10.w,
@@ -1313,7 +1313,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             Text(
                                               '向上',
                                               style: TextStyle(
-                                                color: HhColors.blackColor,
+                                                color: logic.direction.value == 0?HhColors.mainBlueColor:HhColors.blackColor,
                                                 fontSize: 15.sp * 3,
                                               ),
                                             ),
@@ -1328,8 +1328,8 @@ class LiGanDetailPage extends StatelessWidget {
                                                   logic.direction.value == 1
                                                       ? "assets/images/common/yes2.png"
                                                       : "assets/images/common/no.png",
-                                                  height: 32.w,
-                                                  width: 32.w),
+                                                  height: 16.w*3,
+                                                  width: 16.w*3),
                                             ),
                                             SizedBox(
                                               width: 10.w,
@@ -1337,7 +1337,7 @@ class LiGanDetailPage extends StatelessWidget {
                                             Text(
                                               '向下',
                                               style: TextStyle(
-                                                color: HhColors.blackColor,
+                                                color: logic.direction.value == 1?HhColors.mainBlueColor:HhColors.blackColor,
                                                 fontSize: 15.sp * 3,
                                               ),
                                             ),
@@ -1428,7 +1428,7 @@ class LiGanDetailPage extends StatelessWidget {
                                           Radius.circular(2.w * 3))),
                                 ),
                                 Text(
-                                  '息屏设置',
+                                  'LED屏设置',
                                   style: TextStyle(
                                       color: HhColors.blackTextColor,
                                       fontSize: 15.sp * 3,
@@ -1452,7 +1452,7 @@ class LiGanDetailPage extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '息屏开关',
+                                        '控制',
                                         style: TextStyle(
                                           color: HhColors.blackColor,
                                           fontSize: 15.sp * 3,
@@ -1461,18 +1461,84 @@ class LiGanDetailPage extends StatelessWidget {
                                       const Expanded(child: SizedBox()),
                                       Align(
                                           alignment: Alignment.centerRight,
-                                          child: FlutterSwitch(
-                                            width: 100.w,
-                                            height: 55.w,
-                                            activeColor: HhColors.mainBlueColor,
-                                            valueFontSize: 25.w,
-                                            toggleSize: 45.w,
-                                            value: logic.close.value,
-                                            borderRadius: 30.w,
-                                            padding: 8.w,
-                                            onToggle: (val) {
-                                              logic.close.value = val;
-                                            },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              InkWell(
+                                              onTap: (){
+                                                logic.closeTab.value=1;
+                                              },
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [//closeTab
+                                                    Image.asset(
+                                                        logic.closeTab.value==1
+                                                            ? "assets/images/common/yes2.png"
+                                                            : "assets/images/common/no.png",
+                                                        height: 16.w * 3,
+                                                        width: 16.w * 3),
+                                                    SizedBox(width: 10.w,),
+                                                    Text(
+                                                      '常开',
+                                                      style: TextStyle(
+                                                        color: logic.closeTab.value==1?HhColors.mainBlueColor:HhColors.blackColor,
+                                                        fontSize: 15.sp * 3,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(width: 26.w,),
+                                              InkWell(
+                                              onTap: (){
+                                                logic.closeTab.value=0;
+                                              },
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [//closeTab
+                                                    Image.asset(
+                                                        logic.closeTab.value==0
+                                                            ? "assets/images/common/yes2.png"
+                                                            : "assets/images/common/no.png",
+                                                        height: 16.w * 3,
+                                                        width: 16.w * 3),
+                                                    SizedBox(width: 10.w,),
+                                                    Text(
+                                                      '常闭',
+                                                      style: TextStyle(
+                                                        color: logic.closeTab.value==0?HhColors.mainBlueColor:HhColors.blackColor,
+                                                        fontSize: 15.sp * 3,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(width: 26.w,),
+                                              InkWell(
+                                              onTap: (){
+                                                logic.closeTab.value=2;
+                                              },
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [//closeTab
+                                                    Image.asset(
+                                                        logic.closeTab.value==2
+                                                            ? "assets/images/common/yes2.png"
+                                                            : "assets/images/common/no.png",
+                                                        height: 16.w * 3,
+                                                        width: 16.w * 3),
+                                                    SizedBox(width: 10.w,),
+                                                    Text(
+                                                      '触发',
+                                                      style: TextStyle(
+                                                        color: logic.closeTab.value==2?HhColors.mainBlueColor:HhColors.blackColor,
+                                                        fontSize: 15.sp * 3,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ))
                                     ],
                                   ),
@@ -1521,39 +1587,102 @@ class LiGanDetailPage extends StatelessWidget {
                                     padding: EdgeInsets.fromLTRB(
                                         16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Expanded(
-                                          child: Text(
-                                            '息屏时间',
-                                            style: TextStyle(
-                                              color: HhColors.blackColor,
-                                              fontSize: 15.sp * 3,
-                                            ),
+                                        Text(
+                                          '亮屏时间',
+                                          style: TextStyle(
+                                            color: HhColors.blackColor,
+                                            fontSize: 15.sp * 3,
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Text(
-                                            //config["ledTime"]
-                                            // '${logic.ledTime.value}',
-                                            '${logic.closeStart}-${logic.closeEnd}',
-                                            textAlign: TextAlign.end,
-                                            style: TextStyle(
-                                              color: HhColors.gray9TextColor,
-                                              fontSize: 15.sp * 3,
-                                            ),
+                                        Align(
+                                        alignment: Alignment.centerRight,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                  height:40.w*3,
+                                                  decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8.w*3),
+                                                    border: Border.all(color: HhColors.grayE6BackColor,width: 1.w*3)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          width: 10.w * 3,
+                                                        ),
+                                                        Image.asset(
+                                                                "assets/images/common/icon_times.png",
+                                                            height: 13.w * 3,
+                                                            width: 13.w * 3),
+                                                        SizedBox(
+                                                          width: 5.w * 3,
+                                                        ),
+                                                        Text(
+                                                          '${logic.closeStart}',
+                                                          textAlign: TextAlign.end,
+                                                          style: TextStyle(
+                                                            color: HhColors.gray9TextColor,
+                                                            fontSize: 15.sp * 3,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10.w * 3,
+                                                        ),
+                                                      ],
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 6.w * 3,
+                                                ),
+                                                Text(
+                                                  '至',
+                                                  textAlign: TextAlign.end,
+                                                  style: TextStyle(
+                                                    color: HhColors.blackColor,
+                                                    fontSize: 15.sp * 3,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 6.w * 3,
+                                                ),
+                                                Container(
+                                                  height:40.w*3,
+                                                  decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8.w*3),
+                                                    border: Border.all(color: HhColors.grayE6BackColor,width: 1.w*3)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          width: 10.w * 3,
+                                                        ),
+                                                        Image.asset(
+                                                                "assets/images/common/icon_times.png",
+                                                            height: 13.w * 3,
+                                                            width: 13.w * 3),
+                                                        SizedBox(
+                                                          width: 5.w * 3,
+                                                        ),
+                                                        Text(
+                                                          '${logic.closeEnd}',
+                                                          textAlign: TextAlign.end,
+                                                          style: TextStyle(
+                                                            color: HhColors.gray9TextColor,
+                                                            fontSize: 15.sp * 3,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10.w * 3,
+                                                        ),
+                                                      ],
+                                                  ),
+                                                ),
+                                              ],
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 5.w * 3,
-                                        ),
-                                        Image.asset(
-                                            logic.closeStatus.value
-                                                ? "assets/images/common/icon_top_status.png"
-                                                : "assets/images/common/icon_down_status.png",
-                                            height: 13.w * 3,
-                                            width: 13.w * 3),
-                                        SizedBox(
-                                          width: 10.w,
                                         ),
                                       ],
                                     ),
@@ -1572,7 +1701,7 @@ class LiGanDetailPage extends StatelessWidget {
                             },
                             child: Container(
                               width: 1.sw,
-                              height: 90.w,
+                              height: 40.w*3,
                               margin: EdgeInsets.fromLTRB(0, 30.w, 0, 30.w),
                               decoration: BoxDecoration(
                                   color: HhColors.mainBlueColor,
