@@ -43,6 +43,10 @@ class DeviceDetailController extends GetxController {
   final Rx<int> videoMinute = 0.obs;
   final Rx<int> videoSecond = 0.obs;
   final Rx<bool> liveStatus = true.obs;
+  final Rx<bool> upTap = false.obs;
+  final Rx<bool> downTap = false.obs;
+  final Rx<bool> leftTap = false.obs;
+  final Rx<bool> rightTap = false.obs;
   final Rx<bool> upStatus = false.obs;
   final Rx<bool> downStatus = false.obs;
   final Rx<bool> leftStatus = false.obs;

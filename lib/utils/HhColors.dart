@@ -16,6 +16,7 @@ class HhColors {
   static const grayAATextColor = Color(0xFFAAAAAA);//深灰字体颜色
   static const grayBBTextColor = Color(0xFFBBBBBB);//深灰字体颜色
   static const grayCCTextColor = Color(0xFFCCCCCC);//深灰字体颜色
+  static const grayC3TextColor = Color(0xFFC3CCDC);//深灰字体颜色
   static const grayLineColor = Color(0xFFF3F3F8);//深灰字体颜色
   static const grayDDTextColor = Color(0xFFDDDDDD);//深灰字体颜色
   static const grayF3TextColor = Color(0xFFEEEFF3);//深灰字体颜色

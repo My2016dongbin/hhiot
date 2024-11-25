@@ -24,6 +24,7 @@ import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/pages/home/device/detail/fijkpanel.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
+import 'package:iot/pages/home/my/setting/edit_user/edit_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -517,13 +518,242 @@ class DeviceDetailPage extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.topCenter,
-                child: SizedBox(
-                  width: 270.w * 3,
-                  height: 270.w * 3,
+                child: Container(
+                  width: 240.w * 3,
+                  height: 240.w * 3,
+                  margin: EdgeInsets.only(top: 10.w*3),
                   child: Stack(
                     children: [
-                      ///控制背景阴影
+                      Image.asset(
+                        "assets/images/common/icon_board_clip.png",
+                        width: 240.w * 3,
+                        height: 240.w * 3,
+                        fit: BoxFit.fill,
+                      ),
                       Align(
+                        alignment: Alignment.topCenter,
+                        child: GestureDetector(
+                          onTapDown: (v){
+                            logic.upTap.value = true;
+                            logic.command = "UP";
+                            logic.controlPost(0);
+                          },
+                          onTapUp: (v){
+                            logic.upTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          onTapCancel: (){
+                            logic.upTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          child: SizedBox(
+                            width: 85.w * 3,
+                            height: 63.w * 3,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  logic.upTap.value?"assets/images/common/icon_tap_up.png":"assets/images/common/icon_null.png",
+                                  width: 85.w * 3,
+                                  height: 63.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    "assets/images/common/single_top.png",
+                                    width: 26.w * 3,
+                                    height: 15.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: GestureDetector(
+                          onTapDown: (v){
+                            logic.downTap.value = true;
+                            logic.command = "DOWN";
+                            logic.controlPost(0);
+                          },
+                          onTapUp: (v){
+                            logic.downTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          onTapCancel: (){
+                            logic.downTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          child: SizedBox(
+                            width: 85.w * 3,
+                            height: 63.w * 3,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  logic.downTap.value?"assets/images/common/icon_tap_down.png":"assets/images/common/icon_null.png",
+                                  width: 85.w * 3,
+                                  height: 63.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    "assets/images/common/single_bottom.png",
+                                    width: 26.w * 3,
+                                    height: 15.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTapDown: (v){
+                            logic.leftTap.value = true;
+                            logic.command = "LEFT";
+                            logic.controlPost(0);
+                          },
+                          onTapUp: (v){
+                            logic.leftTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          onTapCancel: (){
+                            logic.leftTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          child: SizedBox(
+                            width: 63.w * 3,
+                            height: 85.w * 3,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  logic.leftTap.value?"assets/images/common/icon_tap_left.png":"assets/images/common/icon_null.png",
+                                  width: 63.w * 3,
+                                  height: 85.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    "assets/images/common/single_left.png",
+                                    width: 15.w * 3,
+                                    height: 26.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTapDown: (v){
+                            logic.rightTap.value = true;
+                            logic.command = "RIGHT";
+                            logic.controlPost(0);
+                          },
+                          onTapUp: (v){
+                            logic.rightTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          onTapCancel: (){
+                            logic.rightTap.value = false;
+                            logic.controlPost(1);
+                          },
+                          child: SizedBox(
+                            width: 63.w * 3,
+                            height: 85.w * 3,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  logic.rightTap.value?"assets/images/common/icon_tap_right.png":"assets/images/common/icon_null.png",
+                                  width: 63.w * 3,
+                                  height: 85.w * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    "assets/images/common/single_right.png",
+                                    width: 15.w * 3,
+                                    height: 26.w * 3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          width: 6.w*3,
+                          height: 6.w*3,
+                          margin: EdgeInsets.fromLTRB(0, 55.w*3, 55.w*3, 0),
+                          decoration: BoxDecoration(
+                            color: HhColors.grayC3TextColor,
+                            borderRadius: BorderRadius.circular(3.w*3)
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          width: 6.w*3,
+                          height: 6.w*3,
+                          margin: EdgeInsets.fromLTRB(0, 0, 55.w*3, 55.w*3),
+                          decoration: BoxDecoration(
+                            color: HhColors.grayC3TextColor,
+                            borderRadius: BorderRadius.circular(3.w*3)
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          width: 6.w*3,
+                          height: 6.w*3,
+                          margin: EdgeInsets.fromLTRB(55.w*3, 0, 0, 55.w*3),
+                          decoration: BoxDecoration(
+                            color: HhColors.grayC3TextColor,
+                            borderRadius: BorderRadius.circular(3.w*3)
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          width: 6.w*3,
+                          height: 6.w*3,
+                          margin: EdgeInsets.fromLTRB(55.w*3, 55.w*3, 0, 0),
+                          decoration: BoxDecoration(
+                            color: HhColors.grayC3TextColor,
+                            borderRadius: BorderRadius.circular(3.w*3)
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "切换角度",
+                          style: TextStyle(
+                              color: HhColors.gray6TextColor,
+                              fontSize: 14.sp * 3),
+                        ),
+                      ),
+                      ///控制背景阴影
+                      /*Align(
                         alignment: Alignment.center,
                         child: Container(
                           width: 215.w * 3,
@@ -534,10 +764,10 @@ class DeviceDetailPage extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(110.w * 3))),
                         ),
-                      ),
+                      ),*/
 
                       ///控制拖动按钮
-                      Align(
+                      /*Align(
                           alignment: logic.animateAlign,
                           child: GestureDetector(
                             onPanUpdate: (details) {
@@ -688,7 +918,8 @@ class DeviceDetailPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          )),
+                          )),*/
+
                     ],
                   ),
                 ),

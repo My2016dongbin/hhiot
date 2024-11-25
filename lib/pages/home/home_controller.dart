@@ -52,7 +52,7 @@ class HomeController extends GetxController {
   final Rx<String> version = ''.obs;
   final Rx<String> buildNumber = ''.obs;
 
-  final Rx<int> totalSize = 65.obs;
+  final Rx<int> totalSize = (65*1000*1000).obs;
   final Rx<int> currentSize = 0.obs;
   late Dio dio = Dio();
   late String downloadUrl =
@@ -804,8 +804,8 @@ class HomeController extends GetxController {
   Future<void> downloadDir() async {
     try {
       // 获取设备的存储目录
-      final directory = await getExternalStorageDirectory();
-      savePath = '${directory!.path}/iot.apk';
+      final directory = await getApplicationCacheDirectory();
+      savePath = '${directory.path}/iot.apk';
 
       // 开始下载文件
       await dio.download(
