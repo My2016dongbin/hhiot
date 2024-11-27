@@ -1077,9 +1077,13 @@ class CommonUtils {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? id = prefs.getString(SPKeys().id);
     String? token = prefs.getString(SPKeys().token);
-    XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
-    XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
-    XgFlutterPlugin().deleteTags([id]);
+    try{
+      XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
+      XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
+      XgFlutterPlugin().deleteTags([id]);
+    }catch(e){
+      //
+    }
     prefs.remove(SPKeys().token);
     CommonData.tenant = CommonData.tenantDef;
     CommonData.tenantName = CommonData.tenantNameDef;

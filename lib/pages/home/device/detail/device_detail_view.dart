@@ -93,12 +93,12 @@ class DeviceDetailPage extends StatelessWidget {
               Image.asset(
                 "assets/images/common/test_video.jpg",
                 width: 1.sw,
-                height: 254.w * 3,
+                height: 254.h * 3,
                 fit: BoxFit.fill,
               ),
               Container(
                 width: 1.sw,
-                height: 254.w * 3,
+                height: 254.h * 3,
                 color: HhColors.blackColor,
               ),
               logic.playTag.value
@@ -180,7 +180,7 @@ class DeviceDetailPage extends StatelessWidget {
                         transformationController: logic.transformationController,
                         child: SizedBox(
                           width: double.infinity,
-                          height: 254.w * 3,
+                          height: 254.h * 3,
                           child: Stack(
                             children: [
                               Transform(
@@ -190,17 +190,17 @@ class DeviceDetailPage extends StatelessWidget {
                                 ,
                                 alignment: Alignment.center,
                                 child: Container(
-                                  margin: EdgeInsets.only(top: 0.w * 3),
+                                  margin: EdgeInsets.only(top: 0.h * 3),
                                   child: ScreenRecorder(
                                     width: double.infinity,
-                                    height: 254.w * 3,
+                                    height: 254.h * 3,
                                     background: Colors.white,
                                     controller: logic.recordController,
                                     child: Screenshot(
                                       controller: logic.screenshotController,
                                       child: FijkView(
                                         width: double.infinity,
-                                        height: 254.w * 3,
+                                        height: 254.h * 3,
                                         player: logic.player,
                                         color: HhColors.blackColor,
                                         fit: FijkFit.fill,
@@ -219,16 +219,16 @@ class DeviceDetailPage extends StatelessWidget {
                                           children: [
                                             Container(
                                                 padding: EdgeInsets.fromLTRB(
-                                                    4.w * 3,
-                                                    0.w * 3,
-                                                    4.w * 3,
-                                                    1.w * 3),
+                                                    4.h * 3,
+                                                    0.h * 3,
+                                                    4.h * 3,
+                                                    1.h * 3),
                                                 decoration: BoxDecoration(
                                                     color: HhColors
                                                         .mainGreenColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            2.w * 3)),
+                                                            2.h * 3)),
                                                 child: Text(
                                                   '自动对焦',
                                                   style: TextStyle(
@@ -237,12 +237,12 @@ class DeviceDetailPage extends StatelessWidget {
                                                       fontSize: 12.sp * 3),
                                                 )),
                                             SizedBox(
-                                              height: 19.w * 3,
+                                              height: 19.h * 3,
                                             ),
                                             Image.asset(
                                               "assets/images/common/icon_fix.png",
-                                              width: 56.w * 3,
-                                              height: 56.w * 3,
+                                              width: 56.h * 3,
+                                              height: 56.h * 3,
                                               fit: BoxFit.fill,
                                             ),
                                           ],
@@ -263,19 +263,19 @@ class DeviceDetailPage extends StatelessWidget {
                   Get.back();
                 },
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(23.w * 3, 59.h * 3, 0, 0),
+                  margin: EdgeInsets.fromLTRB(23.h * 3, 59.h * 3, 0, 0),
                   color: HhColors.trans,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         "assets/images/common/back_white.png",
-                        height: 17.w * 3,
-                        width: 10.w * 3,
+                        height: 17.h * 3,
+                        width: 10.h * 3,
                         fit: BoxFit.fill,
                       ),
                       SizedBox(
-                        width: 12.w * 3,
+                        width: 12.h * 3,
                       ),
                       Container(
                         constraints: BoxConstraints(maxWidth: 0.5.sw),
@@ -289,26 +289,26 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        width: 5.w * 3,
+                        width: 5.h * 3,
                       ),
                       logic.videoTag.value
                           ? Container(
                               padding: EdgeInsets.fromLTRB(
-                                  6.w * 3, 2.w * 3, 10.w * 3, 2.w * 3),
+                                  6.h * 3, 2.h * 3, 10.h * 3, 2.h * 3),
                               decoration: BoxDecoration(
                                 color: HhColors.mainRedColor,
-                                borderRadius: BorderRadius.circular(11.w * 3),
+                                borderRadius: BorderRadius.circular(11.h * 3),
                               ),
                               child: Row(
                                 children: [
                                   Image.asset(
                                     "assets/images/common/luxiang.png",
-                                    width: 12.w * 3,
-                                    height: 12.w * 3,
+                                    width: 12.h * 3,
+                                    height: 12.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                   SizedBox(
-                                    width: 2.w * 3,
+                                    width: 2.h * 3,
                                   ),
                                   Text(
                                     "${CommonUtils().parseZero(logic.videoMinute.value)}:${CommonUtils().parseZero(logic.videoSecond.value)}",
@@ -339,11 +339,11 @@ class DeviceDetailPage extends StatelessWidget {
                     showEditDeviceDialog(logic.item);
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 57.w * 3, 14.w * 3, 0),
+                    margin: EdgeInsets.fromLTRB(0, 57.h * 3, 14.h * 3, 0),
                     child: Image.asset(
                       "assets/images/common/icon_video_set.png",
-                      width: 24.w * 3,
-                      height: 24.w * 3,
+                      width: 24.h * 3,
+                      height: 24.h * 3,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -352,9 +352,9 @@ class DeviceDetailPage extends StatelessWidget {
 
               ///tab
               Container(
-                height: 45.w * 3,
+                height: 45.h * 3,
                 color: HhColors.whiteColor,
-                margin: EdgeInsets.fromLTRB(0, 259.w * 3, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 259.h * 3, 0, 0),
                 child: Row(
                   children: [
                     Expanded(
@@ -368,24 +368,24 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.tabIndex.value = 0;
                             },
                             child: Container(
-                              height: 40.w * 3,
+                              height: 40.h * 3,
                               color: HhColors.trans,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(top: 5.w),
+                                    margin: EdgeInsets.only(top: 5.h),
                                     child: Image.asset(
                                       logic.tabIndex.value == 0
                                           ? "assets/images/common/icon_live.png"
                                           : "assets/images/common/icon_live_.png",
-                                      width: 16.w * 3,
-                                      height: 16.w * 3,
+                                      width: 16.h * 3,
+                                      height: 16.h * 3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 6.w,
+                                    width: 6.h,
                                   ),
                                   Text(
                                     '实时视频',
@@ -405,16 +405,16 @@ class DeviceDetailPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 5.w,
+                            height: 5.h,
                           ),
                           logic.tabIndex.value == 0
                               ? Container(
-                                  height: 4.w,
-                                  width: 140.w,
+                                  height: 4.h,
+                                  width: 140.h,
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(2.w))),
+                                          Radius.circular(2.h))),
                                 )
                               : const SizedBox()
                         ],
@@ -431,24 +431,24 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.tabIndex.value = 1;
                             },
                             child: Container(
-                              height: 40.w * 3,
+                              height: 40.h * 3,
                               color: HhColors.trans,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(top: 3.w),
+                                    margin: EdgeInsets.only(top: 3.h),
                                     child: Image.asset(
                                       logic.tabIndex.value == 1
                                           ? "assets/images/common/icon_msg_.png"
                                           : "assets/images/common/icon_msg.png",
-                                      width: 16.w * 3,
-                                      height: 16.w * 3,
+                                      width: 16.h * 3,
+                                      height: 16.h * 3,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 6.w,
+                                    width: 6.h,
                                   ),
                                   Text(
                                     '历史消息',
@@ -468,16 +468,16 @@ class DeviceDetailPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 5.w,
+                            height: 5.h,
                           ),
                           logic.tabIndex.value == 1
                               ? Container(
-                                  height: 4.w,
-                                  width: 140.w,
+                                  height: 4.h,
+                                  width: 140.h,
                                   decoration: BoxDecoration(
                                       color: HhColors.mainBlueColor,
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(2.w))),
+                                          Radius.circular(2.h))),
                                 )
                               : const SizedBox()
                         ],
@@ -488,7 +488,7 @@ class DeviceDetailPage extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.fromLTRB(0, 305.w * 3, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 305.h * 3, 0, 0),
                 child: logic.tabIndex.value == 0 ? livePage() : historyPage(),
               ),
 
@@ -519,14 +519,14 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: 240.w * 3,
-                  height: 240.w * 3,
-                  margin: EdgeInsets.only(top: 10.w*3),
+                  width: 230.h * 3,
+                  height: 230.h * 3,
+                  margin: EdgeInsets.only(top: 10.h*3),
                   child: Stack(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(120.w*3),
+                          borderRadius: BorderRadius.circular(115.h*3),
                           boxShadow: [
                             BoxShadow(
                               color: HhColors.shadowColor.withOpacity(0.9), // 阴影颜色及透明度
@@ -538,8 +538,8 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                         child: Image.asset(
                           "assets/images/common/icon_board_clip.png",
-                          width: 240.w * 3,
-                          height: 240.w * 3,
+                          width: 230.h * 3,
+                          height: 230.h * 3,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -560,22 +560,22 @@ class DeviceDetailPage extends StatelessWidget {
                             logic.controlPost(1);
                           },
                           child: SizedBox(
-                            width: 85.w * 3,
-                            height: 63.w * 3,
+                            width: 85.h * 3,
+                            height: 63.h * 3,
                             child: Stack(
                               children: [
                                 Image.asset(
                                   logic.upTap.value?"assets/images/common/icon_tap_up.png":"assets/images/common/icon_null.png",
-                                  width: 85.w * 3,
-                                  height: 63.w * 3,
+                                  width: 85.h * 3,
+                                  height: 63.h * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
                                     "assets/images/common/single_top.png",
-                                    width: 26.w * 3,
-                                    height: 15.w * 3,
+                                    width: 22.h * 3,
+                                    height: 13.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -601,22 +601,22 @@ class DeviceDetailPage extends StatelessWidget {
                             logic.controlPost(1);
                           },
                           child: SizedBox(
-                            width: 85.w * 3,
-                            height: 63.w * 3,
+                            width: 85.h * 3,
+                            height: 63.h * 3,
                             child: Stack(
                               children: [
                                 Image.asset(
                                   logic.downTap.value?"assets/images/common/icon_tap_down.png":"assets/images/common/icon_null.png",
-                                  width: 85.w * 3,
-                                  height: 63.w * 3,
+                                  width: 85.h * 3,
+                                  height: 63.h * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
                                     "assets/images/common/single_bottom.png",
-                                    width: 26.w * 3,
-                                    height: 15.w * 3,
+                                    width: 22.h * 3,
+                                    height: 13.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -642,22 +642,22 @@ class DeviceDetailPage extends StatelessWidget {
                             logic.controlPost(1);
                           },
                           child: SizedBox(
-                            width: 63.w * 3,
-                            height: 85.w * 3,
+                            width: 63.h * 3,
+                            height: 85.h * 3,
                             child: Stack(
                               children: [
                                 Image.asset(
                                   logic.leftTap.value?"assets/images/common/icon_tap_left.png":"assets/images/common/icon_null.png",
-                                  width: 63.w * 3,
-                                  height: 85.w * 3,
+                                  width: 63.h * 3,
+                                  height: 85.h * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
                                     "assets/images/common/single_left.png",
-                                    width: 15.w * 3,
-                                    height: 26.w * 3,
+                                    width: 13.h * 3,
+                                    height: 22.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -684,22 +684,22 @@ class DeviceDetailPage extends StatelessWidget {
                             logic.controlPost(1);
                           },
                           child: SizedBox(
-                            width: 63.w * 3,
-                            height: 85.w * 3,
+                            width: 63.h * 3,
+                            height: 85.h * 3,
                             child: Stack(
                               children: [
                                 Image.asset(
                                   logic.rightTap.value?"assets/images/common/icon_tap_right.png":"assets/images/common/icon_null.png",
-                                  width: 63.w * 3,
-                                  height: 85.w * 3,
+                                  width: 63.h * 3,
+                                  height: 85.h * 3,
                                   fit: BoxFit.fill,
                                 ),
                                 Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
                                     "assets/images/common/single_right.png",
-                                    width: 15.w * 3,
-                                    height: 26.w * 3,
+                                    width: 13.h * 3,
+                                    height: 22.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -711,48 +711,48 @@ class DeviceDetailPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: Container(
-                          width: 6.w*3,
-                          height: 6.w*3,
-                          margin: EdgeInsets.fromLTRB(0, 55.w*3, 55.w*3, 0),
+                          width: 6.h*3,
+                          height: 6.h*3,
+                          margin: EdgeInsets.fromLTRB(0, 52.h*3, 52.h*3, 0),
                           decoration: BoxDecoration(
                             color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.w*3)
+                            borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: Container(
-                          width: 6.w*3,
-                          height: 6.w*3,
-                          margin: EdgeInsets.fromLTRB(0, 0, 55.w*3, 55.w*3),
+                          width: 6.h*3,
+                          height: 6.h*3,
+                          margin: EdgeInsets.fromLTRB(0, 0, 52.h*3, 52.h*3),
                           decoration: BoxDecoration(
                             color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.w*3)
+                            borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Container(
-                          width: 6.w*3,
-                          height: 6.w*3,
-                          margin: EdgeInsets.fromLTRB(55.w*3, 0, 0, 55.w*3),
+                          width: 6.h*3,
+                          height: 6.h*3,
+                          margin: EdgeInsets.fromLTRB(52.h*3, 0, 0, 52.h*3),
                           decoration: BoxDecoration(
                             color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.w*3)
+                            borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Container(
-                          width: 6.w*3,
-                          height: 6.w*3,
-                          margin: EdgeInsets.fromLTRB(55.w*3, 55.w*3, 0, 0),
+                          width: 6.h*3,
+                          height: 6.h*3,
+                          margin: EdgeInsets.fromLTRB(52.h*3, 52.h*3, 0, 0),
                           decoration: BoxDecoration(
                             color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.w*3)
+                            borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
@@ -769,13 +769,13 @@ class DeviceDetailPage extends StatelessWidget {
                       /*Align(
                         alignment: Alignment.center,
                         child: Container(
-                          width: 215.w * 3,
-                          height: 215.w * 3,
-                          // margin: EdgeInsets.only(top: 60.w*3),
+                          width: 215.h * 3,
+                          height: 215.h * 3,
+                          // margin: EdgeInsets.only(top: 60.h*3),
                           decoration: BoxDecoration(
                               color: HhColors.videoControlShadowColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(110.w * 3))),
+                                  BorderRadius.all(Radius.circular(110.h * 3))),
                         ),
                       ),*/
 
@@ -852,26 +852,26 @@ class DeviceDetailPage extends StatelessWidget {
                               logic.controlPost(1);
                             },
                             child: Container(
-                              width: 240.w * 3,
-                              height: 240.w * 3,
-                              // margin: EdgeInsets.only(top: 60.w*3),
+                              width: 240.h * 3,
+                              height: 240.h * 3,
+                              // margin: EdgeInsets.only(top: 60.h*3),
                               child: Stack(
                                 children: [
                                   Image.asset(
                                     "assets/images/common/video_board.png",
-                                    width: 240.w * 3,
-                                    height: 240.w * 3,
+                                    width: 240.h * 3,
+                                    height: 240.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                   Align(
                                     alignment: Alignment.topCenter,
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          0, 20.w * 3, 0, 0),
+                                          0, 20.h * 3, 0, 0),
                                       child: Image.asset(
                                         "assets/images/common/top.png",
-                                        width: 25.w * 3,
-                                        height: 25.w * 3,
+                                        width: 25.h * 3,
+                                        height: 25.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -880,11 +880,11 @@ class DeviceDetailPage extends StatelessWidget {
                                     alignment: Alignment.bottomCenter,
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          0, 0, 0, 30.w * 3),
+                                          0, 0, 0, 30.h * 3),
                                       child: Image.asset(
                                         "assets/images/common/bottom.png",
-                                        width: 25.w * 3,
-                                        height: 25.w * 3,
+                                        width: 25.h * 3,
+                                        height: 25.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -893,11 +893,11 @@ class DeviceDetailPage extends StatelessWidget {
                                     alignment: Alignment.centerLeft,
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          25.w * 3, 0, 0, 0),
+                                          25.h * 3, 0, 0, 0),
                                       child: Image.asset(
                                         "assets/images/common/left.png",
-                                        width: 25.w * 3,
-                                        height: 25.w * 3,
+                                        width: 25.h * 3,
+                                        height: 25.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -906,11 +906,11 @@ class DeviceDetailPage extends StatelessWidget {
                                     alignment: Alignment.centerRight,
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(
-                                          0, 0, 23.w * 3, 0),
+                                          0, 0, 23.h * 3, 0),
                                       child: Image.asset(
                                         "assets/images/common/right.png",
-                                        width: 25.w * 3,
-                                        height: 25.w * 3,
+                                        width: 25.h * 3,
+                                        height: 25.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -919,7 +919,7 @@ class DeviceDetailPage extends StatelessWidget {
                                     alignment: Alignment.center,
                                     child: Container(
                                       margin:
-                                          EdgeInsets.fromLTRB(0, 0, 0, 10.w),
+                                          EdgeInsets.fromLTRB(0, 0, 0, 10.h),
                                       child: Text(
                                         "切换角度",
                                         style: TextStyle(
@@ -940,7 +940,7 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 126.w * 3),
+                  margin: EdgeInsets.only(bottom: 126.h * 3),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -964,11 +964,11 @@ class DeviceDetailPage extends StatelessWidget {
                             logic.controlPost(1);
                           },
                           child: Container(
-                            width: 44.w * 3,
-                            height: 44.w * 3,
+                            width: 44.h * 3,
+                            height: 44.h * 3,
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
-                                borderRadius: BorderRadius.circular(8.w * 3)),
+                                borderRadius: BorderRadius.circular(8.h * 3)),
                             child: Center(
                               child: Text(
                                 '—',
@@ -982,8 +982,8 @@ class DeviceDetailPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 90.w * 3,
-                          height: 44.w * 3,
+                          width: 90.h * 3,
+                          height: 44.h * 3,
                           child: Center(
                             child: Text(
                               '焦距',
@@ -1010,11 +1010,11 @@ class DeviceDetailPage extends StatelessWidget {
                             logic.controlPost(1);
                           },
                           child: Container(
-                            width: 44.w * 3,
-                            height: 44.w * 3,
+                            width: 44.h * 3,
+                            height: 44.h * 3,
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
-                                borderRadius: BorderRadius.circular(8.w * 3)),
+                                borderRadius: BorderRadius.circular(8.h * 3)),
                             child: Center(
                               child: Text(
                                 '+',
@@ -1035,7 +1035,7 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 20.w * 3),
+                  margin: EdgeInsets.only(bottom: 20.h * 3),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -1057,7 +1057,7 @@ class DeviceDetailPage extends StatelessWidget {
                                   }
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 0.w * 3),
+                                  margin: EdgeInsets.only(left: 0.h * 3),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -1065,8 +1065,8 @@ class DeviceDetailPage extends StatelessWidget {
                                         logic.videoTag.value
                                             ? "assets/images/common/ic_video_yes.png"
                                             : "assets/images/common/ic_video.png",
-                                        width: 76.w * 3,
-                                        height: 76.w * 3,
+                                        width: 76.h * 3,
+                                        height: 76.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                       Text(
@@ -1088,14 +1088,14 @@ class DeviceDetailPage extends StatelessWidget {
                                   logic.saveImageToGallery();
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 13.w * 3),
+                                  margin: EdgeInsets.only(left: 13.h * 3),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Image.asset(
                                         "assets/images/common/ic_picture.png",
-                                        width: 76.w * 3,
-                                        height: 76.w * 3,
+                                        width: 76.h * 3,
+                                        height: 76.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                       Text(
@@ -1127,22 +1127,22 @@ class DeviceDetailPage extends StatelessWidget {
                                   }
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 13.w * 3),
+                                  margin: EdgeInsets.only(left: 13.h * 3),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       /*logic.recordTag.value?Container(
-                                    width: 230.w,
-                                    height: 80.w,
+                                    width: 230.h,
+                                    height: 80.h,
                                     clipBehavior: Clip.hardEdge,
                                     decoration: BoxDecoration(
                                       color: HhColors.whiteColor,
-                                      borderRadius: BorderRadius.circular(20.w)
+                                      borderRadius: BorderRadius.circular(20.h)
                                     ),
                                     child:  PolygonWaveform(
                                       samples: [1,2,3,444,9999,66,89,6,4,999999,13120],
-                                      height: 230.w,
-                                      width: 80.w,
+                                      height: 230.h,
+                                      width: 80.h,
                                     )):const SizedBox(),*/
                                       Image.asset(
                                         logic.recordTag.value
@@ -1150,8 +1150,8 @@ class DeviceDetailPage extends StatelessWidget {
                                                 ? "assets/images/common/ic_yy_close.png"
                                                 : "assets/images/common/ic_yy_ing.png")
                                             : "assets/images/common/ic_yy.png",
-                                        width: 76.w * 3,
-                                        height: 76.w * 3,
+                                        width: 76.h * 3,
+                                        height: 76.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                       Text(
@@ -1184,14 +1184,14 @@ class DeviceDetailPage extends StatelessWidget {
                                       binding: LiGanDetailBinding());
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 13.w * 3),
+                                  margin: EdgeInsets.only(left: 13.h * 3),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Image.asset(
                                         "assets/images/common/icon_setting_video.png",
-                                        width: 76.w * 3,
-                                        height: 76.w * 3,
+                                        width: 76.h * 3,
+                                        height: 76.h * 3,
                                         fit: BoxFit.fill,
                                       ),
                                       Text(
@@ -1235,12 +1235,12 @@ class DeviceDetailPage extends StatelessWidget {
           itemBuilder: (context, item, index) => InkWell(
             onTap: () {},
             child: Container(
-              height: 70.w * 3,
-              margin: EdgeInsets.fromLTRB(14.w * 3, 0, 14.w * 3, 0),
+              height: 70.h * 3,
+              margin: EdgeInsets.fromLTRB(14.h * 3, 0, 14.h * 3, 0),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                   color: HhColors.trans,
-                  borderRadius: BorderRadius.all(Radius.circular(6.w * 3))),
+                  borderRadius: BorderRadius.all(Radius.circular(6.h * 3))),
               child: Stack(
                 children: [
                   Align(
@@ -1249,18 +1249,18 @@ class DeviceDetailPage extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(20.w))),
+                              BorderRadius.all(Radius.circular(20.h))),
                       child: Image.network(
                         '${logic.endpoint}${item['alarmImageUrl']}',
-                        width: 109.w * 3,
-                        height: 59.w * 3,
+                        width: 109.h * 3,
+                        height: 59.h * 3,
                         fit: BoxFit.fill,
                         errorBuilder: (BuildContext context, Object exception,
                             StackTrace? stackTrace) {
                           return Image.asset(
                             "assets/images/common/test_video.jpg",
-                            width: 109.w * 3,
-                            height: 59.w * 3,
+                            width: 109.h * 3,
+                            height: 59.h * 3,
                             fit: BoxFit.fill,
                           );
                         },
@@ -1268,7 +1268,7 @@ class DeviceDetailPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(20.w * 3, 10.w, 0, 50.w),
+                    margin: EdgeInsets.fromLTRB(20.h * 3, 10.h, 0, 50.h),
                     child: Text(
                       logic.parseDate(item['alarmTimestamp']),
                       style: TextStyle(
@@ -1280,7 +1280,7 @@ class DeviceDetailPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(20.w * 3, 30.w * 3, 0, 0),
+                      margin: EdgeInsets.fromLTRB(20.h * 3, 30.h * 3, 0, 0),
                       child: Text(
                         logic.parseType(item['alarmType']),
                         style: TextStyle(
@@ -1293,24 +1293,24 @@ class DeviceDetailPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 1.5.w * 3,
-                      margin: EdgeInsets.fromLTRB(6.w * 3, 20.w * 3, 0, 0),
+                      width: 1.5.h * 3,
+                      margin: EdgeInsets.fromLTRB(6.h * 3, 20.h * 3, 0, 0),
                       decoration: BoxDecoration(
                           color: HhColors.blueEAColor,
                           borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(3.w))),
+                              BorderRadius.vertical(top: Radius.circular(3.h))),
                     ),
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 6.w * 3,
-                      height: 6.w * 3,
-                      margin: EdgeInsets.fromLTRB(10.w, 10.w * 3, 0, 0),
+                      width: 6.h * 3,
+                      height: 6.h * 3,
+                      margin: EdgeInsets.fromLTRB(10.h, 10.h * 3, 0, 0),
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
                           borderRadius:
-                              BorderRadius.all(Radius.circular(3.w * 3))),
+                              BorderRadius.all(Radius.circular(3.h * 3))),
                     ),
                   ),
                 ],
@@ -1328,12 +1328,12 @@ class DeviceDetailPage extends StatelessWidget {
         builder: (context) => Center(
               child: Container(
                 width: 1.sw,
-                height: 70.w * 3,
-                margin: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-                padding: EdgeInsets.fromLTRB(30.w, 35.w, 45.w, 25.w),
+                height: 70.h * 3,
+                margin: EdgeInsets.fromLTRB(30.h, 0, 30.h, 0),
+                padding: EdgeInsets.fromLTRB(30.h, 35.h, 45.h, 25.h),
                 decoration: BoxDecoration(
                     color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20.w))),
+                    borderRadius: BorderRadius.all(Radius.circular(20.h))),
                 child: Row(
                   children: [
                     CommonData.personal
@@ -1373,12 +1373,12 @@ class DeviceDetailPage extends StatelessWidget {
                                     item["shareMark"] == 2
                                         ? "assets/images/common/icon_edit_share_no.png"
                                         : "assets/images/common/icon_edit_share.png",
-                                    width: 24.w * 3,
-                                    height: 24.w * 3,
+                                    width: 24.h * 3,
+                                    height: 24.h * 3,
                                     fit: BoxFit.fill,
                                   ),
                                   SizedBox(
-                                    height: 2.w * 3,
+                                    height: 2.h * 3,
                                   ),
                                   Text(
                                     '分享',
@@ -1397,7 +1397,7 @@ class DeviceDetailPage extends StatelessWidget {
                         : const SizedBox(),
                     CommonData.personal
                         ? SizedBox(
-                            width: 50.w,
+                            width: 50.h,
                           )
                         : const SizedBox(),
                     Expanded(
@@ -1418,12 +1418,12 @@ class DeviceDetailPage extends StatelessWidget {
                           children: [
                             Image.asset(
                               "assets/images/common/icon_edit_edit.png",
-                              width: 24.w * 3,
-                              height: 24.w * 3,
+                              width: 24.h * 3,
+                              height: 24.h * 3,
                               fit: BoxFit.fill,
                             ),
                             SizedBox(
-                              height: 2.w * 3,
+                              height: 2.h * 3,
                             ),
                             Text(
                               '修改',
@@ -1438,7 +1438,7 @@ class DeviceDetailPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 50.w,
+                      width: 50.h,
                     ),
                     Expanded(
                       child: BouncingWidget(
@@ -1453,12 +1453,12 @@ class DeviceDetailPage extends StatelessWidget {
                           children: [
                             Image.asset(
                               "assets/images/common/icon_video_reset.png",
-                              width: 24 * 3.w,
-                              height: 24 * 3.w,
+                              width: 24 * 3.h,
+                              height: 24 * 3.h,
                               fit: BoxFit.fill,
                             ),
                             SizedBox(
-                              height: 2.w * 3,
+                              height: 2.h * 3,
                             ),
                             Text(
                               '重启',
@@ -1473,7 +1473,7 @@ class DeviceDetailPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 50.w,
+                      width: 50.h,
                     ),
                     Expanded(
                       child: BouncingWidget(
@@ -1499,12 +1499,12 @@ class DeviceDetailPage extends StatelessWidget {
                           children: [
                             Image.asset(
                               "assets/images/common/icon_edit_delete.png",
-                              width: 24.w * 3,
-                              height: 24.w * 3,
+                              width: 24.h * 3,
+                              height: 24.h * 3,
                               fit: BoxFit.fill,
                             ),
                             SizedBox(
-                              height: 2.w * 3,
+                              height: 2.h * 3,
                             ),
                             Text(
                               '删除',
@@ -1538,13 +1538,13 @@ class DeviceDetailPage extends StatelessWidget {
         },
         child: Container(
             padding:
-                EdgeInsets.fromLTRB(13.w * 3, 10.w * 3, 12.w * 3, 10.w * 3),
-            margin: EdgeInsets.fromLTRB(10.w * 3, 10.w * 3, 0, 0),
+                EdgeInsets.fromLTRB(13.h * 3, 10.h * 3, 12.h * 3, 10.h * 3),
+            margin: EdgeInsets.fromLTRB(10.h * 3, 10.h * 3, 0, 0),
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(8.w * 3)),
+                borderRadius: BorderRadius.all(Radius.circular(8.h * 3)),
                 border: Border.all(
-                    color: HhColors.grayDDTextColor, width: 0.5.w * 3)),
+                    color: HhColors.grayDDTextColor, width: 0.5.h * 3)),
             child: Text(
               '${live['positionName']}',
               style: TextStyle(
@@ -1556,7 +1556,7 @@ class DeviceDetailPage extends StatelessWidget {
       ));
     }
     list.add(SizedBox(
-      width: 10.w * 3,
+      width: 10.h * 3,
     ));
     return list;
   }
