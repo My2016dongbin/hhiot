@@ -524,11 +524,24 @@ class DeviceDetailPage extends StatelessWidget {
                   margin: EdgeInsets.only(top: 10.w*3),
                   child: Stack(
                     children: [
-                      Image.asset(
-                        "assets/images/common/icon_board_clip.png",
-                        width: 240.w * 3,
-                        height: 240.w * 3,
-                        fit: BoxFit.fill,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(120.w*3),
+                          boxShadow: [
+                            BoxShadow(
+                              color: HhColors.shadowColor.withOpacity(0.9), // 阴影颜色及透明度
+                              spreadRadius: 0.8,  // 阴影扩展的范围
+                              blurRadius: 8,   // 阴影的模糊程度
+                              offset: const Offset(0, 4),  // 阴影的偏移量
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          "assets/images/common/icon_board_clip.png",
+                          width: 240.w * 3,
+                          height: 240.w * 3,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       Align(
                         alignment: Alignment.topCenter,
