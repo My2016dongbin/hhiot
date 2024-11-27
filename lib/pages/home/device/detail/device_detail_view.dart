@@ -519,14 +519,14 @@ class DeviceDetailPage extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  width: 230.h * 3,
-                  height: 230.h * 3,
+                  width: 240.h * 3,
+                  height: 240.h * 3,
                   margin: EdgeInsets.only(top: 10.h*3),
                   child: Stack(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(115.h*3),
+                          borderRadius: BorderRadius.circular(120.h*3),
                           boxShadow: [
                             BoxShadow(
                               color: HhColors.shadowColor.withOpacity(0.9), // 阴影颜色及透明度
@@ -538,8 +538,8 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                         child: Image.asset(
                           "assets/images/common/icon_board_clip.png",
-                          width: 230.h * 3,
-                          height: 230.h * 3,
+                          width: 240.h * 3,
+                          height: 240.h * 3,
                           fit: BoxFit.fill,
                         ),
                       ),
