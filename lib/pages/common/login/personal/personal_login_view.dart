@@ -371,7 +371,13 @@ class PersonalLoginPage extends StatelessWidget {
               duration: const Duration(milliseconds: 100),
               scaleFactor: 1.2,
               onPressed: () {
-                onBackPressed();
+                int time_ = DateTime.now().millisecondsSinceEpoch;
+                if (time_ - timeForExit > 2000) {
+                  EventBusUtil.getInstance().fire(HhToast(title: '再按一次退出程序'));
+                  timeForExit = time_;
+                } else {
+                  SystemNavigator.pop();
+                }
               },
               child: Container(
                   margin: EdgeInsets.fromLTRB(24.w*3, 53.h*3, 0, 0),
