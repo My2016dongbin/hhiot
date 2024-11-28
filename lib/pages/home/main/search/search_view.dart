@@ -317,7 +317,7 @@ class SearchPage extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(24.w*3, 30.w, 0, 25.w),
           child: Text(CommonUtils().parseNameCount('${space['name']}', 10),style: TextStyle(color: HhColors.blackTextColor,fontSize: 18.sp*3,fontWeight: FontWeight.bold),),
         ));
-        for(int i = 0;i < ((deviceList.length%2==0)?(deviceList.length/2)-1:(deviceList.length/2+1-1)); i++){
+        for(int i = 0;i < ((deviceList.length%2==0)?(deviceList.length/2):(deviceList.length/2+1-1)); i++){
           dynamic itemLeft = deviceList[i*2];//0 2 4
           dynamic itemRight = {};
           HhLog.d("space -- ${i*2}");
@@ -578,7 +578,7 @@ class SearchPage extends StatelessWidget {
       ));
       HhLog.d("message--");
     }catch(e){
-      HhLog.e(e.toString());
+      HhLog.e("search error ${e.toString()}");
     }
     return list;
   }
