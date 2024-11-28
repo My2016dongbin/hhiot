@@ -15,6 +15,8 @@ class ScanController extends GetxController {
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
   final Rx<bool> lightStatus = false.obs;
+  final Rx<bool> test = false.obs;
+  final Rx<String> testFile = ''.obs;
   final double maxHeight = 294.w*3;
   late double scanHeight = 0;
   final Rx<double> scanHeightRx = 0.0.obs;
@@ -38,6 +40,15 @@ class ScanController extends GetxController {
       //
     }
     super.dispose();
+  }
+  @override
+  void onClose() {
+    try{
+      controller!.dispose();
+    }catch(e){
+      //
+    }
+    super.onClose();
   }
 
   void onQRViewCreated(QRViewController controller) {

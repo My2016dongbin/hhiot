@@ -118,6 +118,7 @@ class MainController extends GetxController {
     spaceListSubscription =
         EventBusUtil.getInstance().on<SpaceList>().listen((event) {
           getSpaceList(1);
+          spaceListIndex.value = 0;
         });
     catchSubscription =
         EventBusUtil.getInstance().on<CatchRefresh>().listen((event) {

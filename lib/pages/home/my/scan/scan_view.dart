@@ -246,10 +246,14 @@ class ScanPage extends StatelessWidget {
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
+    late String? result;
     if (pickedFile != null) {
       // 使用 QRCodeTools 从图片中读取二维码
-      final result = await QrCodeToolsPlugin.decodeFrom(pickedFile.path);
+      try{
+        result = await QrCodeToolsPlugin.decodeFrom(pickedFile.path);
+      }catch(e){
+        EventBusUtil.getInstance().fire(HhToast(title: '请选择清晰的二维码图片'));
+      }
 
       String? barcodeScanRes = '';
       try{
