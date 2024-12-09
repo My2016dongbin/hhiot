@@ -488,38 +488,37 @@ class HomeController extends GetxController {
 
   Future<void> getVersion() async {
     Map<String, dynamic> map = {};
+    map['operatingSystem'] = "Android";
+    map['version'] = buildNumber.value;
+    map['type'] = CommonData.test ? (CommonData.personal ? 'testPersonal' : 'testCompany') : (CommonData.personal ? 'personal' : 'company');
+    var result = await HhHttp()
+        .request(RequestUtils.versionNew, method: DioMethod.get, params: map);
+    /*
+    Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '100';
     map['flag'] = CommonData.personal ? 'user' : 'company';
     var result = await HhHttp()
-        .request(RequestUtils.version, method: DioMethod.get, params: map);
+        .request(RequestUtils.version, method: DioMethod.get, params: map);*/
+    HhLog.d("getVersion -- request ${RequestUtils.versionNew}");
     HhLog.d("getVersion -- map $map");
     HhLog.d("getVersion -- $result");
     if (result["code"] == 0 && result["data"] != null) {
-      List<dynamic> list = result["data"]["list"];
-      if (list.isNotEmpty) {
-        for (int m = 0; m < list.length; m++) {
-          dynamic update = list[m];
-          HhLog.d(
-              "getVersion -- $update , ${update["status"] == "true"} , ${(int.parse(buildNumber.value) < int.parse("${update["version"]}"))}");
-          if (update["status"] == "true" &&
-              (int.parse(buildNumber.value) <
-                  int.parse("${update["version"]}"))) {
-            HhLog.d("getVersion -- ----");
-            showVersionDialog(update);
-            return;
-          }
-        }
-      }
+      dynamic update = result["data"];
+      showVersionDialog(update);
     } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      // EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
   void showVersionDialog(dynamic update) {
     versionStatus.value = 0;
+    bool force = false;
     try {
+      int minSupportedVersion =  int.parse(update["minSupportedVersion"]);
+      if(minSupportedVersion > (int.parse(buildNumber.value)) || minSupportedVersion == -1){
+        force = true;
+      }
       showCupertinoDialog(
           context: CommonData.context!,
           builder: (context) => WillPopScope(
@@ -546,7 +545,7 @@ class HomeController extends GetxController {
                               duration: const Duration(milliseconds: 100),
                               scaleFactor: 1.2,
                               onPressed: () {
-                                if ("${update["isForce"]}" == "true") {
+                                if (force) {
                                   EventBusUtil.getInstance()
                                       .fire(HhToast(title: '请更新版本后使用'));
                                   Future.delayed(

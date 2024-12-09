@@ -7,6 +7,7 @@ class RequestUtils{
   static const login = '$base/admin-api/system/auth/login';//密码登录
   static const logout = '$base/admin-api/system/auth/logout';//登出
   static const version = '$base/admin-api/system/android-upgrade/page';//查询版本
+  static const versionNew = '$base/admin-api/system/android-upgrade/getAndroidUpgradeVersionNew';//查询版本新版
   static const tenantId = '$base/admin-api/system/tenant/get-tenant-by-name';//'$base/admin-api/system/tenant/get-id-by-name';//获取租户id
   static const tenantSearch = '$base/admin-api/system/tenant/get-tenant-by-user';//'$base/admin-api/system/tenant/get-id-by-user';//根据手机号/用户名获取租户id
   static const codeCheckCommon = '$base/admin-api/system/auth/sms-use';//校验验证码-通用
