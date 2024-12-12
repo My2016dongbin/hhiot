@@ -104,7 +104,7 @@ class MyAppState extends State<HhApp> {
     if (Platform.isIOS) {
       XgFlutterPlugin().startXg("1600040929", "II8XISAN9WTV");
     } else {
-      XgFlutterPlugin().startXg("1500040929", "A2UCA4MQX4ST");
+      XgFlutterPlugin().startXg(CommonData.personal?"1500040929":"1500041692", CommonData.personal?"A2UCA4MQX4ST":"AAST7H0KI7QE");
     }
     XgFlutterPlugin().setEnableDebug(true);
     //注册回调
@@ -164,7 +164,7 @@ class MyAppState extends State<HhApp> {
     return AppView(
         builder: (locale, builder) => GetMaterialApp(
               navigatorObservers: [CustomNavigatorObserver.getInstance()],
-              title: '浩海万联',
+              title: CommonData.personal?'浩海万联':'浩海万联企业版',
               theme: ThemeData(
                 fontFamily: '.SF UI Display',
                 // 使用系统默认字体

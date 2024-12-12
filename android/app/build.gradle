@@ -26,8 +26,8 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 
-def flutterVersionCode = "4"
-def flutterVersionName = "1.0.4"
+def flutterVersionCode = "3"
+def flutterVersionName = "1.0.5.3"
 
 android {
     compileSdkVersion 34
@@ -55,13 +55,11 @@ android {
             //设置支持的SO库架构
             abiFilters  "armeabi-v7a","arm64-v8a", "x86"
         }
-//        manifestPlaceholders = [
-//                XG_ACCESS_ID : "1500022588",
-//                XG_ACCESS_KEY : "AO91IE0UVN5L",
-//        ]
         manifestPlaceholders = [
-                XG_ACCESS_ID : "1500017161",
-                XG_ACCESS_KEY: "AIHFKDXTCVPN",
+                XG_ACCESS_ID : "1500040929",///个人版
+                XG_ACCESS_KEY: "A2UCA4MQX4ST",///个人版
+//                XG_ACCESS_ID : "1500041692",///企业版
+//                XG_ACCESS_KEY: "AAST7H0KI7QE",///企业版
                 HW_APPID: "103066123"
         ]
 
@@ -96,18 +94,50 @@ android {
                     CHANNEL_NAME: "haohaiVersion",
                     APP_NAME: "浩海万联",
                     AUTHORITIES: "com.ehaohai.iot.fileprovider",
+                    XG_ACCESS_ID : "1500040929",///个人版
+                    XG_ACCESS_KEY: "A2UCA4MQX4ST",///个人版
             ]
 //            buildConfigField("String", "NET_TYPE", "ONLINE")//网络
         }
-        onceVersion {
+        bussnessVersion {
+            dimension 'app'
+            applicationId "com.ehaohai.iotb"//包名
+//            resValue "string", "app_name", "浩海万联"   // 设置默认的app_name
+            manifestPlaceholders = [
+                    APP_ICON: "@drawable/logo",//app图标
+                    CHANNEL_NAME: "bussnessVersion",
+                    APP_NAME: "浩海万联企业版",
+                    AUTHORITIES: "com.ehaohai.iotb.fileprovider",
+                    XG_ACCESS_ID : "1500041692",///企业版
+                    XG_ACCESS_KEY: "AAST7H0KI7QE",///企业版
+            ]
+//            buildConfigField("String", "NET_TYPE", "ONLINE")//网络
+        }
+        betaVersion {
             dimension 'app'
             applicationId "com.ehaohai.iot"//包名
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
-                    CHANNEL_NAME: "onceVersion",
-                    APP_NAME: "浩海万联临时测试版${defaultConfig.versionName}",
+                    CHANNEL_NAME: "betaVersion",
+                    APP_NAME: "浩海万联测试版${defaultConfig.versionName}",
                     AUTHORITIES: "com.ehaohai.iot.fileprovider",
+                    XG_ACCESS_ID : "1500040929",///个人版
+                    XG_ACCESS_KEY: "A2UCA4MQX4ST",///个人版
             ]
+        }
+        betaBussnessVersion {
+            dimension 'app'
+            applicationId "com.ehaohai.iotb"//包名
+//            resValue "string", "app_name", "浩海万联"   // 设置默认的app_name
+            manifestPlaceholders = [
+                    APP_ICON: "@drawable/logo",//app图标
+                    CHANNEL_NAME: "betaBussnessVersion",
+                    APP_NAME: "浩海万联企业测试版${defaultConfig.versionName}",
+                    AUTHORITIES: "com.ehaohai.iotb.fileprovider",
+                    XG_ACCESS_ID : "1500041692",///企业版
+                    XG_ACCESS_KEY: "AAST7H0KI7QE",///企业版
+            ]
+//            buildConfigField("String", "NET_TYPE", "ONLINE")//网络
         }
     }
 

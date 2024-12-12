@@ -1,5 +1,11 @@
 # iot
 
+flavor:
+个人版本 haohaiVersion
+企业 bussnessVersion
+个人测试版本 betaVersion
+企业测试版本 betaBussnessVersion
+
 
                                   decoration: TextDecoration.none,
 

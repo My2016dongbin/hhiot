@@ -232,11 +232,14 @@ class PersonalLoginController extends GetxController {
       // XgFlutterPlugin().setAccount("${result["data"]["id"]}",AccountType.UNKNOWN);
       XgFlutterPlugin().deleteAccount('${result["data"]["id"]}',AccountType.UNKNOWN);
       XgFlutterPlugin().deleteAccount("${CommonData.token}", AccountType.UNKNOWN);
-      XgFlutterPlugin().deleteTags(["${CommonData.token}"]);
+      XgFlutterPlugin().deleteTags(["${CommonData.token}","test"]);
       EventBusUtil.getInstance().fire(HhToast(title: '登录成功',type: 1));
 
       Future.delayed(const Duration(seconds: 1), () {
         XgFlutterPlugin().setAccount("${CommonData.token}",AccountType.UNKNOWN);
+        if(CommonData.test){
+          XgFlutterPlugin().setTags(["test"]);
+        }
         Get.offAll(() => HomePage(), binding: HomeBinding(),
             transition: Transition.fadeIn,
             duration: const Duration(milliseconds: 1000));

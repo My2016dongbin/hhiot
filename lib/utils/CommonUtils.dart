@@ -1080,7 +1080,7 @@ class CommonUtils {
     try{
       XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
       XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
-      XgFlutterPlugin().deleteTags([id]);
+      XgFlutterPlugin().deleteTags([id,"test"]);
     }catch(e){
       //
     }
@@ -1104,7 +1104,7 @@ class CommonUtils {
     String? token = prefs.getString(SPKeys().token);
     XgFlutterPlugin().deleteAccount(id!, AccountType.UNKNOWN);
     XgFlutterPlugin().deleteAccount(token!, AccountType.UNKNOWN);
-    XgFlutterPlugin().deleteTags([id]);
+    XgFlutterPlugin().deleteTags([id,"test"]);
     prefs.remove(SPKeys().token);
     CommonData.tenant = CommonData.tenantDef;
     CommonData.tenantName = CommonData.tenantNameDef;
