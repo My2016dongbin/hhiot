@@ -129,12 +129,12 @@ class MyAppState extends State<HhApp> {
           dynamic custom = jsonDecode(msg['customMessage']);
           HhLog.d("HomePage -> $custom ");
 
-          //设备呼叫
+/*          //设备呼叫
           if(custom!=null && custom['devCode']!=null ){
             HhLog.d("HomePage  deviceNo ${custom['deviceNo']}");
 
             Get.to(()=>CallPage('${custom['deviceNo']}','id',0),binding: CallBinding());
-          }
+          }*/
           //分享
           if(custom!=null && custom['otherInfomation']['messageType']== "deviceShare" && CommonData.personal){
             EventBusUtil.getInstance().fire(Share(model:custom['otherInfomation']));

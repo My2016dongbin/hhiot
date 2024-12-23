@@ -3,6 +3,7 @@ import 'package:iot/pages/home/device/add/device_add_controller.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/pages/home/device/list/device_list_controller.dart';
 import 'package:iot/pages/home/device/status/device_status_controller.dart';
+import 'package:iot/pages/home/mqtt/mqtt_controller.dart';
 import 'package:iot/pages/home/my/network/network_controller.dart';
 import 'package:iot/pages/home/my/setting/setting_controller.dart';
 import 'package:iot/pages/home/space/space_controller.dart';
@@ -22,5 +23,6 @@ class HomeBinding extends Bindings {
     Get.lazyPut(() => DeviceController());
     Get.lazyPut(() => MyController());
     Get.lazyPut(() => MessageController());
+    Get.lazyPut(() => MqttController());
   }
 }

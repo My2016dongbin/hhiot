@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/home/mqtt/mqtt_controller.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 
 import '../../cell/bottom_bar.dart';
@@ -20,6 +21,7 @@ import 'message/message_view.dart';
 import 'my/my_view.dart';
 class HomePage extends StatelessWidget {
   final logic = Get.find<HomeController>();
+  final logicMqtt = Get.find<MqttController>();
 
   HomePage({super.key});
 

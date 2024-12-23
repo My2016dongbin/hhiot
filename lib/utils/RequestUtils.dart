@@ -58,6 +58,7 @@ class RequestUtils{
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET
   static const chatCreate = '$base/admin-api/mid/device-info/chatState';//调用语音服务创建会话POST
+  static const chatReceive = '$base/admin-api/mid/device-info/sendChatCmd';//被呼叫后查询语音服务信息POST
 
   static const shareCreate = '$base/app-api/mid/share-log/create';//分享创建 old
   static const shareReceive = '$base/app-api/mid/receive-log/create';//分享接收 old

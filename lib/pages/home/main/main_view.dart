@@ -24,6 +24,9 @@ import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
 import 'package:iot/pages/home/message/message_controller.dart';
+import 'package:iot/pages/home/mqtt/mqtt_binding.dart';
+import 'package:iot/pages/home/mqtt/mqtt_controller.dart';
+import 'package:iot/pages/home/mqtt/mqtt_view.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
@@ -1133,6 +1136,7 @@ class MainPage extends StatelessWidget {
       ),
       onPressed: () {
         Get.to(()=>SpacePage(),binding: SpaceBinding());
+        // Get.to(()=>MqttPage(),binding: MqttBinding());///MQTT测试
       },
     );
   }
