@@ -7,8 +7,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
-import 'package:iot/pages/home/device/list/device_list_binding.dart';
-import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/device/status/device_status_controller.dart';
 import 'package:iot/pages/home/home_binding.dart';
 import 'package:iot/pages/home/home_view.dart';

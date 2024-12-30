@@ -2,9 +2,9 @@
 
 flavor:
 个人版本 haohaiVersion
-企业 bussnessVersion
+企业 businessVersion
 个人测试版本 betaVersion
-企业测试版本 betaBussnessVersion
+企业测试版本 betaBusinessVersion
 
 
                                   decoration: TextDecoration.none,

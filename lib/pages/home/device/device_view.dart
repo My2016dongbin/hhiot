@@ -11,6 +11,8 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
+import 'package:iot/pages/home/device/detail/daozha/daozha_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/daozha/daozha_detail_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
@@ -171,7 +173,8 @@ class DevicePage extends StatelessWidget {
             itemBuilder: (context, item, index) =>
                 InkWell(
                   onTap: (){
-                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                    // Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                    Get.to(()=>DaoZhaDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DaoZhaDetailBinding());
                   },
               child: Container(
                 height: 80.w*3,

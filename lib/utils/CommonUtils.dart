@@ -407,7 +407,7 @@ class CommonUtils {
                         return Container(
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.w * 3)),
+                              borderRadius: BorderRadius.circular(4.w * 3)),
                           child: Image.asset(
                             "assets/images/common/test_video.jpg",
                             fit: BoxFit.fill,
@@ -418,10 +418,10 @@ class CommonUtils {
                   ),
                 ),
                 Container(
-                  height: 77.h * 3,
+                  height: 100.h * 3,
                   width: 1.sw,
                   color: HhColors.whiteColor,
-                  padding: EdgeInsets.only(top: 80.h),
+                  padding: EdgeInsets.only(top: 36.h*3),
                   child: Stack(
                     children: [
                       Align(

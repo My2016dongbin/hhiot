@@ -1,21 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
-import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/socket/WebSocketManager.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
-import 'package:iot/utils/SPKeys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_socket_channel/io.dart';
 
 class LiGanDetailController extends GetxController {
   late BuildContext context;
@@ -78,6 +69,21 @@ class LiGanDetailController extends GetxController {
   final Rx<bool> closeStatus = false.obs;
   final Rx<String> closeStart = ''.obs;
   final Rx<String> closeEnd = ''.obs;
+  final Rx<int> energySetType = 0.obs;//太阳能 能源类型（锂电、液体、胶体、AMG）
+
+  //锂电
+  final Rx<double> liVP = 0.0.obs;//太阳能 过充保护
+  final Rx<double> liVR = 0.0.obs;//太阳能 过冲恢复
+  final Rx<int> liS = 0.obs;//太阳能 零度充电 （正常、禁冲、慢充）index
+  final List<String> liSList = ["正常","禁冲","慢充"];//太阳能 零度充电 （正常、禁冲、慢充）
+  //液体、胶体、AMG
+  final Rx<double> equalV = 14.8.obs;//太阳能 均衡充电压
+  final Rx<double> strongV = 14.5.obs;//太阳能 强充电压
+  final Rx<double> floatV = 13.7.obs;//太阳能 浮充电压
+  //公共
+  final Rx<int> ratedL = 0.obs;//太阳能 电压等级
+  final Rx<double> lowVR = 12.0.obs;//太阳能 低压恢复
+  final Rx<double> lowVP = 11.2.obs;//太阳能 低压保护
 
   @override
   Future<void> onInit() async {
@@ -225,6 +231,20 @@ class LiGanDetailController extends GetxController {
       voiceHuman.value = config["audioHumanVolume"];
       voiceCar.value = config["audioCarVolume"];
       voiceCap.value = config["audioOpenVolume"];
+      ///太阳能
+      energySetType.value = config["energySetType"];//太阳能 能源类型（锂电、液体、胶体、AMG）
+      //锂电
+      liVP.value = config["liVP"];//太阳能 过充保护
+      liVR.value = config["liVR"];//太阳能 过冲恢复
+      liS.value = config["liS"];//太阳能 零度充电 （正常、禁冲、慢充）
+      //液体、胶体、AMG
+      equalV.value = config["equalV"];//太阳能 均衡充电压
+      strongV.value = config["strongV"];//太阳能 强充电压
+      floatV.value = config["floatV"];//太阳能 浮充电压
+      //公共
+      ratedL.value = config["ratedL"];//太阳能 电压等级
+      lowVR.value = config["lowVR"];//太阳能 低压恢复
+      lowVP.value = config["lowVP"];//太阳能 低压保护
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
@@ -449,6 +469,31 @@ class LiGanDetailController extends GetxController {
     var result = await HhHttp().request(RequestUtils.deviceConfigScreenTop,method: DioMethod.post,data: data);
     HhLog.d("versionUpdate -- $data");
     HhLog.d("versionUpdate -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if(result["code"]==0){
+      EventBusUtil.getInstance().fire(HhToast(title: "设置成功",type: 1));
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+  Future<void> sunSetting() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    dynamic data = {
+      "deviceNo": deviceNo,
+      "cmdType": "energySetParam",
+      "liVP": liVP.value,
+      "ratedL": ratedL.value,
+      "liVR": liVR.value,
+      "liS": liS.value,
+      "lowVP": lowVP.value,
+      "lowVR": lowVR.value,
+      "equalV": equalV.value,
+      "strongV": strongV.value,
+      "floatV": floatV.value,
+    };
+    var result = await HhHttp().request(RequestUtils.deviceConfigScreenTop,method: DioMethod.post,data: data);
+    HhLog.d("sunSetting -- $data");
+    HhLog.d("sunSetting -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if(result["code"]==0){
       EventBusUtil.getInstance().fire(HhToast(title: "设置成功",type: 1));

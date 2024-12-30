@@ -18,8 +18,6 @@ import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
-import 'package:iot/pages/home/device/list/device_list_binding.dart';
-import 'package:iot/pages/home/device/list/device_list_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';

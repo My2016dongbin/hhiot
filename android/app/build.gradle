@@ -99,13 +99,13 @@ android {
             ]
 //            buildConfigField("String", "NET_TYPE", "ONLINE")//网络
         }
-        bussnessVersion {
+        businessVersion {
             dimension 'app'
             applicationId "com.ehaohai.iotb"//包名
 //            resValue "string", "app_name", "浩海万联"   // 设置默认的app_name
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
-                    CHANNEL_NAME: "bussnessVersion",
+                    CHANNEL_NAME: "businessVersion",
                     APP_NAME: "浩海万联企业版",
                     AUTHORITIES: "com.ehaohai.iotb.fileprovider",
                     XG_ACCESS_ID : "1500041692",///企业版
@@ -125,13 +125,13 @@ android {
                     XG_ACCESS_KEY: "A2UCA4MQX4ST",///个人版
             ]
         }
-        betaBussnessVersion {
+        betaBusinessVersion {
             dimension 'app'
             applicationId "com.ehaohai.iotb"//包名
 //            resValue "string", "app_name", "浩海万联"   // 设置默认的app_name
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
-                    CHANNEL_NAME: "betaBussnessVersion",
+                    CHANNEL_NAME: "betaBusinessVersion",
                     APP_NAME: "浩海万联企业测试版${defaultConfig.versionName}",
                     AUTHORITIES: "com.ehaohai.iotb.fileprovider",
                     XG_ACCESS_ID : "1500041692",///企业版
