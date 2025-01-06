@@ -196,7 +196,7 @@ class MyAppState extends State<HhApp> {
                 Locale('en', 'US'),
               ],
 
-              enableLog: true,
+              enableLog: CommonData.test,
               //logWriterCallback: Logger.print,
               translations: TranslationService(),
               localizationsDelegates: const [
