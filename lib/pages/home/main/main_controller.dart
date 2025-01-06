@@ -117,19 +117,19 @@ class MainController extends GetxController {
         });
     spaceListSubscription =
         EventBusUtil.getInstance().on<SpaceList>().listen((event) {
-          getSpaceList(1);
+          getSpaceList(1,false);
           spaceListIndex.value = 0;
         });
     catchSubscription =
         EventBusUtil.getInstance().on<CatchRefresh>().listen((event) {
           containStatus.value = false;
           containStatus.value = true;
-          getSpaceList(1);
+          getSpaceList(1,false);
         });
     deviceListSubscription =
         EventBusUtil.getInstance().on<DeviceList>().listen((event) {
           pageNum = 1;
-          getDeviceList(1);
+          getDeviceList(1,false);
         });
     messageSubscription =
         EventBusUtil.getInstance().on<Message>().listen((event) {
@@ -144,7 +144,7 @@ class MainController extends GetxController {
     //未读消息数量
     getUnRead();
     //获取空间列表
-    getSpaceList(1);
+    getSpaceList(1,true);
     EventBusUtil.getInstance().fire(Version());
     super.onInit();
   }
@@ -377,7 +377,7 @@ class MainController extends GetxController {
     }
   }
 
-  Future<void> getSpaceList(int pageKey) async {
+  Future<void> getSpaceList(int pageKey,bool loading) async {
     Map<String, dynamic> map = {};
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
@@ -389,15 +389,17 @@ class MainController extends GetxController {
       spaceListStatus.value = false;
       spaceListStatus.value = true;
 
-      getDeviceList(1);
+      getDeviceList(1,loading);
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
-  Future<void> getDeviceList(int pageKey) async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true));
+  Future<void> getDeviceList(int pageKey,bool loading) async {
+    if(loading){
+      EventBusUtil.getInstance().fire(HhLoading(show: true));
+    }
     Map<String, dynamic> map = {};
     if(spaceList.isNotEmpty){
       map['spaceId'] = spaceList[spaceListIndex.value]['id'];
@@ -559,7 +561,7 @@ class MainController extends GetxController {
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: '操作成功',type: 0));
       pageNum = 1;
-      getDeviceList(1);
+      getDeviceList(1,false);
       EventBusUtil.getInstance().fire(SpaceList());
       EventBusUtil.getInstance().fire(DeviceList());
     }else{

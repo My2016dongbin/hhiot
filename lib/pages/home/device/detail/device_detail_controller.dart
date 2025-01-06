@@ -101,6 +101,7 @@ class DeviceDetailController extends GetxController {
 
   @override
   void onInit() {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
     dragController = DragController();
     Future.delayed(const Duration(seconds: 1), () {
       getDeviceStream();
@@ -344,6 +345,9 @@ class DeviceDetailController extends GetxController {
         Future.delayed(const Duration(seconds: 1), () {
           playTag.value = true;
         });
+
+
+        EventBusUtil.getInstance().fire(HhLoading(show: false));
       } catch (e) {
         HhLog.e(e.toString());
       }
@@ -351,6 +355,7 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["message"])));
     }
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
   }
 
   Future<void> getDeviceInfo() async {
@@ -373,7 +378,7 @@ class DeviceDetailController extends GetxController {
   }
 
   Future<void> getDeviceHistory() async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true, title: "数据加载中.."));
+    // EventBusUtil.getInstance().fire(HhLoading(show: true, title: "数据加载中.."));
     Map<String, dynamic> map = {};
     map['deviceId'] = id;
     map['pageNo'] = pageNum;
@@ -383,7 +388,7 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getDeviceHistory -- $pageNum");
     HhLog.d("getDeviceHistory -- $result");
     Future.delayed(const Duration(seconds: 1), () {
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
+      // EventBusUtil.getInstance().fire(HhLoading(show: false));
     });
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = [];

@@ -178,7 +178,7 @@ class SearchPage extends StatelessWidget {
         dynamic item = logic.deviceList[i];
         list.add(InkWell(
           onTap: (){
-            Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+            CommonUtils().parseRouteDetail(item);
             /*if(item['productName']=='浩海一体机'){
               Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}'),binding: DeviceDetailBinding());
             }else if(item['productName']=='智慧立杆'){
@@ -330,7 +330,7 @@ class SearchPage extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: (){
-                      Get.to(()=>DeviceDetailPage('${itemLeft['deviceNo']}','${itemLeft['id']}',itemLeft['shareMark']),binding: DeviceDetailBinding());
+                      CommonUtils().parseRouteDetail(itemLeft);
                     },
                     child: Container(
                       clipBehavior: Clip.hardEdge, //裁剪
@@ -380,7 +380,7 @@ class SearchPage extends StatelessWidget {
                   ),
                   itemRight['name'] == null?const SizedBox():InkWell(
                     onTap: (){
-                      Get.to(()=>DeviceDetailPage('${itemRight['deviceNo']}','${itemRight['id']}',itemRight['shareMark']),binding: DeviceDetailBinding());
+                      CommonUtils().parseRouteDetail(itemRight);
                     },
                     child: Container(
                       clipBehavior: Clip.hardEdge, //裁剪

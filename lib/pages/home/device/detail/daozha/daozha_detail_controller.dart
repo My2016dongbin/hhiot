@@ -29,7 +29,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DaoZhaDetailController extends GetxController {
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
-  final Rx<String> name = '道闸设备'.obs;
+  final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
   final Rx<bool> recordTag = false.obs;
@@ -54,7 +54,9 @@ class DaoZhaDetailController extends GetxController {
   final PagingController<int, dynamic> deviceController =
       PagingController(firstPageKey: 0);
   late int pageNum = 1;
-  late int pageSize = 20;
+  late int pageSize = 10;
+  late String ip = "1.1.1.1";
+  late int port = 8888;
   late DragController dragController;
   late BuildContext context;
   late String deviceNo;
@@ -101,11 +103,11 @@ class DaoZhaDetailController extends GetxController {
 
   @override
   void onInit() {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
     dragController = DragController();
     Future.delayed(const Duration(seconds: 1), () {
-      getDeviceStream();
       getDeviceInfo();
-      getDeviceHistory();
+      getDeviceHistory(1);
       getWarnType();
     });
     moveSubscription =
@@ -128,9 +130,8 @@ class DaoZhaDetailController extends GetxController {
     });
     deviceSubscription =
         EventBusUtil.getInstance().on<DeviceInfo>().listen((event) {
-      getDeviceStream();
       getDeviceInfo();
-      getDeviceHistory();
+      getDeviceHistory(1);
     });
     recordSubscription =
         EventBusUtil.getInstance().on<Record>().listen((event) {
@@ -252,28 +253,50 @@ class DaoZhaDetailController extends GetxController {
     }
   }
 
+  void openOnce(){
+    postDoor(2);
+  }
   void openDoor(){
-
+    postDoor(1);
   }
   void closeDoor(){
+    postDoor(0);
+  }
 
+  Future<void> postDoor(int value) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    dynamic data = {
+      "deviceNo": deviceNo,
+      "cmd": "ioctl",
+      "host": ip,
+      "port": port,
+      "value": value //0 ：关 1：常开 2：先开后关（自动）
+    };
+    var result = await HhHttp().request(RequestUtils.dzControl,
+        method: DioMethod.post, data: data);
+    HhLog.d("dzControl -- $data");
+    HhLog.d("dzControl -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if (result["code"] == 0) {
+      EventBusUtil.getInstance().fire(HhToast(title: "操作成功", type: 1));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 
   Future<void> getDeviceStream() async {
     Map<String, dynamic> map = {};
     map['deviceNo'] = deviceNo;
     var result = await HhHttp()
-        .request(RequestUtils.deviceStream, method: DioMethod.get, params: map);
+        .request(RequestUtils.dzLiveUrl, method: DioMethod.get, params: map);
     HhLog.d("getDeviceStream -- $deviceNo");
     HhLog.d("getDeviceStream -- $result");
     if (result["code"] == 0 && result["data"] != null) {
-      liveList = result["data"];
-      HhLog.d("getDeviceStream liveList -- $liveList");
       liveStatus.value = false;
       liveStatus.value = true;
       try {
-        ///TODO rtsp测试
-        String url = 'rtsp://192.168.1.165:10068/live/0';
+        String url = result["data"];
         playTag.value = false;
         player.release();
         player = FijkPlayer();
@@ -335,81 +358,8 @@ class DaoZhaDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
-  }
 
-  Future<void> getPlayUrl(String ids, String number) async {
-    dynamic data = {
-      'deviceId': ids,
-      'channelNumber': number,
-      // 'deviceId':'2096e4bf4af411efa74f2a37f6c892cc',
-      // 'channelNumber':'24070888001320000082',
-      'streamProtocol': "RTSP",
-      'streamType': 0,
-      'transMode': "TCP"
-    };
-    var result = await HhHttp().request(RequestUtils.devicePlayUrl,
-        method: DioMethod.post, data: data);
-    HhLog.d("getPlayUrl data -- $data");
-    HhLog.d("getPlayUrl result -- $result");
-    if (result["code"] == 200 && result["data"] != null) {
-      try {
-        String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
-        playTag.value = false;
-        player.release();
-        player = FijkPlayer();
-        player.setDataSource(url, autoPlay: true);
-        player.setOption(FijkOption.playerCategory, "mediacodec-hevc", 1);
-        player.setOption(FijkOption.playerCategory, "framedrop", 1);
-        player.setOption(FijkOption.playerCategory, "start-on-prepared", 0);
-        player.setOption(FijkOption.playerCategory, "opensles", 0);
-        player.setOption(FijkOption.playerCategory, "mediacodec", 0);
-        player.setOption(FijkOption.playerCategory, "start-on-prepared", 1);
-        player.setOption(FijkOption.playerCategory, "packet-buffering", 0);
-        player.setOption(
-            FijkOption.playerCategory, "mediacodec-auto-rotate", 0);
-        player.setOption(FijkOption.playerCategory,
-            "mediacodec-handle-resolution-change", 0);
-        player.setOption(FijkOption.playerCategory, "min-frames", 2);
-        player.setOption(FijkOption.playerCategory, "max_cached_duration", 3);
-        player.setOption(FijkOption.playerCategory, "infbuf", 1);
-        player.setOption(FijkOption.playerCategory, "reconnect", 5);
-        player.setOption(FijkOption.playerCategory, "framedrop", 5);
-        player.setOption(FijkOption.formatCategory, "rtsp_transport", 'tcp');
-        player.setOption(
-            FijkOption.formatCategory, "http-detect-range-support", 0);
-        player.setOption(FijkOption.formatCategory, "analyzeduration", 1);
-        player.setOption(FijkOption.formatCategory, "rtsp_flags", "prefer_tcp");
-        player.setOption(FijkOption.formatCategory, "buffer_size", 1024);
-        player.setOption(FijkOption.formatCategory, "max-fps", 0);
-        player.setOption(FijkOption.formatCategory, "analyzemaxduration", 50);
-        player.setOption(FijkOption.formatCategory, "dns_cache_clear", 1);
-        player.setOption(FijkOption.formatCategory, "flush_packets", 1);
-        player.setOption(FijkOption.formatCategory, "max-buffer-size", 0);
-        player.setOption(FijkOption.formatCategory, "fflags", "nobuffer");
-        player.setOption(FijkOption.formatCategory, "probesize", 200);
-        player.setOption(
-            FijkOption.formatCategory, "http-detect-range-support", 0);
-        player.setOption(FijkOption.codecCategory, "skip_loop_filter", 48);
-        player.setOption(FijkOption.codecCategory, "skip_frame", 0);
-        // 添加播放器状态变化监听
-        player.addListener(() {
-          if (player.state == FijkState.started) {
-            // 播放成功开始
-            HhLog.d('Playback started successfully ${player.state}');
-            //截图并保存
-            saveCatchImage();
-          }
-        });
-        Future.delayed(const Duration(seconds: 1), () {
-          playTag.value = true;
-        });
-      } catch (e) {
-        HhLog.e(e.toString());
-      }
-    } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["message"])));
-    }
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
   }
 
   Future<void> getDeviceInfo() async {
@@ -424,25 +374,27 @@ class DaoZhaDetailController extends GetxController {
       item = result["data"];
       name.value = CommonUtils().parseNull(result["data"]["name"] ?? '', "");
       productName.value = result["data"]["productName"] ?? '';
+      ip = result["data"]["ip"] ?? '';
+      port = int.parse("${result["data"]["port"]}");
       functionItem.value = item['functionItem'];
+
+      getDeviceStream();
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
-  Future<void> getDeviceHistory() async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true, title: "数据加载中.."));
+  Future<void> getDeviceHistory(int page) async {
+    // EventBusUtil.getInstance().fire(HhLoading(show: true, title: "数据加载中.."));
     Map<String, dynamic> map = {};
-    map['deviceId'] = id;
-    map['pageNo'] = pageNum;
+    map['pageNo'] = page;
     map['pageSize'] = pageSize;
-    var result = await HhHttp().request(RequestUtils.deviceHistory,
+    var result = await HhHttp().request(RequestUtils.dzHistory,
         method: DioMethod.get, params: map);
-    HhLog.d("getDeviceHistory -- $pageNum");
-    HhLog.d("getDeviceHistory -- $result");
+    HhLog.d("getDeviceHistory -- $pageNum , $result");
     Future.delayed(const Duration(seconds: 1), () {
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
+      // EventBusUtil.getInstance().fire(HhLoading(show: false));
     });
     if (result["code"] == 0 && result["data"] != null) {
       List<dynamic> newItems = [];

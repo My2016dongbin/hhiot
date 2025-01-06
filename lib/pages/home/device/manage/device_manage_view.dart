@@ -163,7 +163,7 @@ class DeviceManagePage extends StatelessWidget {
             itemBuilder: (context, item, index) =>
                 InkWell(
                   onTap: (){
-                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                    CommonUtils().parseRouteDetail(item);
                   },
                   child: Container(
                     height: 80.w*3,

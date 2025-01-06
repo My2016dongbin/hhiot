@@ -29,7 +29,7 @@ class AppView extends StatelessWidget {
         //textScaleFactor: Config.textScaleFactor,
       ),
       child: LoaderOverlay(
-        overlayColor: HhColors.backTransColor,
+        overlayColor: HhColors.whiteColor,
         closeOnBackButton: true,
         useDefaultLoading: false,
         overlayWidgetBuilder: (_) { //ignored progress for the moment

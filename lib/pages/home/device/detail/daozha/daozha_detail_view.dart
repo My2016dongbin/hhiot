@@ -120,7 +120,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                 ),
               ),
               ///setting
-              Align(
+              /*Align(
                 alignment: Alignment.topRight,
                 child: InkWell(
                   onTap: () {
@@ -141,7 +141,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ),*/
 
               ///设备名
               Align(
@@ -150,7 +150,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(20.w*3, 100.w * 3, 0, 0),
                   color: HhColors.trans,
                   child: Text(
-                    CommonUtils().parseNameCount(logic.name.value, 8),
+                    CommonUtils().parseNameCount(logic.name.value, 16),
                     style: TextStyle(
                         color: HhColors.mainBlueColor,
                         fontSize: 12.sp * 3,
@@ -428,7 +428,7 @@ class DaoZhaDetailPage extends StatelessWidget {
     final size = MediaQuery.of(logic.context).size;
     return Column(
       children: [
-        Container(
+        /*Container(
           width: 1.sw,
           height: 510.h,
           margin: EdgeInsets.fromLTRB(26.w*3, 0, 26.w*3, 10.w*3),
@@ -525,24 +525,25 @@ class DaoZhaDetailPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        ),*/
 
 
-        SizedBox(height: 25.h*3,),
-        ///抬起
+        SizedBox(height: 10.h*3,),
+        ///开一次
         BouncingWidget(
           duration: const Duration(milliseconds: 100),
           scaleFactor: 0.5,
           onPressed: () {
-            logic.openDoor();
+            logic.openOnce();
           },
           child: Container(
-            height: 50.w*3,
+            height: 60.w*3,
             width: 1.sw,
             margin: EdgeInsets.fromLTRB(26.w*3, 10.w*3, 26.w*3, 0),
             decoration: BoxDecoration(
-              color: HhColors.mainBlueColor,
-              borderRadius: BorderRadius.circular(18.w*3),
+              color: HhColors.whiteColor,
+              borderRadius: BorderRadius.circular(16.w*3),
+              // border: Border.all(color: HhColors.mainBlueColor,width: 2.w),
               boxShadow: const [
                 BoxShadow(
                   color: HhColors.trans_777,
@@ -554,10 +555,11 @@ class DaoZhaDetailPage extends StatelessWidget {
               ],
             ),
             child: Align(alignment: Alignment.center,
-                child: Text("抬起",style: TextStyle(color: HhColors.whiteColor,fontSize: 20.sp*3,fontWeight: FontWeight.w600),)),
+                child: Text("开一次",style: TextStyle(color: HhColors.mainBlueColor,fontSize: 20.sp*3,fontWeight: FontWeight.w500),)),
           ),
         ),
-        ///关闭
+        SizedBox(height: 10.h*3,),
+        ///关闸
         BouncingWidget(
           duration: const Duration(milliseconds: 100),
           scaleFactor: 0.5,
@@ -582,7 +584,37 @@ class DaoZhaDetailPage extends StatelessWidget {
               ],
             ),
             child: Center(
-              child: Text("关闭",style: TextStyle(color: HhColors.gray6TextColor,fontSize: 18.sp*3,fontWeight: FontWeight.w600),),
+              child: Text("关闸",style: TextStyle(color: HhColors.gray6TextColor,fontSize: 18.sp*3,fontWeight: FontWeight.w600),),
+            ),
+          ),
+        ),
+        ///常开
+        BouncingWidget(
+          duration: const Duration(milliseconds: 100),
+          scaleFactor: 0.5,
+          onPressed: () {
+            logic.openDoor();
+          },
+          child: Container(
+            height: 50.w*3,
+            width: 1.sw,
+            margin: EdgeInsets.fromLTRB(26.w*3, 10.w*3, 26.w*3, 0),
+            decoration: BoxDecoration(
+              color: HhColors.mainBlueColor,
+              borderRadius: BorderRadius.circular(16.w*3),
+              // border: Border.all(color: HhColors.mainBlueColor,width: 2.w),
+              boxShadow: const [
+                BoxShadow(
+                  color: HhColors.trans_777,
+                  ///控制阴影的位置
+                  offset: Offset(0, 1),
+                  ///控制阴影的大小
+                  blurRadius: 5.0,
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text("常开",style: TextStyle(color: HhColors.whiteColor,fontSize: 18.sp*3,fontWeight: FontWeight.w600),),
             ),
           ),
         ),
@@ -594,11 +626,11 @@ class DaoZhaDetailPage extends StatelessWidget {
     return EasyRefresh(
       onRefresh: () {
         logic.pageNum = 1;
-        logic.getDeviceHistory();
+        logic.getDeviceHistory(logic.pageNum);
       },
       onLoad: () {
         logic.pageNum++;
-        logic.getDeviceHistory();
+        logic.getDeviceHistory(logic.pageNum);
       },
       child: PagedListView<int, dynamic>(
         padding: EdgeInsets.zero,
@@ -651,7 +683,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.fromLTRB(15.w * 3, 10.h, 0, 0),
                         child: Text(
-                          logic.parseDate(item['alarmTimestamp']),
+                          logic.parseDate(item['recordTime']),
                           style: TextStyle(
                               color: HhColors.textBlackColor,
                               fontSize: 15.sp * 3,
@@ -662,7 +694,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.fromLTRB(15.w*3, 5.h * 3, 0, 0),
                         child: Text(
-                          logic.parseType(item['alarmType']),
+                          "车牌：${item['plate']}",
                           style: TextStyle(
                               color: HhColors.textBlackColor,
                               fontSize: 14.sp * 3,
@@ -674,7 +706,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                         onTap: (){
                           CommonUtils().showPictureDialog(
                             logic.context,
-                            url: '${logic.endpoint}${item['alarmImageUrl']}'
+                            url: '${logic.endpoint}${item['imageUrl']}'
                           );
                         },
                         child: Container(
@@ -684,7 +716,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                               borderRadius:
                               BorderRadius.all(Radius.circular(20.h))),
                           child: Image.network(
-                            '${logic.endpoint}${item['alarmImageUrl']}',
+                            '${logic.endpoint}${item['imageUrl']}',
                             width: 260.w * 3,
                             height: 140.w * 3,
                             fit: BoxFit.fill,

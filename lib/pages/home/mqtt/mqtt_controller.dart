@@ -94,11 +94,12 @@ class MqttController extends GetxController {
         dynamic model = jsonDecode(payload);
         //被呼叫
         if(model['cmd'] == 'deviceReqChart'){
-          chatReceive(model['deviceNo'],model['reqChatCode']);
+          /// chatReceive(model['deviceNo'],model['reqChatCode']);
+          Get.to(()=>CallPage('${model['deviceNo']}','id',0),binding: CallBinding());
         }
         //准备接听
         if(model['cmd'] == "deviceReqSession"){
-          Get.to(()=>CallPage('${model['deviceNo']}','id',0),binding: CallBinding());
+          /// Get.to(()=>CallPage('${model['deviceNo']}','id',0),binding: CallBinding());
         }
       }catch(e){
         HhLog.e("mqtt_listen_error ${e.toString()}");

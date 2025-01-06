@@ -12,9 +12,15 @@ import 'package:iot/pages/common/login/company/company_login_binding.dart';
 import 'package:iot/pages/common/login/company/company_login_view.dart';
 import 'package:iot/pages/common/login/personal/personal_login_binding.dart';
 import 'package:iot/pages/common/login/personal/personal_login_view.dart';
+import 'package:iot/pages/home/device/detail/daozha/daozha_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/daozha/daozha_detail_view.dart';
+import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1185,6 +1191,34 @@ class CommonUtils {
       rt = str;
     }
     return double.parse(rt);
+  }
+
+  Future<void> parseRouteDetail(item) async {
+    /*EventBusUtil.getInstance().fire(HhLoading(show: true));
+    Map<String, dynamic> map = {};
+    map['pageNo'] = 1;
+    map['pageSize'] = 10;
+    // map['label'] = "";
+    map['dictType'] = "device_type";
+    var result = await HhHttp().request(RequestUtils.productType,
+        method: DioMethod.get, params: map);
+    HhLog.d("productType -- $item");
+    HhLog.d("productType -- $map");
+    HhLog.d("productType -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if (result["code"] == 0) {
+      // EventBusUtil.getInstance().fire(HhToast(title: "操作成功", type: 1));
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }*/
+
+    if(item['productKey'] == '5MiTcinKdSasKdKQ'){
+      ///道闸
+      Get.to(()=>DaoZhaDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DaoZhaDetailBinding());
+    }else{
+      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+    }
   }
 }
 

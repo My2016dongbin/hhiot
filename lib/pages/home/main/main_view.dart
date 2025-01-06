@@ -531,7 +531,7 @@ class MainPage extends StatelessWidget {
                   scaleFactor: 1.2,
                   onPressed: () {
                     logic.videoStatus.value = !logic.videoStatus.value;
-                    Get.to(()=>DeviceDetailPage('${logic.model['deviceNo']}','${logic.model['id']}',logic.model['shareMark']),binding: DeviceDetailBinding());
+                    CommonUtils().parseRouteDetail(logic.model);
                   },
                   child: Container(
                     width: 1.sw,
@@ -914,7 +914,7 @@ class MainPage extends StatelessWidget {
               child: EasyRefresh(
                 onRefresh: (){
                   logic.pageNum = 1;
-                  logic.getDeviceList(logic.pageNum);
+                  logic.getDeviceList(logic.pageNum,true);
 
                   DateTime dateTime = DateTime.now();
                   logic.dateStr.value = CommonUtils().parseLongTimeWithLength("${dateTime.millisecondsSinceEpoch}",16);
@@ -922,7 +922,7 @@ class MainPage extends StatelessWidget {
                 },
                 onLoad: (){
                   logic.pageNum++;
-                  logic.getDeviceList(logic.pageNum);
+                  logic.getDeviceList(logic.pageNum,false);
                 },
                 controller: logic.easyController,
                 canLoadAfterNoMore: false,
@@ -1023,7 +1023,7 @@ class MainPage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: (){
-                    Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                    CommonUtils().parseRouteDetail(item);
                   },
                   child: Container(
                     height: 90.w*3,
@@ -1047,7 +1047,7 @@ class MainPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: InkWell(
                     onTap: (){
-                      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+                      CommonUtils().parseRouteDetail(item);
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -1366,7 +1366,7 @@ class MainPage extends StatelessWidget {
             onTap: (){
               logic.spaceListIndex.value = i;
               logic.pageNum = 1;
-              logic.getDeviceList(1);
+              logic.getDeviceList(1,true);
             },
             child: Container(
               margin: EdgeInsets.only(left: 10.w*3),

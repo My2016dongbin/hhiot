@@ -2,7 +2,7 @@
 class RequestUtils{
   // static const base = 'http://172.16.50.87:10008';//debug
   static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
-  // static const rtsp = 'rtsp://117.132.5.139:18051';//rtsp
+  // static const base = 'http://192.168.1.165:10003/iot-api';//debug 内网
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
   static const logout = '$base/admin-api/system/auth/logout';//登出
@@ -54,6 +54,10 @@ class RequestUtils{
   static const leftDelete = '$base/admin-api/mid/device-alarm-info/batchDelete';//报警批量删除
   static const rightRead = '$base/admin-api/system/message-log/batchRead';//通知批量已读
   static const rightDelete = '$base/admin-api/system/message-log/batchDelete';//通知批量删除
+  static const dzControl = '$base/admin-api/mid/device-info/sendGateCmd';//道闸控制
+  static const dzLiveUrl = '$base/admin-api/mid/device-base/getBarrierPlayUrl';//道闸获取视频流
+  static const dzHistory = '$base/admin-api/mid/barrier-identify-record/page';//道闸出入历史记录
+  static const productType = '$base/admin-api/system/dict-data/page';//产品类型字典查询
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET

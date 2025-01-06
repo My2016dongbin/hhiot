@@ -173,8 +173,7 @@ class DevicePage extends StatelessWidget {
             itemBuilder: (context, item, index) =>
                 InkWell(
                   onTap: (){
-                    // Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
-                    Get.to(()=>DaoZhaDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DaoZhaDetailBinding());
+                    CommonUtils().parseRouteDetail(item);
                   },
               child: Container(
                 height: 80.w*3,
