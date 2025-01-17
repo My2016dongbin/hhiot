@@ -1250,20 +1250,37 @@ class DeviceDetailPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.all(Radius.circular(20.h))),
-                      child: Image.network(
-                        '${logic.endpoint}${item['alarmImageUrl']}',
+                      child: item['alarmImageUrl']==null?SizedBox(
                         width: 109.h * 3,
                         height: 59.h * 3,
-                        fit: BoxFit.fill,
-                        errorBuilder: (BuildContext context, Object exception,
-                            StackTrace? stackTrace) {
-                          return Image.asset(
-                            "assets/images/common/test_video.jpg",
-                            width: 109.h * 3,
-                            height: 59.h * 3,
-                            fit: BoxFit.fill,
-                          );
+                        child: Center(
+                          child: Text(
+                            '/',
+                            style: TextStyle(
+                                color: HhColors.grayCCTextColor,
+                                fontSize: 15.sp * 3,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ):InkWell(
+                        onTap: (){
+                          CommonUtils().showPictureDialog(context, url:"${CommonData.endpoint}${item['alarmImageUrl']}");
                         },
+                        child: Image.network(
+                          '${logic.endpoint}${item['alarmImageUrl']}',
+                          width: 109.h * 3,
+                          height: 59.h * 3,
+                          fit: BoxFit.fill,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return Image.asset(
+                              "assets/images/common/test_video.jpg",
+                              width: 109.h * 3,
+                              height: 59.h * 3,
+                              fit: BoxFit.fill,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
