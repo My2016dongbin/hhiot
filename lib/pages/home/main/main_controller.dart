@@ -569,7 +569,7 @@ class MainController extends GetxController {
     }
   }
 
-  parseCacheImageView(String deviceNo) {
+  parseCacheImageView(String deviceNo,dynamic item) {
     try{
       // 将图片保存到缓存目录
       final filePath =
@@ -582,21 +582,24 @@ class MainController extends GetxController {
       if(fileImage.file.lengthSync() < 20000){
         //处理白屏问题
         return Image.asset(
-          "assets/images/common/test_video.jpg",
+          CommonUtils().parseDeviceBackImage(item),
+          // "assets/images/common/test_video.jpg",
           fit: BoxFit.fill,
         );
       }
       return Image(image: fileImage,errorBuilder: (c,d,e){
         HhLog.d("parseCacheImageView error $deviceNo");
         return Image.asset(
-          "assets/images/common/test_video.jpg",
+          CommonUtils().parseDeviceBackImage(item),
+          // "assets/images/common/test_video.jpg",
           fit: BoxFit.fill,
         );
       }, fit: BoxFit.fill,);
     }catch(e){
       //
       return Image.asset(
-        "assets/images/common/test_video.jpg",
+        CommonUtils().parseDeviceBackImage(item),
+        // "assets/images/common/test_video.jpg",
         fit: BoxFit.fill,
       );
     }

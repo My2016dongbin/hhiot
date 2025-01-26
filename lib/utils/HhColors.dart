@@ -24,6 +24,7 @@ class HhColors {
   static const gray9TextColor = Color(0xFF999999);//深灰字体颜色
   static const gray8TextColor = Color(0xFF888888);//深灰字体颜色
   static const gray6TextColor = Color(0xFF666666);//深灰字体颜色
+  static const gray5FTextColor = Color(0xFF5F5F5F);//深灰字体颜色
   static const blueTextColor = Color(0xFF3477FF);//深灰字体颜色
   static const gray5TextColor = Color(0xFF555555);//深灰字体颜色
   static const gray4TextColor = Color(0xFF444444);//深灰字体颜色
@@ -44,6 +45,8 @@ class HhColors {
   static const transBlue1Color = Color(0xFFAACAFF);//蓝色渐变背景色
   static const transBlue2Color = Color(0xFFD3E8FF);//蓝色渐变背景色
   static const blueBackColor = Color(0xFFEAF1FF);//蓝色渐变背景色
+  static const blue25Color = Color(0xFFDAEDFF);//蓝色渐变背景色
+  static const blue25InColor = Color(0xFFEDF5FF);//蓝色渐变背景色
   static const blueEAColor = Color(0xFFEAEAEA);//蓝色渐变背景色
   static const videoControlBorder1Color = Color(0xFFD3E8FF);//视频控制边框线-外
   static const videoControlBorder2Color = Color(0xFFCDD8ED);//视频控制边框线-内
@@ -64,6 +67,7 @@ class HhColors {
   static const whiteColorTrans = Color(0x88FFFFFF); //主题颜色
   static const whiteColorTrans2 = Color(0xFFF2F6FE); //主题颜色
   static const whiteColor = Colors.white;
+  static const black25Color = Color(0xFF0D162A);
   static const blackColor = Color(0xFF333333);
   static const shadowColor = Color(0xFFD2DCF0);
   static const black2Color = Color(0xFF232420);
@@ -114,6 +118,8 @@ class HhColors {
   static const mainGreenColor = Color(0xFF6DD400);
   static const backgroundColorGreen = Color(0xFF17a2b8);
   static const lineColor = Color(0xFFEC883A);
+  static const line25Color = Color(0xFFE2E7F5);
+  static const line252Color = Color(0xFFF3F3F8);
   static const mainTabLine = Color(0xFFb3b3b3);
   static const mainTabTextSe = Color(0xFF36DFF4);
 

@@ -204,7 +204,8 @@ class SearchPage extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(5.w))
                     ),
                     child: Image.asset(
-                      item['productName']=='浩海一体机'?"assets/images/common/icon_c.png":"assets/images/common/icon_d.png",
+                      CommonUtils().parseDeviceImage(item),
+                      // item['productName']=='浩海一体机'?"assets/images/common/icon_c.png":"assets/images/common/icon_d.png",
                       width: 52.w*3,
                       height: 52.w*3,
                       fit: BoxFit.fill,
@@ -349,7 +350,8 @@ class SearchPage extends StatelessWidget {
                                 color: HhColors.whiteColor,
                                 borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                             child: Image.asset(
-                              "assets/images/common/test_video.jpg",
+                              CommonUtils().parseDeviceBackImage(itemLeft),
+                              // "assets/images/common/test_video.jpg",
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -399,7 +401,8 @@ class SearchPage extends StatelessWidget {
                                 color: HhColors.whiteColor,
                                 borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
                             child: Image.asset(
-                              "assets/images/common/test_video.jpg",
+                              // "assets/images/common/test_video.jpg",
+                              CommonUtils().parseDeviceBackImage(itemRight),
                               fit: BoxFit.fill,
                             ),
                           ),

@@ -16,6 +16,8 @@ import 'package:iot/pages/home/device/detail/daozha/daozha_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/daozha/daozha_detail_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'package:iot/pages/home/device/detail/yunweixiang/yunwei_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/yunweixiang/yunwei_detail_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhHttp.dart';
@@ -1216,8 +1218,55 @@ class CommonUtils {
     if(item['productKey'] == '5MiTcinKdSasKdKQ'){
       ///道闸
       Get.to(()=>DaoZhaDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DaoZhaDetailBinding());
+    // }else if(item['productKey'] == 'R45bbC4eBxm3555D'){//TODO 测试调试
+    }else if(item['productKey'] == 'Dhs5Kt8bbZaKrCCz'){
+      ///运维箱
+      Get.to(()=>YunWeiDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: YunWeiDetailBinding());
     }else{
       Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+    }
+  }
+
+  parseDeviceImage(item){
+    if(item['productKey'] == '5MiTcinKdSasKdKQ'){
+      ///道闸-高清车牌识别一体机
+      return "assets/images/common/icon_b.png";
+    // }else if (item['productKey'] == 'R45bbC4eBxm3555D'){//TODO 测试调试
+    }else if (item['productKey'] == 'Dhs5Kt8bbZaKrCCz'){
+      ///智能运维箱
+      return "assets/images/common/icon_e.png";
+    }else if (item['productKey'] == 'aSkWAXGKPh4zEcjE'){
+      ///浩海智慧立杆
+      return "assets/images/common/icon_d.png";
+    }else if (item['productKey'] == '2QWASjR4T7aetr7G'){
+      ///火险因子监测站
+      return "assets/images/common/icon_e.png";
+    }else if (item['productKey'] == 'R45bbC4eBxm3555D'){
+      ///一体机
+      return "assets/images/common/icon_c.png";
+    }else{
+      return "assets/images/common/icon_c.png";
+    }
+  }
+  parseDeviceBackImage(item){
+    if(item['productKey'] == '5MiTcinKdSasKdKQ'){
+      ///道闸-高清车牌识别一体机
+      return "assets/images/common/test_video.jpg";
+    // }else if (item['productKey'] == 'R45bbC4eBxm3555D'){//TODO 测试调试
+    }else if (item['productKey'] == 'Dhs5Kt8bbZaKrCCz'){
+      ///智能运维箱
+      return "assets/images/common/test_video_ywx.png";
+    }else if (item['productKey'] == 'aSkWAXGKPh4zEcjE'){
+      ///浩海智慧立杆
+      return "assets/images/common/test_video.jpg";
+    }else if (item['productKey'] == '2QWASjR4T7aetr7G'){
+      ///火险因子监测站
+      return "assets/images/common/test_video.jpg";
+    }else if (item['productKey'] == 'R45bbC4eBxm3555D'){
+      ///一体机
+      return "assets/images/common/test_video.jpg";
+    }else{
+      return "assets/images/common/test_video.jpg";
     }
   }
 }

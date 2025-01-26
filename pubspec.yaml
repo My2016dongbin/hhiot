@@ -74,6 +74,7 @@ dependencies:
   bouncing_widget: ^2.0.0
   draggable_widget: ^2.0.0
 
+  fl_chart: ^0.40.0
   mqtt_client: ^10.3.0 #MQTT
   open_file: ^3.3.2
 #  flutter_downloader: ^1.11.7

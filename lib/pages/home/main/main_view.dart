@@ -1030,7 +1030,7 @@ class MainPage extends StatelessWidget {
                     width: 0.5.sw,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(top:Radius.circular(16.w*3))),
-                    child: item['status']==1?logic.parseCacheImageView('${item['deviceNo']}'):Image.asset(
+                    child: item['status']==1?logic.parseCacheImageView('${item['deviceNo']}',item):Image.asset(
                       "assets/images/common/test_video.png",
                       fit: BoxFit.fill,
                     ),
