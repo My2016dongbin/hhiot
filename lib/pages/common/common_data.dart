@@ -7,8 +7,10 @@ class CommonData{
   static double ?latitude;
   static double ?longitude;
   static String ?token;
-  static bool personal = true;///false企业 true个人
-  static bool test = false;///false正式版 true测试版
+  ///false企业 true个人
+  static bool personal = true;
+  ///false正式版 true测试版
+  static bool test = false;
   static String ?tenantName = personal?'haohai':null;
   static String ?tenant = personal?'1':null;
   static String ?tenantTitle = '';
