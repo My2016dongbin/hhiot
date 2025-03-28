@@ -579,7 +579,7 @@ class MainController extends GetxController {
       FileImage fileImage = FileImage(file);
       // 同步清除指定文件的缓存
       fileImage.evict();
-      if(fileImage.file.lengthSync() < 20000){
+      if(fileImage.file.lengthSync() < 3000){
         //处理白屏问题
         return Image.asset(
           CommonUtils().parseDeviceBackImage(item),

@@ -180,9 +180,14 @@ class DeviceDetailController extends GetxController {
       final filePath =
           '${tempDir.path}/catch_$deviceNo.png';
       final file = File(filePath);
-      File a = await file.writeAsBytes(value!);
-      HhLog.d("saveCatchImage $a");
-      EventBusUtil.getInstance().fire(CatchRefresh());
+      try{
+        HhLog.e("saveCatchImage ${file.lengthSync()} ----- $value");
+        File a = await file.writeAsBytes(value!);
+        HhLog.e("saveCatchImage $a");
+        EventBusUtil.getInstance().fire(CatchRefresh());
+      }catch(e){
+        HhLog.e("saveCatchImage $e");
+      }
     }).catchError((onError) {
       // EventBusUtil.getInstance().fire(HhToast(title: '拍照失败请重试'));
     });
@@ -339,7 +344,16 @@ class DeviceDetailController extends GetxController {
             // 播放成功开始
             HhLog.d('Playback started successfully ${player.state}');
             //截图并保存
-            saveCatchImage();
+            Future.delayed(const Duration(milliseconds: 3000),(){
+              if(Get.isRegistered<DeviceDetailController>()){
+                saveCatchImage();
+              }
+            });
+            Future.delayed(const Duration(milliseconds: 10000),(){
+              if(Get.isRegistered<DeviceDetailController>()){
+                saveCatchImage();
+              }
+            });
           }
         });
         Future.delayed(const Duration(seconds: 1), () {
