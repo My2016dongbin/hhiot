@@ -181,8 +181,9 @@ class DeviceDetailController extends GetxController {
           '${tempDir.path}/catch_$deviceNo.png';
       final file = File(filePath);
       try{
-        HhLog.e("saveCatchImage ${file.lengthSync()} ----- $value");
         File a = await file.writeAsBytes(value!);
+        HhLog.e("saveCatchImage  ----- $value");
+        HhLog.e("saveCatchImage ${file.lengthSync()}");
         HhLog.e("saveCatchImage $a");
         EventBusUtil.getInstance().fire(CatchRefresh());
       }catch(e){
