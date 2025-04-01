@@ -8,7 +8,7 @@ class CommonData{
   static double ?longitude;
   static String ?token;
   ///false企业 true个人
-  static bool personal = false;
+  static bool personal = true;
   ///false正式版 true测试版
   static bool test = false;
   static String ?tenantName = personal?'haohai':null;
