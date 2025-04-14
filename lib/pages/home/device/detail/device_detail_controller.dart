@@ -32,6 +32,8 @@ class DeviceDetailController extends GetxController {
   final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
+  final Rx<bool> playErrorTag = false.obs;
+  final Rx<bool> offlineTag = false.obs;
   final Rx<bool> recordTag = false.obs;
   final Rx<bool> recordTag2 = false.obs;
   final Rx<bool> videoTag = false.obs;
@@ -103,7 +105,7 @@ class DeviceDetailController extends GetxController {
   void onInit() {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     dragController = DragController();
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       getDeviceStream();
       getDeviceInfo();
       getDeviceHistory();
@@ -274,14 +276,20 @@ class DeviceDetailController extends GetxController {
       try {
         deviceId = result["data"][liveIndex.value]["deviceId"];
         channelNumber = result["data"][liveIndex.value]["number"];
-        HhLog.d('$deviceId , $channelNumber');
+        HhLog.d('getDeviceStream $deviceId , $channelNumber');
         getPlayUrl(deviceId, channelNumber);
       } catch (e) {
         HhLog.e(e.toString());
+        EventBusUtil.getInstance().fire(HhLoading(show: false));
+        //视频加载失败
+        videoError();
       }
     } else {
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      //视频加载失败
+      videoError();
     }
   }
 
@@ -355,6 +363,10 @@ class DeviceDetailController extends GetxController {
                 saveCatchImage();
               }
             });
+          }
+          if (player.state == FijkState.error) {
+            videoError();
+            player.reset();
           }
         });
         Future.delayed(const Duration(seconds: 1), () {
@@ -585,5 +597,9 @@ class DeviceDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
+  }
+
+  void videoError() {
+    playErrorTag.value = true;
   }
 }

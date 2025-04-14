@@ -32,6 +32,8 @@ class DaoZhaDetailController extends GetxController {
   final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
+  final Rx<bool> playErrorTag = false.obs;
+  final Rx<bool> offlineTag = false.obs;
   final Rx<bool> recordTag = false.obs;
   final Rx<bool> recordTag2 = false.obs;
   final Rx<bool> videoTag = false.obs;
@@ -105,7 +107,7 @@ class DaoZhaDetailController extends GetxController {
   void onInit() {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     dragController = DragController();
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       getDeviceInfo();
       getDeviceHistory(1);
       getWarnType();
@@ -297,6 +299,7 @@ class DaoZhaDetailController extends GetxController {
       liveStatus.value = true;
       try {
         String url = result["data"];
+        // url = "rtsp://172.16.50.44:554/visible";
         playTag.value = false;
         player.release();
         player = FijkPlayer();
@@ -340,11 +343,35 @@ class DaoZhaDetailController extends GetxController {
             // 播放成功开始
             HhLog.d('Playback started successfully ${player.state}');
             //截图并保存
-            saveCatchImage();
+            Future.delayed(const Duration(milliseconds: 3000),(){
+              if(Get.isRegistered<DaoZhaDetailController>()){
+                saveCatchImage();
+              }
+            });
+            Future.delayed(const Duration(milliseconds: 10000),(){
+              if(Get.isRegistered<DaoZhaDetailController>()){
+                saveCatchImage();
+              }
+            });
           }
           if (player.state == FijkState.stopped) {
             // 播放停止
             HhLog.d('Playback stopped ${player.state}');
+          }
+          if (player.state == FijkState.error) {
+            videoError();
+            player.reset();
+          }
+          if (player.state == FijkState.prepared) {
+            final duration = player.value.duration;
+            HhLog.d("加载进度 $duration");
+            // if (duration > 0) {
+            //   final buffered = player.value.buffered;
+            //   if (buffered.isNotEmpty) {
+            //     final end = buffered.last.end.inMilliseconds.toDouble();
+            //     final percent = (end / duration) * 100;
+            //   }
+            // }
           }
         });
         Future.delayed(const Duration(seconds: 1), () {
@@ -353,10 +380,16 @@ class DaoZhaDetailController extends GetxController {
 
       } catch (e) {
         HhLog.e(e.toString());
+        EventBusUtil.getInstance().fire(HhLoading(show: false));
+        //视频加载失败
+        videoError();
       }
     } else {
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      //视频加载失败
+      videoError();
     }
 
     EventBusUtil.getInstance().fire(HhLoading(show: false));
@@ -576,5 +609,9 @@ class DaoZhaDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
+  }
+
+  void videoError() {
+    playErrorTag.value = true;
   }
 }

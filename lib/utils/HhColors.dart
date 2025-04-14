@@ -28,6 +28,7 @@ class HhColors {
   static const blueTextColor = Color(0xFF3477FF);//深灰字体颜色
   static const gray5TextColor = Color(0xFF555555);//深灰字体颜色
   static const gray4TextColor = Color(0xFF444444);//深灰字体颜色
+  static const gray3TextColor = Color(0xFF333333);//深灰字体颜色
   static const grayEDBackColor = Color(0xFFEDEDED);//灰色背景颜色
   static const grayE6BackColor = Color(0xFFE6E6E6);//灰色背景颜色
   static const grayEFEFBackColor = Color(0xFFEFEFEF);//灰色背景颜色
@@ -67,6 +68,7 @@ class HhColors {
   static const whiteColorTrans = Color(0x88FFFFFF); //主题颜色
   static const whiteColorTrans2 = Color(0xFFF2F6FE); //主题颜色
   static const whiteColor = Colors.white;
+  static const whiteColorD5 = Color(0xFFD5D5D5);
   static const black25Color = Color(0xFF0D162A);
   static const blackColor = Color(0xFF333333);
   static const shadowColor = Color(0xFFD2DCF0);

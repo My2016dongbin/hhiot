@@ -29,15 +29,35 @@ class AppView extends StatelessWidget {
         //textScaleFactor: Config.textScaleFactor,
       ),
       child: LoaderOverlay(
-        overlayColor: HhColors.whiteColor,
+        overlayColor: HhColors.trans,
         closeOnBackButton: true,
         useDefaultLoading: false,
         overlayWidgetBuilder: (_) { //ignored progress for the moment
-          return const Center(
-            child: SpinKitDualRing(
-              color: HhColors.mainBlueColor,
-              size: 50.0,
-              lineWidth: 5,
+          return  Center(
+            child: Container(
+              height: 100.w*3,
+              width: 125.w*3,
+              decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.circular(10.w*3),
+              ),
+              clipBehavior: Clip.hardEdge,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 10.w*3,),
+                    SpinKitDualRing(
+                      color: HhColors.mainBlueColor,
+                      size: 24.w*3,
+                      lineWidth: 2.5.w*3,
+                    ),
+                    SizedBox(height: 13.w*3,),
+                    Text("正在加载，请稍后…",style: TextStyle(color: HhColors.gray3TextColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500,decoration: TextDecoration.none,),
+                      maxLines: 1,textAlign: TextAlign.center,)
+                  ],
+                ),
+              ),
             ),
           );
         },

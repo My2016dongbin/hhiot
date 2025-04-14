@@ -36,10 +36,11 @@ import 'package:screenshot/screenshot.dart';
 class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
 
-  DeviceDetailPage(String deviceNo, String id, int shareMark, {super.key}) {
+  DeviceDetailPage(String deviceNo, String id, int shareMark, bool offlineTag, {super.key}) {
     logic.deviceNo = deviceNo;
     logic.id = id;
     logic.shareMark = shareMark;
+    logic.offlineTag.value = offlineTag;
   }
 
   Widget buildCustomPanel() {
@@ -109,67 +110,6 @@ class DeviceDetailPage extends StatelessWidget {
                           logic.fix.value = false;
                         });
                       },
-                      /*onVerticalDragUpdate: (details) {
-                  // 上下滑动控制 <0:上  >0:下
-                  if(details.delta.dy > 0){
-                    HhLog.d("滑动控制 下");
-                    logic.command = "DOWN";
-                    logic.downStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                  if(details.delta.dy < 0){
-                    HhLog.d("滑动控制 上");
-                    logic.command = "UP";
-                    logic.upStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                },
-                onVerticalDragEnd: (details){
-                  //终止滑动控制
-                  HhLog.d("滑动控制 终止");
-                  Future.delayed(const Duration(milliseconds: 500),(){
-                    logic.upStatus.value = false;
-                    logic.downStatus.value = false;
-                    logic.leftStatus.value = false;
-                    logic.rightStatus.value = false;
-                    logic.controlPost(1);
-                  });
-                },
-                onHorizontalDragUpdate: (details) {
-                  // 左右滑动控制 <0:左  >0:右
-                  if(details.delta.dx > 0){
-                    HhLog.d("滑动控制 右");
-                    logic.command = "RIGHT";
-                    logic.rightStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                  if(details.delta.dx < 0){
-                    HhLog.d("滑动控制 左");
-                    logic.command = "LEFT";
-                    logic.leftStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                },
-                onHorizontalDragEnd: (details){
-                  //终止滑动控制
-                  HhLog.d("滑动控制 终止");
-                  Future.delayed(const Duration(milliseconds: 500),(){
-                    logic.upStatus.value = false;
-                    logic.downStatus.value = false;
-                    logic.leftStatus.value = false;
-                    logic.rightStatus.value = false;
-                    logic.controlPost(1);
-                  });
-                },*/
-                      /*onScaleStart: (ScaleStartDetails details) {
-
-                      },
-                      onScaleUpdate: (ScaleUpdateDetails details) {
-                        EventBusUtil.getInstance().fire(HhToast(title: "${details.scale}"));
-                      },
-                      onScaleEnd: (ScaleEndDetails details) {
-
-                      },*/
                       child: InteractiveViewer(
                         panEnabled: true, // 是否允许拖动
                         minScale: 1.0,
@@ -255,6 +195,101 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                       ),
                     )
+                  : const SizedBox(),
+              logic.playErrorTag.value
+                  ? Container(
+                width: 1.sw,
+                height: 254.h * 3,
+                color: HhColors.blackRealColor,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment:Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 50.w*3,),
+                          Image.asset(
+                            "assets/images/common/ic_video_error.png",
+                            width: 36.w*3,
+                            height: 36.w*3,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(height: 5.w*3,),
+                          Text(
+                            '视频加载错误，请重试',
+                            style: TextStyle(
+                                color: HhColors.gray6TextColor,
+                                fontSize: 14.sp * 3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 300),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              logic.getDeviceStream();
+                              logic.playErrorTag.value = false;
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10.w*3),
+                              padding: EdgeInsets.fromLTRB(15.w*3, 5.w*3, 15.w*3, 5.w*3),
+                              decoration: BoxDecoration(
+                                color: HhColors.gray9TextColor.withAlpha(130),
+                                borderRadius: BorderRadius.circular(4.w*3)
+                              ),
+                              child:
+                                Text(
+                                  '重试',
+                                  style: TextStyle(
+                                      color: HhColors.whiteColorD5,
+                                      fontSize: 14.sp * 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+                  : const SizedBox(),
+              logic.offlineTag.value
+                  ? Container(
+                width: 1.sw,
+                height: 254.h * 3,
+                color: HhColors.blackRealColor,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment:Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 50.w*3,),
+                          Image.asset(
+                            "assets/images/common/ic_offline.png",
+                            width: 30.w*3,
+                            height: 30.w*3,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(height: 5.w*3,),
+                          Text(
+                            '设备已离线',
+                            style: TextStyle(
+                                color: HhColors.gray6TextColor,
+                                fontSize: 14.sp * 3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
                   : const SizedBox(),
 
               ///title

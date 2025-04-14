@@ -31,10 +31,11 @@ import 'package:screenshot/screenshot.dart';
 class DaoZhaDetailPage extends StatelessWidget {
   final logic = Get.find<DaoZhaDetailController>();
 
-  DaoZhaDetailPage(String deviceNo, String id, int shareMark, {super.key}) {
+  DaoZhaDetailPage(String deviceNo, String id, int shareMark, bool offlineTag, {super.key}) {
     logic.deviceNo = deviceNo;
     logic.id = id;
     logic.shareMark = shareMark;
+    logic.offlineTag.value = offlineTag;
   }
 
   Widget buildCustomPanel() {
@@ -270,6 +271,109 @@ class DaoZhaDetailPage extends StatelessWidget {
                       ),
                   )                  : const SizedBox(),
 
+              logic.playErrorTag.value
+                  ? Container(
+                margin: EdgeInsets.fromLTRB(26.w*3,130.w*3,26.w*3,0),
+                width: double.infinity,
+                height: 254.h * 3,
+                decoration: BoxDecoration(
+                    color: HhColors.blackRealColor,
+                    borderRadius: BorderRadius.circular(6.w*3)
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment:Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 10.w*3,),
+                          Image.asset(
+                            "assets/images/common/ic_video_error.png",
+                            width: 30.w*3,
+                            height: 30.w*3,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(height: 5.w*3,),
+                          Text(
+                            '视频加载错误，请重试',
+                            style: TextStyle(
+                                color: HhColors.gray6TextColor,
+                                fontSize: 14.sp * 3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 300),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              logic.getDeviceStream();
+                              logic.playErrorTag.value = false;
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10.w*3),
+                              padding: EdgeInsets.fromLTRB(15.w*3, 5.w*3, 15.w*3, 5.w*3),
+                              decoration: BoxDecoration(
+                                  color: HhColors.gray9TextColor.withAlpha(130),
+                                  borderRadius: BorderRadius.circular(4.w*3)
+                              ),
+                              child:
+                              Text(
+                                '重试',
+                                style: TextStyle(
+                                    color: HhColors.whiteColorD5,
+                                    fontSize: 14.sp * 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+                  : const SizedBox(),
+              logic.offlineTag.value
+                  ? Container(
+                margin: EdgeInsets.fromLTRB(26.w*3,130.w*3,26.w*3,0),
+                width: double.infinity,
+                height: 254.h * 3,
+                decoration: BoxDecoration(
+                    color: HhColors.blackRealColor,
+                    borderRadius: BorderRadius.circular(6.w*3)
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment:Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 10.w*3,),
+                          Image.asset(
+                            "assets/images/common/ic_offline.png",
+                            width: 30.w*3,
+                            height: 30.w*3,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(height: 5.w*3,),
+                          Text(
+                            '设备已离线',
+                            style: TextStyle(
+                                color: HhColors.gray6TextColor,
+                                fontSize: 14.sp * 3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+                  : const SizedBox(),
 
               ///tab
               Container(

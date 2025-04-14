@@ -1217,13 +1217,13 @@ class CommonUtils {
 
     if(item['productKey'] == '5MiTcinKdSasKdKQ'){
       ///道闸
-      Get.to(()=>DaoZhaDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DaoZhaDetailBinding());
+      Get.to(()=>DaoZhaDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DaoZhaDetailBinding());
     // }else if(item['productKey'] == 'R45bbC4eBxm3555D'){//TODO 测试调试
     }else if(item['productKey'] == 'Dhs5Kt8bbZaKrCCz'){
       ///运维箱
       Get.to(()=>YunWeiDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: YunWeiDetailBinding());
     }else{
-      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: DeviceDetailBinding());
+      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DeviceDetailBinding());
     }
   }
 
