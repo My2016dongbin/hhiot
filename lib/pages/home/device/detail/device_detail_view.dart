@@ -196,6 +196,12 @@ class DeviceDetailPage extends StatelessWidget {
                       ),
                     )
                   : const SizedBox(),
+              logic.playLoadingTag.value
+                  ? Container(
+                width: 1.sw,
+                height: 254.h * 3,
+                color: HhColors.blackRealColor,
+              ): const SizedBox(),
               logic.playErrorTag.value
                   ? Container(
                 width: 1.sw,
@@ -230,6 +236,7 @@ class DeviceDetailPage extends StatelessWidget {
                             onPressed: () {
                               logic.getDeviceStream();
                               logic.playErrorTag.value = false;
+                              logic.playLoadingTag.value = false;
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 10.w*3),

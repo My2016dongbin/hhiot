@@ -6,6 +6,8 @@ flavor:
 个人测试版本 betaVersion
 企业测试版本 betaBusinessVersion
 
+export JAVA_HOME=$(/usr/libexec/java_home -v11)
+
 
                                   decoration: TextDecoration.none,
 

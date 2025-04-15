@@ -32,6 +32,7 @@ class DaoZhaDetailController extends GetxController {
   final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
+  final Rx<bool> playLoadingTag = true.obs;
   final Rx<bool> playErrorTag = false.obs;
   final Rx<bool> offlineTag = false.obs;
   final Rx<bool> recordTag = false.obs;
@@ -299,6 +300,7 @@ class DaoZhaDetailController extends GetxController {
       liveStatus.value = true;
       try {
         String url = result["data"];
+        playLoadingTag.value = false;
         // url = "rtsp://172.16.50.44:554/visible";
         playTag.value = false;
         player.release();

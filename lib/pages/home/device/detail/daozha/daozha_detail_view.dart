@@ -271,6 +271,16 @@ class DaoZhaDetailPage extends StatelessWidget {
                       ),
                   )                  : const SizedBox(),
 
+              logic.playLoadingTag.value
+                  ? Container(
+                margin: EdgeInsets.fromLTRB(26.w*3,130.w*3,26.w*3,0),
+                width: double.infinity,
+                height: 254.h * 3,
+                decoration: BoxDecoration(
+                    color: HhColors.blackRealColor,
+                    borderRadius: BorderRadius.circular(6.w*3)
+                ),
+              ): const SizedBox(),
               logic.playErrorTag.value
                   ? Container(
                 margin: EdgeInsets.fromLTRB(26.w*3,130.w*3,26.w*3,0),
@@ -309,6 +319,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                             onPressed: () {
                               logic.getDeviceStream();
                               logic.playErrorTag.value = false;
+                              logic.playLoadingTag.value = false;
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 10.w*3),

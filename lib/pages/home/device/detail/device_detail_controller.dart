@@ -32,6 +32,7 @@ class DeviceDetailController extends GetxController {
   final Rx<String> name = ''.obs;
   final Rx<int> tabIndex = 0.obs;
   final Rx<bool> playTag = true.obs;
+  final Rx<bool> playLoadingTag = true.obs;
   final Rx<bool> playErrorTag = false.obs;
   final Rx<bool> offlineTag = false.obs;
   final Rx<bool> recordTag = false.obs;
@@ -310,6 +311,7 @@ class DeviceDetailController extends GetxController {
     if (result["code"] == 200 && result["data"] != null) {
       try {
         String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
+        playLoadingTag.value = false;
         playTag.value = false;
         player.release();
         player = FijkPlayer();
@@ -377,6 +379,9 @@ class DeviceDetailController extends GetxController {
         EventBusUtil.getInstance().fire(HhLoading(show: false));
       } catch (e) {
         HhLog.e(e.toString());
+        EventBusUtil.getInstance().fire(HhLoading(show: false));
+        //视频加载失败
+        videoError();
       }
     } else {
       EventBusUtil.getInstance()
