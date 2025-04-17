@@ -671,7 +671,7 @@ class MessagePage extends StatelessWidget {
                                                 },
                                                 child: Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
                                                   return Image.asset(
-                                                    "assets/images/common/test_video.jpg",
+                                                    "assets/images/common/ic_message_no.png",
                                                     width: 113.w*3,
                                                     height: 70.w*3,
                                                     fit: BoxFit.fill,
