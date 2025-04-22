@@ -19,7 +19,7 @@ class CommonData{
   static String ?tenantDef = personal?'1':null;
   static String ?deviceNo;
   static String ?sessionId;
-  static String ?endpoint;
+  static String ?endpoint = "http://117.132.5.139:18033/iot-file";
   static String info = "";
   static int versionTime = 0;
   static BuildContext? context;
