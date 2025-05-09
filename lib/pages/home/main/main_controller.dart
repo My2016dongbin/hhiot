@@ -145,7 +145,9 @@ class MainController extends GetxController {
     getUnRead();
     //获取空间列表
     getSpaceList(1,true);
-    EventBusUtil.getInstance().fire(Version());
+    Future.delayed(const Duration(milliseconds: 3000),(){
+      EventBusUtil.getInstance().fire(Version());
+    });
     super.onInit();
   }
 

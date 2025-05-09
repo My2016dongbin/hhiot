@@ -1,12 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/socket/WebSocketManager.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:iot/utils/SPKeys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LiGanDetailController extends GetxController {
   late BuildContext context;
@@ -20,6 +24,7 @@ class LiGanDetailController extends GetxController {
   final Rx<bool> energyAction = false.obs;
   final Rx<bool> weatherAction = false.obs;
   final Rx<bool> soilAction = false.obs;
+  final Rx<String> recordTimes = '00:00:00'.obs;
   final Rx<String> energyDelay = ''.obs;
   final Rx<String> weatherDelay = ''.obs;
   final Rx<String> soilDelay = ''.obs;
@@ -94,6 +99,39 @@ class LiGanDetailController extends GetxController {
       getVersion();
     });
     super.onInit();
+  }
+
+
+  void uploadFile(String filePath,String fileName) async {
+    var dio = Dio();
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(filePath,
+          filename: fileName),
+      "path": filePath,
+    });
+
+    try {
+      var response = await dio.put(
+        RequestUtils.fileUpload,
+        data: formData,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer ${CommonData.token}",
+            "Tenant-Id":"${CommonData.tenant}",
+          },
+        ),
+      );
+      if(response.data.toString().contains("401")){
+        CommonUtils().tokenDown();
+      }
+      HhLog.d("上传成功: ${response.data}");
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(SPKeys().avatar, response.data["data"]);
+      String url = prefs.getString(SPKeys().endpoint)!+response.data["data"];
+      EventBusUtil.getInstance().fire(UserInfo());
+    } catch (e) {
+      HhLog.d("上传失败: $e");
+    }
   }
 
   Future<void> getDeviceInfo() async {
@@ -500,5 +538,39 @@ class LiGanDetailController extends GetxController {
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
+  }
+
+  void startRecord() {
+    recordDateTime = DateTime(2025);
+    videoTag.value = true;
+    runRecordTimer();
+  }
+
+  void stopRecord() {
+    videoTag.value = false;
+
+    Get.back();
+    CommonUtils().showCommonInputDialog(context, "录音", (){
+      Get.back();
+    }, (){
+      Get.back();
+      EventBusUtil.getInstance().fire(HhLoading(show: true));
+      Future.delayed(const Duration(milliseconds: 2000,),(){
+        EventBusUtil.getInstance().fire(HhLoading(show: false));
+        EventBusUtil.getInstance().fire(HhToast(title: "音频上传成功",type: 0));
+      });
+    });
+  }
+
+  late DateTime recordDateTime = DateTime(2025);
+  final Rx<bool> videoTag = false.obs;
+  void runRecordTimer() {
+    Future.delayed(const Duration(seconds: 1),(){
+      recordDateTime = recordDateTime.add(const Duration(seconds: 1));
+      recordTimes.value = "${CommonUtils().parseZero(recordDateTime.hour)}:${CommonUtils().parseZero(recordDateTime.minute)}:${CommonUtils().parseZero(recordDateTime.second)}";
+      if(videoTag.value){
+        runRecordTimer();
+      }
+    });
   }
 }

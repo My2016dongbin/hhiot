@@ -27,6 +27,37 @@ class WebViewPage extends StatefulWidget {
 
 class WebViewPageState extends State<WebViewPage> {
   late WebViewController controller;
+  late final String _removeGoogleAdsJS = '''
+  function removeAds() {
+    const adSelectors = [
+      'iframe[src*="doubleclick.net"]',
+      'iframe[src*="googlesyndication.com"]',
+      '.adsbygoogle',
+      '[id^="google_ads"]',
+      '[class*="ad-"]',
+      '[class^="ad-"]',
+      '[id*="ad"]',
+      '[id*="banner"]',
+      'ins[class="adsbygoogle"]'
+    ];
+    adSelectors.forEach(selector => {
+      document.querySelectorAll(selector).forEach(el => el.remove());
+    });
+  }
+
+  // 屏蔽 JavaScript 弹窗
+  window.alert = function() {};
+  window.confirm = function() { return false; };
+  window.prompt = function() { return null; };
+  window.open = function() { return null; }; // 屏蔽 window.open 弹窗/跳转
+
+  removeAds();
+  setInterval(removeAds, 1000);
+''';
+
+
+
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +69,9 @@ class WebViewPageState extends State<WebViewPage> {
             // Update loading bar.
           },
           onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
+          onPageFinished: (String url) {
+            controller.runJavaScript(_removeGoogleAdsJS);
+            },
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           // onNavigationRequest: (NavigationRequest request) {

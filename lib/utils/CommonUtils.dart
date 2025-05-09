@@ -16,6 +16,8 @@ import 'package:iot/pages/home/device/detail/daozha/daozha_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/daozha/daozha_detail_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'package:iot/pages/home/device/detail/ligan/device_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/ligan/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/yunweixiang/yunwei_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/yunweixiang/yunwei_detail_view.dart';
 import 'package:iot/utils/EventBusUtils.dart';
@@ -417,7 +419,7 @@ class CommonUtils {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4.w * 3)),
                           child: Image.asset(
-                            "assets/images/common/test_video.jpg",
+                            "assets/images/common/ic_message_no.png",
                             fit: BoxFit.fill,
                           ),
                         );
@@ -468,6 +470,107 @@ class CommonUtils {
                   ),
                 ),
               ],
+            ),
+          );
+        },
+        barrierDismissible: true);
+  }
+
+  ///通用输入Dialog（取消/确认）
+  showCommonInputDialog(context, title, leftClick, rightClick,
+      {String? leftStr, String? rightStr, String? hint}) {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: Container(
+              height: hint == null ? 152.w * 3 : 170.w * 3,
+              margin: EdgeInsets.fromLTRB(30.w * 3, 0, 30.w * 3, 0),
+              decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(8.w * 3)),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 40.w * 3),
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "$title",
+                            style: TextStyle(
+                                color: HhColors.blackTextColor,
+                                decoration: TextDecoration.none,
+                                fontSize: 16.sp * 3,
+                                fontWeight: FontWeight.w500),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          ),
+                          Offstage(
+                              offstage: hint == null,
+                              child: SizedBox(
+                                height: 20.h,
+                              )),
+                          Offstage(
+                              offstage: hint == null,
+                              child: Material(
+                                  color: HhColors.whiteColor,
+                                  child: Text(
+                                    "$hint",
+                                    style: TextStyle(
+                                        color: HhColors.titleColor_33,
+                                        fontSize: 16.sp * 3),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 13.w * 3),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: CommonButton(
+                              height: 44.w * 3,
+                              fontSize: 16.sp * 3,
+                              backgroundColor: HhColors.whiteColor,
+                              margin:
+                                  EdgeInsets.fromLTRB(20.w * 3, 0, 13.w * 3, 0),
+                              solid: true,
+                              borderRadius: 8.w * 3,
+                              solidColor: HhColors.grayEDBackColor,
+                              textColor: HhColors.titleColor_99,
+                              text: leftStr ?? "取消",
+                              onPressed: leftClick,
+                            ),
+                          ),
+                          Expanded(
+                            child: CommonButton(
+                              height: 44.w * 3,
+                              fontSize: 16.sp * 3,
+                              backgroundColor: HhColors.mainBlueColor,
+                              margin: EdgeInsets.fromLTRB(0, 0, 20.w * 3, 0),
+                              borderRadius: 8.w * 3,
+                              textColor: HhColors.whiteColor,
+                              text: rightStr ?? "确定",
+                              onPressed: rightClick,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -1222,6 +1325,15 @@ class CommonUtils {
     }else if(item['productKey'] == 'Dhs5Kt8bbZaKrCCz'){
       ///运维箱
       Get.to(()=>YunWeiDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark']),binding: YunWeiDetailBinding());
+    }else if (item['productKey'] == 'aSkWAXGKPh4zEcjE'){
+      ///浩海智慧立杆
+      Get.to(()=>LiGanDeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: LiGanDeviceDetailBinding());
+    }else if (item['productKey'] == '2QWASjR4T7aetr7G'){
+      ///火险因子监测站
+      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DeviceDetailBinding());
+    }else if (item['productKey'] == 'R45bbC4eBxm3555D'){
+      ///一体机
+      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DeviceDetailBinding());
     }else{
       Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DeviceDetailBinding());
     }
@@ -1269,6 +1381,16 @@ class CommonUtils {
       return "assets/images/common/test_video.jpg";
     }
   }
+
+  static line({double? marginTop,double? marginBottom}) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, marginTop??0, 0, marginBottom??0),
+      color: HhColors.backColor,
+      width: 1.sw,
+      height: 1.w,
+    );
+  }
+
 }
 
 ///通用Button

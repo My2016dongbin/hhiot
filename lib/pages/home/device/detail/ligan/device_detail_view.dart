@@ -5,9 +5,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_audio_waveforms/flutter_audio_waveforms.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -17,32 +15,25 @@ import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
-import 'package:iot/pages/home/device/detail/call/call_binding.dart';
-import 'package:iot/pages/home/device/detail/call/call_view.dart';
-import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/pages/home/device/detail/fijkpanel.dart';
+import 'package:iot/pages/home/device/detail/ligan/device_detail_controller.dart';
 import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_view.dart';
-import 'package:iot/pages/home/device/detail/yunweixiang/detail/ywx_in_binding.dart';
-import 'package:iot/pages/home/device/detail/yunweixiang/detail/ywx_in_view.dart';
-import 'package:iot/pages/home/device/detail/yunweixiang/yunwei_detail_controller.dart';
-import 'package:iot/pages/home/my/setting/edit_user/edit_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:screen_recorder/screen_recorder.dart';
 import 'package:screenshot/screenshot.dart';
 
-class YunWeiDetailPage extends StatelessWidget {
-  final logic = Get.find<YunWeiDetailController>();
+class LiGanDeviceDetailPage extends StatelessWidget {
+  final logic = Get.find<LiGanDeviceDetailController>();
 
-  YunWeiDetailPage(String deviceNo, String id, int shareMark, {super.key}) {
+  LiGanDeviceDetailPage(String deviceNo, String id, int shareMark, bool offlineTag, {super.key}) {
     logic.deviceNo = deviceNo;
     logic.id = id;
     logic.shareMark = shareMark;
+    logic.offlineTag.value = offlineTag;
   }
 
   Widget buildCustomPanel() {
@@ -112,67 +103,6 @@ class YunWeiDetailPage extends StatelessWidget {
                           logic.fix.value = false;
                         });
                       },
-                      /*onVerticalDragUpdate: (details) {
-                  // 上下滑动控制 <0:上  >0:下
-                  if(details.delta.dy > 0){
-                    HhLog.d("滑动控制 下");
-                    logic.command = "DOWN";
-                    logic.downStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                  if(details.delta.dy < 0){
-                    HhLog.d("滑动控制 上");
-                    logic.command = "UP";
-                    logic.upStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                },
-                onVerticalDragEnd: (details){
-                  //终止滑动控制
-                  HhLog.d("滑动控制 终止");
-                  Future.delayed(const Duration(milliseconds: 500),(){
-                    logic.upStatus.value = false;
-                    logic.downStatus.value = false;
-                    logic.leftStatus.value = false;
-                    logic.rightStatus.value = false;
-                    logic.controlPost(1);
-                  });
-                },
-                onHorizontalDragUpdate: (details) {
-                  // 左右滑动控制 <0:左  >0:右
-                  if(details.delta.dx > 0){
-                    HhLog.d("滑动控制 右");
-                    logic.command = "RIGHT";
-                    logic.rightStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                  if(details.delta.dx < 0){
-                    HhLog.d("滑动控制 左");
-                    logic.command = "LEFT";
-                    logic.leftStatus.value = true;
-                    logic.controlPost(0);
-                  }
-                },
-                onHorizontalDragEnd: (details){
-                  //终止滑动控制
-                  HhLog.d("滑动控制 终止");
-                  Future.delayed(const Duration(milliseconds: 500),(){
-                    logic.upStatus.value = false;
-                    logic.downStatus.value = false;
-                    logic.leftStatus.value = false;
-                    logic.rightStatus.value = false;
-                    logic.controlPost(1);
-                  });
-                },*/
-                      /*onScaleStart: (ScaleStartDetails details) {
-
-                      },
-                      onScaleUpdate: (ScaleUpdateDetails details) {
-                        EventBusUtil.getInstance().fire(HhToast(title: "${details.scale}"));
-                      },
-                      onScaleEnd: (ScaleEndDetails details) {
-
-                      },*/
                       child: InteractiveViewer(
                         panEnabled: true, // 是否允许拖动
                         minScale: 1.0,
@@ -258,6 +188,108 @@ class YunWeiDetailPage extends StatelessWidget {
                         ),
                       ),
                     )
+                  : const SizedBox(),
+              logic.playLoadingTag.value
+                  ? Container(
+                width: 1.sw,
+                height: 254.h * 3,
+                color: HhColors.blackRealColor,
+              ): const SizedBox(),
+              logic.playErrorTag.value
+                  ? Container(
+                width: 1.sw,
+                height: 254.h * 3,
+                color: HhColors.blackRealColor,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment:Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 50.w*3,),
+                          Image.asset(
+                            "assets/images/common/ic_video_error.png",
+                            width: 36.w*3,
+                            height: 36.w*3,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(height: 5.w*3,),
+                          Text(
+                            '视频加载错误，请重试',
+                            style: TextStyle(
+                                color: HhColors.gray6TextColor,
+                                fontSize: 14.sp * 3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 300),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              logic.getDeviceStream();
+                              logic.playErrorTag.value = false;
+                              logic.playLoadingTag.value = false;
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10.w*3),
+                              padding: EdgeInsets.fromLTRB(15.w*3, 5.w*3, 15.w*3, 5.w*3),
+                              decoration: BoxDecoration(
+                                color: HhColors.gray9TextColor.withAlpha(130),
+                                borderRadius: BorderRadius.circular(4.w*3)
+                              ),
+                              child:
+                                Text(
+                                  '重试',
+                                  style: TextStyle(
+                                      color: HhColors.whiteColorD5,
+                                      fontSize: 14.sp * 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+                  : const SizedBox(),
+              logic.offlineTag.value
+                  ? Container(
+                width: 1.sw,
+                height: 254.h * 3,
+                color: HhColors.blackRealColor,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment:Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 50.w*3,),
+                          Image.asset(
+                            "assets/images/common/ic_offline.png",
+                            width: 30.w*3,
+                            height: 30.w*3,
+                            fit: BoxFit.fill,
+                          ),
+                          SizedBox(height: 5.w*3,),
+                          Text(
+                            '设备已离线',
+                            style: TextStyle(
+                                color: HhColors.gray6TextColor,
+                                fontSize: 14.sp * 3,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
                   : const SizedBox(),
 
               ///title
@@ -440,11 +472,11 @@ class YunWeiDetailPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(top: 3.h),
+                                    margin: EdgeInsets.only(top: 5.h),
                                     child: Image.asset(
                                       logic.tabIndex.value == 1
-                                          ? "assets/images/common/icon_msg_.png"
-                                          : "assets/images/common/icon_msg.png",
+                                          ? "assets/images/common/icon_datas.png"
+                                          : "assets/images/common/icon_live_.png",
                                       width: 16.h * 3,
                                       height: 16.h * 3,
                                       fit: BoxFit.fill,
@@ -454,7 +486,7 @@ class YunWeiDetailPage extends StatelessWidget {
                                     width: 6.h,
                                   ),
                                   Text(
-                                    '历史消息',
+                                    '数据统计',
                                     style: TextStyle(
                                         color: logic.tabIndex.value == 1
                                             ? HhColors.mainBlueColor
@@ -486,13 +518,76 @@ class YunWeiDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 300),
+                            scaleFactor: 1.2,
+                            onPressed: () {
+                              logic.tabIndex.value = 2;
+                            },
+                            child: Container(
+                              height: 40.h * 3,
+                              color: HhColors.trans,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 3.h),
+                                    child: Image.asset(
+                                      logic.tabIndex.value == 2
+                                          ? "assets/images/common/icon_msg_.png"
+                                          : "assets/images/common/icon_msg.png",
+                                      width: 16.h * 3,
+                                      height: 16.h * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 6.h,
+                                  ),
+                                  Text(
+                                    '历史消息',
+                                    style: TextStyle(
+                                        color: logic.tabIndex.value == 2
+                                            ? HhColors.mainBlueColor
+                                            : HhColors.gray6TextColor,
+                                        fontSize: logic.tabIndex.value == 2
+                                            ? 14.sp * 3
+                                            : 14.sp * 3,
+                                        fontWeight: logic.tabIndex.value == 2
+                                            ? FontWeight.w500
+                                            : FontWeight.w200),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          logic.tabIndex.value == 2
+                              ? Container(
+                                  height: 4.h,
+                                  width: 140.h,
+                                  decoration: BoxDecoration(
+                                      color: HhColors.mainBlueColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(2.h))),
+                                )
+                              : const SizedBox()
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
 
               Container(
                 margin: EdgeInsets.fromLTRB(0, 305.h * 3, 0, 0),
-                child: logic.tabIndex.value == 0 ? livePage() : historyPage(),
+                child: logic.tabIndex.value == 0 ? livePage() :  (logic.tabIndex.value==1?dataPage():historyPage()),
               ),
 
               logic.testStatus.value ? const SizedBox() : const SizedBox(),
@@ -1112,35 +1207,102 @@ class YunWeiDetailPage extends StatelessWidget {
                                 ),
                               )
                             : const SizedBox(),
-                        BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: () {
-                            Get.to(
-                                    () => YWXInPage(logic.item),
-                                binding: YWXInBinding());
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 13.h * 3),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  "assets/images/common/icon_setting_video.png",
-                                  width: 76.h * 3,
-                                  height: 76.h * 3,
-                                  fit: BoxFit.fill,
+                        logic.functionItem.value.contains('对讲')
+                            ? BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  logic.recordTag.value =
+                                      !logic.recordTag.value;
+                                  if (logic.recordTag.value) {
+                                    //开始
+                                    logic.chatStatus();
+                                  } else {
+                                    //结束
+                                    logic.recordTag2.value = false;
+                                    logic.manager.stopRecording();
+                                    logic.chatClose();
+                                  }
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 13.h * 3),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      /*logic.recordTag.value?Container(
+                                    width: 230.h,
+                                    height: 80.h,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      color: HhColors.whiteColor,
+                                      borderRadius: BorderRadius.circular(20.h)
+                                    ),
+                                    child:  PolygonWaveform(
+                                      samples: [1,2,3,444,9999,66,89,6,4,999999,13120],
+                                      height: 230.h,
+                                      width: 80.h,
+                                    )):const SizedBox(),*/
+                                      Image.asset(
+                                        logic.recordTag.value
+                                            ? (logic.recordTag2.value
+                                                ? "assets/images/common/ic_yy_close.png"
+                                                : "assets/images/common/ic_yy_ing.png")
+                                            : "assets/images/common/ic_yy.png",
+                                        width: 76.h * 3,
+                                        height: 76.h * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Text(
+                                        logic.recordTag.value
+                                            ? (logic.recordTag2.value
+                                                ? '挂断'
+                                                : '呼叫中...')
+                                            : '对讲',
+                                        style: TextStyle(
+                                            color: logic.recordTag.value
+                                                ? (logic.recordTag2.value
+                                                    ? HhColors.mainRedColor
+                                                    : HhColors.mainBlueColor)
+                                                : HhColors.blackTextColor,
+                                            fontSize: 14.sp * 3),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  '详情',
-                                  style: TextStyle(
-                                      color: HhColors.blackTextColor,
-                                      fontSize: 14.sp * 3),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
+                              )
+                            : const SizedBox(),
+                        logic.functionItem.value.contains('设置')
+                            ? BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  Get.to(
+                                      () => LiGanDetailPage(
+                                          logic.deviceNo, logic.id),
+                                      binding: LiGanDetailBinding());
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 13.h * 3),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/common/icon_setting_video.png",
+                                        width: 76.h * 3,
+                                        height: 76.h * 3,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Text(
+                                        '设置',
+                                        style: TextStyle(
+                                            color: HhColors.blackTextColor,
+                                            fontSize: 14.sp * 3),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),
@@ -1151,6 +1313,306 @@ class YunWeiDetailPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  dataPage() {
+    final size = MediaQuery.of(logic.context).size;
+    return logic.dataStatus.value?SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ///园区火险因子展示--火险等级-电量-当日用电量
+          Container(
+            width: 1.sw,
+            margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 10.w*3),
+            padding: EdgeInsets.all(15.w*3),
+            decoration: BoxDecoration(
+              color: HhColors.whiteColor,
+              borderRadius: BorderRadius.circular(8.w*3)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("园区火险因子",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w600),),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                /*Row(
+                  children: [
+                    Text("火险等级",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text(logic.fireLevel.value,style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
+                Row(
+                  children: [
+                    Text("电量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text(logic.energyQuantity.value,style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("当日用电量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text(logic.energyConsumption.value,style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          ///操作按钮--最新-上一条-下一条
+          Container(
+            margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 5.w*3),
+            child: Row(
+              children: [
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
+                    logic.dataPageNum = 1;
+                    logic.getDataPage();
+                  },
+                  child: Container(
+                      height: 40.w*3,
+                      width: 88.w*3,
+                      decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.circular(8.w*3)
+                      ),
+                      child: Center(child: Text("最新",style: TextStyle(color: HhColors.blueTextColor,fontSize: 14.sp*3),))
+                  ),
+                ),
+                const Expanded(child: SizedBox()),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
+                    logic.dataPageNum--;
+                    if(logic.dataPageNum<1){
+                      logic.dataPageNum = 1;
+                      EventBusUtil.getInstance().fire(HhToast(title: "当前已经是第一条了"));
+                    }
+                    logic.getDataPage();
+                  },
+                  child: Container(
+                      height: 40.w*3,
+                      width: 88.w*3,
+                      decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.circular(8.w*3)
+                      ),
+                      child: Center(child: Text("上一条",style: TextStyle(color: HhColors.blackColor,fontSize: 14.sp*3),))
+                  ),
+                ),
+                const Expanded(child: SizedBox()),
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  onPressed: () {
+                    logic.dataPageNum++;
+                    logic.getDataPage();
+                  },
+                  child: Container(
+                      height: 40.w*3,
+                      width: 88.w*3,
+                      decoration: BoxDecoration(
+                        color: HhColors.whiteColor,
+                        borderRadius: BorderRadius.circular(8.w*3)
+                      ),
+                      child: Center(child: Text("下一条",style: TextStyle(color: HhColors.blackColor,fontSize: 14.sp*3),))
+                  ),
+                ),
+
+              ],
+            ),
+          ),
+          ///太阳能控制器--
+          Container(
+            width: 1.sw,
+            margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 10.w*3),
+            padding: EdgeInsets.all(15.w*3),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.circular(8.w*3)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text("太阳能控制器",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w600),),
+                    Expanded(child: Text("${logic.energyModel["dataTimestampStr"]??""}",style: TextStyle(color: HhColors.gray9TextColor,fontSize: 15.sp*3,),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("负载电压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["loadVoltage"]??""}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("负载电流",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["loadCurrent"]??""}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("太阳能电压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["solarVoltage"]??""}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("太阳能电流",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["solarCurrent"]??""}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("蓄电池剩余电量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["batteryRemain"]??""}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("蓄电池电压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["batteryVoltage"]??""}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("蓄电池电流",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.energyModel["batteryCurrent"]??""}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          ///土壤传感数据--
+          Container(
+            width: 1.sw,
+            margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 10.w*3),
+            padding: EdgeInsets.all(15.w*3),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.circular(8.w*3)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text("土壤传感数据",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w600),),
+                    Expanded(child: Text("${logic.soilModel["dataTimestampStr"]??""}",style: TextStyle(color: HhColors.gray9TextColor,fontSize: 15.sp*3,),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                /*Row(
+                  children: [
+                    Text("凋落物层质量含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.soilModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("土壤层容积含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.soilModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("土壤层质量含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.soilModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
+                Row(
+                  children: [
+                    Text("地表温度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.soilModel["temperature"]??""}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("地表湿度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.soilModel["moisture"]??""}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("空气温度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel["temperature"]??""}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("空气湿度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel["humidity"]??""}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                /*Row(
+                  children: [
+                    Text("光照度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
+                Row(
+                  children: [
+                    Text("风速",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel["windSpeed"]??""}m/s",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("风向",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.parseWind(logic.weatherModel["windDirection2"])??""}风",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                /*Row(
+                  children: [
+                    Text("降雨量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
+                Row(
+                  children: [
+                    Text("降雪",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
+                Row(
+                  children: [
+                    Text("气压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
+                    Expanded(child: Text("${logic.weatherModel["pressure"]??""}kpa",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ):const SizedBox();
   }
 
   historyPage() {

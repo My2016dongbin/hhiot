@@ -665,6 +665,11 @@ class MessagePage extends StatelessWidget {
                                                 width: 113.w*3,
                                                 height: 70.w*3,
                                                 fit: BoxFit.fill,
+                                              ):("${item['alarmType']}".contains("offline"))?Image.asset(
+                                                "assets/images/common/icon_offline_warn.png",
+                                                width: 113.w*3,
+                                                height: 70.w*3,
+                                                fit: BoxFit.fill,
                                               ):InkWell(
                                                 onTap: (){
                                                   CommonUtils().showPictureDialog(context, url:"${CommonData.endpoint}${item['alarmImageUrl']}");

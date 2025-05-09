@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_controller.dart';
+import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -401,8 +401,8 @@ class LiGanDetailPage extends StatelessWidget {
                                               4.w * 3, 9.w * 3, 4.w * 3),
                                           margin: EdgeInsets.only(
                                               right: logic.playing.value == 1
-                                                  ? 95.w * 3
-                                                  : 0),
+                                                  ? 95.w * 3+70.w*3
+                                                  : 0+70.w*3),
                                           decoration: BoxDecoration(
                                               color: HhColors.whiteColor,
                                               border: Border.all(
@@ -442,6 +442,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                 logic.stopVoice();
                                               },
                                               child: Container(
+                                                  margin:EdgeInsets.only(right: 70.w*3),
                                                 padding: EdgeInsets.fromLTRB(
                                                     9.w * 3,
                                                     4.w * 3,
@@ -482,6 +483,53 @@ class LiGanDetailPage extends StatelessWidget {
                                             ),
                                           )
                                         : const SizedBox(),
+
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          showRecordDialog();
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.fromLTRB(
+                                              9.w * 3,
+                                              4.w * 3,
+                                              9.w * 3,
+                                              4.w * 3),
+                                          decoration: BoxDecoration(
+                                              color: HhColors.whiteColor,
+                                              border: Border.all(
+                                                  color: HhColors
+                                                      .grayBBTextColor,
+                                                  width: 1.w),
+                                              borderRadius:
+                                              BorderRadius.all(
+                                                  Radius.circular(
+                                                      4.w * 3))),
+                                          child: Row(
+                                            mainAxisSize:
+                                            MainAxisSize.min,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                  "assets/images/common/yes2.png",
+                                                  height: 13.w * 3,
+                                                  width: 13.w * 3),
+                                              SizedBox(
+                                                width: 4.w * 3,
+                                              ),
+                                              Text('录音',
+                                                  style: TextStyle(
+                                                    color: HhColors
+                                                        .mainBlueColor,
+                                                    fontSize: 13.sp * 3,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                   ],
                                 )),
                               ],
@@ -4462,6 +4510,85 @@ class LiGanDetailPage extends StatelessWidget {
     }
 
     return list;
+  }
+
+  void showRecordDialog() {
+    showModalBottomSheet(
+        context: logic.context,
+        builder: (a) {
+          return Obx(
+                  () => Container(
+            width: 1.sw,
+            height: 260.w*3,
+            decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    HhColors.blue25InColor,
+                    HhColors.whiteColor,
+                    HhColors.whiteColor,
+                    HhColors.whiteColor,
+                    HhColors.blue25InColor,
+                  ],
+                ),
+                borderRadius:
+                BorderRadius.vertical(top: Radius.circular(8.w * 3))),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height:40.w*3),
+                Text(
+                  "新录音1",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: HhColors.blackColor, fontSize: 20.sp * 3),
+                ),
+                SizedBox(height:8.w*3),
+                Text(
+                  logic.recordTimes.value,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: HhColors.gray9TextColor, fontSize: 14.sp * 3),
+                ),
+                SizedBox(height:10.w*3),
+                Image.asset(
+                  "assets/images/common/icon_record_status.png",
+                  height: 40.w * 3,
+                  width: 80.w * 3,fit: BoxFit.fill,),
+                SizedBox(height:10.w*3),
+
+                BouncingWidget(
+                  duration: const Duration(milliseconds: 100),
+                  scaleFactor: 1.2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: HhColors.trans,
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(0.w * 3))),
+                    child: Center(
+                      child: Image.asset(
+                          "assets/images/common/icon_record_setting.png",
+                          height: 80.w * 3,
+                          width: 80.w * 3,fit: BoxFit.fill,),
+                    ),
+                  ),
+                  onPressed: () {
+                    if(!logic.videoTag.value){
+                      logic.startRecord();
+                      EventBusUtil.getInstance().fire(HhToast(title: "开始录音"));
+                    }else{
+                      logic.stopRecord();
+                    }
+                  },
+                )
+              ],
+            ),
+          ));
+        },
+        isDismissible: true,
+        enableDrag: false,
+        backgroundColor: HhColors.trans);
   }
 
   void showChoosePersonDialog() {

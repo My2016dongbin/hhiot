@@ -22,8 +22,8 @@ import 'package:iot/pages/home/device/detail/call/call_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_controller.dart';
 import 'package:iot/pages/home/device/detail/fijkpanel.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/ligan/ligan_detail_view.dart';
+import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_view.dart';
 import 'package:iot/pages/home/my/setting/edit_user/edit_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
@@ -37,10 +37,10 @@ class DeviceDetailPage extends StatelessWidget {
   final logic = Get.find<DeviceDetailController>();
 
   DeviceDetailPage(String deviceNo, String id, int shareMark, bool offlineTag, {super.key}) {
-    logic.deviceNo = deviceNo;
-    logic.id = id;
-    logic.shareMark = shareMark;
-    logic.offlineTag.value = offlineTag;
+  logic.deviceNo = deviceNo;
+  logic.id = id;
+  logic.shareMark = shareMark;
+  logic.offlineTag.value = offlineTag;
   }
 
   Widget buildCustomPanel() {
@@ -83,7 +83,7 @@ class DeviceDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(
-        () => Container(
+            () => Container(
           height: 1.sh,
           width: 1.sw,
           color: HhColors.backColorF5,
@@ -104,97 +104,97 @@ class DeviceDetailPage extends StatelessWidget {
               ),
               logic.playTag.value
                   ? GestureDetector(
-                      onLongPress: () {
-                        logic.fix.value = true;
-                        Future.delayed(const Duration(milliseconds: 2000), () {
-                          logic.fix.value = false;
-                        });
-                      },
-                      child: InteractiveViewer(
-                        panEnabled: true, // 是否允许拖动
-                        minScale: 1.0,
-                        maxScale: 10.0,
-                        onInteractionEnd:(a){
-                          logic.transformationController.value = Matrix4.identity();
-                        },
-                        transformationController: logic.transformationController,
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 254.h * 3,
-                          child: Stack(
-                            children: [
-                              Transform(
-                                transform: Matrix4.identity()
-                                  ..scale(logic.scale.value)//缩放比例
-                                ..translate(logic.dx.value,logic.dy.value)
-                                ,
-                                alignment: Alignment.center,
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 0.h * 3),
-                                  child: ScreenRecorder(
-                                    width: double.infinity,
-                                    height: 254.h * 3,
-                                    background: Colors.white,
-                                    controller: logic.recordController,
-                                    child: Screenshot(
-                                      controller: logic.screenshotController,
-                                      child: FijkView(
-                                        width: double.infinity,
-                                        height: 254.h * 3,
-                                        player: logic.player,
-                                        color: HhColors.blackColor,
-                                        fit: FijkFit.fill,
-                                        fsFit: FijkFit.ar16_9,
-                                        panelBuilder: hhFijkPanelBuilder,
-                                      ),
-                                    ),
-                                  ),
+                onLongPress: () {
+                  logic.fix.value = true;
+                  Future.delayed(const Duration(milliseconds: 2000), () {
+                    logic.fix.value = false;
+                  });
+                },
+                child: InteractiveViewer(
+                  panEnabled: true, // 是否允许拖动
+                  minScale: 1.0,
+                  maxScale: 10.0,
+                  onInteractionEnd:(a){
+                    logic.transformationController.value = Matrix4.identity();
+                  },
+                  transformationController: logic.transformationController,
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 254.h * 3,
+                    child: Stack(
+                      children: [
+                        Transform(
+                          transform: Matrix4.identity()
+                            ..scale(logic.scale.value)//缩放比例
+                            ..translate(logic.dx.value,logic.dy.value)
+                          ,
+                          alignment: Alignment.center,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 0.h * 3),
+                            child: ScreenRecorder(
+                              width: double.infinity,
+                              height: 254.h * 3,
+                              background: Colors.white,
+                              controller: logic.recordController,
+                              child: Screenshot(
+                                controller: logic.screenshotController,
+                                child: FijkView(
+                                  width: double.infinity,
+                                  height: 254.h * 3,
+                                  player: logic.player,
+                                  color: HhColors.blackColor,
+                                  fit: FijkFit.fill,
+                                  fsFit: FijkFit.ar16_9,
+                                  panelBuilder: hhFijkPanelBuilder,
                                 ),
                               ),
-                              logic.fix.value
-                                  ? Center(
-                                      child: Container(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    4.h * 3,
-                                                    0.h * 3,
-                                                    4.h * 3,
-                                                    1.h * 3),
-                                                decoration: BoxDecoration(
-                                                    color: HhColors
-                                                        .mainGreenColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            2.h * 3)),
-                                                child: Text(
-                                                  '自动对焦',
-                                                  style: TextStyle(
-                                                      color:
-                                                          HhColors.whiteColor,
-                                                      fontSize: 12.sp * 3),
-                                                )),
-                                            SizedBox(
-                                              height: 19.h * 3,
-                                            ),
-                                            Image.asset(
-                                              "assets/images/common/icon_fix.png",
-                                              width: 56.h * 3,
-                                              height: 56.h * 3,
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
+                        logic.fix.value
+                            ? Center(
+                          child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                        4.h * 3,
+                                        0.h * 3,
+                                        4.h * 3,
+                                        1.h * 3),
+                                    decoration: BoxDecoration(
+                                        color: HhColors
+                                            .mainGreenColor,
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            2.h * 3)),
+                                    child: Text(
+                                      '自动对焦',
+                                      style: TextStyle(
+                                          color:
+                                          HhColors.whiteColor,
+                                          fontSize: 12.sp * 3),
+                                    )),
+                                SizedBox(
+                                  height: 19.h * 3,
+                                ),
+                                Image.asset(
+                                  "assets/images/common/icon_fix.png",
+                                  width: 56.h * 3,
+                                  height: 56.h * 3,
+                                  fit: BoxFit.fill,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
+                ),
+              )
                   : const SizedBox(),
               logic.playLoadingTag.value
                   ? Container(
@@ -242,18 +242,18 @@ class DeviceDetailPage extends StatelessWidget {
                               margin: EdgeInsets.only(top: 10.w*3),
                               padding: EdgeInsets.fromLTRB(15.w*3, 5.w*3, 15.w*3, 5.w*3),
                               decoration: BoxDecoration(
-                                color: HhColors.gray9TextColor.withAlpha(130),
-                                borderRadius: BorderRadius.circular(4.w*3)
+                                  color: HhColors.gray9TextColor.withAlpha(130),
+                                  borderRadius: BorderRadius.circular(4.w*3)
                               ),
                               child:
-                                Text(
-                                  '重试',
-                                  style: TextStyle(
-                                      color: HhColors.whiteColorD5,
-                                      fontSize: 14.sp * 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      fontWeight: FontWeight.w500),
-                                ),
+                              Text(
+                                '重试',
+                                style: TextStyle(
+                                    color: HhColors.whiteColorD5,
+                                    fontSize: 14.sp * 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                           )
                         ],
@@ -335,33 +335,33 @@ class DeviceDetailPage extends StatelessWidget {
                       ),
                       logic.videoTag.value
                           ? Container(
-                              padding: EdgeInsets.fromLTRB(
-                                  6.h * 3, 2.h * 3, 10.h * 3, 2.h * 3),
-                              decoration: BoxDecoration(
-                                color: HhColors.mainRedColor,
-                                borderRadius: BorderRadius.circular(11.h * 3),
-                              ),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/common/luxiang.png",
-                                    width: 12.h * 3,
-                                    height: 12.h * 3,
-                                    fit: BoxFit.fill,
-                                  ),
-                                  SizedBox(
-                                    width: 2.h * 3,
-                                  ),
-                                  Text(
-                                    "${CommonUtils().parseZero(logic.videoMinute.value)}:${CommonUtils().parseZero(logic.videoSecond.value)}",
-                                    style: TextStyle(
-                                        color: HhColors.whiteColor,
-                                        fontSize: 13.sp * 3,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              ),
+                        padding: EdgeInsets.fromLTRB(
+                            6.h * 3, 2.h * 3, 10.h * 3, 2.h * 3),
+                        decoration: BoxDecoration(
+                          color: HhColors.mainRedColor,
+                          borderRadius: BorderRadius.circular(11.h * 3),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/common/luxiang.png",
+                              width: 12.h * 3,
+                              height: 12.h * 3,
+                              fit: BoxFit.fill,
+                            ),
+                            SizedBox(
+                              width: 2.h * 3,
+                            ),
+                            Text(
+                              "${CommonUtils().parseZero(logic.videoMinute.value)}:${CommonUtils().parseZero(logic.videoSecond.value)}",
+                              style: TextStyle(
+                                  color: HhColors.whiteColor,
+                                  fontSize: 13.sp * 3,
+                                  fontWeight: FontWeight.w500),
                             )
+                          ],
+                        ),
+                      )
                           : const SizedBox(),
                     ],
                   ),
@@ -451,13 +451,13 @@ class DeviceDetailPage extends StatelessWidget {
                           ),
                           logic.tabIndex.value == 0
                               ? Container(
-                                  height: 4.h,
-                                  width: 140.h,
-                                  decoration: BoxDecoration(
-                                      color: HhColors.mainBlueColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(2.h))),
-                                )
+                            height: 4.h,
+                            width: 140.h,
+                            decoration: BoxDecoration(
+                                color: HhColors.mainBlueColor,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(2.h))),
+                          )
                               : const SizedBox()
                         ],
                       ),
@@ -514,13 +514,13 @@ class DeviceDetailPage extends StatelessWidget {
                           ),
                           logic.tabIndex.value == 1
                               ? Container(
-                                  height: 4.h,
-                                  width: 140.h,
-                                  decoration: BoxDecoration(
-                                      color: HhColors.mainBlueColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(2.h))),
-                                )
+                            height: 4.h,
+                            width: 140.h,
+                            decoration: BoxDecoration(
+                                color: HhColors.mainBlueColor,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(2.h))),
+                          )
                               : const SizedBox()
                         ],
                       ),
@@ -549,11 +549,11 @@ class DeviceDetailPage extends StatelessWidget {
       children: [
         logic.liveStatus.value
             ? SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: buildCameraTabs(),
-                ),
-              )
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: buildCameraTabs(),
+          ),
+        )
             : const SizedBox(),
         Expanded(
           child: Stack(
@@ -757,8 +757,8 @@ class DeviceDetailPage extends StatelessWidget {
                           height: 6.h*3,
                           margin: EdgeInsets.fromLTRB(0, 52.h*3, 52.h*3, 0),
                           decoration: BoxDecoration(
-                            color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.h*3)
+                              color: HhColors.grayC3TextColor,
+                              borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
@@ -769,8 +769,8 @@ class DeviceDetailPage extends StatelessWidget {
                           height: 6.h*3,
                           margin: EdgeInsets.fromLTRB(0, 0, 52.h*3, 52.h*3),
                           decoration: BoxDecoration(
-                            color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.h*3)
+                              color: HhColors.grayC3TextColor,
+                              borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
@@ -781,8 +781,8 @@ class DeviceDetailPage extends StatelessWidget {
                           height: 6.h*3,
                           margin: EdgeInsets.fromLTRB(52.h*3, 0, 0, 52.h*3),
                           decoration: BoxDecoration(
-                            color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.h*3)
+                              color: HhColors.grayC3TextColor,
+                              borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
@@ -793,8 +793,8 @@ class DeviceDetailPage extends StatelessWidget {
                           height: 6.h*3,
                           margin: EdgeInsets.fromLTRB(52.h*3, 52.h*3, 0, 0),
                           decoration: BoxDecoration(
-                            color: HhColors.grayC3TextColor,
-                            borderRadius: BorderRadius.circular(3.h*3)
+                              color: HhColors.grayC3TextColor,
+                              borderRadius: BorderRadius.circular(3.h*3)
                           ),
                         ),
                       ),
@@ -1086,94 +1086,94 @@ class DeviceDetailPage extends StatelessWidget {
                       children: [
                         logic.functionItem.value.contains('录像')
                             ? BouncingWidget(
-                                duration: const Duration(milliseconds: 100),
-                                scaleFactor: 1.2,
-                                onPressed: () {
-                                  logic.videoTag.value = !logic.videoTag.value;
-                                  if (logic.videoTag.value) {
-                                    //开启录像
-                                    logic.startRecord();
-                                  } else {
-                                    //关闭录像
-                                    logic.stopRecord();
-                                  }
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 0.h * 3),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        logic.videoTag.value
-                                            ? "assets/images/common/ic_video_yes.png"
-                                            : "assets/images/common/ic_video.png",
-                                        width: 76.h * 3,
-                                        height: 76.h * 3,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Text(
-                                        logic.videoTag.value ? '正在录像' : '录像',
-                                        style: TextStyle(
-                                            color: HhColors.blackTextColor,
-                                            fontSize: 14.sp * 3),
-                                      )
-                                    ],
-                                  ),
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            logic.videoTag.value = !logic.videoTag.value;
+                            if (logic.videoTag.value) {
+                              //开启录像
+                              logic.startRecord();
+                            } else {
+                              //关闭录像
+                              logic.stopRecord();
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 0.h * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  logic.videoTag.value
+                                      ? "assets/images/common/ic_video_yes.png"
+                                      : "assets/images/common/ic_video.png",
+                                  width: 76.h * 3,
+                                  height: 76.h * 3,
+                                  fit: BoxFit.fill,
                                 ),
-                              )
+                                Text(
+                                  logic.videoTag.value ? '正在录像' : '录像',
+                                  style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                             : const SizedBox(),
                         logic.functionItem.value.contains('截图')
                             ? BouncingWidget(
-                                duration: const Duration(milliseconds: 100),
-                                scaleFactor: 1.2,
-                                onPressed: () {
-                                  logic.saveImageToGallery();
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 13.h * 3),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/common/ic_picture.png",
-                                        width: 76.h * 3,
-                                        height: 76.h * 3,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Text(
-                                        '拍照',
-                                        style: TextStyle(
-                                            color: HhColors.blackTextColor,
-                                            fontSize: 14.sp * 3),
-                                      )
-                                    ],
-                                  ),
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            logic.saveImageToGallery();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 13.h * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/ic_picture.png",
+                                  width: 76.h * 3,
+                                  height: 76.h * 3,
+                                  fit: BoxFit.fill,
                                 ),
-                              )
+                                Text(
+                                  '拍照',
+                                  style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                             : const SizedBox(),
                         logic.functionItem.value.contains('对讲')
                             ? BouncingWidget(
-                                duration: const Duration(milliseconds: 100),
-                                scaleFactor: 1.2,
-                                onPressed: () {
-                                  logic.recordTag.value =
-                                      !logic.recordTag.value;
-                                  if (logic.recordTag.value) {
-                                    //开始
-                                    logic.chatStatus();
-                                  } else {
-                                    //结束
-                                    logic.recordTag2.value = false;
-                                    logic.manager.stopRecording();
-                                    logic.chatClose();
-                                  }
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 13.h * 3),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      /*logic.recordTag.value?Container(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            logic.recordTag.value =
+                            !logic.recordTag.value;
+                            if (logic.recordTag.value) {
+                              //开始
+                              logic.chatStatus();
+                            } else {
+                              //结束
+                              logic.recordTag2.value = false;
+                              logic.manager.stopRecording();
+                              logic.chatClose();
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 13.h * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                /*logic.recordTag.value?Container(
                                     width: 230.h,
                                     height: 80.h,
                                     clipBehavior: Clip.hardEdge,
@@ -1186,66 +1186,66 @@ class DeviceDetailPage extends StatelessWidget {
                                       height: 230.h,
                                       width: 80.h,
                                     )):const SizedBox(),*/
-                                      Image.asset(
-                                        logic.recordTag.value
-                                            ? (logic.recordTag2.value
-                                                ? "assets/images/common/ic_yy_close.png"
-                                                : "assets/images/common/ic_yy_ing.png")
-                                            : "assets/images/common/ic_yy.png",
-                                        width: 76.h * 3,
-                                        height: 76.h * 3,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Text(
-                                        logic.recordTag.value
-                                            ? (logic.recordTag2.value
-                                                ? '挂断'
-                                                : '呼叫中...')
-                                            : '对讲',
-                                        style: TextStyle(
-                                            color: logic.recordTag.value
-                                                ? (logic.recordTag2.value
-                                                    ? HhColors.mainRedColor
-                                                    : HhColors.mainBlueColor)
-                                                : HhColors.blackTextColor,
-                                            fontSize: 14.sp * 3),
-                                      )
-                                    ],
-                                  ),
+                                Image.asset(
+                                  logic.recordTag.value
+                                      ? (logic.recordTag2.value
+                                      ? "assets/images/common/ic_yy_close.png"
+                                      : "assets/images/common/ic_yy_ing.png")
+                                      : "assets/images/common/ic_yy.png",
+                                  width: 76.h * 3,
+                                  height: 76.h * 3,
+                                  fit: BoxFit.fill,
                                 ),
-                              )
+                                Text(
+                                  logic.recordTag.value
+                                      ? (logic.recordTag2.value
+                                      ? '挂断'
+                                      : '呼叫中...')
+                                      : '对讲',
+                                  style: TextStyle(
+                                      color: logic.recordTag.value
+                                          ? (logic.recordTag2.value
+                                          ? HhColors.mainRedColor
+                                          : HhColors.mainBlueColor)
+                                          : HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                             : const SizedBox(),
                         logic.functionItem.value.contains('设置')
                             ? BouncingWidget(
-                                duration: const Duration(milliseconds: 100),
-                                scaleFactor: 1.2,
-                                onPressed: () {
-                                  Get.to(
-                                      () => LiGanDetailPage(
-                                          logic.deviceNo, logic.id),
-                                      binding: LiGanDetailBinding());
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 13.h * 3),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/common/icon_setting_video.png",
-                                        width: 76.h * 3,
-                                        height: 76.h * 3,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Text(
-                                        '设置',
-                                        style: TextStyle(
-                                            color: HhColors.blackTextColor,
-                                            fontSize: 14.sp * 3),
-                                      )
-                                    ],
-                                  ),
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: () {
+                            Get.to(
+                                    () => LiGanDetailPage(
+                                    logic.deviceNo, logic.id),
+                                binding: LiGanDetailBinding());
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(left: 13.h * 3),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/common/icon_setting_video.png",
+                                  width: 76.h * 3,
+                                  height: 76.h * 3,
+                                  fit: BoxFit.fill,
                                 ),
-                              )
+                                Text(
+                                  '设置',
+                                  style: TextStyle(
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 14.sp * 3),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                             : const SizedBox(),
                       ],
                     ),
@@ -1291,7 +1291,7 @@ class DeviceDetailPage extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(20.h))),
+                          BorderRadius.all(Radius.circular(20.h))),
                       child: item['alarmImageUrl']==null?SizedBox(
                         width: 109.h * 3,
                         height: 59.h * 3,
@@ -1357,7 +1357,7 @@ class DeviceDetailPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: HhColors.blueEAColor,
                           borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(3.h))),
+                          BorderRadius.vertical(top: Radius.circular(3.h))),
                     ),
                   ),
                   Align(
@@ -1369,7 +1369,7 @@ class DeviceDetailPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: HhColors.mainBlueColor,
                           borderRadius:
-                              BorderRadius.all(Radius.circular(3.h * 3))),
+                          BorderRadius.all(Radius.circular(3.h * 3))),
                     ),
                   ),
                 ],
@@ -1385,202 +1385,202 @@ class DeviceDetailPage extends StatelessWidget {
     showCupertinoDialog(
         context: logic.context,
         builder: (context) => Center(
-              child: Container(
-                width: 1.sw,
-                height: 70.h * 3,
-                margin: EdgeInsets.fromLTRB(30.h, 0, 30.h, 0),
-                padding: EdgeInsets.fromLTRB(30.h, 35.h, 45.h, 25.h),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(20.h))),
-                child: Row(
-                  children: [
-                    CommonData.personal
-                        ? Expanded(
-                            child: BouncingWidget(
-                              duration: const Duration(milliseconds: 100),
-                              scaleFactor: 1.2,
-                              onPressed: () {
-                                if (item["shareMark"] == 2) {
-                                  return;
-                                }
-                                Get.back();
-                                DateTime date = DateTime.now();
-                                String time = date
-                                    .toIso8601String()
-                                    .substring(0, 19)
-                                    .replaceAll("T", " ");
-                                Get.to(() => SharePage(),
-                                    binding: ShareBinding(),
-                                    arguments: {
-                                      "shareType": "2",
-                                      "expirationTime": time,
-                                      "appShareDetailSaveReqVOList": [
-                                        {
-                                          "spaceId": "${item["spaceId"]}",
-                                          "spaceName": "${item["spaceName"]}",
-                                          "deviceId": "${item["id"]}",
-                                          "deviceName": "${item["name"]}"
-                                        }
-                                      ]
-                                    });
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    item["shareMark"] == 2
-                                        ? "assets/images/common/icon_edit_share_no.png"
-                                        : "assets/images/common/icon_edit_share.png",
-                                    width: 24.h * 3,
-                                    height: 24.h * 3,
-                                    fit: BoxFit.fill,
-                                  ),
-                                  SizedBox(
-                                    height: 2.h * 3,
-                                  ),
-                                  Text(
-                                    '分享',
-                                    style: TextStyle(
-                                        color: item["shareMark"] == 2
-                                            ? HhColors.grayCCTextColor
-                                            : HhColors.blackTextColor,
-                                        fontSize: 14.sp * 3,
-                                        decoration: TextDecoration.none,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
-                    CommonData.personal
-                        ? SizedBox(
-                            width: 50.h,
-                          )
-                        : const SizedBox(),
-                    Expanded(
-                      child: BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: () {
-                          Get.back();
-                          Get.to(
-                              () => DeviceAddPage(
-                                    snCode: '${item['deviceNo']}',
-                                  ),
-                              binding: DeviceAddBinding(),
-                              arguments: item);
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/common/icon_edit_edit.png",
-                              width: 24.h * 3,
-                              height: 24.h * 3,
-                              fit: BoxFit.fill,
-                            ),
-                            SizedBox(
-                              height: 2.h * 3,
-                            ),
-                            Text(
-                              '修改',
-                              style: TextStyle(
-                                  color: HhColors.blackTextColor,
-                                  fontSize: 14.sp * 3,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 50.h,
-                    ),
-                    Expanded(
-                      child: BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: () {
-                          Get.back();
-                          logic.resetDevice();
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/common/icon_video_reset.png",
-                              width: 24 * 3.h,
-                              height: 24 * 3.h,
-                              fit: BoxFit.fill,
-                            ),
-                            SizedBox(
-                              height: 2.h * 3,
-                            ),
-                            Text(
-                              '重启',
-                              style: TextStyle(
-                                  color: HhColors.blackTextColor,
-                                  fontSize: 14.sp * 3,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 50.h,
-                    ),
-                    Expanded(
-                      child: BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: () {
-                          Get.back();
-                          CommonUtils().showDeleteDialog(
-                              context,
-                              logic.shareMark == 2
-                                  ? '确定要删除“${item['name']}”?\n此设备是好友分享给你的设备'
-                                  : '确定要删除“${item['name']}”?\n删除设备后无法恢复', () {
-                            Get.back();
-                          }, () {
-                            Get.back();
-                            logic.deleteDevice(item);
-                          }, () {
-                            Get.back();
+          child: Container(
+            width: 1.sw,
+            height: 70.h * 3,
+            margin: EdgeInsets.fromLTRB(30.h, 0, 30.h, 0),
+            padding: EdgeInsets.fromLTRB(30.h, 35.h, 45.h, 25.h),
+            decoration: BoxDecoration(
+                color: HhColors.whiteColor,
+                borderRadius: BorderRadius.all(Radius.circular(20.h))),
+            child: Row(
+              children: [
+                CommonData.personal
+                    ? Expanded(
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      if (item["shareMark"] == 2) {
+                        return;
+                      }
+                      Get.back();
+                      DateTime date = DateTime.now();
+                      String time = date
+                          .toIso8601String()
+                          .substring(0, 19)
+                          .replaceAll("T", " ");
+                      Get.to(() => SharePage(),
+                          binding: ShareBinding(),
+                          arguments: {
+                            "shareType": "2",
+                            "expirationTime": time,
+                            "appShareDetailSaveReqVOList": [
+                              {
+                                "spaceId": "${item["spaceId"]}",
+                                "spaceName": "${item["spaceName"]}",
+                                "deviceId": "${item["id"]}",
+                                "deviceName": "${item["name"]}"
+                              }
+                            ]
                           });
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/common/icon_edit_delete.png",
-                              width: 24.h * 3,
-                              height: 24.h * 3,
-                              fit: BoxFit.fill,
-                            ),
-                            SizedBox(
-                              height: 2.h * 3,
-                            ),
-                            Text(
-                              '删除',
-                              style: TextStyle(
-                                  color: HhColors.mainRedColor,
-                                  fontSize: 14.sp * 3,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          item["shareMark"] == 2
+                              ? "assets/images/common/icon_edit_share_no.png"
+                              : "assets/images/common/icon_edit_share.png",
+                          width: 24.h * 3,
+                          height: 24.h * 3,
+                          fit: BoxFit.fill,
                         ),
-                      ),
+                        SizedBox(
+                          height: 2.h * 3,
+                        ),
+                        Text(
+                          '分享',
+                          style: TextStyle(
+                              color: item["shareMark"] == 2
+                                  ? HhColors.grayCCTextColor
+                                  : HhColors.blackTextColor,
+                              fontSize: 14.sp * 3,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
+                )
+                    : const SizedBox(),
+                CommonData.personal
+                    ? SizedBox(
+                  width: 50.h,
+                )
+                    : const SizedBox(),
+                Expanded(
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      Get.back();
+                      Get.to(
+                              () => DeviceAddPage(
+                            snCode: '${item['deviceNo']}',
+                          ),
+                          binding: DeviceAddBinding(),
+                          arguments: item);
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/icon_edit_edit.png",
+                          width: 24.h * 3,
+                          height: 24.h * 3,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(
+                          height: 2.h * 3,
+                        ),
+                        Text(
+                          '修改',
+                          style: TextStyle(
+                              color: HhColors.blackTextColor,
+                              fontSize: 14.sp * 3,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(
+                  width: 50.h,
+                ),
+                Expanded(
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      Get.back();
+                      logic.resetDevice();
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/icon_video_reset.png",
+                          width: 24 * 3.h,
+                          height: 24 * 3.h,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(
+                          height: 2.h * 3,
+                        ),
+                        Text(
+                          '重启',
+                          style: TextStyle(
+                              color: HhColors.blackTextColor,
+                              fontSize: 14.sp * 3,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 50.h,
+                ),
+                Expanded(
+                  child: BouncingWidget(
+                    duration: const Duration(milliseconds: 100),
+                    scaleFactor: 1.2,
+                    onPressed: () {
+                      Get.back();
+                      CommonUtils().showDeleteDialog(
+                          context,
+                          logic.shareMark == 2
+                              ? '确定要删除“${item['name']}”?\n此设备是好友分享给你的设备'
+                              : '确定要删除“${item['name']}”?\n删除设备后无法恢复', () {
+                        Get.back();
+                      }, () {
+                        Get.back();
+                        logic.deleteDevice(item);
+                      }, () {
+                        Get.back();
+                      });
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/common/icon_edit_delete.png",
+                          width: 24.h * 3,
+                          height: 24.h * 3,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(
+                          height: 2.h * 3,
+                        ),
+                        Text(
+                          '删除',
+                          style: TextStyle(
+                              color: HhColors.mainRedColor,
+                              fontSize: 14.sp * 3,
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
+          ),
+        ),
         barrierDismissible: true);
   }
 
@@ -1597,7 +1597,7 @@ class DeviceDetailPage extends StatelessWidget {
         },
         child: Container(
             padding:
-                EdgeInsets.fromLTRB(13.h * 3, 10.h * 3, 12.h * 3, 10.h * 3),
+            EdgeInsets.fromLTRB(13.h * 3, 10.h * 3, 12.h * 3, 10.h * 3),
             margin: EdgeInsets.fromLTRB(10.h * 3, 10.h * 3, 0, 0),
             decoration: BoxDecoration(
                 color: HhColors.whiteColor,

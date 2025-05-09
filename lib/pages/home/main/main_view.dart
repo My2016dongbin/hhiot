@@ -14,6 +14,7 @@ import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
+import 'package:iot/pages/common/web/WebViewPage.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
@@ -662,129 +663,135 @@ class MainPage extends StatelessWidget {
               ),
             ),
             ///天气
-            Container(
-              margin: EdgeInsets.only(top: 17.w*3),
-              height: 36.w*3,
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(logic.text.value.contains('未获取')?10.w*3:16.w*3, 0, 0, 10.w),
+            InkWell(
+              onTap: (){
+                Get.to(WebViewPage(title: '天气', url: 'https://www.qweather.com/weather/qingdao-101120201.html',));
+                // Get.to(WebViewPage(title: '天气', url: 'https://www.qweather.com/',));
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 17.w*3),
+                height: 36.w*3,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(logic.text.value.contains('未获取')?10.w*3:16.w*3, 0, 0, 10.w),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            logic.text.value.contains('未获取')?const SizedBox():SizedBox(
+                              width: 22.w*3,
+                              height: 22.w*3,
+                              child: Stack(
+                                children: [
+                                  SizedBox(
+                                      width: 22.w*3,
+                                      height: 22.w*3,
+                                      child: WebViewWidget(controller: logic.webController,)),
+                                  logic.iconStatus.value?const SizedBox():Image.asset(
+                                    "assets/images/common/icon_weather.png",
+                                    width: 22.w*3,
+                                    height: 22.w*3,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  Container(
+                                    color: HhColors.trans,
+                                      width: 22.w*3,
+                                      height: 22.w*3),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: logic.text.value.contains('未获取')?2.w*3:6.w*3,
+                            ),
+                            Text(
+                              logic.text.value.contains('未获取')?logic.text.value:"${logic.dateStr.value} ${logic.cityStr.value}",
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor,
+                                  fontSize: 14.sp*3),
+                            ),
+                            SizedBox(
+                              width: 6.w*3,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 6.w),
+                              child: Image.asset(
+                                "assets/images/common/back_role.png",
+                                width: 14.w*3,
+                                height: 14.w*3,
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          logic.text.value.contains('未获取')?const SizedBox():SizedBox(
-                            width: 22.w*3,
-                            height: 22.w*3,
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                    width: 22.w*3,
-                                    height: 22.w*3,
-                                    child: WebViewWidget(controller: logic.webController,)),
-                                logic.iconStatus.value?const SizedBox():Image.asset(
-                                  "assets/images/common/icon_weather.png",
-                                  width: 22.w*3,
-                                  height: 22.w*3,
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                  color: HhColors.trans,
-                                    width: 22.w*3,
-                                    height: 22.w*3),
-                              ],
+                          BouncingWidget(
+                          duration: const Duration(milliseconds: 100),
+                          scaleFactor: 1.2,
+                          onPressed: (){
+                            //TODO Socket测试
+                            homeLogic.index.value = 2;
+                            // Get.to(()=>SocketPage(),binding: SocketBinding());
+                          },
+                            child: Container(
+                              width: 40.w*3,
+                              height: 36.w*3,
+                              margin: EdgeInsets.only(bottom: 10.w),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Image.asset(
+                                      "assets/images/common/icon_message_main.png",
+                                      width: 24.w*3,
+                                      height: 24.w*3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?const SizedBox():Align(
+                                    alignment: Alignment.topRight,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: HhColors.mainRedColor,
+                                        borderRadius: BorderRadius.all(Radius.circular(10.w*3))
+                                      ),
+                                      width: 15.w*3 + ((parseCount(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}")) * (3.w*3)),
+                                      height: 15.w*3,
+                                      child: Center(child: Text(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}",style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            width: logic.text.value.contains('未获取')?2.w*3:6.w*3,
-                          ),
-                          Text(
-                            logic.text.value.contains('未获取')?logic.text.value:"${logic.dateStr.value} ${logic.cityStr.value}",
-                            style: TextStyle(
-                                color: HhColors.blackTextColor,
-                                fontSize: 14.sp*3),
-                          ),
-                          SizedBox(
-                            width: 6.w*3,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 6.w),
-                            child: Image.asset(
-                              "assets/images/common/back_role.png",
-                              width: 14.w*3,
-                              height: 14.w*3,
-                              fit: BoxFit.fill,
+                          BouncingWidget(
+                            duration: const Duration(milliseconds: 100),
+                            scaleFactor: 1.2,
+                            onPressed: (){
+                              Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(10.w*3, 0, 14.w*3, 10.w),
+                              child: Image.asset(
+                                "assets/images/common/ic_add.png",
+                                width: 24.w*3,
+                                height: 24.w*3,
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           )
                         ],
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        BouncingWidget(
-                        duration: const Duration(milliseconds: 100),
-                        scaleFactor: 1.2,
-                        onPressed: (){
-                          //TODO Socket测试
-                          homeLogic.index.value = 2;
-                          // Get.to(()=>SocketPage(),binding: SocketBinding());
-                        },
-                          child: Container(
-                            width: 40.w*3,
-                            height: 36.w*3,
-                            margin: EdgeInsets.only(bottom: 10.w),
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                    "assets/images/common/icon_message_main.png",
-                                    width: 24.w*3,
-                                    height: 24.w*3,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?const SizedBox():Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: HhColors.mainRedColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(10.w*3))
-                                    ),
-                                    width: 15.w*3 + ((parseCount(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}")) * (3.w*3)),
-                                    height: 15.w*3,
-                                    child: Center(child: Text(messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value>99?"99+":"${messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value}",style: TextStyle(color: HhColors.whiteColor,fontSize: 10.sp*3),)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        BouncingWidget(
-                          duration: const Duration(milliseconds: 100),
-                          scaleFactor: 1.2,
-                          onPressed: (){
-                            Get.to(()=>DeviceAddPage(snCode: '',),binding: DeviceAddBinding());
-                          },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(10.w*3, 0, 14.w*3, 10.w),
-                            child: Image.asset(
-                              "assets/images/common/ic_add.png",
-                              width: 24.w*3,
-                              height: 24.w*3,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             ///空间列表滚动
