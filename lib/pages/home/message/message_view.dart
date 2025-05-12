@@ -246,41 +246,74 @@ class MessagePage extends StatelessWidget {
                               child: OverlayTooltipItem(
                                 displayIndex: 0,
                                 tooltip: (controller) {
-                                  return BouncingWidget(
-                                    duration: const Duration(milliseconds: 100),
-                                    scaleFactor: 1.2,
-                                    onPressed: (){
-                                      logic.tipController.dismiss();
-                                      if(logic.tabIndex.value==0){
-                                        // logic.editLeft.value = true;
-                                        logic.editLeft.value = !logic.editLeft.value;
-                                      }else{
-                                        // logic.editRight.value = true;
-                                        logic.editRight.value = !logic.editRight.value;
-                                      }
-                                      logic.pageStatus.value = false;
-                                      logic.pageStatus.value = true;
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: 20.w*3),
-                                      padding: EdgeInsets.fromLTRB(22.w*3, 25.w*3, 15.w*3, 24.w*3),
-                                      decoration: BoxDecoration(
-                                          color: HhColors.whiteColor,
-                                          borderRadius: BorderRadius.circular(16.w*3)
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text('管理消息', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
-                                          SizedBox(width: 20.w*3,),
-                                          Image.asset(
-                                            "assets/images/common/ic_setting.png",
-                                            width: 18.w*3,
-                                            height: 18.w*3,
-                                            fit: BoxFit.fill,
+                                  return Container(
+                                    margin: EdgeInsets.only(top: 10.w*3),
+                                    decoration: BoxDecoration(
+                                        color: HhColors.whiteColor,
+                                        borderRadius: BorderRadius.circular(16.w*3)
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        BouncingWidget(
+                                          duration: const Duration(milliseconds: 100),
+                                          scaleFactor: 1.2,
+                                          onPressed: (){
+                                            logic.tipController.dismiss();
+                                            if(logic.tabIndex.value==0){
+                                              // logic.editLeft.value = true;
+                                              logic.editLeft.value = !logic.editLeft.value;
+                                            }else{
+                                              // logic.editRight.value = true;
+                                              logic.editRight.value = !logic.editRight.value;
+                                            }
+                                            logic.pageStatus.value = false;
+                                            logic.pageStatus.value = true;
+                                          },
+                                          child: Container(
+                                            color:HhColors.trans,
+                                            padding: EdgeInsets.fromLTRB(22.w*3, 25.w*3, 15.w*3, 15.w*3),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text('管理消息', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                                SizedBox(width: 20.w*3,),
+                                                Image.asset(
+                                                  "assets/images/common/ic_setting.png",
+                                                  width: 18.w*3,
+                                                  height: 18.w*3,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        BouncingWidget(
+                                          duration: const Duration(milliseconds: 100),
+                                          scaleFactor: 1.2,
+                                          onPressed: (){
+                                            logic.tipController.dismiss();
+                                            // Get.to(()=>SocketPage(),binding: SocketBinding());
+                                          },
+                                          child: Container(
+                                            color:HhColors.trans,
+                                            padding: EdgeInsets.fromLTRB(22.w*3, 15.w*3, 15.w*3, 24.w*3),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text('报警设置', style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w200),),
+                                                SizedBox(width: 20.w*3,),
+                                                Image.asset(
+                                                  "assets/images/common/ic_setting.png",
+                                                  width: 18.w*3,
+                                                  height: 18.w*3,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   );
                                 },

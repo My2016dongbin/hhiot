@@ -580,7 +580,6 @@ class LiGanDetailController extends GetxController {
   }
   Future<void> recordingComplete() async {
     await _recorder.stopRecorder();
-    HhLog.e('录音完成，保存路径: $_pcmPath');
   }
 
   Future<String> _getPCMPath() async {

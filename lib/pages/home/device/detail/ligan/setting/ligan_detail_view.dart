@@ -4557,8 +4557,8 @@ class LiGanDetailPage extends StatelessWidget {
                 SizedBox(height:10.w*3),
                 AudioDotsVisualizer(
                   key: logic.visualizerKey,
-                  width: 80.w * 3,
-                  height: 40.w * 3,
+                  width: 60.w * 3,
+                  height: 30.w * 3,
                   barCount: 14,
                   color: HhColors.mainBlueColor,
                 ),
