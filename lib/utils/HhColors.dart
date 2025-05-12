@@ -122,6 +122,7 @@ class HhColors {
   static const lineColor = Color(0xFFEC883A);
   static const line25Color = Color(0xFFE2E7F5);
   static const line252Color = Color(0xFFF3F3F8);
+  static const line9Color = Color(0x33999999);
   static const mainTabLine = Color(0xFFb3b3b3);
   static const mainTabTextSe = Color(0xFF36DFF4);
 

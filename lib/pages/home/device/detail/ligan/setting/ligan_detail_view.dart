@@ -13,6 +13,7 @@ import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_controll
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/widgets/jump_view.dart';
 
 class LiGanDetailPage extends StatelessWidget {
   final logic = Get.find<LiGanDetailController>();
@@ -4513,6 +4514,8 @@ class LiGanDetailPage extends StatelessWidget {
   }
 
   void showRecordDialog() {
+    logic.recordDateTime = DateTime(2025);
+    logic.recordTimes.value = "00:00:00";
     showModalBottomSheet(
         context: logic.context,
         builder: (a) {
@@ -4552,10 +4555,13 @@ class LiGanDetailPage extends StatelessWidget {
                       color: HhColors.gray9TextColor, fontSize: 14.sp * 3),
                 ),
                 SizedBox(height:10.w*3),
-                Image.asset(
-                  "assets/images/common/icon_record_status.png",
+                AudioDotsVisualizer(
+                  key: logic.visualizerKey,
+                  width: 80.w * 3,
                   height: 40.w * 3,
-                  width: 80.w * 3,fit: BoxFit.fill,),
+                  barCount: 14,
+                  color: HhColors.mainBlueColor,
+                ),
                 SizedBox(height:10.w*3),
 
                 BouncingWidget(
@@ -4576,7 +4582,7 @@ class LiGanDetailPage extends StatelessWidget {
                   onPressed: () {
                     if(!logic.videoTag.value){
                       logic.startRecord();
-                      EventBusUtil.getInstance().fire(HhToast(title: "开始录音"));
+                      EventBusUtil.getInstance().fire(HhToast(title: "开始录音",type: 0));
                     }else{
                       logic.stopRecord();
                     }
@@ -4969,3 +4975,4 @@ class LiGanDetailPage extends StatelessWidget {
     return list;
   }
 }
+

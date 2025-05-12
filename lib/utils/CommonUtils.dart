@@ -477,14 +477,14 @@ class CommonUtils {
   }
 
   ///通用输入Dialog（取消/确认）
-  showCommonInputDialog(context, title, leftClick, rightClick,
-      {String? leftStr, String? rightStr, String? hint}) {
+  showCommonInputDialog(context, title, controller, leftClick, rightClick,
+      {String? leftStr, String? rightStr}) {
     showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
           return Center(
             child: Container(
-              height: hint == null ? 152.w * 3 : 170.w * 3,
+              height: 200.w * 3,
               margin: EdgeInsets.fromLTRB(30.w * 3, 0, 30.w * 3, 0),
               decoration: BoxDecoration(
                 color: HhColors.whiteColor,
@@ -493,43 +493,86 @@ class CommonUtils {
               child: Stack(
                 children: <Widget>[
                   Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 40.w * 3),
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "$title",
-                            style: TextStyle(
-                                color: HhColors.blackTextColor,
-                                decoration: TextDecoration.none,
-                                fontSize: 16.sp * 3,
-                                fontWeight: FontWeight.w500),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 10.w*3),
+                          height:40.w*3,
+                          color: HhColors.trans,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  '录音',
+                                  style: TextStyle(
+                                      decoration: TextDecoration.none,
+                                      color: HhColors.blackTextColor,
+                                      fontSize: 17.sp * 3,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: BouncingWidget(
+                                  duration: const Duration(milliseconds: 100),
+                                  scaleFactor: 1.2,
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Container(
+                                    color: HhColors.trans,
+                                    margin: EdgeInsets.fromLTRB(0, 10.w*3, 10.w*3, 0),
+                                    padding: EdgeInsets.fromLTRB(12.w*3, 0, 12.w*3, 12.w*3),
+                                    child: Image.asset(
+                                      "assets/images/common/ic_x.png",
+                                      height: 18.w * 3,
+                                      width: 18.w * 3,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Offstage(
-                              offstage: hint == null,
-                              child: SizedBox(
-                                height: 20.h,
-                              )),
-                          Offstage(
-                              offstage: hint == null,
-                              child: Material(
-                                  color: HhColors.whiteColor,
-                                  child: Text(
-                                    "$hint",
-                                    style: TextStyle(
-                                        color: HhColors.titleColor_33,
-                                        fontSize: 16.sp * 3),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ))),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: HhColors.line9Color,
+                            borderRadius: BorderRadius.all(Radius.circular(8.w * 3)),
+                          ),
+                          margin: EdgeInsets.fromLTRB(20.w*3, 20.w*3, 20.w*3, 40.w * 3),
+                          padding: EdgeInsets.fromLTRB(10.w*3, 0, 10.w*3, 0),
+                          child: Material(
+                            color: HhColors.trans,
+                            child: TextField(
+                              textAlign: TextAlign.left,
+                              maxLines: 1,
+                              maxLength: 10,
+                              cursorColor: HhColors.titleColor_99,
+                              controller: controller,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none),
+                                counterText: '',
+                                hintText: '请输入文件名称',
+                                hintStyle: TextStyle(
+                                    color: HhColors.grayCCTextColor,
+                                    fontSize: 15.sp * 3,
+                                    fontWeight: FontWeight.w200),
+                              ),
+                              style: TextStyle(
+                                  color: HhColors.textBlackColor,
+                                  fontSize: 15.sp * 3,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Align(
@@ -548,7 +591,7 @@ class CommonUtils {
                               solid: true,
                               borderRadius: 8.w * 3,
                               solidColor: HhColors.grayEDBackColor,
-                              textColor: HhColors.titleColor_99,
+                              textColor: HhColors.blackColor,
                               text: leftStr ?? "取消",
                               onPressed: leftClick,
                             ),

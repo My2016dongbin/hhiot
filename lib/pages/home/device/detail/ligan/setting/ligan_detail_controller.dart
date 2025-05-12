@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/socket/WebSocketManager.dart';
@@ -10,6 +12,9 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:iot/utils/SPKeys.dart';
+import 'package:iot/widgets/jump_view.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LiGanDetailController extends GetxController {
@@ -62,6 +67,7 @@ class LiGanDetailController extends GetxController {
   TextEditingController? time2Controller = TextEditingController();
   TextEditingController? time3Controller = TextEditingController();
 
+  final GlobalKey<AudioDotsVisualizerState> visualizerKey = GlobalKey();
   final Rx<bool> personStatus = false.obs;
   final Rx<String> personStart = ''.obs;
   final Rx<String> personEnd = ''.obs;
@@ -97,42 +103,11 @@ class LiGanDetailController extends GetxController {
       getDeviceConfig();
       getVoiceUse();
       getVersion();
+      _recorder.openRecorder();
     });
     super.onInit();
   }
 
-
-  void uploadFile(String filePath,String fileName) async {
-    var dio = Dio();
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(filePath,
-          filename: fileName),
-      "path": filePath,
-    });
-
-    try {
-      var response = await dio.put(
-        RequestUtils.fileUpload,
-        data: formData,
-        options: Options(
-          headers: {
-            "Authorization": "Bearer ${CommonData.token}",
-            "Tenant-Id":"${CommonData.tenant}",
-          },
-        ),
-      );
-      if(response.data.toString().contains("401")){
-        CommonUtils().tokenDown();
-      }
-      HhLog.d("上传成功: ${response.data}");
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString(SPKeys().avatar, response.data["data"]);
-      String url = prefs.getString(SPKeys().endpoint)!+response.data["data"];
-      EventBusUtil.getInstance().fire(UserInfo());
-    } catch (e) {
-      HhLog.d("上传失败: $e");
-    }
-  }
 
   Future<void> getDeviceInfo() async {
     Map<String, dynamic> map = {};
@@ -358,6 +333,7 @@ class LiGanDetailController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if(result["code"]==0){
       EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 1));
+      getVoiceUse();
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
@@ -399,7 +375,7 @@ class LiGanDetailController extends GetxController {
     HhLog.d("voiceSubmitCar -- $result");
     // EventBusUtil.getInstance().fire(HhLoading(show: false));
     /*if(result["code"]==0){
-      EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 1));
+      EventBusUtil.getInstance().fire(HhToast(title: "",type: 1));
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }*/
@@ -420,7 +396,7 @@ class LiGanDetailController extends GetxController {
     HhLog.d("voiceSubmitCap -- $result");
     // EventBusUtil.getInstance().fire(HhLoading(show: false));
     /*if(result["code"]==0){
-      EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 1));
+      EventBusUtil.getInstance().fire(HhToast(title: "",type: 1));
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }*/
@@ -541,27 +517,33 @@ class LiGanDetailController extends GetxController {
   }
 
   void startRecord() {
+    visualizerKey.currentState?.start();
     recordDateTime = DateTime(2025);
     videoTag.value = true;
     runRecordTimer();
+    recording();
   }
 
   void stopRecord() {
+    visualizerKey.currentState?.stop();
     videoTag.value = false;
+    recordingComplete();
 
     Get.back();
-    CommonUtils().showCommonInputDialog(context, "录音", (){
+    CommonUtils().showCommonInputDialog(context, "录音", controller, (){
       Get.back();
     }, (){
       Get.back();
-      EventBusUtil.getInstance().fire(HhLoading(show: true));
+      uploadFile(_pcmPath??"","${controller.text}.pcm");
+      /*EventBusUtil.getInstance().fire(HhLoading(show: true));
       Future.delayed(const Duration(milliseconds: 2000,),(){
         EventBusUtil.getInstance().fire(HhLoading(show: false));
         EventBusUtil.getInstance().fire(HhToast(title: "音频上传成功",type: 0));
-      });
+      });*/
     });
   }
 
+  late TextEditingController controller = TextEditingController();
   late DateTime recordDateTime = DateTime(2025);
   final Rx<bool> videoTag = false.obs;
   void runRecordTimer() {
@@ -573,4 +555,85 @@ class LiGanDetailController extends GetxController {
       }
     });
   }
+
+  final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
+  bool isRecording = false;
+  String? _pcmPath;
+  Future<void> recording() async {
+    await Permission.microphone.request();
+    if (await Permission.microphone.isGranted) {
+      _pcmPath = await _getPCMPath();
+
+      await _recorder.startRecorder(
+        toFile: _pcmPath,
+        codec: Codec.pcm16,
+        sampleRate: 16000,
+        numChannels: 1,
+        bitRate: 16000 * 16,
+      );
+    } else {
+      EventBusUtil.getInstance().fire(HhToast(title: "麦克风权限未授权"));
+
+      videoTag.value = false;
+      Get.back();
+    }
+  }
+  Future<void> recordingComplete() async {
+    await _recorder.stopRecorder();
+    HhLog.e('录音完成，保存路径: $_pcmPath');
+  }
+
+  Future<String> _getPCMPath() async {
+    final dir = await getApplicationCacheDirectory();
+    return '${dir.path}/recording.pcm';
+  }
+
+
+  void uploadFile(String filePath,String fileName) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "文件上传中..."));
+    var dio = Dio();
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(filePath,
+          filename: fileName),
+      "path": filePath,
+    });
+
+    try {
+      var response = await dio.post(
+        RequestUtils.fileUpload,
+        data: formData,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer ${CommonData.token}",
+            "Tenant-Id":"${CommonData.tenant}",
+          },
+        ),
+      );
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
+      if(response.data.toString().contains("401")){
+        CommonUtils().tokenDown();
+      }
+      HhLog.d("上传成功: ${response.data}");
+      String url = response.data["data"];
+      postAudioUrl(url,fileName);
+    } catch (e) {
+      HhLog.d("上传失败: $e");
+    }
+  }
+
+  Future<void> postAudioUrl(String url,String fileName) async {
+    dynamic data = {};
+    data['name'] = fileName;
+    data['pcmUrl'] = url;
+    data['description'] = "App上传";
+    var result = await HhHttp().request(RequestUtils.audioCreate,method: DioMethod.post,data: data);
+    HhLog.d("postAudioUrl -- $data");
+    HhLog.d("postAudioUrl -- $result");
+    if(result["code"]==0 && result["data"]!=null){
+      getVoiceUse();
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
 }
