@@ -175,7 +175,7 @@ class LiGanDeviceDetailController extends GetxController {
       // 保存图片到相册
       final result = await ImageGallerySaver.saveImage(value!, quality: 100);
       if (result != null && result['isSuccess']) {
-        EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至相册'));
+        EventBusUtil.getInstance().fire(HhToast(title: '拍照已保存至相册',type: 0));
       } else {
         EventBusUtil.getInstance().fire(HhToast(title: '保存图片失败'));
       }
@@ -251,7 +251,7 @@ class LiGanDeviceDetailController extends GetxController {
     File a = await file.writeAsBytes(exportGif);
     final result = await ImageGallerySaver.saveFile(filePath);
     if (result != null && result['isSuccess']) {
-      EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至相册'));
+      EventBusUtil.getInstance().fire(HhToast(title: '录像已保存至相册',type: 0));
     } else {
       EventBusUtil.getInstance().fire(HhToast(title: '保存录像失败'));
     }

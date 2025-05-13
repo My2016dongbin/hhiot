@@ -23,6 +23,7 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/widgets/battery.dart';
 import 'package:screen_recorder/screen_recorder.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -361,6 +362,28 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                 ),
               ),
 
+              ///battery
+              Align(
+                alignment: Alignment.topRight,
+                child: InkWell(
+                  onTap: () {
+                    if (logic.item['deviceNo'] == null) {
+                      EventBusUtil.getInstance()
+                          .fire(HhToast(title: '设备信息加载中..请稍候', type: 0));
+                      return;
+                    }
+                    showEditDeviceDialog(logic.item);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 57.h * 3, 50.h * 3, 0),
+                    child: BatteryWidget(
+                      width: 14.w*3,
+                      height: 22.w*3,
+                      batteryLevel: parseBatteryValue(logic.energyQuantity.value),
+                    ),
+                  ),
+                ),
+              ),
               ///setting
               Align(
                 alignment: Alignment.topRight,
@@ -1974,5 +1997,15 @@ class LiGanDeviceDetailPage extends StatelessWidget {
       width: 10.h * 3,
     ));
     return list;
+  }
+
+  parseBatteryValue(String value) {
+    int battery = 100;
+    try{
+      battery = int.parse(value);
+    }catch(e){
+      //
+    }
+    return battery;
   }
 }
