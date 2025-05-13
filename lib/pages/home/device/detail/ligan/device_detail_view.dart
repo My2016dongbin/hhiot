@@ -380,6 +380,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                       width: 14.w*3,
                       height: 22.w*3,
                       batteryLevel: parseBatteryValue(logic.energyQuantity.value),
+                      // charging: true, //启用充电动画
                     ),
                   ),
                 ),
