@@ -458,6 +458,20 @@ class SpaceManagePage extends StatelessWidget {
                   const Expanded(child: SizedBox()),
                   InkWell(
                     onTap: (){
+                      model['open'] = model['open']!=true;
+                      logic.testStatus.value = false;
+                      logic.testStatus.value = true;
+                      logic.changeDeviceVisible();
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(5.w*3),
+                        margin: EdgeInsets.fromLTRB(10.w*3, 0, 12.w*3, 0),
+                        child: Image.asset(model['open']==true?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',
+                          height:18.w*3,width: 18.w*3,fit: BoxFit.fill,)
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
                       Get.to(()=>DeviceAddPage(snCode: '${model['deviceNo']}',),binding: DeviceAddBinding(),arguments: model);
                     },
                     child: Container(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -53,7 +54,7 @@ class AppView extends StatelessWidget {
                       lineWidth: 2.5.w*3,
                     ),
                     SizedBox(height: 13.w*3,),
-                    Text("正在加载，请稍后…",style: TextStyle(color: HhColors.gray3TextColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500,decoration: TextDecoration.none,),
+                    Text(CommonData.loadingInfo,style: TextStyle(color: HhColors.gray3TextColor,fontSize: 12.sp*3,fontWeight: FontWeight.w500,decoration: TextDecoration.none,),
                       maxLines: 1,textAlign: TextAlign.center,)
                   ],
                 ),

@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
+import 'package:iot/pages/home/message/message_setting/warn_setting_binding.dart';
+import 'package:iot/pages/home/message/message_setting/warn_setting_view.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhLog.dart';
@@ -293,7 +295,7 @@ class MessagePage extends StatelessWidget {
                                           scaleFactor: 1.2,
                                           onPressed: (){
                                             logic.tipController.dismiss();
-                                            // Get.to(()=>SocketPage(),binding: SocketBinding());
+                                            Get.to(()=>WarnSettingPage(),binding: WarnSettingBinding());
                                           },
                                           child: Container(
                                             color:HhColors.trans,

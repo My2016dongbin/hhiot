@@ -92,6 +92,11 @@ class CompanyLoginController extends GetxController {
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
           if (event.show) {
+            if(event.title!=null && event.title!=""){
+              CommonData.loadingInfo = event.title??"";
+            }else{
+              CommonData.loadingInfo = CommonData.loadingInfoFinal;
+            }
             context.loaderOverlay.show();
           } else {
             context.loaderOverlay.hide();
