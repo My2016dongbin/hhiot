@@ -86,6 +86,7 @@ class DeviceManageController extends GetxController {
     }
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
+    map['appSign'] = 1;
     // map['activeStatus'] = '-1';
     var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
     HhLog.d("deviceList -- $result");

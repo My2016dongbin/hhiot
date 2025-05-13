@@ -258,8 +258,8 @@ class WarnSettingPage extends StatelessWidget {
                 ///选择面板
                 InkWell(
                   onTap: (){
-                    item['open'] = item['open']==true?false:true;
-                    parseChooseNumber();
+                    item['chose'] = item['chose']==1?0:1;
+                    logic.parseChooseNumber();
                     logic.testStatus.value = false;
                     logic.testStatus.value = true;
                   },
@@ -268,7 +268,7 @@ class WarnSettingPage extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.fromLTRB(5.w*3, 5.w*3, 5.w*3, 5.w*3),
                         child: Image.asset(
-                          item['open']==true?"assets/images/common/yes.png":"assets/images/common/no.png",
+                          item['chose']==1?"assets/images/common/yes.png":"assets/images/common/no.png",
                           width: 16.w*3,
                           height: 16.w*3,
                           fit: BoxFit.fill,
@@ -277,11 +277,11 @@ class WarnSettingPage extends StatelessWidget {
                       Container(
                         constraints: BoxConstraints(maxWidth: 200.w*3),
                         child: Text(
-                          "${item['label']}",
+                          "${item['alarmName']}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: item['open']==true?HhColors.mainBlueColor:HhColors.blackColor,
+                              color: item['chose']==1?HhColors.mainBlueColor:HhColors.blackColor,
                               fontSize: 15.sp*3,
                               fontWeight: FontWeight.w500),
                         ),
@@ -299,19 +299,9 @@ class WarnSettingPage extends StatelessWidget {
     );
   }
 
-  void parseChooseNumber() {
-    int number = 0;
-    for(dynamic model in logic.spaceList){
-      if(model["open"]==true){
-        number++;
-      }
-    }
-    logic.chooseListLeftNumber.value = number;
-  }
-
   void chooseAll() {
     for(dynamic model in logic.spaceList){
-      model["open"] = true;
+      model["chose"] = 1;
     }
     logic.chooseListLeftNumber.value = logic.spaceList.length;
     logic.testStatus.value = false;

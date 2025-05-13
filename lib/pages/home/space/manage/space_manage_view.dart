@@ -200,7 +200,6 @@ class SpaceManagePage extends StatelessWidget {
                     logic.testStatus.value = false;
                     logic.testStatus.value = true;
                     if(item['open'] == true){
-                      logic.getDeviceList(item);
     }
                   },
                   child: Row(
@@ -208,7 +207,7 @@ class SpaceManagePage extends StatelessWidget {
                       Container(
                         constraints: BoxConstraints(maxWidth: 200.w*3),
                         child: Text(
-                          "${item['name']}",
+                          "${item['spaceName']}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -234,7 +233,7 @@ class SpaceManagePage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      item['name'] == '默认空间'
+                      item['spaceName'] == '默认空间'
                           ? const SizedBox()
                           : InkWell(
                               onTap: () {
@@ -267,7 +266,7 @@ class SpaceManagePage extends StatelessWidget {
           ),
 
           ///删除空间
-          item['name'] == '默认空间'
+          item['spaceName'] == '默认空间'
               ? const SizedBox()
               : Container(
             height: 1.w,
@@ -281,18 +280,18 @@ class SpaceManagePage extends StatelessWidget {
               dashColor: HhColors.grayDDTextColor,
             ),
           ),
-          item['name'] == '默认空间'
+          item['spaceName'] == '默认空间'
               ? const SizedBox()
               : InkWell(
             onTap: () {
               CommonUtils().showDeleteDialog(
-                  context, "确定要删除“${item['name']}”?\n请选择如何删除空间", () {
+                  context, "确定要删除“${item['spaceName']}”?\n请选择如何删除空间", () {
                 Get.back();
-                // logic.deleteChangeSpace(item['id'],item['id'],1);
+                // logic.deleteChangeSpace(item['spaceId'],item['spaceId'],1);
                 showChooseSpaceDialog(item);
               }, () {
                 Get.back();
-                logic.deleteChangeSpace(item['id'],null,2);
+                logic.deleteChangeSpace(item['spaceId'],null,2);
               }, () {
                 Get.back();
               }, leftStr: '设备转移后删除', rightStr: '全部删除');
@@ -449,7 +448,7 @@ class SpaceManagePage extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "${model['name']}",
+                    "${model['deviceName']}",
                     style: TextStyle(
                         color: HhColors.blackColor,
                         fontSize: 15.sp*3,
@@ -458,15 +457,15 @@ class SpaceManagePage extends StatelessWidget {
                   const Expanded(child: SizedBox()),
                   InkWell(
                     onTap: (){
-                      model['open'] = model['open']!=true;
+                      model['isBlock'] = model['isBlock']==1?0:1;
                       logic.testStatus.value = false;
                       logic.testStatus.value = true;
-                      logic.changeDeviceVisible();
+                      logic.changeDeviceVisible(model);
                     },
                     child: Container(
                         padding: EdgeInsets.all(5.w*3),
                         margin: EdgeInsets.fromLTRB(10.w*3, 0, 12.w*3, 0),
-                        child: Image.asset(model['open']==true?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',
+                        child: Image.asset(model['isBlock']==1?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',
                           height:18.w*3,width: 18.w*3,fit: BoxFit.fill,)
                     ),
                   ),

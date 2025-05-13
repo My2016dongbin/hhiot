@@ -56,11 +56,11 @@ class SpaceManageController extends GetxController {
     Map<String, dynamic> map = {};
     map['pageNo'] = '$pageKey';
     map['pageSize'] = '$pageSize';
-    var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
+    var result = await HhHttp().request(RequestUtils.getAppDeviceBlock,method: DioMethod.get,params: map);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("getSpaceList -- $pageKey,$result");
     if(result["code"]==0 && result["data"]!=null){
-      spaceList = result["data"]["list"];
+      spaceList = result["data"];
       if(spaceList.isNotEmpty){
         spaceListMax = spaceList;
       }
@@ -102,7 +102,8 @@ class SpaceManageController extends GetxController {
     map['spaceId'] = item['id'];
     map['pageNo'] = '1';
     map['pageSize'] = '100';
-    var result = await HhHttp().request(RequestUtils.deviceList,method: DioMethod.get,params: map);
+    map['appSign'] = 1;
+    var result = await HhHttp().request(RequestUtils.getAppDeviceBlock,method: DioMethod.get,params: map);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("deviceList ---   $result");
     if(result["code"]==0 && result["data"]!=null){
@@ -120,7 +121,16 @@ class SpaceManageController extends GetxController {
     }
   }
 
-  Future<void> changeDeviceVisible() async {
-
+  Future<void> changeDeviceVisible(dynamic model) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "正字保存.."));
+    var result = await HhHttp().request(RequestUtils.saveAppDeviceBlock,method: DioMethod.post,data: model);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("changeDeviceVisible ---   $model");
+    HhLog.d("changeDeviceVisible ---   $result");
+    if(result["code"]==0 && result["data"]!=null){
+      EventBusUtil.getInstance().fire(HhToast(title: "修改成功",type: 1));
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 }

@@ -56,6 +56,7 @@ class HhHttp {
     options.headers["Tenant-Id"] = "${CommonData.tenant}";
     options.headers["tenant-user-type"] = "${CommonData.tenantUserType}";
     options.headers["Authorization"] = "Bearer ${CommonData.token}";
+    // HhLog.d("-----------${options.headers}");
     // 更多业务需求
     handler.next(options);
     // super.onRequest(options, handler);

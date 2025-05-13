@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +29,34 @@ class WarnSettingController extends GetxController {
   }
 
   Future<void> getWarnType() async {
+    var result = await HhHttp()
+        .request(RequestUtils.getAlarmConfig, method: DioMethod.get);
+    HhLog.d("getWarnType --  $result");
+    if (result["code"] == 0) {
+      dynamic data = result["data"];
+      if(data!=null){
+        spaceList = data;
+        pagingController.itemList = [];
+        pagingController.appendLastPage(spaceList);
+        parseChooseNumber();
+      }
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  void parseChooseNumber() {
+    int number = 0;
+    for(dynamic model in spaceList){
+      if(model["chose"]==1){
+        number++;
+      }
+    }
+    chooseListLeftNumber.value = number;
+  }
+
+  Future<void> getWarnTypeOld() async {
     Map<String, dynamic> map = {};
     map['pageNo'] = 1;
     map['pageSize'] = -1;
@@ -48,11 +78,25 @@ class WarnSettingController extends GetxController {
     }
   }
 
-  void commitSetting() {
+  Future<void> commitSetting() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true,title: "正在保存.."));
-    Future.delayed(const Duration(milliseconds: 2000),(){
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
-    });
+    var result = await HhHttp()
+        .request(RequestUtils.saveAlarmConfig, method: DioMethod.post,data: jsonEncode(spaceList));
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("commitSetting --  ${RequestUtils.saveAlarmConfig}");
+    HhLog.d("commitSetting --  $spaceList");
+    HhLog.d("commitSetting --  $result");
+    if (result["code"] == 0) {
+      dynamic data = result["data"];
+      if(data!=null){
+        EventBusUtil.getInstance().fire(WarnList());
+        EventBusUtil.getInstance()
+            .fire(HhToast(title: "保存成功",type: 1));
+      }
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
   }
 
 }

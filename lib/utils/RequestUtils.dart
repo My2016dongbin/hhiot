@@ -1,7 +1,7 @@
 
 class RequestUtils{
-  // static const base = 'http://172.16.50.96:48080';//debug
-  static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
+  static const base = 'http://172.16.50.96:48080';//debug
+  // static const base = 'http://117.132.5.139:18033/iot-api';//debug 外网
   // static const base = 'http://192.168.1.165:10003/iot-api';//debug 内网
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
@@ -64,14 +64,11 @@ class RequestUtils{
   static const soilPage = '$base/admin-api/mid/pole-soil-info/page';//获取智慧立杆土壤信息分页
   static const weatherPage = '$base/admin-api/mid/pole-meteorological-info/page';//获取智慧立杆气象信息分页
   static const audioCreate = '$base/admin-api/mid/voice-resource/create';//立杆音频创建
-  //http://192.168.1.66:30029/admin-api/mid/voice-resource/create   POST
-  /*
-    {
-      "name": "测试文件名称.pcm",
-      "pcmUrl": "/iot-test/ligan/audio/2025/05/09/aps.cer.pcm",
-      "description": "测试说明"
-    }
-  */
+
+  static const getAlarmConfig = '$base/admin-api/mid/user-config/getAlarmConfig';//获得用户报警配置
+  static const saveAlarmConfig = '$base/admin-api/mid/user-config/saveAlarmConfig';//保存用户报警配置
+  static const getAppDeviceBlock = '$base/admin-api/mid/user-config/getAppDeviceBlock';//获得用户隐藏设备列表
+  static const saveAppDeviceBlock = '$base/admin-api/mid/user-config/saveAppDeviceBlock';//保存app用户隐藏设备
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET

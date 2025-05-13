@@ -29,6 +29,9 @@ class DownProgress{
 class SpaceList{
   SpaceList();
 }
+class WarnList{
+  WarnList();
+}
 class DeviceList{
   DeviceList();
 }

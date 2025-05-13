@@ -65,11 +65,18 @@ class MessageController extends GetxController {
   final Rx<int> typeSelectIndex = 0.obs;
   final Rx<int> spaceSelectIndex = 0.obs;
   StreamSubscription ?spaceListSubscription;
+  StreamSubscription ?warnListSubscription;
   StreamSubscription ?messageSubscription;
+  late List<dynamic> typeListFinal = [
+    {
+      "alarmName":"类型",
+      "alarmType":null,
+    },
+  ];
   late List<dynamic> typeList = [
     {
-      "label":"类型",
-      "value":null,
+      "alarmName":"类型",
+      "alarmType":null,
     },
   ];
 
@@ -84,6 +91,11 @@ class MessageController extends GetxController {
         .on<SpaceList>()
         .listen((event) {
       getSpaceList();
+    });
+    warnListSubscription = EventBusUtil.getInstance()
+        .on<WarnList>()
+        .listen((event) {
+      getWarnType(refresh: true);
     });
     messageSubscription = EventBusUtil.getInstance()
         .on<Message>()
@@ -171,7 +183,7 @@ class MessageController extends GetxController {
     if(spaceList!=null && spaceList.isNotEmpty && spaceList[spaceSelectIndex.value]!=null){
       map['spaceId'] = spaceList[spaceSelectIndex.value]["id"];
     }
-    map['alarmType'] = typeList[typeSelectIndex.value]["value"];//openSensor 传感器开箱报警；openCap 箱盖开箱报警；human 人员入侵报警；tilt 设备倾斜报警；car 车辆入侵报警
+    map['alarmType'] = typeList[typeSelectIndex.value]["alarmType"];//openSensor 传感器开箱报警；openCap 箱盖开箱报警；human 人员入侵报警；tilt 设备倾斜报警；car 车辆入侵报警
     if(dateStr.value!="日期"){
       map['createTime'] = "${start.toIso8601String().substring(0,10)} 00:00:00,${end.toIso8601String().substring(0,10)} 23:59:59";
     }
@@ -417,7 +429,11 @@ class MessageController extends GetxController {
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
-  Future<void> getWarnType() async {
+  Future<void> getWarnTypeOld() async {
+    typeList.clear();
+    typeList.addAll(typeListFinal);
+    typeSelectIndex.value = 0;
+    isChooseType.value = false;
     Map<String, dynamic> map = {};
     map['pageNo'] = 1;
     map['pageSize'] = -1;
@@ -430,6 +446,32 @@ class MessageController extends GetxController {
       dynamic data = result["data"];
       if(data!=null){
         typeList.addAll(data["list"]);
+      }
+    } else {
+      EventBusUtil.getInstance()
+          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+
+  Future<void> getWarnType({bool? refresh}) async {
+    typeList.clear();
+    typeList.addAll(typeListFinal);
+    typeSelectIndex.value = 0;
+    isChooseType.value = false;
+    var result = await HhHttp()
+        .request(RequestUtils.getAlarmConfig, method: DioMethod.get);
+    HhLog.d("getWarnType --  $result");
+    if (result["code"] == 0) {
+      dynamic data = result["data"];
+      if(data!=null){
+        for(dynamic model in data){
+          if(model["chose"]==1){
+            typeList.add(model);
+          }
+        }
+        if(refresh == true){
+          fetchPageLeft(1);
+        }
       }
     } else {
       EventBusUtil.getInstance()

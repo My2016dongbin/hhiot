@@ -454,7 +454,7 @@ class MessagePage extends StatelessWidget {
                         ),child: Row(
                       mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('${logic.typeList[logic.typeSelectIndex.value]["label"]}',style: TextStyle(color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
+                            Text('${logic.typeList[logic.typeSelectIndex.value]["alarmName"]}',style: TextStyle(color: logic.isChooseType.value?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 12.sp*3),),
                             Image.asset(
                               "assets/images/common/icon_down_status.png",
                               width: 20.w,
@@ -1488,8 +1488,8 @@ class MessagePage extends StatelessWidget {
   String parseLeftType(String s) {
     for(int i = 0;i < logic.typeList.length;i++){
       dynamic model = logic.typeList[i];
-      if(model["value"] == s){
-        return model["label"];
+      if(model["alarmType"] == s){
+        return model["alarmName"];
       }
     }
     return "报警";
@@ -1542,7 +1542,7 @@ class MessagePage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${type["label"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),),
+                Text('${type["alarmName"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),),
                 SizedBox(width: 10.w,),
                 logic.typeSelectIndex.value == i?Image.asset(
                   "assets/images/common/icon_yes.png",
