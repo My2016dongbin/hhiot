@@ -29,8 +29,10 @@ class WarnSettingController extends GetxController {
   }
 
   Future<void> getWarnType() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true));
     var result = await HhHttp()
         .request(RequestUtils.getAlarmConfig, method: DioMethod.get);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("getWarnType --  $result");
     if (result["code"] == 0) {
       dynamic data = result["data"];
