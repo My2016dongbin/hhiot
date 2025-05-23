@@ -4584,7 +4584,8 @@ class LiGanDetailPage extends StatelessWidget {
                       logic.startRecord();
                       EventBusUtil.getInstance().fire(HhToast(title: "开始录音",type: 0));
                     }else{
-                      logic.stopRecord();
+                      Get.back();
+                      //logic.stopRecord();
                     }
                   },
                 )
@@ -4594,7 +4595,15 @@ class LiGanDetailPage extends StatelessWidget {
         },
         isDismissible: true,
         enableDrag: false,
-        backgroundColor: HhColors.trans);
+        backgroundColor: HhColors.trans).then((value) => {
+    logic.stopRecord()
+    });
+
+    ///默认开启录音
+    Future.delayed(const Duration(microseconds: 2000),(){
+      logic.startRecord();
+      EventBusUtil.getInstance().fire(HhToast(title: "开始录音",type: 0));
+    });
   }
 
   void showChoosePersonDialog() {

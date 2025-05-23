@@ -529,17 +529,11 @@ class LiGanDetailController extends GetxController {
     videoTag.value = false;
     recordingComplete();
 
-    Get.back();
     CommonUtils().showCommonInputDialog(context, "录音", controller, (){
       Get.back();
     }, (){
       Get.back();
       uploadFile(_pcmPath??"","${controller.text}.pcm");
-      /*EventBusUtil.getInstance().fire(HhLoading(show: true));
-      Future.delayed(const Duration(milliseconds: 2000,),(){
-        EventBusUtil.getInstance().fire(HhLoading(show: false));
-        EventBusUtil.getInstance().fire(HhToast(title: "音频上传成功",type: 0));
-      });*/
     });
   }
 
@@ -550,6 +544,10 @@ class LiGanDetailController extends GetxController {
     Future.delayed(const Duration(seconds: 1),(){
       recordDateTime = recordDateTime.add(const Duration(seconds: 1));
       recordTimes.value = "${CommonUtils().parseZero(recordDateTime.hour)}:${CommonUtils().parseZero(recordDateTime.minute)}:${CommonUtils().parseZero(recordDateTime.second)}";
+      if(recordDateTime.minute >= 3){
+        Get.back();
+        return;
+      }
       if(videoTag.value){
         runRecordTimer();
       }

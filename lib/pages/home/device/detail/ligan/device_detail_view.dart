@@ -500,7 +500,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                                     child: Image.asset(
                                       logic.tabIndex.value == 1
                                           ? "assets/images/common/icon_datas.png"
-                                          : "assets/images/common/icon_live_.png",
+                                          : "assets/images/common/icon_datas_un.png",
                                       width: 16.h * 3,
                                       height: 16.h * 3,
                                       fit: BoxFit.fill,
@@ -1359,7 +1359,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("园区火险因子",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w600),),
+                Text(logic.name.value,style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w600),),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 /*Row(
                   children: [
@@ -1676,12 +1676,11 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                         width: 109.h * 3,
                         height: 59.h * 3,
                         child: Center(
-                          child: Text(
-                            '/',
-                            style: TextStyle(
-                                color: HhColors.grayCCTextColor,
-                                fontSize: 15.sp * 3,
-                                fontWeight: FontWeight.w600),
+                          child: Image.asset(
+                            "assets/images/common/ic_message_no.png",
+                            width: 109.h * 3,
+                            height: 59.h * 3,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ):InkWell(
@@ -1696,7 +1695,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace? stackTrace) {
                             return Image.asset(
-                              "assets/images/common/test_video.jpg",
+                              "assets/images/common/ic_message_no.png",
                               width: 109.h * 3,
                               height: 59.h * 3,
                               fit: BoxFit.fill,
@@ -2003,7 +2002,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
   parseBatteryValue(String value) {
     int battery = 100;
     try{
-      battery = int.parse(value);
+      battery = int.parse(value.replaceAll("%", ""));
     }catch(e){
       //
     }

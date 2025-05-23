@@ -838,7 +838,7 @@ class DaoZhaDetailPage extends StatelessWidget {
                             errorBuilder: (BuildContext context, Object exception,
                                 StackTrace? stackTrace) {
                               return Image.asset(
-                                "assets/images/common/test_video.jpg",
+                                "assets/images/common/ic_message_no.png",
                                 width: 260.w * 3,
                                 height: 140.w * 3,
                                 fit: BoxFit.fill,

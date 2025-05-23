@@ -1296,12 +1296,11 @@ class DeviceDetailPage extends StatelessWidget {
                         width: 109.h * 3,
                         height: 59.h * 3,
                         child: Center(
-                          child: Text(
-                            '/',
-                            style: TextStyle(
-                                color: HhColors.grayCCTextColor,
-                                fontSize: 15.sp * 3,
-                                fontWeight: FontWeight.w600),
+                          child: Image.asset(
+                            "assets/images/common/ic_message_no.png",
+                            width: 109.h * 3,
+                            height: 59.h * 3,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ):InkWell(
@@ -1316,7 +1315,7 @@ class DeviceDetailPage extends StatelessWidget {
                           errorBuilder: (BuildContext context, Object exception,
                               StackTrace? stackTrace) {
                             return Image.asset(
-                              "assets/images/common/test_video.jpg",
+                              "assets/images/common/ic_message_no.png",
                               width: 109.h * 3,
                               height: 59.h * 3,
                               fit: BoxFit.fill,

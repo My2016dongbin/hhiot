@@ -465,7 +465,7 @@ class SpaceManagePage extends StatelessWidget {
                     child: Container(
                         padding: EdgeInsets.all(5.w*3),
                         margin: EdgeInsets.fromLTRB(10.w*3, 0, 12.w*3, 0),
-                        child: Image.asset(model['isBlock']==1?'assets/images/common/icon_bi.png':'assets/images/common/icon_zheng.png',
+                        child: Image.asset(model['isBlock']==1?'assets/images/common/icon_eye_hide.png':'assets/images/common/icon_eye_show.png',
                           height:18.w*3,width: 18.w*3,fit: BoxFit.fill,)
                     ),
                   ),
