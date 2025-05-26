@@ -1510,7 +1510,7 @@ class MessagePage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(constraints: BoxConstraints(maxWidth: 0.9.sw),child: Text('${type["name"]}',style: TextStyle(color: logic.spaceSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3,overflow: TextOverflow.ellipsis),)),
+                Container(constraints: BoxConstraints(maxWidth: 0.9.sw),child: Text(CommonUtils().parseNameCount('${type["name"]}', 5),style: TextStyle(color: logic.spaceSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3,overflow: TextOverflow.ellipsis),)),
                 SizedBox(width: 10.w,),
                 logic.spaceSelectIndex.value == i?Image.asset(
                   "assets/images/common/icon_yes.png",

@@ -64,6 +64,7 @@ class RequestUtils{
   static const energyPage = '$base/admin-api/mid/pole-solar-energy/page';//获取智慧立杆设备太阳能信息分页
   static const soilPage = '$base/admin-api/mid/pole-soil-info/page';//获取智慧立杆土壤信息分页
   static const weatherPage = '$base/admin-api/mid/pole-meteorological-info/page';//获取智慧立杆气象信息分页
+  static const hxyzPage = '$base/admin-api/mid/device-measurements/page';//获取火险因子信息分页
   static const audioCreate = '$base/admin-api/mid/voice-resource/create';//立杆音频创建
 
   static const getAlarmConfig = '$base/admin-api/mid/user-config/getAlarmConfig';//获得用户报警配置

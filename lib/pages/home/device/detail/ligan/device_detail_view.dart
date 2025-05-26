@@ -378,7 +378,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 57.h * 3, 50.h * 3, 0),
                     child: BatteryWidget(
                       width: 14.w*3,
-                      height: 22.w*3,
+                      height: 20.w*3,
                       batteryLevel: parseBatteryValue(logic.energyQuantity.value),
                       // charging: true, //启用充电动画
                     ),
@@ -1414,7 +1414,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                     logic.dataPageNum--;
                     if(logic.dataPageNum<1){
                       logic.dataPageNum = 1;
-                      EventBusUtil.getInstance().fire(HhToast(title: "当前已经是第一条了"));
+                      EventBusUtil.getInstance().fire(HhToast(title: "当前已是第一条，已为您加载最新一条数据",type: 0));
                     }
                     logic.getDataPage();
                   },
@@ -1521,119 +1521,6 @@ class LiGanDeviceDetailPage extends StatelessWidget {
               ],
             ),
           ),
-          ///土壤传感数据--
-          Container(
-            width: 1.sw,
-            margin: EdgeInsets.fromLTRB(14.w*3, 10.w*3, 14.w*3, 10.w*3),
-            padding: EdgeInsets.all(15.w*3),
-            decoration: BoxDecoration(
-                color: HhColors.whiteColor,
-                borderRadius: BorderRadius.circular(8.w*3)
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text("土壤传感数据",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3,fontWeight: FontWeight.w600),),
-                    Expanded(child: Text("${logic.soilModel["dataTimestampStr"]??""}",style: TextStyle(color: HhColors.gray9TextColor,fontSize: 15.sp*3,),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                /*Row(
-                  children: [
-                    Text("凋落物层质量含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.soilModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("土壤层容积含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.soilModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("土壤层质量含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.soilModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
-                Row(
-                  children: [
-                    Text("地表温度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.soilModel["temperature"]??""}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("地表湿度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.soilModel["moisture"]??""}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("空气温度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel["temperature"]??""}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("空气湿度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel["humidity"]??""}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                /*Row(
-                  children: [
-                    Text("光照度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
-                Row(
-                  children: [
-                    Text("风速",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel["windSpeed"]??""}m/s",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("风向",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.parseWind(logic.weatherModel["windDirection2"])??""}风",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                /*Row(
-                  children: [
-                    Text("降雨量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
-                Row(
-                  children: [
-                    Text("降雪",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel[""]??""}",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-                CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),*/
-                Row(
-                  children: [
-                    Text("气压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.weatherModel["pressure"]??""}kpa",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
-                  ],
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     ):const SizedBox();
@@ -1672,7 +1559,18 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.all(Radius.circular(20.h))),
-                      child: item['alarmImageUrl']==null?SizedBox(
+                      child: "${item['alarmType']}".contains("offline")?SizedBox(
+                        width: 109.h * 3,
+                        height: 59.h * 3,
+                        child: Center(
+                          child: Image.asset(
+                            "assets/images/common/icon_offline_warn.png",
+                            width: 109.h * 3,
+                            height: 59.h * 3,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ):item['alarmImageUrl']==null?SizedBox(
                         width: 109.h * 3,
                         height: 59.h * 3,
                         child: Center(

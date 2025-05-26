@@ -144,10 +144,10 @@ class SpaceManagePage extends StatelessWidget {
           logic.pageNum = 1;
           logic.getSpaceList(logic.pageNum);
         },
-        onLoad: () {
-          logic.pageNum++;
-          logic.getSpaceList(logic.pageNum);
-        },
+        // onLoad: () {
+        //   logic.pageNum++;
+        //   logic.getSpaceList(logic.pageNum);
+        // },
         controller: logic.easyController,
         child: PagedListView<int, dynamic>(
           padding: EdgeInsets.zero,

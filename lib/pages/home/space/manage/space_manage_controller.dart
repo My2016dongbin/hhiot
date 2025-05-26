@@ -58,6 +58,7 @@ class SpaceManageController extends GetxController {
     map['pageSize'] = '$pageSize';
     var result = await HhHttp().request(RequestUtils.getAppDeviceBlock,method: DioMethod.get,params: map);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
+    HhLog.d("getSpaceList -- $map");
     HhLog.d("getSpaceList -- $pageKey,$result");
     if(result["code"]==0 && result["data"]!=null){
       spaceList = result["data"];

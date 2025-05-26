@@ -16,6 +16,8 @@ import 'package:iot/pages/home/device/detail/daozha/daozha_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/daozha/daozha_detail_view.dart';
 import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'package:iot/pages/home/device/detail/huoxianyinzi/device_detail_binding.dart';
+import 'package:iot/pages/home/device/detail/huoxianyinzi/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/ligan/device_detail_binding.dart';
 import 'package:iot/pages/home/device/detail/ligan/device_detail_view.dart';
 import 'package:iot/pages/home/device/detail/yunweixiang/yunwei_detail_binding.dart';
@@ -210,10 +212,15 @@ class CommonUtils {
   }
 
   String parseLongTime(String s) {
-    DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
-    String time = date.toIso8601String();
-    time = time.substring(0, 19);
-    time = time.replaceAll("T", " ");
+    String time = "";
+    try{
+      DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(s));
+      time = date.toIso8601String();
+      time = time.substring(0, 19);
+      time = time.replaceAll("T", " ");
+    }catch(e){
+      //
+    }
     return time;
   }
 
@@ -1373,7 +1380,7 @@ class CommonUtils {
       Get.to(()=>LiGanDeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: LiGanDeviceDetailBinding());
     }else if (item['productKey'] == '2QWASjR4T7aetr7G'){
       ///火险因子监测站
-      Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DeviceDetailBinding());
+      Get.to(()=>HXYZDeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: HXYZDeviceDetailBinding());
     }else if (item['productKey'] == 'R45bbC4eBxm3555D'){
       ///一体机
       Get.to(()=>DeviceDetailPage('${item['deviceNo']}','${item['id']}',item['shareMark'],"${item['status']}"!="1"),binding: DeviceDetailBinding());

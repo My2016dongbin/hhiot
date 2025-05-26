@@ -26,7 +26,7 @@ import 'package:screen_recorder/screen_recorder.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LiGanDeviceDetailController extends GetxController {
+class HXYZDeviceDetailController extends GetxController {
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
   final Rx<String> name = ''.obs;
@@ -83,8 +83,6 @@ class LiGanDeviceDetailController extends GetxController {
   FijkPlayer player = FijkPlayer();
   late WebSocketManager manager;
   late dynamic energyModel = {};
-  late dynamic soilModel = {};
-  late dynamic weatherModel = {};
 
   late List<dynamic> liveList = [];
   late AnimationController animationController;
@@ -367,12 +365,12 @@ class LiGanDeviceDetailController extends GetxController {
             HhLog.d('Playback started successfully ${player.state}');
             //截图并保存
             Future.delayed(const Duration(milliseconds: 3000),(){
-              if(Get.isRegistered<LiGanDeviceDetailController>()){
+              if(Get.isRegistered<HXYZDeviceDetailController>()){
                 saveCatchImage();
               }
             });
             Future.delayed(const Duration(milliseconds: 10000),(){
-              if(Get.isRegistered<LiGanDeviceDetailController>()){
+              if(Get.isRegistered<HXYZDeviceDetailController>()){
                 saveCatchImage();
               }
             });
@@ -440,22 +438,27 @@ class LiGanDeviceDetailController extends GetxController {
   }
 
   Future<void> getDataPage() async {
-    ///太阳能信息数据
+    ///火险因子信息数据
     EventBusUtil.getInstance().fire(HhLoading(show: true));
-    Map<String, dynamic> map = {};
-    map['deviceCode'] = deviceNo;
-    map['pageNo'] = dataPageNum;
-    map['pageSize'] = 1;
+    dynamic data = {
+      "deviceId":id,
+      "pageNo":dataPageNum,
+      "pageSize":1,
+    };
     var result = await HhHttp()
-        .request(RequestUtils.energyPage, method: DioMethod.get, params: map);
+        .request(RequestUtils.hxyzPage, method: DioMethod.post, data: data);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
-    HhLog.d("energyPage -- $map");
-    HhLog.d("energyPage -- $result");
+    HhLog.d("getDataPage -- $data");
+    HhLog.d("getDataPage -- $result");
     if (result["code"] == 0 && result["data"] != null) {
-      if(result["data"]["list"]!=null){
-        energyModel = result["data"]["list"][0];
-        dataStatus.value = false;
-        dataStatus.value = true;
+      try{
+        if(result["data"]["list"]!=null){
+          energyModel = result["data"]["list"][0];
+          dataStatus.value = false;
+          dataStatus.value = true;
+        }
+      }catch(e){
+        //
       }
     } else {
       EventBusUtil.getInstance()
@@ -691,5 +694,27 @@ class LiGanDeviceDetailController extends GetxController {
     if(wind > 270 && wind < 360){
       return "西北";
     }
+  }
+
+  String parseLevel(String level) {
+    if(level == "1"){
+      return "一级";
+    }
+    if(level == "2"){
+      return "二级";
+    }
+    if(level == "3"){
+      return "三级";
+    }
+    if(level == "4"){
+      return "四级";
+    }
+    if(level == "5"){
+      return "五级";
+    }
+    if(level == "6"){
+      return "六级";
+    }
+    return "";
   }
 }

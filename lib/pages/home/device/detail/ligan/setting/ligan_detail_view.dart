@@ -4295,16 +4295,11 @@ class LiGanDetailPage extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            Expanded(
-              child: Text(
-                '描述',
-                style: TextStyle(
-                    color: HhColors.blackColor,
-                    fontSize: 15.sp * 3,
-                    fontWeight: FontWeight.bold),
-              ),
+            const Expanded(
+              child: SizedBox()
             ),
-            Expanded(
+            Container(
+              margin: EdgeInsets.only(right: 2.w*3),
               child: Text(
                 '操作',
                 style: TextStyle(
@@ -4381,16 +4376,11 @@ class LiGanDetailPage extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            Expanded(
-              child: Text(
-                '描述',
-                style: TextStyle(
-                    color: HhColors.blackColor,
-                    fontSize: 15.sp * 3,
-                    fontWeight: FontWeight.bold),
-              ),
+            const Expanded(
+                child: SizedBox()
             ),
-            Expanded(
+            Container(
+              margin: EdgeInsets.only(right: 42.w*3),
               child: Text(
                 '操作',
                 style: TextStyle(

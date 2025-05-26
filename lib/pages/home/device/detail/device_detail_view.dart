@@ -1292,7 +1292,18 @@ class DeviceDetailPage extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius:
                           BorderRadius.all(Radius.circular(20.h))),
-                      child: item['alarmImageUrl']==null?SizedBox(
+                      child: "${item['alarmType']}".contains("offline")?SizedBox(
+                        width: 109.h * 3,
+                        height: 59.h * 3,
+                        child: Center(
+                          child: Image.asset(
+                            "assets/images/common/icon_offline_warn.png",
+                            width: 109.h * 3,
+                            height: 59.h * 3,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ):item['alarmImageUrl']==null?SizedBox(
                         width: 109.h * 3,
                         height: 59.h * 3,
                         child: Center(
