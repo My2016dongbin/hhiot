@@ -459,6 +459,12 @@ class HXYZDeviceDetailController extends GetxController {
         }
       }catch(e){
         //
+        if(dataPageNum==1){
+          EventBusUtil.getInstance().fire(HhToast(title: "数据未上传请稍后再试"));
+        }else{
+          dataPageNum--;
+          EventBusUtil.getInstance().fire(HhToast(title: "已是最后一条数据"));
+        }
       }
     } else {
       EventBusUtil.getInstance()
