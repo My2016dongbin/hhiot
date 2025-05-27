@@ -341,12 +341,7 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: InkWell(
                   onTap: () {
-                    if (logic.item['deviceNo'] == null) {
-                      EventBusUtil.getInstance()
-                          .fire(HhToast(title: '设备信息加载中..请稍候', type: 0));
-                      return;
-                    }
-                    showEditDeviceDialog(logic.item);
+
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(0, 57.h * 3, 50.h * 3, 0),
