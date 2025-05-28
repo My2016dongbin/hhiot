@@ -93,13 +93,10 @@ class WebViewPageState extends State<WebViewPage> {
           onTap: () {
             Get.back();
           },
-          child: Container(
-            width: 16.w,
-            height: 26.w,
-            margin: EdgeInsets.fromLTRB(20.w, 8.w, 0, 7.w),
-            padding: EdgeInsets.fromLTRB(58.w, 49.w, 58.w, 49.w),
-            color: HhColors.trans,
-            child: SizedBox(
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 10.w, 20.w, 10.w),
+              color: HhColors.trans,
               child: Image.asset(
                 "assets/images/common/back.png",
                 height: 17.w*3,
