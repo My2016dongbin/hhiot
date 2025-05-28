@@ -59,6 +59,7 @@ class RequestUtils{
   static const dzLiveUrl = '$base/admin-api/mid/device-base/getBarrierPlayUrl';//道闸获取视频流
   static const dzHistory = '$base/admin-api/mid/barrier-identify-record/page';//道闸出入历史记录
   static const productType = '$base/admin-api/system/dict-data/page';//产品类型字典查询
+  static const voiceDelete = '$base/admin-api/mid/voice-resource/delete';//音频删除
 
   static const getDataInfo = '$base/admin-api/mid/device-base/getDataInfo';//获取当日电量
   static const energyPage = '$base/admin-api/mid/pole-solar-energy/page';//获取智慧立杆设备太阳能信息分页

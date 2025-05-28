@@ -9,10 +9,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:iot/bus/bus_bean.dart';
+import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/home/device/detail/ligan/setting/ligan_detail_controller.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
+import 'package:iot/utils/HhLog.dart';
 import 'package:iot/widgets/jump_view.dart';
 
 class LiGanDetailPage extends StatelessWidget {
@@ -4299,7 +4301,7 @@ class LiGanDetailPage extends StatelessWidget {
               child: SizedBox()
             ),
             Container(
-              margin: EdgeInsets.only(right: 2.w*3),
+              margin: EdgeInsets.only(right: 42.w*3),
               child: Text(
                 '操作',
                 style: TextStyle(
@@ -4326,11 +4328,44 @@ class LiGanDetailPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  '${model["name"]}',
-                  style: TextStyle(
-                    color: HhColors.blackColor,
-                    fontSize: 14.sp * 3,
+                child: Row(
+                  children: [
+                    Text(
+                      '${model["name"]}',
+                      style: TextStyle(
+                        color: HhColors.blackColor,
+                        fontSize: 14.sp * 3,
+                      ),
+                    ),
+                    logic.localVoice.value=="${model["id"]}"? Container(
+                      margin: EdgeInsets.only(left: 5.w*3),
+                      child: Image.asset("assets/images/common/icon_device_playing.png",
+                          height: 20.w*3,
+                          width: 20.w*3),
+                    ):const SizedBox()
+                  ],
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  if(logic.localVoice.value=="${model["id"]}"){
+                    //停止
+                    logic.localVoice.value = "";
+                    logic.stopVoiceLocal();
+                  }else{
+                    //播放
+                    logic.playVoiceLocal("${CommonData.endpoint}${model["pcmUrl"]}");
+                    logic.localVoice.value = "${model["id"]}";
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.all(6.w),
+                  child: Text(
+                    logic.localVoice.value=="${model["id"]}"?"停止":'播放',
+                    style: TextStyle(
+                      color: logic.localVoice.value=="${model["id"]}"?HhColors.titleColorRed:HhColors.mainBlueColor,
+                      fontSize: 14.sp * 3,
+                    ),
                   ),
                 ),
               ),
@@ -4354,7 +4389,7 @@ class LiGanDetailPage extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  logic.deleteVoice(model["name"]);
+                  logic.deleteWebVoice(model);
                 },
                 child: Text(
                   '删除',
@@ -4372,6 +4407,7 @@ class LiGanDetailPage extends StatelessWidget {
         ),
       );
     }
+
     return list;
   }
 
@@ -4422,19 +4458,12 @@ class LiGanDetailPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Row(
-                  children: [
-                    Text(
-                      '${model["name"]}',
-                      style: TextStyle(
-                        color: HhColors.blackColor,
-                        fontSize: 14.sp * 3,
-                      ),
-                    ),
-                    /*Image.asset("assets/images/common/icon_device_playing.png",
-                        height: 20.w*3,
-                        width: 20.w*3),*/
-                  ],
+                child: Text(
+                  '${model["name"]}',
+                  style: TextStyle(
+                    color: HhColors.blackColor,
+                    fontSize: 14.sp * 3,
+                  ),
                 ),
               ),
               SizedBox(

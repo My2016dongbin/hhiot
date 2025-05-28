@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -16,6 +18,8 @@ import 'package:iot/widgets/jump_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:http/http.dart' as http;
 
 class LiGanDetailController extends GetxController {
   late BuildContext context;
@@ -95,6 +99,9 @@ class LiGanDetailController extends GetxController {
   final Rx<int> ratedL = 0.obs;//太阳能 电压等级
   final Rx<double> lowVR = 12.0.obs;//太阳能 低压恢复
   final Rx<double> lowVP = 11.2.obs;//太阳能 低压保护
+
+  final FlutterSoundPlayer _player = FlutterSoundPlayer();
+  final Rx<String> localVoice = ''.obs;
 
   @override
   Future<void> onInit() async {
@@ -301,6 +308,34 @@ class LiGanDetailController extends GetxController {
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
+  Future<void> stopVoiceLocal() async {
+    _player.stopPlayer();
+  }
+  Future<void> playVoiceLocal(String url) async {
+    await _player.openPlayer();
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      return;
+    }
+
+    // 假设你知道采样率、声道数等信息
+    const sampleRate = 16000;
+    const numChannels = 1;
+    const bitsPerSample = 16;
+
+    final data = response.bodyBytes;
+
+    await _player.startPlayer(
+      fromDataBuffer: data,
+      codec: Codec.pcm16,
+      sampleRate: sampleRate,
+      numChannels: numChannels,
+      whenFinished: (){
+        localVoice.value = "";
+      },
+    );
+  }
   Future<void> stopVoice() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     dynamic data = {
@@ -330,6 +365,21 @@ class LiGanDetailController extends GetxController {
     var result = await HhHttp().request(RequestUtils.deviceConfigScreenTop,method: DioMethod.post,data: data);
     HhLog.d("deleteVoice -- $data");
     HhLog.d("deleteVoice -- $result");
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
+    if(result["code"]==0){
+      EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 1));
+      getVoiceUse();
+    }else{
+      EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+  Future<void> deleteWebVoice(dynamic model) async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "正在删除，请稍后…"));
+    Map<String, dynamic> map = {};
+    map['id'] = model["id"];
+    var result = await HhHttp().request(RequestUtils.voiceDelete,method: DioMethod.delete,params: map);
+    HhLog.d("deleteWebVoice -- $map");
+    HhLog.d("deleteWebVoice -- $result");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if(result["code"]==0){
       EventBusUtil.getInstance().fire(HhToast(title: "删除成功",type: 1));
@@ -587,34 +637,48 @@ class LiGanDetailController extends GetxController {
 
 
   void uploadFile(String filePath,String fileName) async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "文件上传中..."));
-    var dio = Dio();
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(filePath,
-          filename: fileName),
-      "path": filePath,
-    });
+    final oldFile = File(filePath);
 
-    try {
-      var response = await dio.post(
-        RequestUtils.fileUpload,
-        data: formData,
-        options: Options(
-          headers: {
-            "Authorization": "Bearer ${CommonData.token}",
-            "Tenant-Id":"${CommonData.tenant}",
-          },
-        ),
-      );
-      EventBusUtil.getInstance().fire(HhLoading(show: false));
-      if(response.data.toString().contains("401")){
-        CommonUtils().tokenDown();
+    // 确保文件存在
+    if (await oldFile.exists()) {
+      // 获取目录路径
+      final dir = oldFile.parent.path;
+      // 新文件路径
+      final newFilePath = '$dir/$fileName';
+      final newFile = await oldFile.rename(newFilePath);
+
+
+      EventBusUtil.getInstance().fire(HhLoading(show: true,title: "文件上传中..."));
+      var dio = Dio();
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(newFile.path,
+            filename: fileName),
+        "path": newFile.path,
+      });
+
+      try {
+        var response = await dio.post(
+          RequestUtils.fileUpload,
+          data: formData,
+          options: Options(
+            headers: {
+              "Authorization": "Bearer ${CommonData.token}",
+              "Tenant-Id":"${CommonData.tenant}",
+            },
+          ),
+        );
+        EventBusUtil.getInstance().fire(HhLoading(show: false));
+        if(response.data.toString().contains("401")){
+          CommonUtils().tokenDown();
+        }
+        HhLog.d("上传成功: ${response.data}");
+        String url = response.data["data"];
+        postAudioUrl(url,fileName);
+      } catch (e) {
+        HhLog.d("上传失败: $e");
       }
-      HhLog.d("上传成功: ${response.data}");
-      String url = response.data["data"];
-      postAudioUrl(url,fileName);
-    } catch (e) {
-      HhLog.d("上传失败: $e");
+    } else {
+      //print('文件不存在: $filePath');
     }
   }
 
