@@ -298,62 +298,107 @@ class LiGanDetailPage extends StatelessWidget {
                                       fontSize: 15.sp * 3,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                /*logic.playing.value == 1
-                                    ? Expanded(
-                                        child: Stack(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: InkWell(
-                                              onTap: () {
-                                                logic.playing.value = 0;
-                                                logic.stopVoice();
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    10.w, 3.w, 10.w, 3.w),
-                                                decoration: BoxDecoration(
-                                                    color: HhColors.whiteColor,
-                                                    border: Border.all(
-                                                        color: HhColors
-                                                            .grayBBTextColor,
-                                                        width: 1.w),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                5.w))),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                        "assets/images/common/icon_pause.png",
-                                                        height: 14.w * 3,
-                                                        width: 14.w * 3),
-                                                    SizedBox(
-                                                      width: 5.w,
-                                                    ),
-                                                    Text('停止播放',
-                                                        style: TextStyle(
-                                                          color: HhColors
-                                                              .mainBlueColor,
-                                                          fontSize: 14.sp * 3,
-                                                        )),
-                                                  ],
-                                                ),
+                                Expanded(
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: InkWell(
+                                            onTap: () {
+                                              logic.getVoiceUse();
+                                              logic.getDeviceConfig();
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.fromLTRB(9.w * 3,
+                                                  4.w * 3, 9.w * 3, 4.w * 3),
+                                              margin: EdgeInsets.only(
+                                                  right: 70.w*3),
+                                              decoration: BoxDecoration(
+                                                  color: HhColors.whiteColor,
+                                                  border: Border.all(
+                                                      color:
+                                                      HhColors.grayBBTextColor,
+                                                      width: 1.w),
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(4.w * 3))),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                      "assets/images/common/icon_refresh.png",
+                                                      height: 13.w * 3,
+                                                      width: 13.w * 3),
+                                                  SizedBox(
+                                                    width: 4.w * 3,
+                                                  ),
+                                                  Text('刷新',
+                                                      style: TextStyle(
+                                                        color:
+                                                        HhColors.mainBlueColor,
+                                                        fontSize: 13.sp * 3,
+                                                      )),
+                                                ],
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ))
-                                    : const SizedBox(),*/
+                                        ),
+
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: InkWell(
+                                            onTap: () {
+                                              showRecordDialog();
+                                            },
+                                            child: Container(
+                                                margin:EdgeInsets.only(right: 5.w),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  9.w * 3,
+                                                  4.w * 3,
+                                                  9.w * 3,
+                                                  4.w * 3),
+                                              decoration: BoxDecoration(
+                                                  color: HhColors.whiteColor,
+                                                  border: Border.all(
+                                                      color: HhColors
+                                                          .grayBBTextColor,
+                                                      width: 1.w),
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius.circular(
+                                                          4.w * 3))),
+                                              child: Row(
+                                                mainAxisSize:
+                                                MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                      "assets/images/common/yes2.png",
+                                                      height: 13.w * 3,
+                                                      width: 13.w * 3),
+                                                  SizedBox(
+                                                    width: 4.w * 3,
+                                                  ),
+                                                  Text('录音',
+                                                      style: TextStyle(
+                                                        color: HhColors
+                                                            .mainBlueColor,
+                                                        fontSize: 13.sp * 3,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
                               ],
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 14.w * 3),
+                            margin: EdgeInsets.only(top: 8.w * 3),
                             decoration: BoxDecoration(
                                 color: HhColors.whiteColor,
                                 borderRadius:
@@ -402,8 +447,8 @@ class LiGanDetailPage extends StatelessWidget {
                                               4.w * 3, 9.w * 3, 4.w * 3),
                                           margin: EdgeInsets.only(
                                               right: logic.playing.value == 1
-                                                  ? 95.w * 3+70.w*3
-                                                  : 0+70.w*3),
+                                                  ? 95.w * 3
+                                                  : 5.w),
                                           decoration: BoxDecoration(
                                               color: HhColors.whiteColor,
                                               border: Border.all(
@@ -443,7 +488,7 @@ class LiGanDetailPage extends StatelessWidget {
                                                 logic.stopVoice();
                                               },
                                               child: Container(
-                                                  margin:EdgeInsets.only(right: 70.w*3),
+                                                  margin:EdgeInsets.only(right: 5.w),
                                                 padding: EdgeInsets.fromLTRB(
                                                     9.w * 3,
                                                     4.w * 3,
@@ -484,53 +529,6 @@ class LiGanDetailPage extends StatelessWidget {
                                             ),
                                           )
                                         : const SizedBox(),
-
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: InkWell(
-                                        onTap: () {
-                                          showRecordDialog();
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.fromLTRB(
-                                              9.w * 3,
-                                              4.w * 3,
-                                              9.w * 3,
-                                              4.w * 3),
-                                          decoration: BoxDecoration(
-                                              color: HhColors.whiteColor,
-                                              border: Border.all(
-                                                  color: HhColors
-                                                      .grayBBTextColor,
-                                                  width: 1.w),
-                                              borderRadius:
-                                              BorderRadius.all(
-                                                  Radius.circular(
-                                                      4.w * 3))),
-                                          child: Row(
-                                            mainAxisSize:
-                                            MainAxisSize.min,
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                  "assets/images/common/yes2.png",
-                                                  height: 13.w * 3,
-                                                  width: 13.w * 3),
-                                              SizedBox(
-                                                width: 4.w * 3,
-                                              ),
-                                              Text('录音',
-                                                  style: TextStyle(
-                                                    color: HhColors
-                                                        .mainBlueColor,
-                                                    fontSize: 13.sp * 3,
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
                                   ],
                                 )),
                               ],
@@ -4351,6 +4349,21 @@ class LiGanDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
+              /*SizedBox(
+                width: 30.w,
+              ),
+              InkWell(
+                onTap: () {
+                  logic.deleteVoice(model["name"]);
+                },
+                child: Text(
+                  '删除',
+                  style: TextStyle(
+                    color: HhColors.mainBlueColor,
+                    fontSize: 14.sp * 3,
+                  ),
+                ),
+              ),*/
               SizedBox(
                 width: 10.w,
               ),
@@ -4409,12 +4422,19 @@ class LiGanDetailPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  '${model["name"]}',
-                  style: TextStyle(
-                    color: HhColors.blackColor,
-                    fontSize: 14.sp * 3,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      '${model["name"]}',
+                      style: TextStyle(
+                        color: HhColors.blackColor,
+                        fontSize: 14.sp * 3,
+                      ),
+                    ),
+                    /*Image.asset("assets/images/common/icon_device_playing.png",
+                        height: 20.w*3,
+                        width: 20.w*3),*/
+                  ],
                 ),
               ),
               SizedBox(

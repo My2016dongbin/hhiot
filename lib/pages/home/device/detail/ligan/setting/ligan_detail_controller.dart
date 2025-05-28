@@ -320,7 +320,7 @@ class LiGanDetailController extends GetxController {
     }
   }
   Future<void> deleteVoice(String name) async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true));
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "正在删除，请稍后…"));
     dynamic data = {
       "deviceNo": deviceNo,
       "switchType": "delet",
