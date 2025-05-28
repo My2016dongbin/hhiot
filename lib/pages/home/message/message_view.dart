@@ -661,6 +661,8 @@ class MessagePage extends StatelessWidget {
                               }
                               logic.chooseListLeftNumber.value = logic.chooseListLeft.length;
                               HhLog.d("list -- ${logic.chooseListLeft}");
+                            }else{
+                              logic.readOneLeft("${item["id"]}");
                             }
                           },
                           child: Row(
@@ -708,6 +710,7 @@ class MessagePage extends StatelessWidget {
                                               ):InkWell(
                                                 onTap: (){
                                                   CommonUtils().showPictureDialog(context, url:"${CommonData.endpoint}${item['alarmImageUrl']}");
+                                                  logic.readOneLeft("${item["id"]}");
                                                 },
                                                 child: Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
                                                   return Image.asset(
@@ -950,6 +953,8 @@ class MessagePage extends StatelessWidget {
                           }
                           logic.chooseListRightNumber.value = logic.chooseListRight.length;
                           HhLog.d("list right -- ${logic.chooseListRight}");
+                        }else{
+                          logic.readOneRight("${item["id"]}");
                         }
                       },
                       child: Row(

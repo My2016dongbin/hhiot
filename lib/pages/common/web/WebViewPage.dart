@@ -96,8 +96,8 @@ class WebViewPageState extends State<WebViewPage> {
           child: Container(
             width: 16.w,
             height: 26.w,
-            margin: EdgeInsets.fromLTRB(20.w, 5.w, 0, 5.w),
-            padding: EdgeInsets.fromLTRB(18.w*3, 49.w, 19.w*3, 49.w),
+            margin: EdgeInsets.fromLTRB(20.w, 8.w, 0, 7.w),
+            padding: EdgeInsets.fromLTRB(58.w, 49.w, 58.w, 49.w),
             color: HhColors.trans,
             child: SizedBox(
               child: Image.asset(

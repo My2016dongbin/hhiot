@@ -138,8 +138,7 @@ class MessageController extends GetxController {
       }
       warnController.appendLastPage(newItems);
     } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      // EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
@@ -318,6 +317,22 @@ class MessageController extends GetxController {
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
+  Future<void> readOneRight(String id) async {
+    Map<String, dynamic> map = {};
+    map['ids'] = [id];
+    var result = await HhHttp()
+        .request(RequestUtils.rightRead, method: DioMethod.post, params: map);
+    HhLog.d("readOne --  ${chooseListLeft.toString()} , $result");
+    if (result["code"] == 0 && result["data"] == true) {
+      editRight.value = false;
+      pageStatus.value = false;
+      pageStatus.value = true;
+      pageNumRight = 1;
+      fetchPageRight(1);
+    } else {
+
+    }
+  }
   Future<void> readLeft() async {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
@@ -338,6 +353,24 @@ class MessageController extends GetxController {
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+    }
+  }
+  Future<void> readOneLeft(String id) async {
+    Map<String, dynamic> map = {};
+    map['ids'] = [id];
+    var result = await HhHttp()
+        .request(RequestUtils.leftRead, method: DioMethod.post, params: map);
+    HhLog.d("readOne --  ${chooseListLeft.toString()} , $result");
+    if (result["code"] == 0 && result["data"] == true) {
+      editLeft.value = false;
+      pageStatus.value = false;
+      pageStatus.value = true;
+
+      dateListLeft = [];
+      pageNumLeft = 1;
+      fetchPageLeft(1);
+    } else {
+
     }
   }
   Future<void> deleteCall() async {
