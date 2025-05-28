@@ -263,6 +263,8 @@ class DeviceDetailController extends GetxController {
   }
 
   Future<void> getDeviceStream() async {
+    playErrorTag.value = false;
+    playLoadingTag.value = false;
     Map<String, dynamic> map = {};
     map['deviceNo'] = deviceNo;
     var result = await HhHttp()
@@ -295,6 +297,8 @@ class DeviceDetailController extends GetxController {
   }
 
   Future<void> getPlayUrl(String ids, String number) async {
+    playErrorTag.value = false;
+    playLoadingTag.value = false;
     dynamic data = {
       'deviceId': ids,
       'channelNumber': number,
@@ -606,5 +610,6 @@ class DeviceDetailController extends GetxController {
 
   void videoError() {
     playErrorTag.value = true;
+    player.release();
   }
 }
