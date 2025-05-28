@@ -452,10 +452,20 @@ class LiGanDeviceDetailController extends GetxController {
     HhLog.d("energyPage -- $map");
     HhLog.d("energyPage -- $result");
     if (result["code"] == 0 && result["data"] != null) {
-      if(result["data"]["list"]!=null){
-        energyModel = result["data"]["list"][0];
-        dataStatus.value = false;
-        dataStatus.value = true;
+      try{
+        if(result["data"]["list"]!=null){
+          energyModel = result["data"]["list"][0];
+          dataStatus.value = false;
+          dataStatus.value = true;
+        }
+      }catch(e){
+        //
+        if(dataPageNum==1){
+          EventBusUtil.getInstance().fire(HhToast(title: "数据未上传请稍后再试"));
+        }else{
+          dataPageNum--;
+          EventBusUtil.getInstance().fire(HhToast(title: "已是最后一条数据"));
+        }
       }
     } else {
       EventBusUtil.getInstance()

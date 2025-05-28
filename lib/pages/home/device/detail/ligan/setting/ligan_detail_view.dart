@@ -50,7 +50,7 @@ class LiGanDetailPage extends StatelessWidget {
       children: [
         // Image.asset('assets/images/common/back_login.png',width:1.sw,height: 1.sh,fit: BoxFit.fill,),
         Container(
-          color: HhColors.backColor,
+          color: HhColors.backColorSetting,
           width: 1.sw,
           height: 1.sh,
         ),
@@ -2893,6 +2893,7 @@ class LiGanDetailPage extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 20.w),
+                      padding:EdgeInsets.fromLTRB(5.w*3, 0, 10.w*3, 0),
                       decoration: BoxDecoration(
                           color: HhColors.whiteColor,
                           borderRadius:
@@ -2902,7 +2903,7 @@ class LiGanDetailPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.fromLTRB(
-                                16.w * 3, 15.w * 3, 16.w * 3, 15.w * 3),
+                                12.w * 3, 15.w * 3, 12.w * 3, 15.w * 3),
                             child: Row(
                               children: [
                                 Align(
@@ -3015,262 +3016,263 @@ class LiGanDetailPage extends StatelessWidget {
                             ),
                           ),
                           Container(
+                            margin: EdgeInsets.fromLTRB(10.w*3, 0, 10.w*3, 0),
                             height: 1.w,
                             color: HhColors.backColor,
                           ),
-                        ],
-                      ),
-                    ),
-                    ///过充保护//锂电 liVP
-                    logic.energySetType.value==0?Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                        child:Row(
-                            children: [
-                              Text(
-                                '过充保护',
-                                style: TextStyle(
-                                  color: HhColors.blackColor,
-                                  fontSize: 15.sp * 3,
-                                ),
-                              ),
-                              const Expanded(child: SizedBox()),
-                              Container(
-                        width: 130.w*3, // 控制控件的宽度
-                                height: 35.w*3, // 控制控件的高度
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(6.w*3),
-                        ),
-                        child: Row(
-                          children: [
-                            // 数字输入框
-                            Expanded(
-                              child: TextField(
-                                controller: TextEditingController(
-                                  text: logic.liVP.value.toStringAsFixed(1),
-                                ),
-                                textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide.none
+
+                          logic.energySetType.value==0?Container(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
+                              children: [
+                                Text(
+                                  '过充保护',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
                                   ),
-                                  contentPadding: EdgeInsets.zero,
-                                  floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
                                 ),
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                onChanged: (text) {
-                                  logic.liVP.value = double.tryParse(text) ?? logic.liVP.value;
-                                },
-                                /*onSubmitted: (text) {
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.liVP.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.liVP.value = double.tryParse(text) ?? logic.liVP.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.liVP.value = double.tryParse(text) ?? logic.liVP.value;
                                 },*/
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                              child: Text(
-                                'V',
-                                style: TextStyle(
-                                  color: HhColors.grayAATextColor,
-                                  fontSize: 18.sp * 3,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
+                                          ),
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.liVP.value = (logic.liVP.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.liVP.value = (logic.liVP.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            // 上下按钮
-                            SizedBox(
-                              width: 30.w*3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // 向上按钮
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                        ),
-                                      ),
-                                      child: BouncingWidget(
-                                        duration: const Duration(milliseconds: 100),
-                                        scaleFactor: 1.5,
-                                        onPressed: () {
-                                          logic.liVP.value = (logic.liVP.value + 0.1).clamp(0, 220);
-                                        },
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.arrow_drop_up,
-                                            color: HhColors.gray9TextColor,
-                                            size: 20.w*3,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                      color:HhColors.mainTabLine,
-                                      height: 2.w,
-                                  ),
-                                  Container(
-                                      color:HhColors.whiteColor,
-                                      height: 1.w,
-                                  ),
-                                  Container(
-                                      color:HhColors.mainTabLine,
-                                      height: 2.w,
-                                  ),
-                                  // 向下按钮
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                        ),
-                                      ),
-                                      child: BouncingWidget(
-                                        duration: const Duration(milliseconds: 100),
-                                        scaleFactor: 1.5,
-                                        onPressed: () {
-                                          logic.liVP.value = (logic.liVP.value - 0.1).clamp(0, 220);
-                                        },
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: HhColors.gray9TextColor,
-                                            size: 20.w*3,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                            ],
-                        ),
-                    ):const SizedBox(),
-                    ///电压等级//公共 ratedL
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '电压等级',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
+                          ):const SizedBox(),
+                          ///电压等级//公共 ratedL
                           Container(
-                            width: 130.w*3, // 控制控件的宽度
-                            height: 35.w*3, // 控制控件的高度
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.withAlpha(80)),
-                              borderRadius: BorderRadius.circular(6.w*3),
-                            ),
-                            child: Row(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
                               children: [
-                                // 数字输入框
-                                Expanded(
-                                  child: TextField(
-                                    enabled: false,
-                                    controller: TextEditingController(
-                                      text: logic.ratedL.value.toString(),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none
-                                      ),
-                                      contentPadding: EdgeInsets.zero,
-                                      floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
-                                    ),
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    onChanged: (text) {
-                                      logic.ratedL.value = int.tryParse(text) ?? logic.ratedL.value;
-                                    },
-                                    /*onSubmitted: (text) {
+                                Text(
+                                  '电压等级',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey.withAlpha(80)),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          enabled: false,
+                                          controller: TextEditingController(
+                                            text: logic.ratedL.value.toString(),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.ratedL.value = int.tryParse(text) ?? logic.ratedL.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.ratedL.value = double.tryParse(text) ?? logic.ratedL.value;
                                 },*/
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                                  child: Text(
-                                    '  ',
-                                    style: TextStyle(
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 18.sp * 3,
-                                    ),
-                                  ),
-                                ),
-                                // 上下按钮
-                                SizedBox(
-                                  width: 30.w*3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // 向上按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
-                                          ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              // logic.ratedL.value = (logic.ratedL.value + 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_up,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.whiteColor,
-                                        height: 1.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      // 向下按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          '  ',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              // logic.ratedL.value = (logic.ratedL.value - 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    // logic.ratedL.value = (logic.ratedL.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    // logic.ratedL.value = (logic.ratedL.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -3279,299 +3281,299 @@ class LiGanDetailPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    ///过冲恢复//锂电 liVR
-                    logic.energySetType.value==0?Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                        child:Row(
-                            children: [
-                              Text(
-                                '过冲恢复',
-                                style: TextStyle(
-                                  color: HhColors.blackColor,
-                                  fontSize: 15.sp * 3,
-                                ),
-                              ),
-                              const Expanded(child: SizedBox()),
-                              Container(
-                        width: 130.w*3, // 控制控件的宽度
-                                height: 35.w*3, // 控制控件的高度
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(6.w*3),
-                        ),
-                        child: Row(
-                          children: [
-                            // 数字输入框
-                            Expanded(
-                              child: TextField(
-                                controller: TextEditingController(
-                                  text: logic.liVR.value.toStringAsFixed(1),
-                                ),
-                                textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderSide: BorderSide.none
+                          ///过冲恢复//锂电 liVR
+                          logic.energySetType.value==0?Container(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
+                              children: [
+                                Text(
+                                  '过冲恢复',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
                                   ),
-                                  contentPadding: EdgeInsets.zero,
-                                  floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
                                 ),
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                onChanged: (text) {
-                                  logic.liVR.value = double.tryParse(text) ?? logic.liVR.value;
-                                },
-                                /*onSubmitted: (text) {
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.liVR.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.liVR.value = double.tryParse(text) ?? logic.liVR.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.liVR.value = double.tryParse(text) ?? logic.liVR.value;
                                 },*/
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                              child: Text(
-                                'V',
-                                style: TextStyle(
-                                  color: HhColors.grayAATextColor,
-                                  fontSize: 18.sp * 3,
-                                ),
-                              ),
-                            ),
-                            // 上下按钮
-                            SizedBox(
-                              width: 30.w*3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // 向上按钮
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
                                         ),
                                       ),
-                                      child: BouncingWidget(
-                                        duration: const Duration(milliseconds: 100),
-                                        scaleFactor: 1.5,
-                                        onPressed: () {
-                                          logic.liVR.value = (logic.liVR.value + 0.1).clamp(0, 220);
-                                        },
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.arrow_drop_up,
-                                            color: HhColors.gray9TextColor,
-                                            size: 20.w*3,
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  Container(
-                                      color:HhColors.mainTabLine,
-                                      height: 2.w,
-                                  ),
-                                  Container(
-                                      color:HhColors.whiteColor,
-                                      height: 1.w,
-                                  ),
-                                  Container(
-                                      color:HhColors.mainTabLine,
-                                      height: 2.w,
-                                  ),
-                                  // 向下按钮
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.liVR.value = (logic.liVR.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.liVR.value = (logic.liVR.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      child: BouncingWidget(
-                                        duration: const Duration(milliseconds: 100),
-                                        scaleFactor: 1.5,
-                                        onPressed: () {
-                                          logic.liVR.value = (logic.liVR.value - 0.1).clamp(0, 220);
-                                        },
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: HhColors.gray9TextColor,
-                                            size: 20.w*3,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                            ],
-                        ),
-                    ):const SizedBox(),
-                    ///零度充电//锂电 liS
-                    logic.energySetType.value==0?Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '零度充电',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          InkWell(
-                            onTap: (){
-                              logic.liS.value++;
-                              if(logic.liS.value >= logic.liSList.length){
-                                logic.liS.value = 0;
-                              }
-                            },
-                            child: Container(
-                              width: 130.w*3, // 控制控件的宽度
-                              height: 35.w*3, // 控制控件的高度
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(6.w*3),
-                              ),
-                                child: Center(
-                                  child: Text(
-                                    logic.liSList[logic.liS.value],
-                                    style: TextStyle(
-                                      color: HhColors.blackColor,
-                                      fontSize: 14.sp * 3,
-                                    ),
+                                    ],
                                   ),
                                 ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ):const SizedBox(),
-                    ///均衡充电压//液体、胶体、AMG equalV
-                    logic.energySetType.value!=0?Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '均衡充电压',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Container(
-                            width: 130.w*3, // 控制控件的宽度
-                            height: 35.w*3, // 控制控件的高度
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(6.w*3),
-                            ),
-                            child: Row(
+                          ):const SizedBox(),
+                          ///零度充电//锂电 liS
+                          logic.energySetType.value==0?Container(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
                               children: [
-                                // 数字输入框
-                                Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController(
-                                      text: logic.equalV.value.toStringAsFixed(1),
+                                Text(
+                                  '零度充电',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                InkWell(
+                                  onTap: (){
+                                    logic.liS.value++;
+                                    if(logic.liS.value >= logic.liSList.length){
+                                      logic.liS.value = 0;
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 130.w*3, // 控制控件的宽度
+                                    height: 35.w*3, // 控制控件的高度
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(6.w*3),
                                     ),
-                                    textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none
+                                    child: Center(
+                                      child: Text(
+                                        logic.liSList[logic.liS.value],
+                                        style: TextStyle(
+                                          color: HhColors.blackColor,
+                                          fontSize: 14.sp * 3,
+                                        ),
                                       ),
-                                      contentPadding: EdgeInsets.zero,
-                                      floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
                                     ),
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    onChanged: (text) {
-                                      logic.equalV.value = double.tryParse(text) ?? logic.equalV.value;
-                                    },
-                                    /*onSubmitted: (text) {
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ):const SizedBox(),
+                          ///均衡充电压//液体、胶体、AMG equalV
+                          logic.energySetType.value!=0?Container(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
+                              children: [
+                                Text(
+                                  '均衡充电压',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.equalV.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.equalV.value = double.tryParse(text) ?? logic.equalV.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.equalV.value = double.tryParse(text) ?? logic.equalV.value;
                                 },*/
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                                  child: Text(
-                                    'V',
-                                    style: TextStyle(
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 18.sp * 3,
-                                    ),
-                                  ),
-                                ),
-                                // 上下按钮
-                                SizedBox(
-                                  width: 30.w*3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // 向上按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
-                                          ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.equalV.value = (logic.equalV.value + 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_up,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.whiteColor,
-                                        height: 1.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      // 向下按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.equalV.value = (logic.equalV.value - 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.equalV.value = (logic.equalV.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.equalV.value = (logic.equalV.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -3579,129 +3581,129 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ):const SizedBox(),
-                    ///强充电压//液体、胶体、AMG strongV
-                    logic.energySetType.value!=0?Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '强充电压',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Container(
-                            width: 130.w*3, // 控制控件的宽度
-                            height: 35.w*3, // 控制控件的高度
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(6.w*3),
-                            ),
-                            child: Row(
+                          ):const SizedBox(),
+                          ///强充电压//液体、胶体、AMG strongV
+                          logic.energySetType.value!=0?Container(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
                               children: [
-                                // 数字输入框
-                                Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController(
-                                      text: logic.strongV.value.toStringAsFixed(1),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none
-                                      ),
-                                      contentPadding: EdgeInsets.zero,
-                                      floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
-                                    ),
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    onChanged: (text) {
-                                      logic.strongV.value = double.tryParse(text) ?? logic.strongV.value;
-                                    },
-                                    /*onSubmitted: (text) {
+                                Text(
+                                  '强充电压',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.strongV.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.strongV.value = double.tryParse(text) ?? logic.strongV.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.strongV.value = double.tryParse(text) ?? logic.strongV.value;
                                 },*/
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                                  child: Text(
-                                    'V',
-                                    style: TextStyle(
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 18.sp * 3,
-                                    ),
-                                  ),
-                                ),
-                                // 上下按钮
-                                SizedBox(
-                                  width: 30.w*3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // 向上按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
-                                          ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.strongV.value = (logic.strongV.value + 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_up,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.whiteColor,
-                                        height: 1.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      // 向下按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.strongV.value = (logic.strongV.value - 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.strongV.value = (logic.strongV.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.strongV.value = (logic.strongV.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -3709,129 +3711,129 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ):const SizedBox(),
-                    ///浮充电压//液体、胶体、AMG floatV
-                    logic.energySetType.value!=0?Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '浮充电压',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
-                          Container(
-                            width: 130.w*3, // 控制控件的宽度
-                            height: 35.w*3, // 控制控件的高度
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(6.w*3),
-                            ),
-                            child: Row(
+                          ):const SizedBox(),
+                          ///浮充电压//液体、胶体、AMG floatV
+                          logic.energySetType.value!=0?Container(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
                               children: [
-                                // 数字输入框
-                                Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController(
-                                      text: logic.floatV.value.toStringAsFixed(1),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none
-                                      ),
-                                      contentPadding: EdgeInsets.zero,
-                                      floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
-                                    ),
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    onChanged: (text) {
-                                      logic.floatV.value = double.tryParse(text) ?? logic.floatV.value;
-                                    },
-                                    /*onSubmitted: (text) {
+                                Text(
+                                  '浮充电压',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.floatV.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.floatV.value = double.tryParse(text) ?? logic.floatV.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.floatV.value = double.tryParse(text) ?? logic.floatV.value;
                                 },*/
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                                  child: Text(
-                                    'V',
-                                    style: TextStyle(
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 18.sp * 3,
-                                    ),
-                                  ),
-                                ),
-                                // 上下按钮
-                                SizedBox(
-                                  width: 30.w*3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // 向上按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
-                                          ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.floatV.value = (logic.floatV.value + 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_up,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.whiteColor,
-                                        height: 1.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      // 向下按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.floatV.value = (logic.floatV.value - 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.floatV.value = (logic.floatV.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.floatV.value = (logic.floatV.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -3839,130 +3841,130 @@ class LiGanDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ):const SizedBox(),
+                          ):const SizedBox(),
 
-                    ///低压保护//公共 lowVP
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '低压保护',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
+                          ///低压保护//公共 lowVP
                           Container(
-                            width: 130.w*3, // 控制控件的宽度
-                            height: 35.w*3, // 控制控件的高度
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(6.w*3),
-                            ),
-                            child: Row(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
                               children: [
-                                // 数字输入框
-                                Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController(
-                                      text: logic.lowVR.value.toStringAsFixed(1),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none
-                                      ),
-                                      contentPadding: EdgeInsets.zero,
-                                      floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
-                                    ),
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    onChanged: (text) {
-                                      logic.lowVR.value = double.tryParse(text) ?? logic.lowVR.value;
-                                    },
-                                    /*onSubmitted: (text) {
+                                Text(
+                                  '低压保护',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.lowVR.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.lowVR.value = double.tryParse(text) ?? logic.lowVR.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.lowVR.value = double.tryParse(text) ?? logic.lowVR.value;
                                 },*/
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                                  child: Text(
-                                    'V',
-                                    style: TextStyle(
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 18.sp * 3,
-                                    ),
-                                  ),
-                                ),
-                                // 上下按钮
-                                SizedBox(
-                                  width: 30.w*3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // 向上按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
-                                          ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.lowVR.value = (logic.lowVR.value + 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_up,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.whiteColor,
-                                        height: 1.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      // 向下按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.lowVR.value = (logic.lowVR.value - 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.lowVR.value = (logic.lowVR.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.lowVR.value = (logic.lowVR.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -3971,128 +3973,128 @@ class LiGanDetailPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    ///低压恢复//公共 lowVR
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
-                      child:Row(
-                        children: [
-                          Text(
-                            '低压恢复',
-                            style: TextStyle(
-                              color: HhColors.blackColor,
-                              fontSize: 15.sp * 3,
-                            ),
-                          ),
-                          const Expanded(child: SizedBox()),
+                          ///低压恢复//公共 lowVR
                           Container(
-                            width: 130.w*3, // 控制控件的宽度
-                            height: 35.w*3, // 控制控件的高度
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(6.w*3),
-                            ),
-                            child: Row(
+                            padding: EdgeInsets.fromLTRB(10.w*3, 10.w*3, 0.w*3, 10.w*3),
+                            child:Row(
                               children: [
-                                // 数字输入框
-                                Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController(
-                                      text: logic.lowVP.value.toStringAsFixed(1),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none
-                                      ),
-                                      contentPadding: EdgeInsets.zero,
-                                      floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
-                                    ),
-                                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                    onChanged: (text) {
-                                      logic.lowVP.value = double.tryParse(text) ?? logic.lowVP.value;
-                                    },
-                                    /*onSubmitted: (text) {
+                                Text(
+                                  '低压恢复',
+                                  style: TextStyle(
+                                    color: HhColors.blackColor,
+                                    fontSize: 15.sp * 3,
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                Container(
+                                  width: 130.w*3, // 控制控件的宽度
+                                  height: 35.w*3, // 控制控件的高度
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(6.w*3),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // 数字输入框
+                                      Expanded(
+                                        child: TextField(
+                                          controller: TextEditingController(
+                                            text: logic.lowVP.value.toStringAsFixed(1),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide.none
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            floatingLabelBehavior: FloatingLabelBehavior.never, // 取消文本上移效果
+                                          ),
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (text) {
+                                            logic.lowVP.value = double.tryParse(text) ?? logic.lowVP.value;
+                                          },
+                                          /*onSubmitted: (text) {
                                   logic.lowVP.value = double.tryParse(text) ?? logic.lowVP.value;
                                 },*/
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
-                                  child: Text(
-                                    'V',
-                                    style: TextStyle(
-                                      color: HhColors.grayAATextColor,
-                                      fontSize: 18.sp * 3,
-                                    ),
-                                  ),
-                                ),
-                                // 上下按钮
-                                SizedBox(
-                                  width: 30.w*3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // 向上按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
-                                          ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.lowVP.value = (logic.lowVP.value + 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_up,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
-                                              ),
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.whiteColor,
-                                        height: 1.w,
-                                      ),
-                                      Container(
-                                        color:HhColors.mainTabLine,
-                                        height: 2.w,
-                                      ),
-                                      // 向下按钮
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
-                                            ),
+                                        padding: EdgeInsets.fromLTRB(5.w*3, 0, 5.w*3, 0),
+                                        child: Text(
+                                          'V',
+                                          style: TextStyle(
+                                            color: HhColors.grayAATextColor,
+                                            fontSize: 18.sp * 3,
                                           ),
-                                          child: BouncingWidget(
-                                            duration: const Duration(milliseconds: 100),
-                                            scaleFactor: 1.5,
-                                            onPressed: () {
-                                              logic.lowVP.value = (logic.lowVP.value - 0.1).clamp(0, 220);
-                                            },
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: HhColors.gray9TextColor,
-                                                size: 20.w*3,
+                                        ),
+                                      ),
+                                      // 上下按钮
+                                      SizedBox(
+                                        width: 30.w*3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            // 向上按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.lowVP.value = (logic.lowVP.value + 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_up,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.whiteColor,
+                                              height: 1.w,
+                                            ),
+                                            Container(
+                                              color:HhColors.mainTabLine,
+                                              height: 2.w,
+                                            ),
+                                            // 向下按钮
+                                            Expanded(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: HhColors.mainTabLine,width: 2.w),
+                                                  ),
+                                                ),
+                                                child: BouncingWidget(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  scaleFactor: 1.5,
+                                                  onPressed: () {
+                                                    logic.lowVP.value = (logic.lowVP.value - 0.1).clamp(0, 220);
+                                                  },
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: HhColors.gray9TextColor,
+                                                      size: 20.w*3,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],

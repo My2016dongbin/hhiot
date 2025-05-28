@@ -60,6 +60,7 @@ class HhColors {
   static const themeColor = Color(0xFF7ad6f2); //主题颜色
   static const backColorRegister = Color(0xFFF5F7F7); //背景颜色
   static const backColor = Color(0xFFEDEDED); //背景颜色
+  static const backColorSetting = Color(0xFFF5F7F7); //背景颜色
   static const backColor2 = Color(0xFFF5F7F7); //背景颜色
   static const themeSe = Color(0xFFF9605F); //主题选中颜色
   static const themeUn = Color(0xFFD6D7D9); //主题未选颜色

@@ -1409,7 +1409,7 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                     logic.dataPageNum--;
                     if(logic.dataPageNum<1){
                       logic.dataPageNum = 1;
-                      EventBusUtil.getInstance().fire(HhToast(title: "当前已是第一条，已为您加载最新一条数据",type: 0));
+                      EventBusUtil.getInstance().fire(HhToast(title: "当前已是第一条\n已为您加载最新一条数据",type: 0));
                     }
                     logic.getDataPage();
                   },

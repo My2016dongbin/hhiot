@@ -18,20 +18,12 @@ class SpaceManageController extends GetxController {
   late BuildContext context;
   late List<dynamic> spaceList = [];
   late List<dynamic> spaceListMax = [];
-  StreamSubscription ?spaceListSubscription;
   late EasyRefreshController easyController = EasyRefreshController();
 
   @override
   void onInit() {
     //获取空间列表
     getSpaceList(1);
-
-    spaceListSubscription = EventBusUtil.getInstance()
-        .on<SpaceList>()
-        .listen((event) {
-      pageNum = 1;
-      getSpaceList(1);
-    });
     super.onInit();
   }
 
@@ -123,13 +115,15 @@ class SpaceManageController extends GetxController {
   }
 
   Future<void> changeDeviceVisible(dynamic model) async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "正字保存.."));
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: "正在保存.."));
     var result = await HhHttp().request(RequestUtils.saveAppDeviceBlock,method: DioMethod.post,data: model);
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("changeDeviceVisible ---   $model");
     HhLog.d("changeDeviceVisible ---   $result");
     if(result["code"]==0 && result["data"]!=null){
       EventBusUtil.getInstance().fire(HhToast(title: "修改成功",type: 1));
+      EventBusUtil.getInstance().fire(SpaceList());
+      EventBusUtil.getInstance().fire(DeviceList());
     }else{
       EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
