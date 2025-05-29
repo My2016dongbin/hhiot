@@ -410,6 +410,8 @@ class DeviceAddPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                      firstPageProgressIndicatorBuilder: (context) => Container(),
+                      newPageProgressIndicatorBuilder: (context) => Container(),
                     ),
                   ),
                 ),
