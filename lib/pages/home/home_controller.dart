@@ -435,16 +435,24 @@ class HomeController extends GetxController {
       _myLocPlugin.singleLocationCallback(callback: (BaiduLocation result) {
         //result为定位结果
         HhLog.e("location isIOS ${result.latitude},${result.longitude}");
-        CommonData.latitude = result.latitude;
-        CommonData.longitude = result.longitude;
+        if(result.longitude!=null){
+          CommonData.longitude = result.longitude;
+        }
+        if(result.latitude!=null){
+          CommonData.latitude = result.latitude;
+        }
       });
     } else if (Platform.isAndroid) {
       //接受定位回调
       _myLocPlugin.seriesLocationCallback(callback: (BaiduLocation result) {
         //result为定位结果
         HhLog.e("location isAndroid ${result.latitude},${result.longitude}");
-        CommonData.latitude = result.latitude;
-        CommonData.longitude = result.longitude;
+        if(result.longitude!=null){
+          CommonData.longitude = result.longitude;
+        }
+        if(result.latitude!=null){
+          CommonData.latitude = result.latitude;
+        }
         EventBusUtil.getInstance().fire(Location());
       });
     }

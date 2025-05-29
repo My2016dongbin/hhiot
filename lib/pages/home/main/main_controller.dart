@@ -93,8 +93,12 @@ class MainController extends GetxController {
     //接受定位回调
     _myLocPlugin.seriesLocationCallback(callback: (BaiduLocation result) {
       HhLog.d('BaiduLocation -> ${result.longitude},${result.latitude}');
-      CommonData.longitude = result.longitude;
-      CommonData.latitude = result.latitude;
+      if(result.longitude!=null){
+        CommonData.longitude = result.longitude;
+      }
+      if(result.latitude!=null){
+        CommonData.latitude = result.latitude;
+      }
       latitude.value = CommonData.latitude;
       longitude.value = CommonData.longitude;
 
