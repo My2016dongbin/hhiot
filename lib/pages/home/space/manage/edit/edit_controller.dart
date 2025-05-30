@@ -31,6 +31,7 @@ class EditController extends GetxController {
       method: DioMethod.put,
       data: data
     );
+    HhLog.d("spaceUpdate -- $data");
     HhLog.d("spaceUpdate -- $tenantResult");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (tenantResult["code"] == 0 && tenantResult["data"] != null) {

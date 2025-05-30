@@ -27,7 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 
 def flutterVersionCode = "31"
-def flutterVersionName = "1.0.7.24"
+def flutterVersionName = "1.0.7.25"
 
 android {
     compileSdkVersion 34

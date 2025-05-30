@@ -1451,49 +1451,49 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     Text("负载电压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["loadVoltage"]??"-"}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["loadVoltage"]??"-"}",1)}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("负载电流",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["loadCurrent"]??"-"}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["loadCurrent"]??"-"}",1)}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("太阳能电压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["solarVoltage"]??"-"}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["solarVoltage"]??"-"}",1)}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("太阳能电流",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["solarCurrent"]??"-"}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["solarCurrent"]??"-"}",1)}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("蓄电池剩余电量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["batteryRemain"]??"-"}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["batteryRemain"]??"-"}",1)}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("蓄电池电压",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["batteryVoltage"]??"-"}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["batteryVoltage"]??"-"}",1)}V",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("蓄电池电流",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["batteryCurrent"]??"-"}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["batteryCurrent"]??"-"}",1)}A",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
               ],
@@ -1522,49 +1522,49 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     Text("土壤质量含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["soilMassMoisture"]??"-"}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["soilMassMoisture"]??"-"}",3)}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("凋落物含水率",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["litterMassMoisture"]??"-"}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["litterMassMoisture"]??"-"}",3)}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("地表温度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["surfaceTemperature"]??"-"}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["surfaceTemperature"]??"-"}",3)}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("地表湿度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["surfaceHumidity"]??"-"}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["surfaceHumidity"]??"-"}",3)}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("倾角X",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["inclinationX"]??"0"}°",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["inclinationX"]??"0"}",1)}°",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("倾角Y",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["inclinationY"]??"0"}°",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["inclinationY"]??"0"}",1)}°",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("倾角Z",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["inclinationZ"]??"0"}°",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["inclinationZ"]??"0"}",1)}°",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
               ],
@@ -1593,21 +1593,21 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     Text("空气温度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["airTemperature"]??"-"}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["airTemperature"]??"-"}",3)}°C",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("空气湿度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["airHumidity"]??"-"}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["airHumidity"]??"-"}",3)}%",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("大气压力",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["airPressure"]??"-"}KPa",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["airPressure"]??"-"}",3)}KPa",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
@@ -1621,28 +1621,28 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     Text("风速",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["windSpeed"]??"-"}m/s",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["windSpeed"]??"-"}",3)}m/s",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("光照强度",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["illuminance"]??"-"}Lux",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["illuminance"]??"-"}",3)}Lux",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("雨量",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["rainfall"]??"0"}mm",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["rainfall"]??"0"}",3)}mm",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
                 CommonUtils.line(marginTop: 13.w*3,marginBottom: 13.w*3),
                 Row(
                   children: [
                     Text("降雪",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),),
-                    Expanded(child: Text("${logic.energyModel["snowfall"]??"0"}mm",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
+                    Expanded(child: Text("${CommonUtils().parseDoubleNumber("${logic.energyModel["snowfall"]??"0"}",3)}mm",style: TextStyle(color: HhColors.blackColor,fontSize: 15.sp*3),textAlign: TextAlign.end,)),
                   ],
                 ),
               ],

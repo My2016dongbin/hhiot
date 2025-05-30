@@ -54,7 +54,7 @@ class SettingController extends GetxController {
         EventBusUtil.getInstance().on<UserInfo>().listen((event) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           nickname!.value = prefs.getString(SPKeys().nickname)!;
-          account!.value = prefs.getString(SPKeys().account)!;
+          account!.value = prefs.getString(SPKeys().username)!;
           mobile!.value = prefs.getString(SPKeys().mobile)!;
           email!.value = prefs.getString(SPKeys().email)!;
           avatar!.value = prefs.getString(SPKeys().endpoint)!+prefs.getString(SPKeys().avatar)!;
