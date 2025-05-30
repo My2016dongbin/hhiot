@@ -27,7 +27,8 @@ class DownProgress{
   DownProgress({required this.progress});
 }
 class SpaceList{
-  SpaceList();
+  String ?mode;
+  SpaceList({this.mode});
 }
 class WarnList{
   WarnList();

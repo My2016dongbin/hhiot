@@ -24,6 +24,7 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/widgets/battery.dart';
+import 'package:qc_amap_navi/qc_amap_navi.dart';
 import 'package:screen_recorder/screen_recorder.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -341,6 +342,14 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: InkWell(
                   onTap: () {
+                    QcAmapNavi.startNavigation(
+                      fromLat: 39.90882,
+                      fromLng: 116.39750,
+                      fromName: "起点",
+                      toLat: 39.99016,
+                      toLng: 116.48118,
+                      toName: "终点",
+                    );
 
                   },
                   child: Container(

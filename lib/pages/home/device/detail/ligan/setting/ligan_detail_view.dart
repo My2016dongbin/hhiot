@@ -4330,11 +4330,14 @@ class LiGanDetailPage extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Text(
-                      '${model["name"]}',
-                      style: TextStyle(
-                        color: HhColors.blackColor,
-                        fontSize: 14.sp * 3,
+                    SizedBox(
+                      width:0.55.sw,
+                      child: Text(
+                        '${model["name"]}',
+                        style: TextStyle(
+                          color: HhColors.blackColor,
+                          fontSize: 14.sp * 3,
+                        ),
                       ),
                     ),
                     logic.localVoice.value=="${model["id"]}"? Container(
@@ -4458,11 +4461,14 @@ class LiGanDetailPage extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  '${model["name"]}',
-                  style: TextStyle(
-                    color: HhColors.blackColor,
-                    fontSize: 14.sp * 3,
+                child: SizedBox(
+                  width:0.55.sw,
+                  child: Text(
+                    '${model["name"]}',
+                    style: TextStyle(
+                      color: HhColors.blackColor,
+                      fontSize: 14.sp * 3,
+                    ),
                   ),
                 ),
               ),

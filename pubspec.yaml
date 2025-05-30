@@ -98,6 +98,8 @@ dependencies:
     git:
       url: https://github.com/TencentCloud/TPNS-Flutter-Plugin
       ref: V1.3.0
+  qc_amap_navi:
+    path: ./qc_amap_navi
 
 
 dev_dependencies:
