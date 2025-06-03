@@ -532,7 +532,7 @@ class MainPage extends StatelessWidget {
                 child:
                 Container(
                   width: 1.sw,
-                  height: 320.w*3,
+                  height: 300.w*3,
                   margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 30.w*3),
                   clipBehavior: Clip.hardEdge,
                   //裁剪
