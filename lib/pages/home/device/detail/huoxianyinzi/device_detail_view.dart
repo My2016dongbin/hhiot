@@ -342,15 +342,14 @@ class HXYZDeviceDetailPage extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: InkWell(
                   onTap: () {
-                    QcAmapNavi.startNavigation(
-                      fromLat: 39.90882,
-                      fromLng: 116.39750,
-                      fromName: "起点",
-                      toLat: 39.99016,
-                      toLng: 116.48118,
-                      toName: "终点",
-                    );
-
+                    // QcAmapNavi.startNavigation(
+                    //   fromLat: 39.90882,
+                    //   fromLng: 116.39750,
+                    //   fromName: "起点",
+                    //   toLat: 39.99016,
+                    //   toLng: 116.48118,
+                    //   toName: "终点",
+                    // );
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(0, 57.h * 3, 50.h * 3, 0),

@@ -13,6 +13,7 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/ParseLocation.dart';
 import 'package:iot/utils/RequestUtils.dart';
 
 class DeviceAddController extends GetxController {
@@ -78,9 +79,10 @@ class DeviceAddController extends GetxController {
       locText.value = model['location']??"";
 
       if(model['longitude']!=null && model['longitude']!=0 && model['longitude']!=""){
-        dynamic map = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
-        model['longitude'] = "${map['longitude']}";
-        model['latitude'] = "${map['latitude']}";
+        // dynamic map = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
+        List<num> map = ParseLocation.gps84_To_bd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"));
+        model['longitude'] = "${map[1]}";
+        model['latitude'] = "${map[0]}";
 
         longitude.value = double.parse(model['longitude']);
         latitude.value = double.parse(model['latitude']);
@@ -156,13 +158,14 @@ class DeviceAddController extends GetxController {
     addingStatus.value = 0;
     addingStep.value = 0;
     futureStep();
-    dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
+    // dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
+    List<num> map = ParseLocation.bd09_To_gps84(num.parse("${latitude.value!}"), num.parse("${longitude.value!}"));
     dynamic data = {
       "deviceNo":snController!.text,
     "name":nameController!.text==''?null:nameController!.text,
     "spaceId":spaceId,
-    "longitude":"${map['longitude']}",
-    "latitude":"${map['latitude']}",
+    "longitude":"${map[1]}",
+    "latitude":"${map[0]}",
     "location":locText.value,
     };
     var result = await HhHttp().request(RequestUtils.deviceCreate,method: DioMethod.post,data: data);
@@ -188,9 +191,10 @@ class DeviceAddController extends GetxController {
       model['spaceName'] = newItems[index.value]['name'];
       model['spaceId'] = newItems[index.value]['id'];
       if(hasLocation){
-        dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
-        model['longitude'] = "${map['longitude']}";
-        model['latitude'] = "${map['latitude']}";
+        // dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
+        List<num> map = ParseLocation.bd09_To_gps84(num.parse("${latitude.value!}"), num.parse("${longitude.value!}"));
+        model['longitude'] = "${map[1]}";
+        model['latitude'] = "${map[0]}";
         model['location'] = locText.value;
       }
       HhLog.d("model $model ，${locText.value}");

@@ -18,6 +18,7 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhHttp.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/ParseLocation.dart';
 import 'package:iot/utils/RequestUtils.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:overlay_tooltip/overlay_tooltip.dart';
@@ -216,9 +217,10 @@ class MainController extends GetxController {
       for (int i = 0; i < newItems.length; i++) {
         if(newItems[i]["deviceNo"] == marker.customMap!["deviceNo"]){
           model = newItems[i];
-          dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
+          // dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
+          List<num> mapLatLng = ParseLocation.gps84_To_bd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"));
           controller?.setCenterCoordinate(
-            BMFCoordinate(mapLatLng["latitude"],mapLatLng["longitude"]), false,
+            BMFCoordinate(double.parse("${mapLatLng[0]}"),double.parse("${mapLatLng[1]}")), false,
           );
           controller?.setZoomTo(17);
 
@@ -229,7 +231,7 @@ class MainController extends GetxController {
           }
           //添加标题框
           /// text经纬度信息
-          BMFCoordinate position = BMFCoordinate(mapLatLng["latitude"],mapLatLng["longitude"]);
+          BMFCoordinate position = BMFCoordinate(double.parse("${mapLatLng[0]}"),double.parse("${mapLatLng[1]}"));
 
           /// 构造text
           BMFText bmfText = BMFText(
@@ -251,6 +253,7 @@ class MainController extends GetxController {
 
           searchDown.value = false;
 
+          videoStatus.value = false;
           videoStatus.value = true;
         }
       }
@@ -507,9 +510,10 @@ class MainController extends GetxController {
         Map<String, dynamic> map = {};
         map["deviceNo"] = "${model['deviceNo']}";
 
-        dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
+        // dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
+        List<num> mapLatLng = ParseLocation.gps84_To_bd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"));
         BMFMarker marker = BMFMarker(
-            position: BMFCoordinate(mapLatLng['latitude'], mapLatLng['longitude']),
+            position: BMFCoordinate(double.parse("${mapLatLng[0]}"), double.parse("${mapLatLng[1]}")),
             enabled: true,
             visible: true,
             title: "${model['name']}",

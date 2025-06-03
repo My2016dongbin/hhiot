@@ -35,8 +35,10 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
+import 'package:iot/utils/ParseLocation.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:overlay_tooltip/overlay_tooltip.dart';
+import 'package:qc_amap_navi/qc_amap_navi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'main_controller.dart';
@@ -190,8 +192,9 @@ class MainPage extends StatelessWidget {
                           InkWell(
                             onTap: (){
                               HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
+                              List<num> point = ParseLocation.gps84_To_bd09(num.parse('${item["latitude"]}'), num.parse('${item["longitude"]}'));
                               logic.controller?.setCenterCoordinate(
-                                BMFCoordinate(double.parse('${item["latitude"]}'),double.parse('${item["longitude"]}')), false,
+                                BMFCoordinate(double.parse('${point[0]}'),double.parse('${point[1]}')), false,
                               );
                               logic.controller?.setZoomTo(17);
                               logic.searchDown.value = false;
@@ -527,68 +530,170 @@ class MainPage extends StatelessWidget {
             ? Align(
                 alignment: Alignment.bottomCenter,
                 child:
-                BouncingWidget(
-                  duration: const Duration(milliseconds: 100),
-                  scaleFactor: 1.2,
-                  onPressed: () {
-                    logic.videoStatus.value = !logic.videoStatus.value;
-                    CommonUtils().parseRouteDetail(logic.model);
-                  },
-                  child: Container(
-                    width: 1.sw,
-                    height: 195.w*3,
-                    margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 93.w*3),
-                    clipBehavior: Clip.hardEdge,
-                    //裁剪
-                    decoration: BoxDecoration(
-                        color: HhColors.trans,
-                        borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            width: 1.sw,
-                            height: 195.w*3,
-                            color: HhColors.textBlackColor,
-                            child: Image.asset(
-                              "assets/images/common/test_video.jpg",
-                              width: 1.sw,
-                              height: 195.w*3,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+                Container(
+                  width: 1.sw,
+                  height: 320.w*3,
+                  margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 30.w*3),
+                  clipBehavior: Clip.hardEdge,
+                  //裁剪
+                  decoration: BoxDecoration(
+                      color: HhColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(16.w*3, 15.w*3, 0, 0),
+                        child: Text(
+                          "${logic.model["name"]}",
+                          style: TextStyle(
+                              color: HhColors.blackTextColor, fontSize: 14.sp*3,fontWeight: FontWeight.bold),
                         ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(12.w*3, 15.w*3, 0, 0),
-                            child: Text(
+                      ),
+                      Container(
+                        color: HhColors.line252Color,
+                        height: 1,
+                        margin: EdgeInsets.fromLTRB(15.w*3, 15.w*3, 15.w*3, 0),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(16.w*3, 15.w*3, 16.w*3, 0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "设备类型",
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
+                            ),
+                            const Expanded(child: SizedBox()),
+                            Text(
                               "${logic.model["name"]}",
                               style: TextStyle(
-                                  color: HhColors.blackTextColor, fontSize: 14.sp*3,fontWeight: FontWeight.bold),
+                                  color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
                             ),
-                          ),
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 13.w*3, 18.w*3, 0),
-                            padding:
-                                EdgeInsets.fromLTRB(18.w*3, 3.w*3, 17.w*3, 3.w*3),
-                            decoration: BoxDecoration(
-                                color: HhColors.textBlackColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12.w*3))),
-                            child: Text(
-                              "进入",
+                      ),
+                      Container(
+                        color: HhColors.line252Color,
+                        height: 1,
+                        margin: EdgeInsets.fromLTRB(15.w*3, 15.w*3, 15.w*3, 0),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(16.w*3, 15.w*3, 16.w*3, 0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "经纬度",
                               style: TextStyle(
-                                  color: HhColors.whiteColor, fontSize: 13.sp*3),
+                                  color: HhColors.blackTextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
                             ),
+                            const Expanded(child: SizedBox()),
+                            Text(
+                              "(${logic.model["longitude"]},${logic.model["latitude"]})",
+                              style: TextStyle(
+                                  color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        color: HhColors.line252Color,
+                        height: 1,
+                        margin: EdgeInsets.fromLTRB(15.w*3, 15.w*3, 15.w*3, 0),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(16.w*3, 15.w*3, 16.w*3, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "位置",
+                              style: TextStyle(
+                                  color: HhColors.blackTextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 2.w*3),
+                              child: Text(
+                                "${logic.model["location"]}",
+                                style: TextStyle(
+                                    color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        color: HhColors.line252Color,
+                        height: 1,
+                        margin: EdgeInsets.fromLTRB(15.w*3, 15.w*3, 15.w*3, 0),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(15.w*3, 0, 15.w*3, 0),
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  logic.videoStatus.value = !logic.videoStatus.value;
+                                  CommonUtils().parseRouteDetail(logic.model);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(0, 13.w*3, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(50.w*3, 12.w*3, 50.w*3, 12.w*3),
+                                  decoration: BoxDecoration(
+                                      color: HhColors.whiteColor,
+                                      border: Border.all(color: HhColors.grayCCTextColor,width: 2.w),
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(8.w*3))),
+                                  child: Text(
+                                    "查看",
+                                    style: TextStyle(
+                                        color: HhColors.blackTextColor, fontSize: 16.sp*3),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 15.w*3,),
+                              BouncingWidget(
+                                duration: const Duration(milliseconds: 100),
+                                scaleFactor: 1.2,
+                                onPressed: () {
+                                  try{
+                                    List<num> start = ParseLocation.bd09_To_Gcj02(num.parse("${CommonData.latitude!}"), num.parse("${CommonData.longitude}"));
+                                    List<num> end = ParseLocation.gps84_To_Gcj02(num.parse("${logic.model["latitude"]}"), num.parse("${logic.model["longitude"]}"));
+                                    QcAmapNavi.startNavigation(
+                                      fromLat: double.parse("${start[0]}"),
+                                      fromLng: double.parse("${start[1]}"),
+                                      fromName: "我的位置",
+                                      toLat: double.parse("${end[0]}"),
+                                      toLng: double.parse("${end[1]}"),
+                                      toName: "${logic.model["name"]}",
+                                    );
+                                  }catch(e){
+                                    HhLog.e(e.toString());
+                                  }
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(0, 13.w*3, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(50.w*3, 12.w*3, 50.w*3, 12.w*3),
+                                  decoration: BoxDecoration(
+                                      color: HhColors.mainBlueColor,
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(6.w*3))),
+                                  child: Text(
+                                    "导航",
+                                    style: TextStyle(
+                                        color: HhColors.whiteColor, fontSize: 16.sp*3),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               )
