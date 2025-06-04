@@ -480,7 +480,11 @@ class DeviceAddPage extends StatelessWidget {
                       return;
                     }
 
-                    Get.to(()=>SearchLocationPage(),binding: SearchLocationBinding());
+                    if(logic.isEdit.value){
+                      Get.to(()=>SearchLocationPage(),binding: SearchLocationBinding(),arguments: logic.model);
+                    }else{
+                      Get.to(()=>SearchLocationPage(),binding: SearchLocationBinding());
+                    }
                   },
                   child: Container(
                     width: 1.sw,

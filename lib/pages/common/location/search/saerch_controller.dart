@@ -18,10 +18,13 @@ class SearchLocationController extends GetxController {
   final Rx<bool> searchStatus = false.obs;
   final Rx<double> longitude = 0.0.obs;
   final Rx<double> latitude = 0.0.obs;
+  late double lat = 0;
+  late double lng = 0;
   final Rx<String> locText = ''.obs;
   final Rx<String> locCity = ''.obs;
   late int searchIndex = 0;
   late bool choose = false;
+  late dynamic model = {};
   BMFMapController ?controller;
   late List<BMFPoiInfo> searchList = [];
   TextEditingController ?searchController = TextEditingController();
@@ -30,7 +33,11 @@ class SearchLocationController extends GetxController {
   Future<void> onInit() async {
     latitude.value = CommonData.latitude!;
     longitude.value = CommonData.longitude!;
+    lat = CommonData.latitude!;
+    lng = CommonData.longitude!;
     locSearch(0);
+
+    model = Get.arguments;
     super.onInit();
   }
 
@@ -79,6 +86,36 @@ class SearchLocationController extends GetxController {
       controller?.addMarker(marker);
       locSearch(1);
     });
+
+
+    ///设备添加-选择定位-返回-再次进入
+    if(latitude.value!=0 &&longitude.value!=0 && latitude.value!=lat && longitude.value!=lng){
+      /// 创建BMFMarker
+      BMFMarker marker = BMFMarker(
+          position: BMFCoordinate(latitude.value,longitude.value),
+          enabled: false,
+          visible: true,
+          identifier: "location",
+          icon: 'assets/images/common/ic_device_online.png');
+
+      /// 添加Marker
+      controller?.addMarker(marker);
+    }else{
+      ///设备修改
+      if(model!=null && model!={}){
+        /// 创建BMFMarker
+        BMFMarker marker = BMFMarker(
+            position: BMFCoordinate(double.parse("${model["latitude"]}"),double.parse("${model["longitude"]}")),
+            enabled: false,
+            visible: true,
+            identifier: "location",
+            icon: 'assets/images/common/ic_device_online.png');
+
+        /// 添加Marker
+        controller?.addMarker(marker);
+        // locSearch(1);
+      }
+    }
   }
 
   Future<void> userEdit() async {
