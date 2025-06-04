@@ -532,7 +532,6 @@ class MainPage extends StatelessWidget {
                 child:
                 Container(
                   width: 1.sw,
-                  height: 300.w*3,
                   margin: EdgeInsets.fromLTRB(14.w*3, 0, 14.w*3, 30.w*3),
                   clipBehavior: Clip.hardEdge,
                   //裁剪
@@ -540,6 +539,7 @@ class MainPage extends StatelessWidget {
                       color: HhColors.whiteColor,
                       borderRadius: BorderRadius.all(Radius.circular(16.w*3))),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -615,8 +615,9 @@ class MainPage extends StatelessWidget {
                               margin: EdgeInsets.only(left: 2.w*3),
                               child: Text(
                                 "${logic.model["location"]}",
+                                maxLines: 2,
                                 style: TextStyle(
-                                    color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
+                                    color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),
                               ),
                             ),
                           ],
@@ -628,7 +629,7 @@ class MainPage extends StatelessWidget {
                         margin: EdgeInsets.fromLTRB(15.w*3, 15.w*3, 15.w*3, 0),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(15.w*3, 0, 15.w*3, 0),
+                        margin: EdgeInsets.fromLTRB(15.w*3, 0, 15.w*3, 15.w*3),
                         child: Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
