@@ -192,7 +192,7 @@ class MainPage extends StatelessWidget {
                           InkWell(
                             onTap: (){
                               HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
-                              List<num> point = ParseLocation.gps84_To_bd09(num.parse('${item["latitude"]}'), num.parse('${item["longitude"]}'));
+                              List<num> point = ParseLocation.parseTypeToBd09(num.parse('${item["latitude"]}'), num.parse('${item["longitude"]}'),item['coordinateType']??"0");
                               logic.controller?.setCenterCoordinate(
                                 BMFCoordinate(double.parse('${point[0]}'),double.parse('${point[1]}')), false,
                               );
@@ -663,7 +663,7 @@ class MainPage extends StatelessWidget {
                                 onPressed: () {
                                   try{
                                     List<num> start = ParseLocation.bd09_To_Gcj02(num.parse("${CommonData.latitude!}"), num.parse("${CommonData.longitude}"));
-                                    List<num> end = ParseLocation.gps84_To_Gcj02(num.parse("${logic.model["latitude"]}"), num.parse("${logic.model["longitude"]}"));
+                                    List<num> end = ParseLocation.parseTypeToGcj02(num.parse("${logic.model["latitude"]}"), num.parse("${logic.model["longitude"]}"),logic.model['coordinateType']??"0");
                                     QcAmapNavi.startNavigation(
                                       fromLat: double.parse("${start[0]}"),
                                       fromLng: double.parse("${start[1]}"),

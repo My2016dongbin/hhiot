@@ -80,7 +80,7 @@ class DeviceAddController extends GetxController {
 
       if(model['longitude']!=null && model['longitude']!=0 && model['longitude']!=""){
         // dynamic map = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
-        List<num> map = ParseLocation.gps84_To_bd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"));
+        List<num> map = ParseLocation.parseTypeToBd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"),model['coordinateType']??"0");
         model['longitude'] = "${map[1]}";
         model['latitude'] = "${map[0]}";
 
@@ -159,14 +159,15 @@ class DeviceAddController extends GetxController {
     addingStep.value = 0;
     futureStep();
     // dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
-    List<num> map = ParseLocation.bd09_To_gps84(num.parse("${latitude.value!}"), num.parse("${longitude.value!}"));
+    // List<num> map = ParseLocation.bd09_To_gps84(num.parse("${latitude.value!}"), num.parse("${longitude.value!}"));
     dynamic data = {
       "deviceNo":snController!.text,
     "name":nameController!.text==''?null:nameController!.text,
     "spaceId":spaceId,
-    "longitude":"${map[1]}",
-    "latitude":"${map[0]}",
+    "longitude":"${longitude.value!}",
+    "latitude":"${latitude.value!}",
     "location":locText.value,
+    "coordinateType":2
     };
     var result = await HhHttp().request(RequestUtils.deviceCreate,method: DioMethod.post,data: data);
     HhLog.d("createDevice data -- $data");
@@ -192,10 +193,11 @@ class DeviceAddController extends GetxController {
       model['spaceId'] = newItems[index.value]['id'];
       if(hasLocation){
         // dynamic map = CommonUtils().bdToGd(longitude.value!, latitude.value!);
-        List<num> map = ParseLocation.bd09_To_gps84(num.parse("${latitude.value!}"), num.parse("${longitude.value!}"));
-        model['longitude'] = "${map[1]}";
-        model['latitude'] = "${map[0]}";
+        // List<num> map = ParseLocation.bd09_To_gps84(num.parse("${latitude.value!}"), num.parse("${longitude.value!}"));
+        model['longitude'] = "${longitude.value!}";
+        model['latitude'] = "${latitude.value!}";
         model['location'] = locText.value;
+        model['coordinateType'] = 2;
       }
       HhLog.d("model $model ，${locText.value}");
     }catch(e){

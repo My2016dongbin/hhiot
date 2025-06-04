@@ -218,7 +218,7 @@ class MainController extends GetxController {
         if(newItems[i]["deviceNo"] == marker.customMap!["deviceNo"]){
           model = newItems[i];
           // dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
-          List<num> mapLatLng = ParseLocation.gps84_To_bd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"));
+          List<num> mapLatLng = ParseLocation.parseTypeToBd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"),model['coordinateType']??"0");
           controller?.setCenterCoordinate(
             BMFCoordinate(double.parse("${mapLatLng[0]}"),double.parse("${mapLatLng[1]}")), false,
           );
@@ -511,7 +511,7 @@ class MainController extends GetxController {
         map["deviceNo"] = "${model['deviceNo']}";
 
         // dynamic mapLatLng = CommonUtils().gdToBd(double.parse(model['longitude']), double.parse(model['latitude']));
-        List<num> mapLatLng = ParseLocation.gps84_To_bd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"));
+        List<num> mapLatLng = ParseLocation.parseTypeToBd09(num.parse("${model['latitude']}"), num.parse("${model['longitude']}"),model['coordinateType']??"0");
         BMFMarker marker = BMFMarker(
             position: BMFCoordinate(double.parse("${mapLatLng[0]}"), double.parse("${mapLatLng[1]}")),
             enabled: true,

@@ -122,6 +122,40 @@ static List<num> gps84_To_bd09(num lat, num lon) {
   return bd09;
 }
 
+///type 0-WGS84  1-GCJ02  2-BD09
+static List<num> parseTypeToBd09(num lat, num lon,String type) {
+  List<num> bd09 = [];
+  if(type == "0"){
+    bd09 = gps84_To_bd09(lat,lon);
+  }
+  if(type == "1"){
+    bd09 = gcj02_To_Bd09(lat,lon);
+  }
+  if(type == "2"){
+    bd09.add(lat);
+    bd09.add(lon);
+  }
+
+  return bd09;
+}
+///type 0-WGS84  1-GCJ02  2-BD09
+static List<num> parseTypeToGcj02(num lat, num lon,String type) {
+  List<num> gcj02 = [];
+  if(type == "0"){
+    gcj02 = gps84_To_Gcj02(lat,lon);
+  }
+  if(type == "1"){
+    gcj02.add(lat);
+    gcj02.add(lon);
+  }
+  if(type == "2"){
+    gcj02 = bd09_To_Gcj02(lat,lon);
+  }
+
+  return gcj02;
+}
+
+
 static List<num> bd09_To_gps84(num lat, num lon) {
   List<num> gcj02 = bd09_To_Gcj02(lat, lon);
   List<num> gps84 = gcj02_To_Gps84(gcj02[0], gcj02[1]);
