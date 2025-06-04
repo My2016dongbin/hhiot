@@ -101,6 +101,7 @@ class SearchLocationController extends GetxController {
       /// 添加Marker
       controller?.addMarker(marker);
     }else{
+      ///没有选择过定位
       ///设备修改
       if(model!=null && model!={}){
         /// 创建BMFMarker
