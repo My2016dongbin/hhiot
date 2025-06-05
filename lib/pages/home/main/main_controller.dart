@@ -261,6 +261,13 @@ class MainController extends GetxController {
       userMarker();
     });
 
+    controller?.setMapOnClickedMapPoiCallback(callback: (a){
+      videoStatus.value = false;
+    });
+    controller?.setMapOnClickedMapBlankCallback(callback: (a){
+      videoStatus.value = false;
+    });
+
     //获取设备检索列表
     deviceSearch();
   }
@@ -280,6 +287,7 @@ class MainController extends GetxController {
 
   void onSearchClick() {
     searchStatus.value = true;
+    videoStatus.value = false;
   }
 
   void restartSearchClick() {

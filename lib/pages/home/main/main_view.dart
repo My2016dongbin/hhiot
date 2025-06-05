@@ -199,6 +199,9 @@ class MainPage extends StatelessWidget {
                               logic.controller?.setZoomTo(17);
                               logic.searchDown.value = false;
                               logic.searchListIndex.value = index;
+                              logic.model = item;
+                              logic.videoStatus.value = false;
+                              logic.videoStatus.value = true;
                             },
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -314,6 +317,7 @@ class MainPage extends StatelessWidget {
                   scaleFactor: 1.2,
                   onPressed: (){
                     logic.pageMapStatus.value = false;
+                    logic.videoStatus.value = false;
                     Future.delayed(const Duration(seconds: 5),(){
                       logic.refreshMarkers();
                     });
@@ -368,6 +372,7 @@ class MainPage extends StatelessWidget {
                       scaleFactor: 1.2,
                       onPressed: () {
                         logic.pageMapStatus.value = false;
+                        logic.videoStatus.value = false;
                         Future.delayed(const Duration(seconds: 5),(){
                           logic.refreshMarkers();
                         });
@@ -589,7 +594,7 @@ class MainPage extends StatelessWidget {
                             ),
                             const Expanded(child: SizedBox()),
                             Text(
-                              "(${logic.model["longitude"]},${logic.model["latitude"]})",
+                              "(${CommonUtils().parseDoubleNumber("${logic.model["longitude"]}", 6)},${CommonUtils().parseDoubleNumber("${logic.model["latitude"]}", 6)})",
                               style: TextStyle(
                                   color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
                             ),
@@ -638,7 +643,6 @@ class MainPage extends StatelessWidget {
                                 duration: const Duration(milliseconds: 100),
                                 scaleFactor: 1.2,
                                 onPressed: () {
-                                  logic.videoStatus.value = !logic.videoStatus.value;
                                   CommonUtils().parseRouteDetail(logic.model);
                                 },
                                 child: Container(
