@@ -571,7 +571,7 @@ class MainPage extends StatelessWidget {
                             ),
                             const Expanded(child: SizedBox()),
                             Text(
-                              "${logic.model["name"]}",
+                              "${logic.model["productName"]}",
                               style: TextStyle(
                                   color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500),
                             ),
