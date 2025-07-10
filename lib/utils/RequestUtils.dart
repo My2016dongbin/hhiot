@@ -7,7 +7,7 @@ class RequestUtils{
 
   static const login = '$base/admin-api/system/auth/login';//密码登录
   static const logout = '$base/admin-api/system/auth/logout';//登出
-  static const version = '$base/admin-api/system/android-upgrade/page';//查询版本
+  //static const version = '$base/admin-api/system/android-upgrade/page';//查询版本
   static const versionNew = '$base/admin-api/system/android-upgrade/getAndroidUpgradeVersionNew';//查询版本新版
   static const tenantId = '$base/admin-api/system/tenant/get-tenant-by-name';//'$base/admin-api/system/tenant/get-id-by-name';//获取租户id
   static const tenantSearch = '$base/admin-api/system/tenant/get-tenant-by-user';//'$base/admin-api/system/tenant/get-id-by-user';//根据手机号/用户名获取租户id
@@ -28,11 +28,11 @@ class RequestUtils{
   static const message = '$base/admin-api/system/message-log/page';//主页-消息-通知信息查询
   static const messageCall = '$base/admin-api/mid/pole-device-call-log/page';//主页-消息-通话信息查询
   static const messageAlarm = '$base/admin-api/mid/device-alarm-info/page';//主页-消息-报警信息查询
-  static const spaceInfo = '$base/admin-api/mid/space/get';//主页-空间-空间信息
+  //static const spaceInfo = '$base/admin-api/mid/space/get';//主页-空间-空间信息
   static const deviceInfo = '$base/admin-api/mid/device-base/get';//设备详情
   static const deviceConfig = '$base/admin-api/mid/device-config/get';//设备配置
   static const deviceConfigScreenTop = '$base/admin-api/mid/device-info/sendDeviceCmd';//设备配置修改
-  static const deviceVoiceTop = '$base/admin-api/mid/voice-resource/page';
+  static const deviceVoiceTop = '$base/admin-api/mid/voice-resource/page';//设备音频列表
   static const deviceVersion = '$base/admin-api/mid/device-ota-file/page';//设备固件版本号
   static const deviceHistory = '$base/admin-api/mid/device-alarm-info/page';//设备详情-历史消息
   static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceNo';//设备通道查询
@@ -75,7 +75,7 @@ class RequestUtils{
 
   ///Socket
   static const chatStatus = '$base/admin-api/mid/device-info/chatState';//获取设备通话状态GET
-  static const chatCreate = '$base/admin-api/mid/device-info/chatState';//调用语音服务创建会话POST
+  static const chatCreate = '$base/admin-api/mid/device-info/chatState';//断开POST
   static const chatReceive = '$base/admin-api/mid/device-info/sendChatCmd';//被呼叫后查询语音服务信息POST
 
   static const shareCreate = '$base/app-api/mid/share-log/create';//分享创建 old

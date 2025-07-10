@@ -389,8 +389,7 @@ class MainController extends GetxController {
     if (result["code"] == 0 && result["data"] != null) {
       count.value = '${result["data"]}';
     } else {
-      EventBusUtil.getInstance()
-          .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      // EventBusUtil.getInstance().fire(HhToast(title: CommonUtils().msgString(result["msg"])));
     }
   }
 
