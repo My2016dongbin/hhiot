@@ -189,7 +189,7 @@ class MyAppState extends State<HhApp> {
               builder: builder,
               // home: HomePage(),
               //显示debug
-              debugShowCheckedModeBanner: true,
+              debugShowCheckedModeBanner: false,
               //配置如下两个国际化的参数
               supportedLocales: const [
                 Locale('zh', 'CH'),
