@@ -24,7 +24,7 @@ import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/widgets/battery.dart';
-import 'package:qc_amap_navi/qc_amap_navi.dart';
+// import 'package:qc_amap_navi/qc_amap_navi.dart';
 import 'package:screen_recorder/screen_recorder.dart';
 import 'package:screenshot/screenshot.dart';
 

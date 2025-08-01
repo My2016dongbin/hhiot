@@ -38,7 +38,7 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/ParseLocation.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:overlay_tooltip/overlay_tooltip.dart';
-import 'package:qc_amap_navi/qc_amap_navi.dart';
+// import 'package:qc_amap_navi/qc_amap_navi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'main_controller.dart';
@@ -665,7 +665,7 @@ class MainPage extends StatelessWidget {
                                 duration: const Duration(milliseconds: 100),
                                 scaleFactor: 1.2,
                                 onPressed: () {
-                                  try{
+                                  /*try{
                                     List<num> start = ParseLocation.bd09_To_Gcj02(num.parse("${CommonData.latitude!}"), num.parse("${CommonData.longitude}"));
                                     List<num> end = ParseLocation.parseTypeToGcj02(num.parse("${logic.model["latitude"]}"), num.parse("${logic.model["longitude"]}"),logic.model['coordinateType']??"0");
                                     QcAmapNavi.startNavigation(
@@ -678,7 +678,7 @@ class MainPage extends StatelessWidget {
                                     );
                                   }catch(e){
                                     HhLog.e(e.toString());
-                                  }
+                                  }*/
                                 },
                                 child: Container(
                                   margin: EdgeInsets.fromLTRB(0, 13.w*3, 0, 0),
