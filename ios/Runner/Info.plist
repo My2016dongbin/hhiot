@@ -65,8 +65,6 @@
 	<key>NSCameraUsageDescription</key>
 	<string>为了您正常使用相机拍摄并在上传火警信息时拍摄火警照片，我们需要访问您终端设备的摄像头权限，是否允许打开相机权限？</string>
 	<key>NSContactsUsageDescription</key>
-	<string>为了方便您发现公司同事需要访问您的通讯录，是否允许此App获取通讯录权限？</string>
-	<key>NSDocumentsFolderUsageDescription</key>
 	<string>需要获取登录信息是否允许打开文件访问权限？</string>
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>需要获取登录信息是否允许打开文件访问权限？</string>
