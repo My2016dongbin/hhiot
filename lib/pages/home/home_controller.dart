@@ -127,7 +127,7 @@ class HomeController extends GetxController {
       prefs.setBool("hasPromptedNotificationPermission", true);
       EventBusUtil.getInstance().fire(HhToast(title: '请开启通知权限', type: 0));
       Future.delayed(const Duration(milliseconds: 2000), () {
-        openAppSettings();
+        //openAppSettings();
       });
     }
   }
