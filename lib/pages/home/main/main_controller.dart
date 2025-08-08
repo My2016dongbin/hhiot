@@ -201,7 +201,7 @@ class MainController extends GetxController {
       // 指定是否允许后台定位,
       // 允许的话是可以进行后台定位的，但需要项目
       // 配置允许后台定位，否则会报错，具体参考开发文档
-      allowsBackgroundLocationUpdates: true,
+      allowsBackgroundLocationUpdates: false,
       // 设定定位的最小更新距离
       distanceFilter: 10,
     );
