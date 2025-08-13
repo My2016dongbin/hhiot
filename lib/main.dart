@@ -53,9 +53,13 @@ void main() {
     runApp(MyApp());
   });*/
   WidgetsFlutterBinding.ensureInitialized();//package_info_plus
-  FlutterBugly.postCatchedException(() {
+  FlutterBugly.postCatchedException(() async {
     // 如果需要 ensureInitialized，请在这里运行。
     // WidgetsFlutterBinding.ensureInitialized();
+    // 强制竖屏
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,    // 竖屏（正常）
+    ]);
     runApp(const HhApp());
     ///注册bugly
     FlutterBugly.init(
