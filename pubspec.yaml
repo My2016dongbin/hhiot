@@ -63,7 +63,7 @@ dependencies:
   qr_code_tools: ^0.1.0
   web_socket_channel: ^2.4.0
 
-  date_picker_plus: ^4.1.0 #日历
+  date_picker_plus: 4.1.0 #日历
   flutter_audio_waveforms: ^1.2.1+8 #wave
   dotted_dashed_line: ^0.0.3 #虚线
   overlay_tooltip: ^0.2.3 #tips
@@ -89,10 +89,10 @@ dependencies:
   flutter_sound: ^9.2.13 #any #^9.2.13
   fijkplayer: ^0.11.0
   shared_preferences: ^2.2.3
-  flutter_bmflocation: ^3.3.0
-  flutter_baidu_mapapi_map: ^3.8.1
-  flutter_baidu_mapapi_search: ^3.8.1
-  flutter_baidu_mapapi_utils: ^3.8.1
+  flutter_bmflocation: 3.8.3
+  flutter_baidu_mapapi_map: 3.9.8
+  flutter_baidu_mapapi_search: 3.9.8
+  flutter_baidu_mapapi_utils: 3.9.8
   pinput: ^4.0.0
   tpns_flutter_plugin:
     git:
