@@ -35,8 +35,10 @@ class RequestUtils{
   static const deviceVoiceTop = '$base/admin-api/mid/voice-resource/page';//设备音频列表
   static const deviceVersion = '$base/admin-api/mid/device-ota-file/page';//设备固件版本号
   static const deviceHistory = '$base/admin-api/mid/device-alarm-info/page';//设备详情-历史消息
-  static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceNo';//设备通道查询
-  static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrlApp';//设备视频流查询
+  // static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceNo';//设备通道查询
+  static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceId';//设备通道查询卡口App
+  // static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrlApp';//设备视频流查询
+  static const devicePlayUrl = '$base/admin-api/mid/device-channel-rel/video/startPlay';//设备视频流查询
   static const deviceCreate = '$base/admin-api/mid/device-base/create';//设备添加
   static const deviceUpdate = '$base/admin-api/mid/device-base/update';//设备修改
   static const deviceDelete = '$base/admin-api/mid/device-base/delete';//设备删除

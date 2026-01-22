@@ -213,10 +213,10 @@ packages:
     dependency: transitive
     description:
       name: equatable
-      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      sha256: "3e0141505477fd8ad55d6eb4e7776d3fe8430be8e497ccb1521370c3f21a3e2b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   event_bus:
     dependency: "direct main"
     description:
@@ -314,10 +314,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_baidu_mapapi_base
-      sha256: "70501fa966de46330d7ececb1cc6f584eb570581b48fa01a30927b80a4798282"
+      sha256: "588dbad01db03fc0a9429420c71450bb5a99699d0741f8c3ded62cf663a84e92"
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.8+1"
+    version: "3.9.8+2"
   flutter_baidu_mapapi_map:
     dependency: "direct main"
     description:

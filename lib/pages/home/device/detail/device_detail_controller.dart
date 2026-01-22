@@ -277,8 +277,8 @@ class DeviceDetailController extends GetxController {
       liveStatus.value = false;
       liveStatus.value = true;
       try {
-        deviceId = result["data"][liveIndex.value]["deviceId"];
-        channelNumber = result["data"][liveIndex.value]["number"];
+        deviceId = "${result["data"][liveIndex.value]["deviceId"]}";
+        channelNumber = "${result["data"][liveIndex.value]["channelId"]}";
         HhLog.d('getDeviceStream $deviceId , $channelNumber');
         getPlayUrl(deviceId, channelNumber);
       } catch (e) {
@@ -300,13 +300,7 @@ class DeviceDetailController extends GetxController {
     playErrorTag.value = false;
     playLoadingTag.value = false;
     dynamic data = {
-      'deviceId': ids,
-      'channelNumber': number,
-      // 'deviceId':'2096e4bf4af411efa74f2a37f6c892cc',
-      // 'channelNumber':'24070888001320000082',
-      'streamProtocol': "RTSP",
-      'streamType': 0,
-      'transMode': "TCP"
+      'channelId': number,
     };
     var result = await HhHttp().request(RequestUtils.devicePlayUrl,
         method: DioMethod.post, data: data);
@@ -314,7 +308,8 @@ class DeviceDetailController extends GetxController {
     HhLog.d("getPlayUrl result -- $result");
     if (result["code"] == 200 && result["data"] != null) {
       try {
-        String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
+        // String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
+        String url = /*RequestUtils.rtsp + */ "${result["data"]["appRelativePath"]}";
         playLoadingTag.value = false;
         playTag.value = false;
         player.release();
@@ -356,6 +351,7 @@ class DeviceDetailController extends GetxController {
         // 添加播放器状态变化监听
         player.addListener(() {
           if (player.state == FijkState.started) {
+            playErrorTag.value = false;
             // 播放成功开始
             HhLog.d('Playback started successfully ${player.state}');
             //截图并保存
