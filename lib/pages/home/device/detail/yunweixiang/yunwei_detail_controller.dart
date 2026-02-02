@@ -255,7 +255,8 @@ class YunWeiDetailController extends GetxController {
 
   Future<void> getDeviceStream() async {
     Map<String, dynamic> map = {};
-    map['deviceNo'] = deviceNo;
+    // map['deviceNo'] = deviceNo;
+    map['id'] = id;
     var result = await HhHttp()
         .request(RequestUtils.deviceStream, method: DioMethod.get, params: map);
     HhLog.d("getDeviceStream -- $deviceNo");
