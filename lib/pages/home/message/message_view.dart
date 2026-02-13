@@ -612,11 +612,11 @@ class MessagePage extends StatelessWidget {
                     width: 0.44.sw,),
                   itemBuilder: (context, item, index) {
                     if(item["showDate"]==null){
-                      if(logic.dateListLeft.contains(CommonUtils().parseLongTimeYearDay('${item['createTime']}'))){
+                      if(logic.dateListLeft.contains(CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'))){
                         item["showDate"] = 0;
                       }else{
                         item["showDate"] = 1;
-                        logic.dateListLeft.add(CommonUtils().parseLongTimeYearDay('${item['createTime']}'));
+                        logic.dateListLeft.add(CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'));
                       }
                     }
                     return Column(
@@ -627,7 +627,7 @@ class MessagePage extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                today == CommonUtils().parseLongTimeYearDay('${item['createTime']}')?'今天':CommonUtils().parseLongTimeDay('${item['createTime']}'),
+                                today == CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}')?'今天':CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'),
                                 style: TextStyle(
                                     color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                               ),
@@ -794,11 +794,22 @@ class MessagePage extends StatelessWidget {
                                               Align(
                                                 alignment: Alignment.topRight,
                                                 child: Container(
-                                                  margin: EdgeInsets.only(top: 5.w),
-                                                  child: Text(
-                                                    CommonUtils().parseLongTimeHourMinute('${item['createTime']}'),
-                                                    style: TextStyle(
-                                                        color: HhColors.textColor, fontSize: 12.sp*3),
+                                                  margin: EdgeInsets.only(top: 5.w*3),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'),
+                                                        style: TextStyle(
+                                                            color: HhColors.gray9TextColor, fontSize: 12.sp*3),
+                                                      ),
+                                                      SizedBox(height: 5.w*3,),
+                                                      Text(
+                                                        CommonUtils().parseLongTimeHourMinuteSecond('${item['alarmTimestamp']}'),
+                                                        style: TextStyle(
+                                                            color: HhColors.gray9TextColor, fontSize: 12.sp*3),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
