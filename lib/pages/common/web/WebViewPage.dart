@@ -82,7 +82,8 @@ class WebViewPageState extends State<WebViewPage> {
           // },
         ),
       )
-      ..loadRequest(Uri.parse(widget.url));
+      // ..loadRequest(Uri.parse(widget.url));
+    ..loadFlutterAsset(widget.url);
   }
   @override
   Widget build(BuildContext context) {

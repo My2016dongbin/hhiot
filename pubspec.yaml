@@ -98,6 +98,7 @@ dependencies:
     git:
       url: https://github.com/TencentCloud/TPNS-Flutter-Plugin
       ref: V1.3.0
+  audioplayers: ^5.2.1
 
   amap_flutter_map: ^3.0.0
   amap_flutter_location: ^3.0.0
@@ -133,7 +134,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
+  - assets/file/
   - assets/images/common/
+  - assets/audio/common/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
