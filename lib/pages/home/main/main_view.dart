@@ -859,8 +859,8 @@ class MainPage extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Image.asset(
-                                      "assets/images/common/icon_message_main.png",
-                                      width: 24.w*3,
+                                      messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?"assets/images/common/main_warn.png":"assets/images/common/main_warning.gif",
+                                      width: messageLogic.noticeCountInt.value+messageLogic.warnCountInt.value==0?20.w*3:24.w*3,
                                       height: 24.w*3,
                                       fit: BoxFit.fill,
                                     ),
