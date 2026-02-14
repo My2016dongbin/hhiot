@@ -28,7 +28,7 @@ class CommonData{
 
   static String html = "assets/file/privacy.html";
   static String webSocketUrl = "ws://192.168.1.2:18034/websocket/";
-  static String mqttIP = "192.168.1.2";
+  static String mqttIP = "192.168.1.66";
   static int mqttPORT = 11889;
   static String mqttAccount = "admin";
   static String mqttPassword = "QIyG0!bhfS";
