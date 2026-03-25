@@ -55,28 +55,16 @@ class HomeController extends GetxController {
 
   switchTab(index) {
     this.index.value = index;
-    // IMViews.showToast(index.toString());
-    var brightness = Platform.isAndroid ? Brightness.dark : Brightness.dark;
-    // switch(index){
-    //   case 0:
-    //   // 状态栏透明（Android）
-    //     brightness = Platform.isAndroid ? Brightness.dark : Brightness.light;
-    //     break;
-    //   case 1:
-    //     break;
-    //   case 2:
-    //     break;
-    //   case 3:
-    //     break;
-    //     default:
-    //       break;
-    //
-    // }
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    final overlayStyle = Platform.isAndroid
+        ? const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarBrightness: brightness,
-      statusBarIconBrightness: brightness,
-    ));
+      statusBarIconBrightness: Brightness.dark,
+    )
+        : const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
+    );
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
   }
 
   scrollToUnreadMessage(index) {

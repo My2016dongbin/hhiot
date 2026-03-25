@@ -7,8 +7,7 @@ import 'package:get/get.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/share/share_binding.dart';
 import 'package:iot/pages/common/share/share_view.dart';
-import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/device_detail_view.dart';
+import 'dart:io';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/pages/home/main/search/search_controller.dart';
@@ -23,11 +22,17 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     logic.context = context;
     // 在这里设置状态栏字体为深色
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // 状态栏背景色
-      statusBarBrightness: Brightness.dark, // 状态栏字体亮度
-      statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
-    ));
+    
+    final overlayStyle = Platform.isAndroid
+        ? const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    )
+        : const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
+    );
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(

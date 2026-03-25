@@ -1,5 +1,4 @@
 import 'package:bouncing_widget/bouncing_widget.dart';
-import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,13 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/home/device/add/device_add_binding.dart';
-import 'package:iot/pages/home/device/add/device_add_view.dart';
 import 'package:iot/pages/home/message/message_setting/warn_setting_controller.dart';
-import 'package:iot/pages/home/space/manage/edit/edit_binding.dart';
-import 'package:iot/pages/home/space/manage/edit/edit_view.dart';
-import 'package:iot/pages/home/space/space_binding.dart';
-import 'package:iot/pages/home/space/space_view.dart';
+import 'dart:io';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
@@ -27,11 +21,17 @@ class WarnSettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     logic.context = context;
     // 在这里设置状态栏字体为深色
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // 状态栏背景色
-      statusBarBrightness: Brightness.dark, // 状态栏字体亮度
-      statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
-    ));
+    
+    final overlayStyle = Platform.isAndroid
+        ? const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    )
+        : const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
+    );
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
     return Scaffold(
       backgroundColor: HhColors.backColor,
       body: Obx(

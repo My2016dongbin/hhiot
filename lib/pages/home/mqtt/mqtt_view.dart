@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:iot/bus/bus_bean.dart';
 import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/home/mqtt/mqtt_controller.dart';
-import 'package:iot/utils/EventBusUtils.dart';
+import 'dart:io';
 import 'package:iot/utils/HhColors.dart';
 
 class MqttPage extends StatelessWidget {
@@ -19,11 +19,17 @@ class MqttPage extends StatelessWidget {
     logic.context = context;
     CommonData.context = context;
     // 在这里设置状态栏字体为深色
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // 状态栏背景色
-      statusBarBrightness: Brightness.dark, // 状态栏字体亮度
-      statusBarIconBrightness: Brightness.dark, // 状态栏图标亮度
-    ));
+    
+    final overlayStyle = Platform.isAndroid
+        ? const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    )
+        : const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
+    );
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
 
     return Obx(() => Scaffold(
       backgroundColor: HhColors.backColor,
