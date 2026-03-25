@@ -1,12 +1,9 @@
-import 'dart:math';
-
+import 'package:amap_flutter_map/amap_flutter_map.dart';
 import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_baidu_mapapi_map/flutter_baidu_mapapi_map.dart';
-import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -17,16 +14,10 @@ import 'package:iot/pages/common/share/share_view.dart';
 import 'package:iot/pages/common/web/WebViewPage.dart';
 import 'package:iot/pages/home/device/add/device_add_binding.dart';
 import 'package:iot/pages/home/device/add/device_add_view.dart';
-import 'package:iot/pages/home/device/detail/device_detail_binding.dart';
-import 'package:iot/pages/home/device/detail/device_detail_view.dart';
 import 'package:iot/pages/home/home_controller.dart';
 import 'package:iot/pages/home/main/search/search_binding.dart';
 import 'package:iot/pages/home/main/search/search_view.dart';
 import 'package:iot/pages/home/message/message_controller.dart';
-import 'package:iot/pages/home/mqtt/mqtt_binding.dart';
-import 'package:iot/pages/home/mqtt/mqtt_controller.dart';
-import 'package:iot/pages/home/mqtt/mqtt_view.dart';
-import 'package:iot/pages/home/my/setting/edit_user/edit_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_binding.dart';
 import 'package:iot/pages/home/space/manage/space_manage_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
@@ -38,10 +29,11 @@ import 'package:iot/utils/HhLog.dart';
 import 'package:iot/utils/ParseLocation.dart';
 import 'package:iot/utils/SPKeys.dart';
 import 'package:overlay_tooltip/overlay_tooltip.dart';
-// import 'package:qc_amap_navi/qc_amap_navi.dart';
+import 'package:qc_amap_navi/qc_amap_navi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'main_controller.dart';
+import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 class MainPage extends StatelessWidget {
   final logic = Get.find<MainController>();
@@ -192,11 +184,12 @@ class MainPage extends StatelessWidget {
                           InkWell(
                             onTap: (){
                               HhLog.d("touch ${item["latitude"]},${item["longitude"]}");
-                              List<num> point = ParseLocation.parseTypeToBd09(num.parse('${item["latitude"]}'), num.parse('${item["longitude"]}'),item['coordinateType']??"0");
-                              logic.controller?.setCenterCoordinate(
-                                BMFCoordinate(double.parse('${point[0]}'),double.parse('${point[1]}')), false,
-                              );
-                              logic.controller?.setZoomTo(17);
+                              if(item["latitude"]==null || item["longitude"]==null){
+                                EventBusUtil.getInstance().fire(HhToast(title: "设备定位不可用"));
+                                return;
+                              }
+                              List<double> point = ParseLocation.parseTypeToGcj02(double.parse('${item["latitude"]}'), double.parse('${item["longitude"]}'),item['coordinateType']??"0");
+                              logic.gdMapController.moveCamera(CameraUpdate.newLatLngZoom(LatLng(double.parse('${point[0]}'),double.parse('${point[1]}')), 16));
                               logic.searchDown.value = false;
                               logic.searchListIndex.value = index;
                               logic.model = item;
@@ -288,17 +281,33 @@ class MainPage extends StatelessWidget {
   mapPage() {
     return Stack(
       children: [
-        BMFMapWidget(
-          onBMFMapCreated: (controller) {
-            logic.onBMFMapCreated(controller);
-          },
-          mapOptions: BMFMapOptions(
-              center: BMFCoordinate(CommonData.latitude ?? 36.30865,
-                  CommonData.longitude ?? 120.314037),
-              zoomLevel: 12,
-              mapType: BMFMapType.Standard,
-              mapPadding:
-                  BMFEdgeInsets(left: 30.w, top: 0, right: 30.w, bottom: 0)),
+        ///高德地图
+        Container(
+          height: 1.0.sh - 95.w*3,
+          width: 1.sw,
+          margin: EdgeInsets.only(top: 90.w*3),
+          child: AMapWidget(
+            apiKey: CommonData.aMapApiKey,
+            privacyStatement: const AMapPrivacyStatement(
+                hasContains: true, hasShow: true, hasAgree: true),
+            onMapCreated: logic.onGDMapCreated,
+            mapType: MapType.normal,
+            tiltGesturesEnabled: true,
+            buildingsEnabled: true,
+            compassEnabled: true,
+            scaleEnabled: true,
+            markers: logic.aMapMarkers.toSet(),
+            onTap: (LatLng latLng){
+              FocusScope.of(Get.context!).requestFocus(FocusNode());
+              logic.searchDown.value = false;
+              logic.videoStatus.value = false;
+            },
+            onPoiTouched: (poi){
+              FocusScope.of(Get.context!).requestFocus(FocusNode());
+              logic.searchDown.value = false;
+              logic.videoStatus.value = false;
+            },
+          ),
         ),
         Container(
           height: 88.w*3,
@@ -319,7 +328,7 @@ class MainPage extends StatelessWidget {
                     logic.pageMapStatus.value = false;
                     logic.videoStatus.value = false;
                     Future.delayed(const Duration(seconds: 5),(){
-                      logic.refreshMarkers();
+                      logic.updateMarker();
                     });
                   },
                   child: Container(
@@ -338,7 +347,7 @@ class MainPage extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              CommonUtils().parseNameCount("${logic.spaceList[logic.spaceListIndex.value]['name']}", 10),
+                              logic.spaceList.isNotEmpty?CommonUtils().parseNameCount("${logic.spaceList[logic.spaceListIndex.value]['name']}", 10):"",
                               style: TextStyle(
                                   color: HhColors.blackTextColor,
                                   fontSize: 18.sp*3,
@@ -374,7 +383,7 @@ class MainPage extends StatelessWidget {
                         logic.pageMapStatus.value = false;
                         logic.videoStatus.value = false;
                         Future.delayed(const Duration(seconds: 5),(){
-                          logic.refreshMarkers();
+                          logic.updateMarker();
                         });
                       },
                       child: Container(
@@ -619,7 +628,7 @@ class MainPage extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.only(left: 2.w*3),
                               child: Text(
-                                "${logic.model["location"]}",
+                                CommonUtils().parseNull("${logic.model["location"]}", ""),
                                 maxLines: 2,
                                 style: TextStyle(
                                     color: HhColors.gray9TextColor, fontSize: 14.sp*3,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),
@@ -665,9 +674,9 @@ class MainPage extends StatelessWidget {
                                 duration: const Duration(milliseconds: 100),
                                 scaleFactor: 1.2,
                                 onPressed: () {
-                                  /*try{
-                                    List<num> start = ParseLocation.bd09_To_Gcj02(num.parse("${CommonData.latitude!}"), num.parse("${CommonData.longitude}"));
-                                    List<num> end = ParseLocation.parseTypeToGcj02(num.parse("${logic.model["latitude"]}"), num.parse("${logic.model["longitude"]}"),logic.model['coordinateType']??"0");
+                                  try{
+                                    List<double> start = ParseLocation.bd09_To_Gcj02(double.parse("${CommonData.latitude!}"), double.parse("${CommonData.longitude}"));
+                                    List<double> end = ParseLocation.parseTypeToGcj02(double.parse("${logic.model["latitude"]}"), double.parse("${logic.model["longitude"]}"),logic.model['coordinateType']??"0");
                                     QcAmapNavi.startNavigation(
                                       fromLat: double.parse("${start[0]}"),
                                       fromLng: double.parse("${start[1]}"),
@@ -678,7 +687,7 @@ class MainPage extends StatelessWidget {
                                     );
                                   }catch(e){
                                     HhLog.e(e.toString());
-                                  }*/
+                                  }
                                 },
                                 child: Container(
                                   margin: EdgeInsets.fromLTRB(0, 13.w*3, 0, 0),

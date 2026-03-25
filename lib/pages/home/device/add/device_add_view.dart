@@ -5,12 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:iot/bus/bus_bean.dart';
-import 'package:iot/pages/common/location/search/saerch_controller.dart';
-import 'package:iot/pages/common/location/search/search_binding.dart';
-import 'package:iot/pages/common/location/search/search_view.dart';
+import 'package:iot/pages/common/amap_location/location_binding.dart';
+import 'package:iot/pages/common/amap_location/location_view.dart';
 import 'package:iot/pages/home/device/add/device_add_controller.dart';
-import 'package:iot/pages/home/home_binding.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/pages/home/my/scan/scan_binding.dart';
 import 'package:iot/pages/home/my/scan/scan_view.dart';
 import 'package:iot/pages/home/space/space_binding.dart';
@@ -19,11 +16,9 @@ import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/EventBusUtils.dart';
 import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
-// import 'package:qrscan/qrscan.dart' as scanner;
 
 class DeviceAddPage extends StatelessWidget {
   final logic = Get.find<DeviceAddController>();
-  final logicLocation = Get.find<SearchLocationController>();
 
   DeviceAddPage({super.key,required String snCode}){
     logic.snCode = snCode;
@@ -32,7 +27,6 @@ class DeviceAddPage extends StatelessWidget {
 
   //复写返回监听
   Future<bool> onBackPressed() {
-    Get.offAll(() => HomePage(), binding: HomeBinding());
     bool exit = true;
     return Future.value(exit);
   }
@@ -76,8 +70,7 @@ class DeviceAddPage extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      // Get.back();
-                      Get.offAll(() => HomePage(), binding: HomeBinding());
+                      Get.back();
                     },
                     child: Container(
                       margin: EdgeInsets.fromLTRB(23.w*3, 59.h*3, 0, 0),
@@ -317,22 +310,16 @@ class DeviceAddPage extends StatelessWidget {
                         if(logic.isEdit.value){
                           logic.model["name"] = logic.nameController!.text;
                           logic.model["spaceId"] = logic.spaceId;
-                          if((!logicLocation.choose) && (logic.model["location"]==null || "${logic.model["location"]}".isEmpty)){
+                          if(logic.location.value.contains("点击选择设备定位")){
                             logic.updateDevice(false);
                           }else{
-                            logic.latitude.value = logicLocation.choose?logicLocation.latitude.value:CommonUtils().parseIsDouble("${logic.model["latitude"]}",0);
-                            logic.longitude.value = logicLocation.choose?logicLocation.longitude.value:CommonUtils().parseIsDouble("${logic.model["longitude"]}",0);
-                            logic.locText.value = logicLocation.choose?logicLocation.locText.value:logic.model["location"];
                             logic.updateDevice(true);
                           }
                         }else{
-                          if(logicLocation.locText.value == '' || logicLocation.locText.value == '已搜索'){
-                            EventBusUtil.getInstance().fire(HhToast(title: '请选择设备定位'));
+                          if(logic.location.value.contains("点击选择设备定位")){
+                            EventBusUtil.getInstance().fire(HhToast(title: '点击选择设备定位'));
                             return;
                           }
-                          logic.latitude.value = logicLocation.latitude.value;
-                          logic.longitude.value = logicLocation.longitude.value;
-                          logic.locText.value = logicLocation.locText.value;
                           logic.createDevice();
                         }
                       },
@@ -475,16 +462,10 @@ class DeviceAddPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: (){
-                    if(logic.isEdit.value && logic.model['shareMark']==2){
-                      EventBusUtil.getInstance().fire(HhToast(title: '无法修改设备定位',type: 0));
-                      return;
-                    }
-
-                    if(logic.isEdit.value){
-                      Get.to(()=>SearchLocationPage(),binding: SearchLocationBinding(),arguments: logic.model);
-                    }else{
-                      Get.to(()=>SearchLocationPage(),binding: SearchLocationBinding());
-                    }
+                    Get.to(() => LocationPage(), binding: LocationBinding(),arguments: logic.location.value.contains("点击选择")?null:{
+                      "latitude":logic.latitude.value,
+                      "longitude":logic.longitude.value,
+                    });
                   },
                   child: Container(
                     width: 1.sw,
@@ -492,19 +473,19 @@ class DeviceAddPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(5.w*3, 30.w, 5.w*3, 0),
                     padding: EdgeInsets.fromLTRB(14.w*3, 26.w, 14.w*3, 26.w),
                     decoration: BoxDecoration(
-                      color: HhColors.grayEDBackColor,
-                      borderRadius: BorderRadius.circular(8.w*3)
+                        color: HhColors.grayEDBackColor,
+                        borderRadius: BorderRadius.circular(8.w*3)
                     ),
                     child: Row(
                       children: [
                         Expanded(
                           child: Text(
-                            logic.isEdit.value?(logic.locText.value.isEmpty?'点击选择设备定位':logic.locText.value):((logicLocation.locText.value!=""&&logicLocation.locText.value!='已搜索')?logicLocation.locText.value:logic.location.value),
+                            (logic.location.value),
                             maxLines: 1,
                             style: TextStyle(
-                              overflow: TextOverflow.ellipsis,
-                              color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
-                              fontSize: 15.sp*3,fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                color: logic.isEdit.value?HhColors.gray9TextColor:HhColors.blackTextColor,
+                                fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                           ),
                         ),
                         Image.asset(

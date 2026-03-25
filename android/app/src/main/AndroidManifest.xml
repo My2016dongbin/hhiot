@@ -21,7 +21,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Ih0zhnxdlfuSd13qXxeDD3S79z5ykQiA" />赵毅-->
         <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="6414df9afa4174702a40778c2fc96569" />
+            android:value="16e6b6954bbc4b78f2a9384f79ee03f1" />
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

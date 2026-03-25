@@ -1,6 +1,5 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:iot/utils/HhColors.dart';
+import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 class CommonData{
   static int time = 0;
@@ -34,5 +33,10 @@ class CommonData{
   static String mqttPassword = "QIyG0!bhfS";
   static String chatTopic = "/device/pole/chat/";//$id
   static String alarmTopic = "/deviceAlarm/";//$id
+
+
+  ///高德地图key
+  static AMapApiKey aMapApiKey = const AMapApiKey(iosKey: "92cac573ce3997ea190f80b335ad8c95",androidKey: "16e6b6954bbc4b78f2a9384f79ee03f1");
+
 
 }

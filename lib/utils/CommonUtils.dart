@@ -150,6 +150,31 @@ class CommonUtils {
     }
   }
 
+  static backView({EdgeInsets? margin,EdgeInsets? padding,bool? white,String? title}) {
+    return Container(
+      margin: margin??EdgeInsets.only(top:30.w*3),
+      padding: padding??EdgeInsets.all(20.w*3),
+      color: HhColors.trans,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            white==true?"assets/images/common/back_white.png":"assets/images/common/icon_back_left.png",
+            width: 9.w*3,
+            height: 16.w*3,
+            fit: BoxFit.fill,
+          ),
+          SizedBox(width: 7.w*3,),
+          Text(title??'返回',style: TextStyle(
+              color: white==true?HhColors.whiteColor:HhColors.textBlackColor,
+              fontSize: 16.sp*3,
+              fontWeight: FontWeight.w400
+          ),)
+        ],
+      ),
+    );
+  }
+
   bool validateSpaceName(String spaceName) {
     //空间名称不能包含特殊符号
     final RegExp pattern = RegExp(r'^[a-zA-Z0-9\u4e00-\u9fa5]+$');
@@ -1436,12 +1461,12 @@ class CommonUtils {
     }
   }
 
-  static line({double? marginTop,double? marginBottom}) {
+  static line({double? marginTop,double? marginBottom,EdgeInsets? margin,Color? color,double? height}) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, marginTop??0, 0, marginBottom??0),
-      color: HhColors.backColor,
+      margin: margin??EdgeInsets.fromLTRB(0, marginTop??0, 0, marginBottom??0),
+      color: color??HhColors.grayE8BackColor,
       width: 1.sw,
-      height: 1.w,
+      height: height??1.w,
     );
   }
 

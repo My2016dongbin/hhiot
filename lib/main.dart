@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bmflocation/flutter_bmflocation.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:iot/bus/bus_bean.dart';
@@ -15,21 +13,14 @@ import 'package:iot/pages/common/common_data.dart';
 import 'package:iot/pages/common/launch/launch_controller.dart';
 import 'package:iot/pages/common/share/manage/share_manage_binding.dart';
 import 'package:iot/pages/common/share/manage/share_manage_view.dart';
-import 'package:iot/pages/home/device/detail/call/call_binding.dart';
-import 'package:iot/pages/home/device/detail/call/call_view.dart';
-import 'package:iot/pages/home/home_controller.dart';
-import 'package:iot/pages/home/home_view.dart';
 import 'package:iot/res/strings.dart';
 import 'package:iot/routes/app_pages.dart';
 import 'package:iot/utils/CommonUtils.dart';
 import 'package:iot/utils/CustomNavigatorObserver.dart';
 import 'package:iot/utils/EventBusUtils.dart';
-import 'package:iot/utils/HhColors.dart';
 import 'package:iot/utils/HhLog.dart';
 import 'package:iot/widgets/app_view.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tpns_flutter_plugin/tpns_flutter_plugin.dart';
-import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart';
 
 void main() {
   //1334*750
@@ -89,20 +80,6 @@ class MyAppState extends State<HhApp> {
   @override
   void initState() {
     super.initState();
-
-    ///百度地图sdk初始化鉴权
-    /// 设置是否隐私政策
-    LocationFlutterPlugin myLocPlugin = LocationFlutterPlugin();
-    myLocPlugin.setAgreePrivacy(true);
-    BMFMapSDK.setAgreePrivacy(true);
-    if (Platform.isIOS) {
-      BMFMapSDK.setApiKeyAndCoordType(
-          'wARV9WoE9vC8q8QE7n7oTTC59541zYTy', BMF_COORD_TYPE.BD09LL);
-    } else if (Platform.isAndroid) {
-      // Android 目前不支持接口设置Apikey,
-      // 请在主工程的Manifest文件里设置，详细配置方法请参考官网(https://lbsyun.baidu.com/)demo
-      BMFMapSDK.setCoordType(BMF_COORD_TYPE.BD09LL);
-    }
 
     ///推送注册
     if (Platform.isIOS) {
