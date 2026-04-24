@@ -26,9 +26,9 @@ class CommonData{
   static BuildContext? context;
 
   static String html = "assets/file/privacy.html";
-  static String webSocketUrl = "ws://192.168.1.2:18034/websocket/";
-  static String mqttIP = "192.168.1.66";
-  static int mqttPORT = 11889;
+  static String webSocketUrl = "ws://117.132.5.139:18034/websocket/";//"ws://192.168.1.2:18034/websocket/";
+  static const String mqttIP = 'ws://117.132.5.139:18034/wsUrl/mqtt';//192.168.1.66
+  static const int mqttPORT = 18034;//11889
   static String mqttAccount = "admin";
   static String mqttPassword = "QIyG0!bhfS";
   static String chatTopic = "/device/pole/chat/";//$id
