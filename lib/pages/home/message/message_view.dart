@@ -611,23 +611,21 @@ class MessagePage extends StatelessWidget {
                     height: 0.36.sw,
                     width: 0.44.sw,),
                   itemBuilder: (context, item, index) {
-                    if(item["showDate"]==null){
-                      if(logic.dateListLeft.contains(CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'))){
-                        item["showDate"] = 0;
-                      }else{
-                        item["showDate"] = 1;
-                        logic.dateListLeft.add(CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'));
-                      }
-                    }
+                    final itemDate = CommonUtils().parseLongTimeYearDay(
+                        '${item['alarmTimestamp']}');
+                    final showDateHeader = index == 0 ||
+                        itemDate !=
+                            CommonUtils().parseLongTimeYearDay(
+                                '${logic.deviceController.itemList![index - 1]['alarmTimestamp']}');
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        item["showDate"]==1?Container(
+                        showDateHeader?Container(
                           margin: EdgeInsets.fromLTRB(14.w*3, 20.w, 14.w*3, 0),
                           child: Row(
                             children: [
                               Text(
-                                today == CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}')?'今天':CommonUtils().parseLongTimeYearDay('${item['alarmTimestamp']}'),
+                                today == itemDate?'今天':itemDate,
                                 style: TextStyle(
                                     color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                               ),

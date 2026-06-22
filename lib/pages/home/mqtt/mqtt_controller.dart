@@ -20,14 +20,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class MqttController extends GetxController {
+  static const Duration _alarmSoundCooldown = Duration(seconds: 5);
+  static const Duration _alarmRefreshDelay = Duration(seconds: 5);
+  static const Duration _alarmRefreshMaxDelay = Duration(seconds: 10);
+
   final Rx<bool> test = true.obs;
   late BuildContext context;
   late MqttServerClient client;
   late String id;
   late String clientId;
+  DateTime? _lastAlarmSoundAt;
+  DateTime? _firstAlarmAt;
+  Timer? _alarmRefreshTimer;
 
   @override
   void onClose() {
+    _alarmRefreshTimer?.cancel();
     try {
       ///通过 disconnect 方法安全断开连接
       client.disconnect();
@@ -113,13 +121,19 @@ class MqttController extends GetxController {
           dynamic model = jsonDecode(payload);
           //设备报警
           if("${model["messageType"]}" == "deviceAlarm"){
-            EventBusUtil.getInstance().fire(Message());
+            _scheduleAlarmListRefresh();
             //语音播报
             final SharedPreferences prefs = await SharedPreferences.getInstance();
             bool voice = true/*prefs.getBool(SPKeys().voice)??false*/;
             if(voice){
-              final AudioPlayer audioPlayer = AudioPlayer();
-              audioPlayer.play(AssetSource('audio/common/find_fire.mp3'));
+              final now = DateTime.now();
+              final lastPlayedAt = _lastAlarmSoundAt;
+              if (lastPlayedAt == null ||
+                  now.difference(lastPlayedAt) >= _alarmSoundCooldown) {
+                _lastAlarmSoundAt = now;
+                final AudioPlayer audioPlayer = AudioPlayer();
+                audioPlayer.play(AssetSource('audio/common/find_fire.mp3'));
+              }
             }
           }
         }
@@ -134,6 +148,25 @@ class MqttController extends GetxController {
     builder.addString('Hello MQTT!');
     client.publishMessage('/device/pole/chat/$id', MqttQos.atLeastOnce, builder.payload!);*/
 
+  }
+
+  void _scheduleAlarmListRefresh() {
+    final now = DateTime.now();
+    final firstAlarmAt = _firstAlarmAt ?? now;
+    _firstAlarmAt ??= now;
+
+    final maxRefreshAt = firstAlarmAt.add(_alarmRefreshMaxDelay);
+    final requestedRefreshAt = now.add(_alarmRefreshDelay);
+    final refreshAt = requestedRefreshAt.isAfter(maxRefreshAt)
+        ? maxRefreshAt
+        : requestedRefreshAt;
+
+    _alarmRefreshTimer?.cancel();
+    _alarmRefreshTimer = Timer(refreshAt.difference(now), () {
+      _alarmRefreshTimer = null;
+      _firstAlarmAt = null;
+      EventBusUtil.getInstance().fire(Message());
+    });
   }
 
 
