@@ -454,14 +454,17 @@ class SpaceManagePage extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(0, 14.w*3, 0, 0.w*3),
               child: Row(
                 children: [
-                  Text(
-                    "${model['deviceName']}",
-                    style: TextStyle(
-                        color: HhColors.blackColor,
-                        fontSize: 15.sp*3,
-                        fontWeight: FontWeight.w500),
+                  Expanded(
+                    child: Text(
+                      "${model['deviceName']}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: HhColors.blackColor,
+                          fontSize: 15.sp*3,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
-                  const Expanded(child: SizedBox()),
                   InkWell(
                     onTap: (){
                       model['isBlock'] = model['isBlock']==1?0:1;
