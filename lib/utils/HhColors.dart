@@ -54,6 +54,7 @@ class HhColors {
   static const videoControlInnerColor = Color(0xFFADC6F9);//视频控制图标内线
   static const videoControlIconColor = Color(0xFFE1E2E5);//视频控制图标边框线
   static const videoControlShadowColor = Color(0xFFEBF0F7);//视频控制拖动外阴影色
+  static const whiteBackSearch = Color(0xFFF1F2F6);
 
 
 

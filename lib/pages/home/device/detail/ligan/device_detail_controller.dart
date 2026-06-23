@@ -334,6 +334,7 @@ class LiGanDeviceDetailController extends GetxController {
       try {
         // String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
         String url = /*RequestUtils.rtsp + */ "${result["data"]["appRelativePath"]}";
+        HhLog.d("getPlayUrl url -- $url");
         playLoadingTag.value = false;
         playTag.value = false;
         player.release();
