@@ -758,15 +758,17 @@ class MessagePage extends StatelessWidget {
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.fromLTRB(30.w, 5.w, 0, 0),
+                                                margin: EdgeInsets.fromLTRB(30.w, 5.w, 80.w*3, 0),
                                                 child: Text(
                                                   parseLeftType("${item['alarmType']}"),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                       color: HhColors.textBlackColor, fontSize: 15.sp*3,fontWeight: FontWeight.bold),
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.fromLTRB(30.w, 26.w*3, 0, 0),
+                                                margin: EdgeInsets.fromLTRB(30.w, 26.w*3, 80.w*3, 0),
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
