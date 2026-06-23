@@ -36,13 +36,14 @@ class CompanyLoginController extends GetxController {
   late String? account;
   late String? password;
   late String? tenantName;
+  bool _isClosed = false;
 
   @override
   Future<void> onInit() async {
 
     showToastSubscription =
         EventBusUtil.getInstance().on<HhToast>().listen((event) {
-          if(event.title.isEmpty || event.title == "null"){
+          if (_isClosed || !context.mounted || event.title.isEmpty || event.title == "null") {
             return;
           }
           showToastWidget(
@@ -91,6 +92,9 @@ class CompanyLoginController extends GetxController {
     });
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
+          if (_isClosed || !context.mounted) {
+            return;
+          }
           if (event.show) {
             if(event.title!=null && event.title!=""){
               CommonData.loadingInfo = event.title??"";
@@ -115,6 +119,14 @@ class CompanyLoginController extends GetxController {
     tenantController?.text = tenantName!;
 
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _isClosed = true;
+    showToastSubscription.cancel();
+    showLoadingSubscription.cancel();
+    super.onClose();
   }
 
   Future<void> getTenant() async {

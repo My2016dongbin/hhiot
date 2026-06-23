@@ -68,7 +68,7 @@ class CompanyLoginPage extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.fromLTRB(36.w*3, 135.h*3, 0, 0),
               child: Text(
-                '欢迎登录浩海万联',
+                '欢迎登录京西林场',
                 style: TextStyle(
                     color: HhColors.blackColor,
                     fontSize: 20.sp*3,
@@ -274,7 +274,7 @@ class CompanyLoginPage extends StatelessWidget {
                         Get.to(WebViewPage(title: '隐私协议', url: CommonData.html,));
                       },
                       child: Text(
-                        '《浩海万联平台隐私政策》',
+                        '《京西林场平台隐私政策》',
                         style: TextStyle(
                             color: HhColors.backBlueOutColor,
                             fontSize: 12.sp*3,
@@ -436,7 +436,7 @@ class CompanyLoginPage extends StatelessWidget {
                                 Get.to(WebViewPage(title: '隐私协议', url: CommonData.html,));
                               },
                               child: Text(
-                                '《浩海万联平台隐私政策》',
+                                '《京西林场平台隐私政策》',
                                 style: TextStyle(
                                     decoration: TextDecoration.none,
                                     color: HhColors.mainBlueColor,

@@ -324,75 +324,84 @@ class SpaceManagePage extends StatelessWidget {
 
   void showChooseSpaceDialog(dynamic item) {
     showModalBottomSheet(context: logic.context, builder: (a){
-      bool choose = false;
-      return Container(
+      final spaceWidgets = buildDialogSpace(item);
+      return SizedBox(
         width: 1.sw,
-        decoration: BoxDecoration(
-            color: HhColors.trans,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Container(
-                width: 1.sw,
-                height: 90.w,
-                margin: EdgeInsets.fromLTRB(14.w*3, 15.w*3, 14.w*3, 25.w),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 15.w*3,),
-                    Text('空间删除后，将设备转移至',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),),
-                    SizedBox(height: 20.w*3,),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: buildDialogSpace(item),
-                        ),
+        height: 0.6.sh,
+        child: Container(
+          decoration: BoxDecoration(
+              color: HhColors.trans,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(8.w*3))
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: 1.sw,
+                  margin: EdgeInsets.fromLTRB(14.w*3, 15.w*3, 14.w*3, 25.w),
+                  decoration: BoxDecoration(
+                      color: HhColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 15.w*3,),
+                      Text('空间删除后，将设备转移至',style: TextStyle(color: HhColors.gray9TextColor,fontSize: 14.sp*3),),
+                      SizedBox(height: 20.w*3,),
+                      Expanded(
+                        child: spaceWidgets.isEmpty
+                            ? Center(
+                                child: Text(
+                                  '暂无可转移空间',
+                                  style: TextStyle(
+                                    color: HhColors.gray9TextColor,
+                                    fontSize: 14.sp*3,
+                                  ),
+                                ),
+                              )
+                            : SingleChildScrollView(
+                                child: Column(
+                                  children: spaceWidgets,
+                                ),
+                              ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            BouncingWidget(
-              duration: const Duration(milliseconds: 100),
-              scaleFactor: 1.2,
-              child: Container(
-                width: 1.sw,
-                height: 50.w*3,
-                margin: EdgeInsets.fromLTRB(14.w*3, 20.w*3, 14.w*3, 40.w*3),
-                decoration: BoxDecoration(
-                    color: HhColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
-                child: Center(
-                  child: Text(
-                    "取消",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                    ],
                   ),
                 ),
               ),
-              onPressed: () {
-                Get.back();
-              },
-            )
-          ],
+              BouncingWidget(
+                duration: const Duration(milliseconds: 100),
+                scaleFactor: 1.2,
+                child: Container(
+                  width: 1.sw,
+                  height: 50.w*3,
+                  margin: EdgeInsets.fromLTRB(14.w*3, 20.w*3, 14.w*3, 40.w*3),
+                  decoration: BoxDecoration(
+                      color: HhColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.w*3))),
+                  child: Center(
+                    child: Text(
+                      "取消",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: HhColors.blackColor, fontSize: 15.sp*3),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+              )
+            ],
+          ),
         ),
       );
-    },isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
+    },isScrollControlled: true,isDismissible: true,enableDrag: false,backgroundColor: HhColors.trans);
   }
 
   buildDialogSpace(dynamic item) {
     List<Widget> list = [];
     for(int i = 0;i < logic.spaceListMax.length;i++){
       dynamic model = logic.spaceListMax[i];
-      if(model['id'] != item['id']){
+      if(model['spaceId'] != item['spaceId']){
         list.add(
             Container(
               margin: EdgeInsets.fromLTRB(13.w*3, 13.w*3, 13.w*3, 13.w*3),
@@ -401,7 +410,7 @@ class SpaceManagePage extends StatelessWidget {
                   Container(
                     constraints: BoxConstraints(maxWidth: 200.w*3),
                     child: Text(
-                      "${model['name']}",
+                      "${model['spaceName']}",
                       style: TextStyle(
                           color: HhColors.blackColor,
                           fontSize: 15.sp*3,
@@ -413,7 +422,7 @@ class SpaceManagePage extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Get.back();
-                      logic.deleteChangeSpace(item['id'],model['id'],1);
+                      logic.deleteChangeSpace(item['spaceId'],model['spaceId'],1);
                     },
                     child: Container(
                       padding: EdgeInsets.all(5.w),
@@ -454,14 +463,17 @@ class SpaceManagePage extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(0, 14.w*3, 0, 0.w*3),
               child: Row(
                 children: [
-                  Text(
-                    "${model['deviceName']}",
-                    style: TextStyle(
-                        color: HhColors.blackColor,
-                        fontSize: 15.sp*3,
-                        fontWeight: FontWeight.w500),
+                  Expanded(
+                    child: Text(
+                      "${model['deviceName']}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: HhColors.blackColor,
+                          fontSize: 15.sp*3,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
-                  const Expanded(child: SizedBox()),
                   InkWell(
                     onTap: (){
                       model['isBlock'] = model['isBlock']==1?0:1;

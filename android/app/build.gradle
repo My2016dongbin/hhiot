@@ -92,7 +92,7 @@ android {
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
                     CHANNEL_NAME: "haohaiVersion",
-                    APP_NAME: "浩海万联",
+                    APP_NAME: "京西林场",
                     AUTHORITIES: "com.ehaohai.iot.fileprovider",
                     XG_ACCESS_ID : "1500040929",///个人版
                     XG_ACCESS_KEY: "A2UCA4MQX4ST",///个人版
@@ -106,7 +106,7 @@ android {
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
                     CHANNEL_NAME: "businessVersion",
-                    APP_NAME: "浩海万联企业版",
+                    APP_NAME: "京西林场企业版",
                     AUTHORITIES: "com.ehaohai.iotb.fileprovider",
                     XG_ACCESS_ID : "1500041692",///企业版
                     XG_ACCESS_KEY: "AAST7H0KI7QE",///企业版
@@ -119,7 +119,7 @@ android {
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
                     CHANNEL_NAME: "betaVersion",
-                    APP_NAME: "浩海万联测试版${defaultConfig.versionName}",
+                    APP_NAME: "京西林场测试版${defaultConfig.versionName}",
                     AUTHORITIES: "com.ehaohai.iot.fileprovider",
                     XG_ACCESS_ID : "1500040929",///个人版
                     XG_ACCESS_KEY: "A2UCA4MQX4ST",///个人版
@@ -132,7 +132,7 @@ android {
             manifestPlaceholders = [
                     APP_ICON: "@drawable/logo",//app图标
                     CHANNEL_NAME: "betaBusinessVersion",
-                    APP_NAME: "浩海万联企业测试版${defaultConfig.versionName}",
+                    APP_NAME: "京西林场企业测试版${defaultConfig.versionName}",
                     AUTHORITIES: "com.ehaohai.iotb.fileprovider",
                     XG_ACCESS_ID : "1500041692",///企业版
                     XG_ACCESS_KEY: "AAST7H0KI7QE",///企业版

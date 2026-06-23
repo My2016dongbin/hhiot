@@ -145,7 +145,7 @@ class MyAppState extends State<HhApp> {
     return AppView(
         builder: (locale, builder) => GetMaterialApp(
               navigatorObservers: [CustomNavigatorObserver.getInstance()],
-              title: CommonData.personal?'浩海万联':'浩海万联企业版',
+              title: CommonData.personal?'京西林场':'京西林场企业版',
               theme: ThemeData(
                 fontFamily: '.SF UI Display',
                 // 使用系统默认字体

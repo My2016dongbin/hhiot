@@ -37,12 +37,12 @@ class HomeController extends GetxController {
   final unhandledCount = 0.obs;
 
   Function()? onScrollToUnreadMessage;
-  late StreamSubscription showToastSubscription;
+  StreamSubscription? showToastSubscription;
   StreamSubscription? versionSubscription;
   StreamSubscription? progressSubscription;
   StreamSubscription? downloadProgressSubscription;
-  late StreamSubscription showLoadingSubscription;
-  late StreamSubscription showShareReceiveSubscription;
+  StreamSubscription? showLoadingSubscription;
+  StreamSubscription? showShareReceiveSubscription;
   final Rx<String> version = ''.obs;
   final Rx<String> buildNumber = ''.obs;
 
@@ -52,6 +52,7 @@ class HomeController extends GetxController {
   late String downloadUrl =
       'http://192.168.1.88:9000/resource/fireRebuild-2.1.1.apk';
   late String savePath = '';
+  bool _isClosed = false;
 
   switchTab(index) {
     this.index.value = index;
@@ -116,25 +117,26 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
-    try {
-      versionSubscription!.cancel();
-      showToastSubscription.cancel();
-      progressSubscription!.cancel();
-      downloadProgressSubscription!.cancel();
-      showLoadingSubscription.cancel();
-      showShareReceiveSubscription.cancel();
-    } catch (e) {
-      //
-    }
+    _isClosed = true;
+    versionSubscription?.cancel();
+    showToastSubscription?.cancel();
+    progressSubscription?.cancel();
+    downloadProgressSubscription?.cancel();
+    showLoadingSubscription?.cancel();
+    showShareReceiveSubscription?.cancel();
+    super.onClose();
   }
 
   @override
   void onInit() {
     localVersion();
     Future.delayed(const Duration(seconds: 1), () {
+      if (_isClosed) {
+        return;
+      }
       showToastSubscription =
           EventBusUtil.getInstance().on<HhToast>().listen((event) {
-        if (event.title.isEmpty || event.title == "null") {
+        if (_isClosed || !context.mounted || event.title.isEmpty || event.title == "null") {
           return;
         }
 
@@ -207,6 +209,9 @@ class HomeController extends GetxController {
     });
     showLoadingSubscription =
         EventBusUtil.getInstance().on<HhLoading>().listen((event) {
+      if (_isClosed || !context.mounted) {
+        return;
+      }
       if (event.show) {
         if(event.title!=null && event.title!=""){
           CommonData.loadingInfo = event.title??"";
@@ -220,6 +225,9 @@ class HomeController extends GetxController {
     });
     showShareReceiveSubscription =
         EventBusUtil.getInstance().on<Share>().listen((event) {
+      if (_isClosed || !context.mounted) {
+        return;
+      }
       dynamic model = event.model;
 
       showCupertinoDialog(

@@ -84,7 +84,7 @@ class HhHttp {
   }
 
   /// 请求类：支持异步请求操作
-  Future<T> request<T>(
+  Future<dynamic> request(
       String path, {
         DioMethod method = DioMethod.get,
         Map<String, dynamic>? params,
@@ -122,7 +122,11 @@ class HhHttp {
       HhLog.e("发送请求异常: $e");
       EventBusUtil.getInstance().fire(HhLoading(show: false));
       EventBusUtil.getInstance().fire(HhToast(title: '服务器异常请稍后重试'));
-      rethrow;
+      return {
+        'code': -1,
+        'data': null,
+        'msg': '服务器异常请稍后重试',
+      };
     }
   }
 
