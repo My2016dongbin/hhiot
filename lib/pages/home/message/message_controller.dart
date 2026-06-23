@@ -240,6 +240,16 @@ class MessageController extends GetxController {
   }
 
   Future<void> readAll() async {
+    EventBusUtil.getInstance().fire(HhToast(title: "已全部标记为已读",type: 0));
+    editRight.value = false;
+    editLeft.value = false;
+    pageStatus.value = false;
+    pageStatus.value = true;
+    noticeCount.value = "0";
+    noticeCountInt.value = 0;
+    warnCount.value = "0";
+    warnCountInt.value = 0;
+
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> mapR = {};
     mapR['ids'] = null;
@@ -248,7 +258,7 @@ class MessageController extends GetxController {
     HhLog.d("readRight --  ${chooseListRight.toString()} , $resultR");
     EventBusUtil.getInstance().fire(HhLoading(show: false));
     if (resultR["code"] == 0 && resultR["data"] == true) {
-      EventBusUtil.getInstance().fire(HhToast(title: "已全部标记为已读",type: 0));
+      /*EventBusUtil.getInstance().fire(HhToast(title: "已全部标记为已读",type: 0));*/
       editRight.value = false;
       pageStatus.value = false;
       pageStatus.value = true;
