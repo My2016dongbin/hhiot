@@ -37,6 +37,7 @@ class RequestUtils{
   static const deviceStream = '$base/admin-api/mid/device-base/findChannelListByDeviceId';//设备通道查询卡口App
   // static const devicePlayUrl = '$base/admin-api/mid/videoAggregation/devicePreviewUrlApp';//设备视频流查询
   static const devicePlayUrl = '$base/admin-api/mid/device-channel-rel/video/startPlay';//设备视频流查询
+  static const devicePlayUrlPhaseTwo = '$base/admin-api/mid/device-base/getVideo';//二期设备视频流查询
   static const deviceCreate = '$base/admin-api/mid/device-base/create';//设备添加
   static const deviceUpdate = '$base/admin-api/mid/device-base/update';//设备修改
   static const deviceDelete = '$base/admin-api/mid/device-base/delete';//设备删除
@@ -51,6 +52,7 @@ class RequestUtils{
   static const codeCheckPersonal = '$base/admin-api/system/captcha/check';//校验验证码
   static const codeCheckChangePhone = '$base/admin-api/system/user/update-mobile';//修改手机号
   static const videoControl = '$base/admin-api/mid/videoAggregation/deviceControl';//视频控制
+  static const deviceKakouControl = '$base/admin-api/mid/device-base/kakouControl';//二期设备云台控制
   static const leftRead = '$base/admin-api/mid/device-alarm-info/batchRead';//报警批量已读
   static const leftDelete = '$base/admin-api/mid/device-alarm-info/batchDelete';//报警批量删除
   static const rightRead = '$base/admin-api/system/message-log/batchRead';//通知批量已读

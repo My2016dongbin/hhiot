@@ -707,10 +707,10 @@ class MessagePage extends StatelessWidget {
                                                 fit: BoxFit.fill,
                                               ):InkWell(
                                                 onTap: (){
-                                                  CommonUtils().showPictureDialog(context, url:"${CommonData.endpoint}${item['alarmImageUrl']}");
+                                                  CommonUtils().showPictureDialog(context, url:"${item['alarmImageUrl']}".startsWith("http")?"${item['alarmImageUrl']}":"${CommonData.endpoint}${item['alarmImageUrl']}");
                                                   logic.readOneLeft("${item["id"]}");
                                                 },
-                                                child: Image.network("${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
+                                                child: Image.network("${item['alarmImageUrl']}".startsWith("http")?"${item['alarmImageUrl']}":"${CommonData.endpoint}${item['alarmImageUrl']}",errorBuilder: (a,b,c){
                                                   return Image.asset(
                                                     "assets/images/common/ic_message_no.png",
                                                     width: 113.w*3,
@@ -1558,7 +1558,7 @@ class MessagePage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${type["alarmName"]}',style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),),
+                Expanded(child: Text('${type["alarmName"]}',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(color: logic.typeSelectIndex.value == i?HhColors.mainBlueColor:HhColors.blackColor,fontSize: 14.sp*3),)),
                 SizedBox(width: 10.w,),
                 logic.typeSelectIndex.value == i?Image.asset(
                   "assets/images/common/icon_yes.png",

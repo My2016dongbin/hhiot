@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:draggable_widget/draggable_widget.dart';
@@ -27,6 +28,8 @@ import 'package:screenshot/screenshot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LiGanDeviceDetailController extends GetxController {
+  static const String _phaseTwoDeviceType = '5Yk5Jcf5NmzGkCxW';
+
   final index = 0.obs;
   final Rx<bool> testStatus = true.obs;
   final Rx<String> name = ''.obs;
@@ -66,6 +69,7 @@ class LiGanDeviceDetailController extends GetxController {
   late BuildContext context;
   late String deviceNo;
   late String id;
+  String deviceType = '';
   late int dataPageNum = 1;
   late int shareMark;
   late String deviceId;
@@ -115,9 +119,7 @@ class LiGanDeviceDetailController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     dragController = DragController();
     Future.delayed(const Duration(milliseconds: 500), () {
-      getDeviceStream();
-      getDeviceInfo();
-      getDeviceHistory();
+      _refreshDeviceData();
       getWarnType();
       getDataInfo();
       getDataPage();
@@ -142,9 +144,7 @@ class LiGanDeviceDetailController extends GetxController {
     });
     deviceSubscription =
         EventBusUtil.getInstance().on<DeviceInfo>().listen((event) {
-      getDeviceStream();
-      getDeviceInfo();
-      getDeviceHistory();
+      _refreshDeviceData();
     });
     recordSubscription =
         EventBusUtil.getInstance().on<Record>().listen((event) {
@@ -157,6 +157,16 @@ class LiGanDeviceDetailController extends GetxController {
     });*/
 
     super.onInit();
+  }
+
+  Future<void> _refreshDeviceData() async {
+    final hasDeviceInfo = await getDeviceInfo();
+    if (hasDeviceInfo) {
+      await getDeviceStream();
+    } else {
+      EventBusUtil.getInstance().fire(HhLoading(show: false));
+    }
+    getDeviceHistory();
   }
 
   @override
@@ -289,6 +299,13 @@ class LiGanDeviceDetailController extends GetxController {
   }
 
   Future<void> getDeviceStream() async {
+    if (deviceType == _phaseTwoDeviceType) {
+      liveList = [];
+      liveStatus.value = false;
+      liveStatus.value = true;
+      await getPlayUrl('', '');
+      return;
+    }
     Map<String, dynamic> map = {};
     // map['deviceNo'] = deviceNo;
     map['id'] = id;
@@ -322,18 +339,34 @@ class LiGanDeviceDetailController extends GetxController {
   }
 
   Future<void> getPlayUrl(String ids, String number) async {
-    dynamic data = {
-      'channelId': number,
-    };
-    var result = await HhHttp().request(RequestUtils.devicePlayUrl,
-        method: DioMethod.post, data: data);
-    HhLog.d("getPlayUrl data -- ${RequestUtils.devicePlayUrl}");
+    final isPhaseTwoDevice = deviceType == _phaseTwoDeviceType;
+    dynamic data;
+    dynamic result;
+    if (isPhaseTwoDevice) {
+      data = {
+        'deviceNo': _phaseTwoDeviceNo(),
+        'dwStreamType': 1,
+      };
+      result = await HhHttp().request(RequestUtils.devicePlayUrlPhaseTwo,
+          method: DioMethod.post, params: data);
+    } else {
+      data = {
+        'channelId': number,
+      };
+      result = await HhHttp().request(RequestUtils.devicePlayUrl,
+          method: DioMethod.post, data: data);
+    }
+    HhLog.d("getPlayUrl data -- ${isPhaseTwoDevice ? RequestUtils.devicePlayUrlPhaseTwo : RequestUtils.devicePlayUrl}");
     HhLog.d("getPlayUrl data -- $data");
     HhLog.d("getPlayUrl result -- $result");
     if (result["code"] == 0 && result["data"] != null) {
       try {
-        // String url = /*RequestUtils.rtsp + */ result["data"][0]['url'];
-        String url = /*RequestUtils.rtsp + */ "${result["data"]["appRelativePath"]}";
+        final url = isPhaseTwoDevice
+            ? '${result["data"]["rtspStreamPath"]}'
+            : '${result["data"]["appRelativePath"]}';
+        if (url.isEmpty || url == 'null') {
+          throw StateError('视频流地址为空');
+        }
         HhLog.d("getPlayUrl url -- $url");
         playLoadingTag.value = false;
         playTag.value = false;
@@ -415,7 +448,7 @@ class LiGanDeviceDetailController extends GetxController {
     EventBusUtil.getInstance().fire(HhLoading(show: false));
   }
 
-  Future<void> getDeviceInfo() async {
+  Future<bool> getDeviceInfo() async {
     Map<String, dynamic> map = {};
     map['id'] = id;
     map['shareMark'] = shareMark;
@@ -425,12 +458,15 @@ class LiGanDeviceDetailController extends GetxController {
     HhLog.d("getDeviceInfo -- $result");
     if (result["code"] == 0 && result["data"] != null) {
       item = result["data"];
+      deviceType = '${item['deviceType'] ?? ''}';
       name.value = CommonUtils().parseNull(result["data"]["name"] ?? '', "");
       productName.value = result["data"]["productName"] ?? '';
       functionItem.value = item['functionItem'];
+      return true;
     } else {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(result["msg"])));
+      return false;
     }
   }
 
@@ -600,6 +636,23 @@ class LiGanDeviceDetailController extends GetxController {
   }
 
   Future<void> controlPost(int action) async {
+    if (deviceType == _phaseTwoDeviceType) {
+      final phaseTwoCommand = _buildPhaseTwoCommand(action);
+      if (phaseTwoCommand == null) {
+        HhLog.e('二期设备不支持的控制指令: $command');
+        return;
+      }
+      Map<String, dynamic> map = {};
+      map['deviceNo'] = _phaseTwoDeviceNo();
+      map['command'] = jsonEncode(phaseTwoCommand);
+      var tenantResult = await HhHttp().request(
+          RequestUtils.deviceKakouControl,
+          method: DioMethod.post,
+          params: map);
+      HhLog.d("controlPost phaseTwo map -- $map");
+      HhLog.d("controlPost phaseTwo result -- $tenantResult");
+      return;
+    }
     dynamic data = {
       "action": action, //0 开始  1 结束
       "channelNumber": channelNumber,
@@ -617,6 +670,42 @@ class LiGanDeviceDetailController extends GetxController {
       EventBusUtil.getInstance()
           .fire(HhToast(title: CommonUtils().msgString(tenantResult["data"][0]["msg"])));
     }*/
+  }
+
+  Map<String, int>? _buildPhaseTwoCommand(int action) {
+    if (action == 1) {
+      return {'pan': 0, 'tilt': 0};
+    }
+    switch (command) {
+      case 'UP':
+        return {'pan': 0, 'tilt': 15};
+      case 'RIGHT':
+        return {'pan': 15, 'tilt': 0};
+      case 'DOWN':
+        return {'pan': 0, 'tilt': -15};
+      case 'LEFT':
+        return {'pan': -15, 'tilt': 0};
+      case 'RIGHT_UP':
+        return {'pan': 15, 'tilt': 15};
+      case 'RIGHT_DOWN':
+        return {'pan': 15, 'tilt': -15};
+      case 'LEFT_DOWN':
+        return {'pan': -15, 'tilt': -15};
+      case 'LEFT_UP':
+        return {'pan': -15, 'tilt': 15};
+      case 'ZOOM_OUT':
+        return {'zoom': -15};
+      case 'ZOOM_IN':
+        return {'zoom': 15};
+      default:
+        return null;
+    }
+  }
+
+  String _phaseTwoDeviceNo() {
+    return deviceNo.length > 5
+        ? deviceNo.substring(0, deviceNo.length - 5)
+        : deviceNo;
   }
 
   Future<void> deleteDevice(item) async {

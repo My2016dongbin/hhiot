@@ -589,6 +589,7 @@ class DeviceDetailPage extends StatelessWidget {
                         alignment: Alignment.topCenter,
                         child: GestureDetector(
                           onTapDown: (v){
+                            ///上
                             logic.upTap.value = true;
                             logic.command = "UP";
                             logic.controlPost(0);
@@ -630,6 +631,7 @@ class DeviceDetailPage extends StatelessWidget {
                         alignment: Alignment.bottomCenter,
                         child: GestureDetector(
                           onTapDown: (v){
+                            ///下
                             logic.downTap.value = true;
                             logic.command = "DOWN";
                             logic.controlPost(0);
@@ -671,6 +673,7 @@ class DeviceDetailPage extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
                           onTapDown: (v){
+                            ///左
                             logic.leftTap.value = true;
                             logic.command = "LEFT";
                             logic.controlPost(0);
@@ -713,6 +716,7 @@ class DeviceDetailPage extends StatelessWidget {
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTapDown: (v){
+                            ///右
                             logic.rightTap.value = true;
                             logic.command = "RIGHT";
                             logic.controlPost(0);
@@ -991,6 +995,7 @@ class DeviceDetailPage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTapDown: (a) {
+                            ///焦距减
                             logic.fixLeft.value = true;
                             logic.command = "ZOOM_OUT";
                             logic.controlPost(0);
@@ -1037,6 +1042,7 @@ class DeviceDetailPage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTapDown: (a) {
+                            ///焦距加
                             logic.fixRight.value = true;
                             logic.command = "ZOOM_IN";
                             logic.controlPost(0);

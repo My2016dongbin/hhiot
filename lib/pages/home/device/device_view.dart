@@ -209,6 +209,8 @@ class DevicePage extends StatelessWidget {
                         margin: EdgeInsets.fromLTRB(60.w*3, 0, 0, 50.w),
                         child: Text(
                           CommonUtils().parseNull('${item['name']}',""),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: HhColors.textBlackColor, fontSize: 16.sp*3,fontWeight: FontWeight.bold),
                         ),
