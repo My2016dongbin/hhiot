@@ -171,6 +171,12 @@ class LiGanDeviceDetailController extends GetxController {
 
   @override
   void onClose() {
+    if(recordTag2.value){
+      //对讲结束
+      recordTag2.value = false;
+      manager.stopRecording();
+      chatClose();
+    }
     moveSubscription?.cancel();
     scaleSubscription?.cancel();
     deviceSubscription?.cancel();
@@ -363,7 +369,7 @@ class LiGanDeviceDetailController extends GetxController {
       try {
         final url = isPhaseTwoDevice
             ? '${result["data"]["rtspStreamPath"]}'
-            : '${result["data"]["appRelativePath"]}';
+            : 'http://117.132.5.139:18034/app-video${result["data"]["appRelativePath"]}';
         if (url.isEmpty || url == 'null') {
           throw StateError('视频流地址为空');
         }
@@ -605,7 +611,7 @@ class LiGanDeviceDetailController extends GetxController {
 
     manager =
         // WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
-        WebSocketManager('ws://117.132.5.139:18030/$nickname', '');
+        WebSocketManager('${CommonData.webSocketUrl}$nickname', '');
     manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
     CommonData.deviceNo = deviceNo;
   }

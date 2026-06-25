@@ -340,7 +340,7 @@ class DeviceDetailController extends GetxController {
       try {
         final url = isPhaseTwoDevice
             ? '${result["data"]["rtspStreamPath"]}'
-            : '${result["data"]["appRelativePath"]}';
+            : 'http://117.132.5.139:18034/app-video${result["data"]["appRelativePath"]}';
         if (url.isEmpty || url == 'null') {
           throw StateError('视频流地址为空');
         }
@@ -528,7 +528,7 @@ class DeviceDetailController extends GetxController {
 
     manager =
         // WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
-        WebSocketManager('ws://117.132.5.139:18030/$nickname', '');
+        WebSocketManager('${CommonData.webSocketUrl}$nickname', '');
     manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
     CommonData.deviceNo = deviceNo;
   }

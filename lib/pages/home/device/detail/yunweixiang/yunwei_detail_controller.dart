@@ -460,7 +460,7 @@ class YunWeiDetailController extends GetxController {
 
     manager =
         // WebSocketManager('ws://172.16.50.85:6002/$nickname', '');
-        WebSocketManager('ws://117.132.5.139:18030/$nickname', '');
+        WebSocketManager('${CommonData.webSocketUrl}$nickname', '');
     manager.sendMessage({"CallType": "Active", "Dest": deviceNo});
     CommonData.deviceNo = deviceNo;
   }

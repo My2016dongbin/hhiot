@@ -49,10 +49,12 @@ class DeviceManageController extends GetxController {
   }
 
   Future<void> getSpaceList() async {
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在加载，请稍候…'));
     Map<String, dynamic> map = {};
     map['pageNo'] = '1';
     map['pageSize'] = '100';
     var result = await HhHttp().request(RequestUtils.mainSpaceList,method: DioMethod.get,params: map);
+    EventBusUtil.getInstance().fire(HhLoading(show: false));
     HhLog.d("getSpaceList -- $result");
     if(result["code"]==0 && result["data"]!=null){
       spaceList = [];
@@ -79,7 +81,7 @@ class DeviceManageController extends GetxController {
   }
 
   Future<void> deviceList(int pageKey) async {
-    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '设备加载中..'));
+    EventBusUtil.getInstance().fire(HhLoading(show: true,title: '正在加载，请稍候…'));
     Map<String, dynamic> map = {};
     if(spaceList[tabIndex.value]['id']!=-999){
       map['spaceId'] = spaceList[tabIndex.value]['id'];
