@@ -474,69 +474,71 @@ class LiGanDeviceDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          BouncingWidget(
-                            duration: const Duration(milliseconds: 300),
-                            scaleFactor: 1.2,
-                            onPressed: () {
-                              logic.tabIndex.value = 1;
-                            },
-                            child: Container(
-                              height: 40.h * 3,
-                              color: HhColors.trans,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5.h),
-                                    child: Image.asset(
-                                      logic.tabIndex.value == 1
-                                          ? "assets/images/common/icon_datas.png"
-                                          : "assets/images/common/icon_datas_un.png",
-                                      width: 16.h * 3,
-                                      height: 16.h * 3,
-                                      fit: BoxFit.fill,
+                    logic.isPhaseTwoDevice
+                        ? const SizedBox()
+                        : Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                BouncingWidget(
+                                  duration: const Duration(milliseconds: 300),
+                                  scaleFactor: 1.2,
+                                  onPressed: () {
+                                    logic.tabIndex.value = 1;
+                                  },
+                                  child: Container(
+                                    height: 40.h * 3,
+                                    color: HhColors.trans,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(top: 5.h),
+                                          child: Image.asset(
+                                            logic.tabIndex.value == 1
+                                                ? "assets/images/common/icon_datas.png"
+                                                : "assets/images/common/icon_datas_un.png",
+                                            width: 16.h * 3,
+                                            height: 16.h * 3,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 6.h,
+                                        ),
+                                        Text(
+                                          '数据统计',
+                                          style: TextStyle(
+                                              color: logic.tabIndex.value == 1
+                                                  ? HhColors.mainBlueColor
+                                                  : HhColors.gray6TextColor,
+                                              fontSize: logic.tabIndex.value == 1
+                                                  ? 14.sp * 3
+                                                  : 14.sp * 3,
+                                              fontWeight: logic.tabIndex.value == 1
+                                                  ? FontWeight.w500
+                                                  : FontWeight.w200),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 6.h,
-                                  ),
-                                  Text(
-                                    '数据统计',
-                                    style: TextStyle(
-                                        color: logic.tabIndex.value == 1
-                                            ? HhColors.mainBlueColor
-                                            : HhColors.gray6TextColor,
-                                        fontSize: logic.tabIndex.value == 1
-                                            ? 14.sp * 3
-                                            : 14.sp * 3,
-                                        fontWeight: logic.tabIndex.value == 1
-                                            ? FontWeight.w500
-                                            : FontWeight.w200),
-                                  ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                logic.tabIndex.value == 1
+                                    ? Container(
+                                        height: 4.h,
+                                        width: 140.h,
+                                        decoration: BoxDecoration(
+                                            color: HhColors.mainBlueColor,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(2.h))),
+                                      )
+                                    : const SizedBox()
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          logic.tabIndex.value == 1
-                              ? Container(
-                                  height: 4.h,
-                                  width: 140.h,
-                                  decoration: BoxDecoration(
-                                      color: HhColors.mainBlueColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(2.h))),
-                                )
-                              : const SizedBox()
-                        ],
-                      ),
-                    ),
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -606,7 +608,11 @@ class LiGanDeviceDetailPage extends StatelessWidget {
 
               Container(
                 margin: EdgeInsets.fromLTRB(0, 305.h * 3, 0, 0),
-                child: logic.tabIndex.value == 0 ? livePage() :  (logic.tabIndex.value==1?dataPage():historyPage()),
+                child: logic.tabIndex.value == 0
+                    ? livePage()
+                    : (logic.tabIndex.value == 1 && !logic.isPhaseTwoDevice
+                        ? dataPage()
+                        : historyPage()),
               ),
 
               logic.testStatus.value ? const SizedBox() : const SizedBox(),

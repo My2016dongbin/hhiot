@@ -123,6 +123,7 @@ class DevicePage extends StatelessWidget {
         onRefresh: (){
           logic.pageNum = 1;
           logic.deviceList(logic.pageNum);
+          logic.easyController.resetFooter();
         },
         onLoad: (){
           logic.pageNum++;
@@ -318,6 +319,7 @@ class DevicePage extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: (){
+                    logic.easyController.resetFooter();
                     logic.tabIndex.value = i;
                     logic.pageNum = 1;
                     logic.deviceList(logic.pageNum);

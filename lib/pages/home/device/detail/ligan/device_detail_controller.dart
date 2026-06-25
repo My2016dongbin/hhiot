@@ -114,6 +114,8 @@ class LiGanDeviceDetailController extends GetxController {
     },
   ];
 
+  bool get isPhaseTwoDevice => deviceType == _phaseTwoDeviceType;
+
   @override
   void onInit() {
     EventBusUtil.getInstance().fire(HhLoading(show: true));
@@ -121,8 +123,6 @@ class LiGanDeviceDetailController extends GetxController {
     Future.delayed(const Duration(milliseconds: 500), () {
       _refreshDeviceData();
       getWarnType();
-      getDataInfo();
-      getDataPage();
     });
     moveSubscription =
         EventBusUtil.getInstance().on<Move>().listen((event) {
@@ -163,6 +163,10 @@ class LiGanDeviceDetailController extends GetxController {
     final hasDeviceInfo = await getDeviceInfo();
     if (hasDeviceInfo) {
       await getDeviceStream();
+      if (!isPhaseTwoDevice) {
+        getDataInfo();
+        getDataPage();
+      }
     } else {
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
@@ -465,6 +469,9 @@ class LiGanDeviceDetailController extends GetxController {
     if (result["code"] == 0 && result["data"] != null) {
       item = result["data"];
       deviceType = '${item['deviceType'] ?? ''}';
+      if (isPhaseTwoDevice && tabIndex.value == 1) {
+        tabIndex.value = 0;
+      }
       name.value = CommonUtils().parseNull(result["data"]["name"] ?? '', "");
       productName.value = result["data"]["productName"] ?? '';
       functionItem.value = item['functionItem'];
@@ -477,6 +484,9 @@ class LiGanDeviceDetailController extends GetxController {
   }
 
   Future<void> getDataInfo() async {
+    if (isPhaseTwoDevice) {
+      return;
+    }
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
     map['deviceNo'] = deviceNo;
@@ -496,6 +506,9 @@ class LiGanDeviceDetailController extends GetxController {
   }
 
   Future<void> getDataPage() async {
+    if (isPhaseTwoDevice) {
+      return;
+    }
     ///太阳能信息数据
     EventBusUtil.getInstance().fire(HhLoading(show: true));
     Map<String, dynamic> map = {};
