@@ -72,7 +72,7 @@ class HhHttp {
     } else {
       // 处理异常结果
       HhLog.e("响应异常");
-      EventBusUtil.getInstance().fire(HhToast(title: '服务器状态异常请稍后重试'));
+      //EventBusUtil.getInstance().fire(HhToast(title: '服务器状态异常请稍后重试'));
       EventBusUtil.getInstance().fire(HhLoading(show: false));
     }
     handler.next(response);
@@ -121,7 +121,7 @@ class HhHttp {
     } on DioException catch (e) {
       HhLog.e("发送请求异常: $e");
       EventBusUtil.getInstance().fire(HhLoading(show: false));
-      EventBusUtil.getInstance().fire(HhToast(title: '服务器异常请稍后重试'));
+      //EventBusUtil.getInstance().fire(HhToast(title: '服务器异常请稍后重试'));
       rethrow;
     }
   }
