@@ -1206,12 +1206,12 @@ class MainPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      CommonUtils().parseNameCount("${item['name']}", 4),
+                      CommonUtils().parseNameCount("${item['name']}", 20),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: HhColors.textBlackColor,
-                          fontSize: 15.sp*3,),
+                          fontSize: 14.sp*3,),
                     ),
                   ),
                   SizedBox(width: 9.w*3,),
